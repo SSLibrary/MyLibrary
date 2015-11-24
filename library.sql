@@ -1,5 +1,5 @@
 --
--- Database: `library`
+-- Database: `library`  U KNOW, JUST FOR THE TEST
 --
 DROP DATABASE IF EXISTS `library`;
 CREATE DATABASE `library` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
