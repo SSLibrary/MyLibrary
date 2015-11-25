@@ -9,11 +9,6 @@ public class Mazalo {
 	
 	private static final  String TI_DA_VIDISH = "Opravqsh li go ;)"
 	
-public abstract class Mazalo {
-	
-	public void Test()
-	{
-	String name2 = "Ti si"
-	}
-	
+	private static final  String TI2= "Bravo"
+
 }
