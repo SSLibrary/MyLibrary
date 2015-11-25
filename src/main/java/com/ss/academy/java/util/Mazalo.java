@@ -5,6 +5,10 @@ import java.util.List;
 
 import com.ss.academy.java.model.rating.Rating;
 
-public class RatingCalculator {
-	
+public class Mazalo {
+	private static String myFirstMazaloMetod () {
+		String name = "Mime kak si";
+		System.out.println(name);
+		return name;
+	}
 }
