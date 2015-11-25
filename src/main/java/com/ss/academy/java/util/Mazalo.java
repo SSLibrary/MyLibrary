@@ -6,6 +6,9 @@ public class Mazalo {
 		System.out.println(name);
 		return name;
 	}
+	
+	private static final  String TI_DA_VIDISH = "Opravqsh li go ;)"
+	
 public abstract class Mazalo {
 	
 	public void Test()
