@@ -9,5 +9,6 @@ public class Mazalo {
 	
 	private static final  String TI_DA_VIDISH = "2"
 	
+	private static final  String TI_DA_VIDISH = "32"
 
 }
