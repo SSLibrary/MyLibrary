@@ -13,15 +13,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ss.academy.java.model.book.Book;
 
 @Entity
 @Table(name = "authors")
-@XmlRootElement(name = "Author")
-public class Author {
+public class Author  {
 
 	@Id
 	@Column(name = "author_id")
@@ -39,7 +37,7 @@ public class Author {
 	private AuthorCountry country;
 
 	@OneToMany(mappedBy = "author")
-	@JsonManagedReference
+	@JsonManagedReference(value = "author-books")
 	private List<Book> books;
 
 	public Long getId() {

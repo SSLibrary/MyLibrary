@@ -121,10 +121,18 @@
 
 		<!-- Swagger -->
 		<dependency>
-			<groupId>com.mangofactory</groupId>
-			<artifactId>swagger-springmvc</artifactId>
-			<version>1.0.2</version>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.2.2</version>
 		</dependency>
+
+		<!-- HATEOAS -->
+		<dependency>
+			<groupId>org.springframework.hateoas</groupId>
+			<artifactId>spring-hateoas</artifactId>
+			<version>0.19.0.RELEASE</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

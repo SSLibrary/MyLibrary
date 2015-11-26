@@ -14,7 +14,7 @@ public interface AuthorService {
 
 	List<Author> findAuthorsByName(String authorName);
 
-	@PreAuthorize("hasAuthority('ADMIN')")
+	//@PreAuthorize("hasAuthority('ADMIN')")
 	void saveAuthor(Author author);
 
 	@PreAuthorize("hasAuthority('ADMIN')")

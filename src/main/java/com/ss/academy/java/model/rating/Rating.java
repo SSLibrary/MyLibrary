@@ -11,7 +11,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ss.academy.java.model.book.Book;
@@ -19,7 +18,6 @@ import com.ss.academy.java.model.user.User;
 
 @Entity
 @Table(name = "book_ratings")
-@XmlRootElement(name = "book_ratings")
 public class Rating {
 
 	@Id
@@ -35,12 +33,12 @@ public class Rating {
 
 	@ManyToOne()
 	@JoinColumn(name = "user_id")
-	@JsonBackReference
+	@JsonBackReference(value = "user-ratings")
 	private User user;
 	
 	@ManyToOne()
 	@JoinColumn(name = "book_id")
-	@JsonBackReference
+	@JsonBackReference(value = "book-ratings")
 	private Book book;
 
 	public Long getId() {

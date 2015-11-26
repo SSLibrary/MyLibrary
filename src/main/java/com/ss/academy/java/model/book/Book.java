@@ -18,13 +18,14 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ss.academy.java.model.author.Author;
 import com.ss.academy.java.model.rating.Rating;
 
 @Entity
 @Table(name = "author_books")
-public class Book  {
+public class Book {
 
 	@Id
 	@Column(name = "book_id")
@@ -43,17 +44,19 @@ public class Book  {
 
 	@ManyToOne()
 	@JoinColumn(name = "author_id")
-	@JsonBackReference
+	@JsonBackReference(value = "author-books")
 	private Author author;
 
 	@OneToMany(mappedBy = "book")
-	@JsonManagedReference
+	@JsonManagedReference(value = "book-ratings")
 	private List<Rating> ratings;
 
 	@Transient
+	@JsonIgnore
 	private boolean isRated;
 
 	@Transient
+	@JsonIgnore
 	private Double averageRating;
 
 	public Double getAverageRating() {
