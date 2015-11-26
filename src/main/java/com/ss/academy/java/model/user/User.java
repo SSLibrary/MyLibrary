@@ -13,14 +13,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ss.academy.java.model.rating.Rating;
 
 @Entity
 @Table(name = "users")
-@XmlRootElement(name = "user")
 public class User {
 
 	@Id
@@ -70,7 +68,7 @@ public class User {
 	}
 
 	@OneToMany(mappedBy = "user")
-	@JsonManagedReference
+	@JsonManagedReference(value = "user-ratings")
 	private List<Rating> ratings;
 
 	public Long getId() {

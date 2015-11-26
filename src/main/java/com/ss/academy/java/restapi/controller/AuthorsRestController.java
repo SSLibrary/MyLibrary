@@ -1,8 +1,12 @@
 package com.ss.academy.java.restapi.controller;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.ExposesResourceFor;
+import org.springframework.hateoas.hal.CurieProvider;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.ss.academy.java.model.author.Author;
+import com.ss.academy.java.model.author.AuthorResource;
+import com.ss.academy.java.model.author.AuthorResourceAssembler;
 import com.ss.academy.java.service.author.AuthorService;
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping({ "/restapi/authors" })
-@Api(value = "onlinestore", description = "Operations pertaining to Online Store")
+@ExposesResourceFor(AuthorResource.class)
 public class AuthorsRestController {
 
 	@Autowired
@@ -29,23 +33,8 @@ public class AuthorsRestController {
 	/**
 	 * Retrieve All Authors in JSON format
 	 */
-	@RequestMapping(value = { "/" }, method = RequestMethod.GET, produces = "application/json")
-	@ApiOperation(value = "View the Specific info of the product")
+	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public ResponseEntity<List<Author>> listAllAuthorsInJSON() {
-		List<Author> authors = authorService.findAllAuthors();
-
-		if (authors.isEmpty()) {
-			return new ResponseEntity<List<Author>>(HttpStatus.NO_CONTENT);
-		}
-
-		return new ResponseEntity<List<Author>>(authors, HttpStatus.OK);
-	}
-
-	/**
-	 * Retrieve All Authors in XML format
-	 */
-	@RequestMapping(value = { "/" }, method = RequestMethod.GET, produces = "application/xml")
-	public ResponseEntity<List<Author>> listAllAuthorsInXML() {
 		List<Author> authors = authorService.findAllAuthors();
 
 		if (authors.isEmpty()) {
@@ -58,39 +47,30 @@ public class AuthorsRestController {
 	/**
 	 * Retrieve Author by ID in JSON format
 	 */
-	@RequestMapping(value = { "/{id}" }, method = RequestMethod.GET, produces = "application/json")
-	@ApiOperation(value = "View the Specific info of the product")
-	public ResponseEntity<Author> getAuthorInJSON(@PathVariable("id") long id) {
+	@RequestMapping(value = { "/{id}" }, method = RequestMethod.GET)
+	public ResponseEntity<AuthorResource> getAuthorInJSON(@PathVariable("id") long id) {
 		Author author = authorService.findById(id);
 
 		if (author == null) {
-			return new ResponseEntity<Author>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<AuthorResource>(HttpStatus.NO_CONTENT);
 		}
 
-		return new ResponseEntity<Author>(author, HttpStatus.OK);
-	}
+		AuthorResourceAssembler assembler = new AuthorResourceAssembler();
+		AuthorResource authorResource = assembler.toResource(author);
 
-	/**
-	 * Retrieve Author by ID in XML format
-	 */
-	@RequestMapping(value = { "/{id}" }, method = RequestMethod.GET, produces = "application/xml")
-	@ApiOperation(value = "View the Specific info of the product")
-	public ResponseEntity<Author> getAuthorInXML(@PathVariable("id") long id) {
-		Author author = authorService.findById(id);
+		
+		authorResource.add(linkTo(AuthorsRestController.class).withRel(author.getId().toString()));
 
-		if (author == null) {
-			return new ResponseEntity<Author>(HttpStatus.NO_CONTENT);
-		}
-
-		return new ResponseEntity<Author>(author, HttpStatus.OK);
+		return new ResponseEntity<AuthorResource>(authorResource, HttpStatus.OK);
 	}
 
 	/**
 	 * Create Author
 	 */
-	@RequestMapping(value = "/new", method = RequestMethod.POST)
+	@RequestMapping(value = "/new", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<Void> createAuthor(@RequestBody Author author, UriComponentsBuilder ucBuilder) {
-		if (authorService.findAuthorsByName(author.getName()) != null) {
+		System.out.println(authorService.findAuthorsByName(author.getName()));
+		if (!authorService.findAuthorsByName(author.getName()).isEmpty()) {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}
 
