@@ -10,5 +10,18 @@ public class Mazalo {
 	private static final  String TI_DA_VIDISH = "Opravqsh li go ;)"
 	
 	private static final  String TI2= "Bravo"
+	
+	private static final  String T3= "Bravo pak"
 
+public abstract class Mazalo {
+	
+	public String Test() {
+		String test = "test";
+		return test;
+
+	public void Test()
+	{
+	String name2 = "Ti si"
+	}
+	
 }
