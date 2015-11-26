@@ -6,11 +6,10 @@ public class Mazalo {
 		System.out.println(name);
 		return name;
 	}
-	
-	private static final  String TI_DA_VIDISH = "2"
-	
-	
+
+	private static final  String TI_DA_VIDISH = "32"
+
 	private static final  String TI6= "524234234324"
-	
+
 
 }
