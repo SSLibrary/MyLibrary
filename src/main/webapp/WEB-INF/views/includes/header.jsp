@@ -6,9 +6,9 @@
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
 			<li><a href="/MyLibrary/authors/">Authors</a></li>
 		</sec:authorize>
-		<sec:authorize access="hasAuthority('ADMIN')">
+		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
 			<li><a href="/MyLibrary/users/">Users</a></li>
-		</sec:authorize>
+			</sec:authorize>
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
 			<li><a href="/MyLibrary/messages/inbox">Inbox</a></li>
 		</sec:authorize>

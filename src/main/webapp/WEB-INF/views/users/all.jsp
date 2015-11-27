@@ -33,25 +33,32 @@
 		<div class="row">
 			<div class="col-md-3 col-xs-4 text-center">
 				<h2>Name</h2>
+				
 			</div>
+			<sec:authorize access="hasAuthority('ADMIN')">
 			<div class="col-md-3 col-xs-4 text-center">
 				<h2>Status</h2>
 			</div>
+			
 			<div class="col-md-3 col-xs-4 text-center">
 				<h2>Role</h2>
 			</div>
+			</sec:authorize>
 		</div>
 		<c:forEach items="${allUsers}" var="user">
 			<div class="row">
 				<div class="col-md-3 col-xs-4 text-center">
-					<h4>${user.username}</h4>
+				<h4><a href="<c:url value='/messages/${user.id}/new' />">${user.username}</a>
+					</h4>
 				</div>
+				<sec:authorize access="hasAuthority('ADMIN')">
 				<div class="col-md-3 col-xs-4 text-center">
 					<h4>${user.userStatus}</h4>
 				</div>
 				<div class="col-md-3 col-xs-4 text-center">
 					<h4>${user.userRole}</h4>
 				</div>
+				
 				<c:choose>
 				<c:when test="${ user.userRole == 'ADMIN'}">
 					<div class="col-md-3">
@@ -72,10 +79,12 @@
 								</form:form>
 							</div>
 						</sec:authorize>
+						
 					</div>
 				</div>
 				</c:otherwise>
 			</c:choose>
+			</sec:authorize>
 			</div>
 			<br />
 		</c:forEach>

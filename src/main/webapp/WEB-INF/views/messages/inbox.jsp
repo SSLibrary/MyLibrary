@@ -16,46 +16,38 @@
 	<div class="container">
 		<jsp:include page="../includes/header.jsp" />
 		<div class="jumbotron">
-			<h1 class="text-center">Inbox</h1>
+			<h1 class="text-center">Message Inbox</h1>
 		</div>
 	
+	<c:choose>
+				<c:when test="${isEmpty}">
+				
+				<h3 class="text-center">There are no messages received!</h3>
+ 	 </c:when>
+			 <c:otherwise>
+			 <table class="table table-striped">	
 		<c:forEach items="${messages}" var="message">
+		<tr>
 			<c:choose>
 				<c:when test="${message.isNew=='0'}">
-			<div class="row">
-				<div class="col-md-3 col-xs-4 text-center">
-					<h5>From: ${message.sender.username}</h5>
-				</div>
-				<div class="col-md-3 col-xs-4 text-center">
-					<h5>Subject: <a href="<c:url value="/messages/${message.message_id}/reply" />">${message.header}</a></h5>
-				</div>
-				<div class="col-md-3 col-xs-4 text-center">
-					<h5>Date: ${message.date}</h5>
-				</div>
-				<div class="col-md-3 col-xs-4 text-center">
-					<h5>Status: Read</h5>
-				</div>
-			</div>
+					<td>From: <i>${message.sender.username}</i></td>
+					<td>Subject: <i><a href="<c:url value="/messages/${message.message_id}/reply" />">${message.header}</a></i></td>
+					<td>Date: <i>${message.date}</i></td>
+					<td>Status: <i>Read</i></td>
 			</c:when>
-			 <c:otherwise>
-						<div class="row">
-				<div class="col-md-3 col-xs-4 text-center">
-					<h5><b>From: ${message.sender.username}</b></h5>
-				</div>
-				<div class="col-md-3 col-xs-4 text-center">
-					<h5><b>Subject: <a href="<c:url value="/messages/${message.message_id}/reply" />">${message.header}</a></b></h5>
-				</div>
-				<div class="col-md-3 col-xs-4 text-center">
-					<h5><b>Date: ${message.date}</b></h5>
-				</div>
-				<div class="col-md-3 col-xs-4 text-center">
-					<h5><b>Status: Unread</b></h5>
-				</div>
-				</div>
-						</c:otherwise>
+			 <c:otherwise>		
+					<td><b>From: <i>${message.sender.username}</i></b></td>
+					<td><b>Subject: <i><a href="<c:url value="/messages/${message.message_id}/reply" />">${message.header}</a></i></b></td>
+					<td><b>Date: <i>${message.date}</i></b></td>
+					<td><b>Status: <i>Unread</i></b></td>
+						</c:otherwise>		
 				</c:choose>
+				</tr>
 			<br />
 		</c:forEach>
+		</table>
+		</c:otherwise>
+		</c:choose>
 		<br /> 
 			<jsp:include page="../includes/footer.jsp" />
 	</div>
