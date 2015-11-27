@@ -49,21 +49,5 @@ public class HomeController {
 		return "home";
 	}
 	
-	   /*
-     * This method will list all existing authors.
-     */ 
-    @RequestMapping(value = { "/authors" }, method = RequestMethod.GET)
-  public String listAuthors(HttpServletRequest request,ModelMap model, Integer offset, Integer maxResults) { 
 
-        List<Author> authors = authorService.list(offset, maxResults); 
-        
-      if (authors.isEmpty()) {
-			model.addAttribute("emptyListOfAuthors", true);
-		}        
-      model.addAttribute("authors", authorService.list(offset, maxResults));
-      model.addAttribute("count", authorService.count());
-      model.addAttribute("offset", offset);
-
-      return "authors/all";
-  }   
 }

@@ -2,6 +2,7 @@ package com.ss.academy.java.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,23 @@ public class AuthorsController {
 //		return "authors/all";
 //	}
 	
-	
+	   /*
+  * This method will list all existing authors.
+  */ 
+ @RequestMapping(value = { "/" }, method = RequestMethod.GET)
+public String listAuthors(HttpServletRequest request,ModelMap model, Integer offset, Integer maxResults) { 
+
+     List<Author> authors = service.list(offset, maxResults); 
+     
+   if (authors.isEmpty()) {
+			model.addAttribute("emptyListOfAuthors", true);
+		}        
+   model.addAttribute("authors", service.list(offset, maxResults));
+   model.addAttribute("count", service.count());
+   model.addAttribute("offset", offset);
+
+   return "authors/all";
+}   
 
 	/*
 	 * This method provides the ability to search for authors by their names.

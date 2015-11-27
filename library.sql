@@ -69,7 +69,7 @@ create table `users` (
 -- Populate one Admin User which will further create other users for the application using GUI
 --
 INSERT INTO `users`(`username`, `password`, `first_name`, `last_name`, `email`, `role`, `status`)
-VALUES ('Zhivko','$2a$10$p0uWigFGA/eNtsP5j.b73.gp9ZFlYvlMH2ea7J11g9Oh2Kb6Ze6j.', 'Zhivko','Georgiev','zhivko@softserve.bg', 'ADMIN', 'ACTIVE');
+VALUES ('admin','admin', 'Zhivko','Georgiev','zhivko@softserve.bg', 'ADMIN', 'ACTIVE');
 
 CREATE TABLE `book_ratings` (
 `rating_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
