@@ -2,9 +2,12 @@ package com.ss.academy.java.dao.author;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -50,5 +53,22 @@ public class AuthorDaoImpl extends AbstractDao<Long, Author> implements AuthorDa
 		List<Author> authors = (List<Author>) criteria.list();
 
 		return authors;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public List<Author> list(Integer offset, Integer maxResults){
+		return getSession()
+				.createCriteria(Author.class)
+				.setFirstResult(offset!=null?offset:0)
+				.setMaxResults(maxResults!=null?maxResults:10)
+				.list();
+	}
+	
+	public Long count(){
+		return (Long)getSession()
+				.createCriteria(Author.class)
+				.setProjection(Projections.rowCount())
+				.uniqueResult();
 	}
 }

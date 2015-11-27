@@ -3,6 +3,7 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 	
+<%@ taglib prefix="tag" uri="/WEB-INF/taglibs/customTaglib.tld"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -73,6 +74,10 @@
 			<br />
 		</c:forEach>
 		<br />
+			<!-- pagination -->		
+					<tag:paginate max="15" offset="${offset}" count="${count}"
+   						uri="../authors/" next="&raquo;" previous="&laquo;" /> 
+   					<!-- end of pagination -->		
 		<sec:authorize access="hasAuthority('ADMIN')">
 			<div class="row">
 				<div class="col-md-2"></div>

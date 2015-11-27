@@ -27,16 +27,18 @@ public class AuthorsController {
 	@Autowired
 	AuthorService service;
 
-	/*
-	 * This method will list all existing authors.
-	 */
-	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
-	public String listAllAuthors(ModelMap model) {
-		List<Author> authors = service.findAllAuthors();
-		model.addAttribute("authors", authors);
-
-		return "authors/all";
-	}
+//	/*
+//	 * This method will list all existing authors.
+//	 */
+//	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
+//	public String listAllAuthors(ModelMap model) {
+//		List<Author> authors = service.findAllAuthors();
+//		model.addAttribute("authors", authors);
+//
+//		return "authors/all";
+//	}
+	
+	
 
 	/*
 	 * This method provides the ability to search for authors by their names.

@@ -15,4 +15,8 @@ public interface AuthorDao {
     List<Author> findAllAuthors();
 
     List<Author> findAuthorsByName(String authorName);
+    
+    List<Author> list(Integer offset, Integer maxResults);
+    
+    Long count();
 }
