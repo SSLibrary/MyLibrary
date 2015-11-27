@@ -9,6 +9,12 @@
 		<sec:authorize access="hasAuthority('ADMIN')">
 			<li><a href="/MyLibrary/users/">Users</a></li>
 		</sec:authorize>
+		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
+			<li><a href="/MyLibrary/messages/inbox">Inbox</a></li>
+		</sec:authorize>
+		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
+			<li><a href="/MyLibrary/messages/outbox">Outbox</a></li>
+		</sec:authorize>
 		<sec:authorize access="!isFullyAuthenticated()">
 			<li><a href="/MyLibrary/login/">Login</a></li>
 			<li><a href="/MyLibrary/register/">Register</a></li>

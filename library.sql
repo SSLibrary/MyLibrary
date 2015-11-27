@@ -79,3 +79,17 @@ CREATE TABLE `book_ratings` (
 CONSTRAINT `book_ratings_author_books` FOREIGN KEY (`book_id`) REFERENCES `author_books`(`book_id`) ON DELETE CASCADE,
 CONSTRAINT `book_ratings_users` FOREIGN KEY (`user_id`) REFERENCES `users`(`user_id`) ON DELETE CASCADE
 ) ENGINE = InnoDB CHARACTER SET=utf8;
+
+CREATE TABLE messages (
+	message_id int(6) NOT NULL AUTO_INCREMENT,
+	header varchar(60) NOT NULL,
+	body text NOT NULL,
+	date DATETIME NOT NULL DEFAULT NOW(),
+	sender_id bigint UNSIGNED NOT NULL,
+	receiver_id bigint UNSIGNED NOT NULL,
+	is_new TINYINT(1) NOT NULL,
+	in_reply_to int(6) NOT NULL,
+	PRIMARY KEY (message_id),
+	CONSTRAINT fk_sender_message FOREIGN KEY (sender_id) REFERENCES USERS (user_id) ON DELETE CASCADE,
+	CONSTRAINT fk_receiver_message FOREIGN KEY (receiver_id) REFERENCES USERS (user_id) ON DELETE CASCADE
+)ENGINE = InnoDB CHARACTER SET=utf8;

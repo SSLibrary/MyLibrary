@@ -65,7 +65,7 @@
 						</sec:authorize>
 						<div class="btn-group">
 							<form:form action="${author.id}/books/" method="GET">
-								<button type="submit" class="btn btn-info">Books</button>
+								<button type="submit" class="btn btn-primary">Books</button>
 							</form:form>
 						</div>
 					</div>
