@@ -61,7 +61,7 @@ public class AuthorDaoImpl extends AbstractDao<Long, Author> implements AuthorDa
 		return getSession()
 				.createCriteria(Author.class)
 				.setFirstResult(offset!=null?offset:0)
-				.setMaxResults(maxResults!=null?maxResults:10)
+				.setMaxResults(maxResults!=null?maxResults:5)
 				.list();
 	}
 	

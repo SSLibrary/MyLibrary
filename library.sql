@@ -80,6 +80,7 @@ CONSTRAINT `book_ratings_author_books` FOREIGN KEY (`book_id`) REFERENCES `autho
 CONSTRAINT `book_ratings_users` FOREIGN KEY (`user_id`) REFERENCES `users`(`user_id`) ON DELETE CASCADE
 ) ENGINE = InnoDB CHARACTER SET=utf8;
 
+
 CREATE TABLE messages (
 	message_id int(6) NOT NULL AUTO_INCREMENT,
 	header varchar(60) NOT NULL,
