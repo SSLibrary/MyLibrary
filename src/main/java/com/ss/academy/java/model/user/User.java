@@ -17,6 +17,8 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ss.academy.java.model.rating.Rating;
 
+import com.ss.academy.java.model.message.Message;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -70,6 +72,12 @@ public class User {
 	@OneToMany(mappedBy = "user")
 	@JsonManagedReference(value = "user-ratings")
 	private List<Rating> ratings;
+	
+	@OneToMany(mappedBy = "sender")
+    private List<Message> sentMessage;
+    
+    @OneToMany(mappedBy = "receiver")
+    private List<Message> receivedMessage;
 
 	public Long getId() {
 		return id;
@@ -126,4 +134,21 @@ public class User {
 	public void setUserRole(UserRole userRole) {
 		this.userRole = userRole;
 	}
+
+	public List<Message> getSentMessage() {
+		return sentMessage;
+	}
+
+	public void setSentMessage(List<Message> sentMessage) {
+		this.sentMessage = sentMessage;
+	}
+
+	public List<Message> getReceivedMessage() {
+		return receivedMessage;
+	}
+
+	public void setReceivedMessage(List<Message> receivedMessage) {
+		this.receivedMessage = receivedMessage;
+	}
+	
 }
