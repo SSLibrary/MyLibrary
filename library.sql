@@ -66,11 +66,14 @@ create table `users` (
 );
 
 --
--- Populate one Admin User which will further create other users for the application using GUI
+-- Populate one Admin User: user/pass - admin/admin
 --
 INSERT INTO `users`(`username`, `password`, `first_name`, `last_name`, `email`, `role`, `status`)
-VALUES ('admin','admin', 'Zhivko','Georgiev','zhivko@softserve.bg', 'ADMIN', 'ACTIVE');
+VALUES ('admin','$2a$10$oMBvbuqBRgsamQYLVvXgsempbOV8d879sc.HyKYquJTxeGY1qNpCS', 'Adminec','Adminov','admin@softserveinc.com', 'ADMIN', 'ACTIVE');
 
+--
+-- Table structure for table `book_ratings`
+--
 CREATE TABLE `book_ratings` (
 `rating_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 `rating` BIGINT UNSIGNED NOT NULL,
@@ -81,16 +84,19 @@ CONSTRAINT `book_ratings_users` FOREIGN KEY (`user_id`) REFERENCES `users`(`user
 ) ENGINE = InnoDB CHARACTER SET=utf8;
 
 
-CREATE TABLE messages (
-	message_id int(6) NOT NULL AUTO_INCREMENT,
-	header varchar(60) NOT NULL,
-	body text NOT NULL,
-	date DATETIME NOT NULL DEFAULT NOW(),
-	sender_id bigint UNSIGNED NOT NULL,
-	receiver_id bigint UNSIGNED NOT NULL,
-	is_new TINYINT(1) NOT NULL,
-	in_reply_to int(6) NOT NULL,
-	PRIMARY KEY (message_id),
-	CONSTRAINT fk_sender_message FOREIGN KEY (sender_id) REFERENCES USERS (user_id) ON DELETE CASCADE,
-	CONSTRAINT fk_receiver_message FOREIGN KEY (receiver_id) REFERENCES USERS (user_id) ON DELETE CASCADE
-)ENGINE = InnoDB CHARACTER SET=utf8;
+--
+-- Table structure for table `messages`
+--
+CREATE TABLE `messages` (
+	`message_id` int(6) NOT NULL AUTO_INCREMENT,
+	`header` varchar(60) NOT NULL,
+	`body` text NOT NULL,
+	`date` DATETIME NOT NULL DEFAULT NOW(),
+	`sender_id` bigint UNSIGNED NOT NULL,
+	`receiver_id` bigint UNSIGNED NOT NULL,
+	`is_new` TINYINT(1) NOT NULL,
+	`in_reply_to` int(6) NOT NULL,
+	PRIMARY KEY (`message_id`),
+	CONSTRAINT `fk_sender_message` FOREIGN KEY (`sender_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
+	CONSTRAINT `fk_receiver_message` FOREIGN KEY (`receiver_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE
+) ENGINE = InnoDB CHARACTER SET=utf8;
