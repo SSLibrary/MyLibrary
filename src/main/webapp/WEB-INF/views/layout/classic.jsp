@@ -15,7 +15,7 @@
 <body>	
 	<%@ taglib uri="http://tiles.apache.org/tags-tiles-extras" prefix="tilesx" %>	
 	<tilesx:useAttribute name="current"/>
-  <h1 style="color: green; margin-top:50px" >${current}</h1>
+  <!--  <h1 style="color: green; margin-top:50px" >${current}</h1> -->
 
 	<tiles:insertAttribute name="header"/>	
 	<tiles:insertAttribute name="body"/>
