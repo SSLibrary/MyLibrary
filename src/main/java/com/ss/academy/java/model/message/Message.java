@@ -16,10 +16,9 @@ import org.hibernate.annotations.Type;
 
 import com.ss.academy.java.model.user.User;
 
-
 @Entity
 @Table(name = "MESSAGES")
-public class Message {
+public class Message implements Comparable<Message> {
 
 	@Id
 	@Column(name = "MESSAGE_ID", nullable = false)
@@ -114,6 +113,10 @@ public class Message {
 
 	public void setReceiver(User receiver) {
 		this.receiver = receiver;
+	}
+	
+	public int compareTo(Message message) {
+		return message.getDate().compareTo(getDate());
 	}
 
 	@Override

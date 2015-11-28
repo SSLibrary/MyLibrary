@@ -1,6 +1,7 @@
 package com.ss.academy.java.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -36,6 +37,7 @@ public class MessageController {
 	public String listAllReceivedMessages(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
+		Collections.sort(messages);
 			model.addAttribute("isEmpty", messages.isEmpty());
 			model.addAttribute("messages", messages);
 		return "messages/inbox";
@@ -45,6 +47,7 @@ public class MessageController {
 	public String listAllSentMessages(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getSentMessage();
+		Collections.sort(messages);
 			model.addAttribute("messages", messages);
 			model.addAttribute("isEmpty", messages.isEmpty());
 		return "messages/outbox";
@@ -118,8 +121,6 @@ public class MessageController {
 		message.setIn_reply_to(parent.getMessage_id());
 		message.setHeader("Re: " + parent.getHeader());
 		messageService.saveMessage(message);
-		
-		
 		return "redirect:/messages/outbox";
 	}
 }

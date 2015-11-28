@@ -12,5 +12,5 @@ public interface MessageDao {
 	void saveMessage(Message message);
 	
 	List<Message> findAllMessages();
-	
+
 }
