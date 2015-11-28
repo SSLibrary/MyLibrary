@@ -30,22 +30,6 @@
 				</tr>
 			<br />
 		</c:forEach>
-<<<<<<< .mine
-		
-
-
-
-
-
-
-
-=======
 		</table>
 		</c:otherwise>
 		</c:choose>
-		<br /> 
-			<jsp:include page="../includes/footer.jsp" />
-	</div>
-</body>
-</html>
->>>>>>> .theirs
