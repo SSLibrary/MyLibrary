@@ -1,18 +1,5 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="../layout/taglib.jsp" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
-	rel="stylesheet">
-<title>Book Details</title>
-</head>
-<body>
-	<div class="container">
-		<jsp:include page="../includes/header.jsp" />
 		<form:form modelAttribute="book" class="form-horizontal" role="form">
 			<legend>Book Details</legend>
 			<form:input type="hidden" path="id" id="id" />
@@ -54,11 +41,4 @@
 				</c:otherwise>
 			</c:choose>
 		</form:form>
-		<br /> <a href="<c:url value='./' />"> <img
-			class="img-responsive"
-			src="<c:url value='/resources/images/SoftServe-logo.jpg' />"
-			alt="SoftServe Logo" width="100%">
-		</a>
-	</div>
-</body>
-</html>
+		

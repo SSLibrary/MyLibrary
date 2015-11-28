@@ -1,21 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
-	
+<%@ include file="../layout/taglib.jsp" %>
 <%@ taglib prefix="tag" uri="/WEB-INF/taglibs/customTaglib.tld"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
-	rel="stylesheet">
-<title>SoftServe Library</title>
-</head>
-<body>
-	<div class="container">
-		<jsp:include page="../includes/header.jsp" />
+
 		<div class="jumbotron">
 			<h1 class="text-center">Authors</h1>
 		</div>
@@ -77,7 +62,7 @@
 			<!-- pagination -->		
 					<tag:paginate max="15" offset="${offset}" count="${count}"
    						uri="../authors/" next="&raquo;" previous="&laquo;" /> 
-   					<!-- end of pagination -->		
+   			<!-- end of pagination -->		
 		<sec:authorize access="hasAuthority('ADMIN')">
 			<div class="row">
 				<div class="col-md-2"></div>
@@ -89,8 +74,4 @@
 				</div>
 			</div>
 		</sec:authorize>
-		<br />
-		<jsp:include page="../includes/footer.jsp" />
-	</div>
-</body>
-</html>
+		

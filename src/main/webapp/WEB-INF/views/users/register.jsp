@@ -1,16 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
-	rel="stylesheet">
-<title>SoftServe Library Login page</title>
-</head>
-<body>
-	<div class="container">
+<%@ include file="../layout/taglib.jsp" %>
+
 		<div class="navbar navbar-default">
 
 			<div class="navbar-header">
@@ -78,6 +67,7 @@
 									<form:errors path="email" cssClass="error" />
 								</div>
 							</div>
+							<br/>
 							<input type="hidden" name="${_csrf.parameterName}"
 								value="${_csrf.token}" />
 							<div class="form-actions">
@@ -89,8 +79,5 @@
 				</div>
 			</div>
 		</form:form>
-		<br />
-		<jsp:include page="../includes/footer.jsp" />
-	</div>
-</body>
-</html>
+		
+		
