@@ -12,6 +12,7 @@
 
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <link rel="stylesheet"
 	href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">

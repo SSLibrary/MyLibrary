@@ -21,13 +21,12 @@
 					</div>
 					<table class="table table-striped">	
 							<c:forEach items="${parents}" var="parent">
-							<tr>
-						
+							<tr>		
 						<td>
 						<p><b>From:</b> ${parent.sender.username}</p>
-						<p><b>Date:</b> ${parent.date}</p>
-						<p><b>From:</b> ${parent.header}</p>
-						<p><b>Date:</b> ${parent.body}</p>
+						<p><b>Date:</b> <fmt:formatDate pattern="yyyy-MM-dd, hh:mm a" value="${parent.date}" /></p>
+						<p><b>Subject</b> ${parent.header}</p>
+						<p><b>Message:</b> ${parent.body}</p>
 						
 						</td> 	
 						</tr>

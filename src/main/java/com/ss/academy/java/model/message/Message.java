@@ -10,9 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.Type;
 
 import com.ss.academy.java.model.user.User;
 
@@ -33,7 +33,7 @@ public class Message {
 	@Column(name = "body", nullable = false)
 	private String body;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@Type(type="timestamp")
 	@Column(name = "date", nullable = false)
     private Date date = new Date();
 
