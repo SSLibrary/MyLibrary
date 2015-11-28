@@ -2,8 +2,11 @@ package com.ss.academy.java.dao.user;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -52,5 +55,22 @@ public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
 		List<User> users = (List<User>) criteria.list();
 
 		return users;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public List<User> list(Integer offset, Integer maxResults){
+		return getSession()
+				.createCriteria(User.class)
+				.setFirstResult(offset!=null?offset:0)
+				.setMaxResults(maxResults!=null?maxResults:5)
+				.list();
+	}
+	
+	public Long count(){
+		return (Long)getSession()
+				.createCriteria(User.class)
+				.setProjection(Projections.rowCount())
+				.uniqueResult();
 	}
 }

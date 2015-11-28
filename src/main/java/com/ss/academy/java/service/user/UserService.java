@@ -22,5 +22,9 @@ public interface UserService {
 	void updateUserStatus(User user);
 
 	boolean isUsernameUnique(Long id, String username);
+	
+	List<User> list(Integer offset, Integer maxResults);
+    
+	Long count();
 
 }

@@ -43,11 +43,14 @@ public class UsersController {
 	 * This method will list all existing users.
 	 */
 	@RequestMapping(value = { "/users" }, method = RequestMethod.GET)
-	public String listAllUsers(@AuthenticationPrincipal UserDetails userDetails, ModelMap model) {
-		List<User> allUsers = userService.findAllUsers();
+	public String listAllUsers(@AuthenticationPrincipal UserDetails userDetails, ModelMap model, Integer offset, Integer maxResults) {
+//		List<User> allUsers = userService.findAllUsers();
+//		model.addAttribute("allUsers", allUsers);
 
-		model.addAttribute("allUsers", allUsers);
-
+		 model.addAttribute("allUsers", userService.list(offset, maxResults));
+		   model.addAttribute("count", userService.count());
+		   model.addAttribute("offset", offset);
+		   
 		return "users/all";
 	}
 

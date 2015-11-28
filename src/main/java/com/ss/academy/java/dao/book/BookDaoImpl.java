@@ -2,9 +2,12 @@ package com.ss.academy.java.dao.book;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -50,5 +53,22 @@ public class BookDaoImpl extends AbstractDao<Long, Book> implements BookDao {
 		List<Book> authors = (List<Book>) criteria.list();
 
 		return authors;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public List<Book> list(Integer offset, Integer maxResults){
+		return getSession()
+				.createCriteria(Book.class)
+				.setFirstResult(offset!=null?offset:0)
+				.setMaxResults(maxResults!=null?maxResults:5)
+				.list();
+	}
+	
+	public Long count(){
+		return (Long)getSession()
+				.createCriteria(Book.class)
+				.setProjection(Projections.rowCount())
+				.uniqueResult();
 	}
 }

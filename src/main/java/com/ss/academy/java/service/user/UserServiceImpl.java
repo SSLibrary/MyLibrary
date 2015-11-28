@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ss.academy.java.dao.user.UserDao;
+import com.ss.academy.java.model.author.Author;
 import com.ss.academy.java.model.user.User;
 import com.ss.academy.java.model.user.UserRole;
 import com.ss.academy.java.model.user.UserStatus;
@@ -61,5 +62,12 @@ public class UserServiceImpl implements UserService {
 		User user = findByUsername(username);
 	        return ( user == null || ((id != null) && (user.getId() == id)));
 	}
+	
+	public List<User> list(Integer offset, Integer maxResults) {
+		return dao.list(offset, maxResults);
+	}
 
+	public Long count() {
+		return dao.count();
+	}
 }
