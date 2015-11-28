@@ -6,8 +6,8 @@
 			
 			<div class="form-group">
 				<label for="body" class="control-label col-sm-1">Message:</label>
-				<div class="col-sm-10">
-					<form:input path="body" id="body" class="form-control" />
+				<div class="col-sm-5">
+					<form:textarea path="body" rows="5" cols="30" id="body" class="form-control" />
 					<form:errors path="body" />
 				</div>
 				</div>
@@ -23,12 +23,11 @@
 							<c:forEach items="${parents}" var="parent">
 							<tr>		
 						<td>
-						<p><b>From:</b> ${parent.sender.username}</p>
-						<p><b>To:</b> ${parent.receiver.username}</p>
-						<p><b>Date:</b> <fmt:formatDate pattern="yyyy-MM-dd, hh:mm a" value="${parent.date}" /></p>
-						<p><b>Subject</b> ${parent.header}</p>
-						<p><b>Message:</b> ${parent.body}</p>
-						
+						<p><b>From: </b>${parent.sender.username}</p>
+						<p><b>To: </b>${parent.receiver.username}</p>
+						<p><b>Date: </b><fmt:formatDate pattern="yyyy-MM-dd, hh:mm a" value="${parent.date}" /></p>
+						<p><b>Subject: </b>${parent.header}</p>
+						<p><b>Message: </b>${parent.body}</p>
 						</td> 	
 						</tr>
 						</c:forEach>	

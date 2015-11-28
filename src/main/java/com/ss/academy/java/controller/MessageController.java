@@ -123,4 +123,20 @@ public class MessageController {
 		messageService.saveMessage(message);
 		return "redirect:/messages/outbox";
 	}
+	
+	@RequestMapping(value = { "/{message_id}/display" }, method = RequestMethod.GET)
+	public String displayMessage(ModelMap model, @PathVariable Integer message_id) {
+		Message parent = messageService.findById(message_id);
+		List<Message> previousMessages = new ArrayList<Message>();
+		previousMessages.add(parent);
+		
+		while (parent.getIn_reply_to() != 0) {
+			parent = messageService.findById(parent.getIn_reply_to());
+			previousMessages.add(parent);	
+		}
+			
+		model.addAttribute("parents", previousMessages);
+
+		return "messages/display";
+	}
 }
