@@ -13,10 +13,13 @@ public class RatingCalculator {
 		for (Rating rating : bookRatings) {
 			result += Double.valueOf(rating.getRatingValue());
 		}
-
-		result = result / bookRatingsCount;
-
-		return RoundTo2Decimals(result);
+		
+		if (result == 0.0d) {
+			return result;
+		}
+		
+		
+		return RoundTo2Decimals(result / bookRatingsCount);
 	}
 
 	private static double RoundTo2Decimals(double val) {
