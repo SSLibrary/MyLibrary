@@ -14,34 +14,28 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.hateoas.Identifiable;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
 import com.ss.academy.java.model.book.Book;
 
 @Entity
 @Table(name = "authors")
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonRootName("authors")
-public class Author  {
+public class Author implements Identifiable<Long> {
 
 	@Id
 	@Column(name = "author_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonProperty("id")
 	private Long id;
 
 	@Size(min = 3, max = 50)
 	@Column(name = "name")
 	@NotNull
-	@JsonProperty("name")
 	private String name;
 
 	@Column(name = "country")
 	@Enumerated(EnumType.STRING)
 	@NotNull
-	@JsonProperty("country")
 	private AuthorCountry country;
 
 	@OneToMany(mappedBy = "author")

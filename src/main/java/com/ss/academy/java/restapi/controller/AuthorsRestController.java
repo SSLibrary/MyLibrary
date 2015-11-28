@@ -1,13 +1,14 @@
 package com.ss.academy.java.restapi.controller;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityLinks;
 import org.springframework.hateoas.ExposesResourceFor;
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.hateoas.hal.CurieProvider;
 import org.springframework.http.HttpHeaders;
@@ -27,7 +28,7 @@ import com.ss.academy.java.service.author.AuthorService;
 
 @RestController
 @RequestMapping({ "/restapi/authors" })
-@ExposesResourceFor(AuthorResource.class)
+@ExposesResourceFor(Author.class)
 public class AuthorsRestController {
 
 	@Autowired
@@ -36,22 +37,31 @@ public class AuthorsRestController {
 	@Autowired
 	CurieProvider curieProvider;
 
+	@Autowired
+	EntityLinks entityLinks;
+
 	/**
 	 * Retrieve All Authors in JSON format
 	 */
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
-	public ResponseEntity<Resources<Author>> listAllAuthorsInJSON() {
+	public ResponseEntity<Resources<AuthorResource>> listAllAuthorsInJSON() {
 		List<Author> authors = authorService.findAllAuthors();
 
-		Link authorsLink = linkTo(AuthorsRestController.class).withSelfRel();
+		AuthorResourceAssembler assembler = new AuthorResourceAssembler();
+		List<AuthorResource> authorsResources = new ArrayList<AuthorResource>();
 
 		for (Author author : authors) {
-			buildAuthorResource(author);
+			AuthorResource authorResource = assembler.toResource(author);
+
+			authorResource.add(linkTo(AuthorsRestController.class).slash(author).withSelfRel());
+			authorResource.add(linkTo(AuthorsRestController.class).slash(author).slash("/books").withRel("books"));
+
+			authorsResources.add(authorResource);
 		}
 
-		Resources<Author> resourceList = new Resources<Author>(authors, authorsLink);
+		Resources<AuthorResource> authorResources = new Resources<AuthorResource>(authorsResources);
 
-		return new ResponseEntity<Resources<Author>>(resourceList, HttpStatus.OK);
+		return new ResponseEntity<Resources<AuthorResource>>(authorResources, HttpStatus.OK);
 
 	}
 
@@ -68,8 +78,9 @@ public class AuthorsRestController {
 
 		AuthorResourceAssembler assembler = new AuthorResourceAssembler();
 		AuthorResource authorResource = assembler.toResource(author);
-
-		authorResource.add(linkTo(AuthorsRestController.class).withRel(author.getId().toString()));
+		authorResource.add(linkTo(AuthorsRestController.class).slash(author).withSelfRel());
+		authorResource.add(linkTo(methodOn(AuthorsRestController.class).listAllAuthorsInJSON()).withRel("authors"));
+		authorResource.add(linkTo(AuthorsRestController.class).slash(author).slash("/books").withRel("books"));
 
 		return new ResponseEntity<AuthorResource>(authorResource, HttpStatus.OK);
 	}
@@ -89,11 +100,5 @@ public class AuthorsRestController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(ucBuilder.path("/authors/{id}").buildAndExpand(author.getId()).toUri());
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
-	}
-
-	private Resource<Author> buildAuthorResource(Author author) {
-		Link authorLink = linkTo(AuthorsRestController.class).slash("/authors").slash(author.getId()).withSelfRel();
-
-		return new Resource<Author>(author, authorLink.expand(author.getId()));
 	}
 }

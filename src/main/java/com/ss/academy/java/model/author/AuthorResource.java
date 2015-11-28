@@ -12,6 +12,13 @@ public class AuthorResource extends ResourceSupport {
 	private AuthorCountry country;
 	private List<Book> books;
 
+	public AuthorResource(String name, AuthorCountry country, List<Book> books) {
+		super();
+		this.name = name;
+		this.country = country;
+		this.books = books;
+	}
+
 	public String getName() {
 		return name;
 	}
