@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles
+Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="baseLayout" template="/WEB-INF/views/layout/classic.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp"/>		
+		<put-attribute name="body" value=""/>		
+		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />		 
+	</definition>	
+	
+	<definition name="home" extends="baseLayout">
+		<put-attribute name="title" value="SoftServe Library"/>		
+		<put-attribute name="body" value="/WEB-INF/views/home.jsp"/>			
+		<put-attribute name="current" value="home"></put-attribute>
+	</definition>
+<!-- users -->
+	<definition name="users/register" extends="baseLayout">
+		<put-attribute name="title" value="SoftServe Library Register page"/>		
+		<put-attribute name="header" value=""/>	
+		<put-attribute name="body" value="/WEB-INF/views/users/register.jsp"/>	
+		<put-attribute name="current" value="register"></put-attribute>
+	</definition>		
+		
+	<definition name="users/login" extends="baseLayout">
+		<put-attribute name="title" value="SoftServe Library Login page"/>			
+		<put-attribute name="header" value=""/>	
+		<put-attribute name="body" value="/WEB-INF/views/users/login.jsp"/>	
+		<put-attribute name="current" value="login"></put-attribute>
+	</definition>		
+			
+	<definition name="users/all" extends="baseLayout">
+		<put-attribute name="title" value="SoftServe Library Users List"/>
+		<put-attribute name="body" value="/WEB-INF/views/users/all.jsp"/>	
+		<put-attribute name="current" value="all"></put-attribute>
+	</definition>
+<!--end of users -->	
+
+<!-- authors -->
+	<definition name="authors/addNewAuthor" extends="baseLayout">
+		<put-attribute name="title" value="Author Details"/>
+		<put-attribute name="body" value="/WEB-INF/views/authors/addNewAuthor.jsp"/>	
+		<put-attribute name="current" value="addNewAuthor"></put-attribute>
+	</definition>
+	
+	<definition name="authors/all" extends="baseLayout">
+		<put-attribute name="title" value="SoftServe Library All Authors"/>
+		<put-attribute name="body" value="/WEB-INF/views/authors/all.jsp"/>	
+		<put-attribute name="current" value="all"></put-attribute>
+	</definition>
+<!--end of authors -->	
+
+<!-- books -->
+	<definition name="books/addNewBook" extends="baseLayout">
+		<put-attribute name="title" value="Book Details"/>
+		<put-attribute name="body" value="/WEB-INF/views/books/addNewBook.jsp"/>	
+		<put-attribute name="current" value="addNewBook"></put-attribute>
+	</definition>
+	
+	<definition name="books/all" extends="baseLayout">
+		<put-attribute name="title" value="SoftServe Library All Books"/>
+		<put-attribute name="body" value="/WEB-INF/views/books/all.jsp"/>	
+		<put-attribute name="current" value="all"></put-attribute>
+	</definition>
+	
+	<definition name="books/rating" extends="baseLayout">
+		<put-attribute name="title" value="Rating"/>
+		<put-attribute name="body" value="/WEB-INF/views/books/rating.jsp"/>	
+		<put-attribute name="current" value="rating"></put-attribute>
+	</definition>	
+		
+	<definition name="books/ratingCheck" extends="baseLayout">
+		<put-attribute name="title" value="Rating check"/>
+		<put-attribute name="body" value="/WEB-INF/views/books/ratingCheck.jsp"/>	
+		<put-attribute name="current" value="ratingCheck"></put-attribute>
+	</definition>		
+<!--end of books -->
+	
+<!-- messages -->		
+	<definition name="messages/inbox" extends="baseLayout">
+		<put-attribute name="title" value="Inbox Messages"/>
+		<put-attribute name="body" value="/WEB-INF/views/messages/inbox.jsp"/>	
+		<put-attribute name="current" value="inbox"></put-attribute>
+	</definition>
+	
+	<definition name="messages/new" extends="baseLayout">
+		<put-attribute name="title" value="Send new Message"/>
+		<put-attribute name="body" value="/WEB-INF/views/messages/new.jsp"/>	
+		<put-attribute name="current" value="new"></put-attribute>
+	</definition>
+		
+	<definition name="messages/outbox" extends="baseLayout">
+		<put-attribute name="title" value="Outbox Messages"/>
+		<put-attribute name="body" value="/WEB-INF/views/messages/outbox.jsp"/>	
+		<put-attribute name="current" value="outbox"></put-attribute>
+	</definition>	
+<!--end of messages -->
+</tiles-definitions>
+

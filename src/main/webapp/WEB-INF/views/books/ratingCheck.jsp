@@ -1,23 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ include file="../layout/taglib.jsp" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
-	rel="stylesheet">
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-<link rel="stylesheet"
-	href="../../../../resources/rating-plugin/css/star-rating.min.css"
-	media="all" rel="stylesheet" type="text/css" />
-<title>SoftServe Library</title>
-</head>
-<body>
-	<div class="container">
-		<jsp:include page="../includes/header.jsp" />
 		<div class="row">
 			<div class="col-md-3 col-xs-6 text-center">
 				<h2>Title</h2>
@@ -38,11 +20,9 @@
 			<input id="input-21f" class="form-control rating" min='1' max='5'
 				step='0.1' data-size="lg" type="number" />
 		</div>
-		<br />
-		<jsp:include page="../includes/footer.jsp" />
-	</div>
-	<script
-		src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		
+<!-- raiting script -->
+
 	<script src="../../../../resources/rating-plugin/js/star-rating.min.js"
 		type="text/javascript"></script>
 	<script type="text/javascript">
@@ -50,6 +30,5 @@
 			disabled : true
 		});
 		$('#input-21f').rating('update', '${book.averageRating}');
-	</script>
-</body>
-</html>
+	</script>	
+<!--end raiting script -->	
