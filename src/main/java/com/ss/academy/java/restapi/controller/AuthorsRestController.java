@@ -3,12 +3,14 @@ package com.ss.academy.java.restapi.controller;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityLinks;
 import org.springframework.hateoas.ExposesResourceFor;
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
 import org.springframework.hateoas.hal.CurieProvider;
 import org.springframework.http.HttpHeaders;
@@ -36,9 +38,6 @@ public class AuthorsRestController {
 
 	@Autowired
 	CurieProvider curieProvider;
-
-	@Autowired
-	EntityLinks entityLinks;
 
 	/**
 	 * Retrieve All Authors in JSON format
@@ -88,17 +87,20 @@ public class AuthorsRestController {
 	/**
 	 * Create Author
 	 */
-	@RequestMapping(value = "/new", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<Void> createAuthor(@RequestBody Author author, UriComponentsBuilder ucBuilder) {
-		System.out.println(authorService.findAuthorsByName(author.getName()));
+	@RequestMapping(value = "/new", method = RequestMethod.POST)
+	public ResponseEntity<Void> createAuthor(@RequestBody Author author) {
 		if (!authorService.findAuthorsByName(author.getName()).isEmpty()) {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}
 
 		authorService.saveAuthor(author);
 
+		UriComponentsBuilder uriBuilderRib = linkTo(AuthorsRestController.class).toUriComponentsBuilder();
+		URI uriSelf = uriBuilderRib.path("/{id}").buildAndExpand(author.getId()).toUri();
+
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path("/authors/{id}").buildAndExpand(author.getId()).toUri());
+		headers.setLocation(uriSelf);
+
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 }
