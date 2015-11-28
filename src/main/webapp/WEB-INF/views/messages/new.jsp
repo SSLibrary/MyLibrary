@@ -28,22 +28,3 @@
 						<input type="hidden" name="${_csrf.parameterName}"
 									value="${_csrf.token}" />
 						</form:form>	
-<<<<<<< .mine
-					
-
-
-
-
-
-
-
-=======
-						</div>
-		<br /> <a href="<c:url value='/authors/' />"> <img
-			class="img-responsive"
-			src="<c:url value='/resources/images/SoftServe-logo.jpg' />"
-			alt="SoftServe Logo" width="100%">
-		</a>
-</body>
-</html>
->>>>>>> .theirs
