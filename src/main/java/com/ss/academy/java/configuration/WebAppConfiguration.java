@@ -24,6 +24,7 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableHypermediaSupport(type = { HypermediaType.HAL })
 @ComponentScan(basePackages = "com.ss.academy.java")
 public class WebAppConfiguration extends WebMvcConfigurerAdapter {
+
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();

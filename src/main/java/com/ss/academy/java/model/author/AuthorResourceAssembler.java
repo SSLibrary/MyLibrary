@@ -1,5 +1,6 @@
 package com.ss.academy.java.model.author;
 
+import org.apache.log4j.lf5.util.Resource;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 
 public class AuthorResourceAssembler extends ResourceAssemblerSupport<Author, AuthorResource> {
@@ -9,10 +10,7 @@ public class AuthorResourceAssembler extends ResourceAssemblerSupport<Author, Au
 	}
 
 	public AuthorResource toResource(Author author) {
-		AuthorResource resource = createResourceWithId(author.getId(), author);
-		resource.setName(author.getName());
-		resource.setCountry(author.getCountry());
-		resource.setBooks(author.getBooks());
+		AuthorResource resource = new AuthorResource(author.getName(), author.getCountry(), author.getBooks());
 		
 		return resource;
 	}
