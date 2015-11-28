@@ -6,6 +6,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ExposesResourceFor;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.hateoas.hal.CurieProvider;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -30,18 +33,26 @@ public class AuthorsRestController {
 	@Autowired
 	AuthorService authorService;
 
+	@Autowired
+	CurieProvider curieProvider;
+
 	/**
 	 * Retrieve All Authors in JSON format
 	 */
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
-	public ResponseEntity<List<Author>> listAllAuthorsInJSON() {
+	public ResponseEntity<Resources<Author>> listAllAuthorsInJSON() {
 		List<Author> authors = authorService.findAllAuthors();
 
-		if (authors.isEmpty()) {
-			return new ResponseEntity<List<Author>>(HttpStatus.NO_CONTENT);
+		Link authorsLink = linkTo(AuthorsRestController.class).withSelfRel();
+
+		for (Author author : authors) {
+			buildAuthorResource(author);
 		}
 
-		return new ResponseEntity<List<Author>>(authors, HttpStatus.OK);
+		Resources<Author> resourceList = new Resources<Author>(authors, authorsLink);
+
+		return new ResponseEntity<Resources<Author>>(resourceList, HttpStatus.OK);
+
 	}
 
 	/**
@@ -58,7 +69,6 @@ public class AuthorsRestController {
 		AuthorResourceAssembler assembler = new AuthorResourceAssembler();
 		AuthorResource authorResource = assembler.toResource(author);
 
-		
 		authorResource.add(linkTo(AuthorsRestController.class).withRel(author.getId().toString()));
 
 		return new ResponseEntity<AuthorResource>(authorResource, HttpStatus.OK);
@@ -79,5 +89,11 @@ public class AuthorsRestController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(ucBuilder.path("/authors/{id}").buildAndExpand(author.getId()).toUri());
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+	}
+
+	private Resource<Author> buildAuthorResource(Author author) {
+		Link authorLink = linkTo(AuthorsRestController.class).slash("/authors").slash(author.getId()).withSelfRel();
+
+		return new Resource<Author>(author, authorLink.expand(author.getId()));
 	}
 }

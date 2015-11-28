@@ -36,6 +36,7 @@ public class MessageController {
 	public String listAllReceivedMessages(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
+			model.addAttribute("isEmpty", messages.isEmpty());
 			model.addAttribute("messages", messages);
 		return "messages/inbox";
 	}
@@ -45,13 +46,16 @@ public class MessageController {
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getSentMessage();
 			model.addAttribute("messages", messages);
+			model.addAttribute("isEmpty", messages.isEmpty());
 		return "messages/outbox";
 	}
 	
 	@RequestMapping(value = { "/{user_id}/new" }, method = RequestMethod.GET)
-	public String sendNewMessage(ModelMap model) {
+	public String sendNewMessage(ModelMap model, @PathVariable Long user_id) {
+		User user = userService.findById(user_id);
 		Message message = new Message();
 		model.addAttribute("message", message);
+		model.addAttribute("user", user.getUsername());
 		return "messages/new";
 	}
 
@@ -76,6 +80,11 @@ public class MessageController {
 	@RequestMapping(value = { "/{message_id}/reply" }, method = RequestMethod.GET)
 	public String replyToMessage(ModelMap model, @PathVariable Integer message_id) {
 		Message parent = messageService.findById(message_id);
+		
+		if (parent.getIsNew() == 1) {
+			messageService.updateMessageStatus(parent);
+		}
+		
 		List<Message> previousMessages = new ArrayList<Message>();
 		previousMessages.add(parent);
 		
@@ -83,14 +92,11 @@ public class MessageController {
 			parent = messageService.findById(parent.getIn_reply_to());
 			previousMessages.add(parent);	
 		}
-		
-		if (parent.getIsNew() == 1) {
-			messageService.updateMessageStatus(parent);
-		}
-		
+			
 		Message message = new Message();
 		model.addAttribute("message", message);
 		model.addAttribute("parents", previousMessages);
+		model.addAttribute("receiver", parent.getSender().getUsername());
 		return "messages/reply";
 	}
 	

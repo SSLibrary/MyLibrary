@@ -1,21 +1,22 @@
+
 <%@ include file="../layout/taglib.jsp" %>
 
 		<div class="jumbotron">
-			<h1 class="text-center">Outbox</h1>
+			<h1 class="text-center">Message Outbox</h1>
 		</div>
-	
-		<c:forEach items="${messages}" var="message">
-			<div class="row">
-				<div class="col-md-3 col-xs-4 text-center">
-					<h5>To: ${message.sender.username}</h5>
-				</div>
-				<div class="col-md-3 col-xs-4 text-center">
-					<h5>Subject: ${message.header}</h5>
-				</div>
-				<div class="col-md-3 col-xs-4 text-center">
-					<h5>Date: ${message.date}</h5>
-				</div>
-			</div>
+		<c:choose>
+				<c:when test="${isEmpty}">
+				
+				<h3 class="text-center">There are no messages sent!</h3>
+ 	 </c:when>
+			 <c:otherwise>
 		
+	<table class="table table-striped">	
+		<c:forEach items="${messages}" var="message">
+			<tr>
+					<td>To: <i>${message.receiver.username}</i></td>
+					<td>Subject: <i>${message.header}</i></td>
+					<td>Date: <i>${message.date}</i></td>	
+					</tr>	
 			<br />
-		</c:forEach>
+		

@@ -1,7 +1,7 @@
 <%@ include file="../layout/taglib.jsp" %>
 
 		<form:form modelAttribute="message" class="form-horizontal" role="form">
-			<legend>Send new Message to ' user ' </legend>
+			<legend>Send new Message to <b>${user}</b> </legend>
 			<form:input type="hidden" path="message_id" id="message_id" />
 			<div class="form-group">
 				<label for="header" class="control-label col-sm-2">Subject:</label>
@@ -28,4 +28,22 @@
 						<input type="hidden" name="${_csrf.parameterName}"
 									value="${_csrf.token}" />
 						</form:form>	
+<<<<<<< .mine
 					
+
+
+
+
+
+
+
+=======
+						</div>
+		<br /> <a href="<c:url value='/authors/' />"> <img
+			class="img-responsive"
+			src="<c:url value='/resources/images/SoftServe-logo.jpg' />"
+			alt="SoftServe Logo" width="100%">
+		</a>
+</body>
+</html>
+>>>>>>> .theirs

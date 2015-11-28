@@ -27,32 +27,30 @@ public class PaginationTaglib extends SimpleTagSupport {
 		try {
 			out.write("<nav>");
 			out.write("<ul class=\"pagination\">");
-			
-			if(offset<steps)
+
+			if (offset < steps)
 				out.write(constructLink(1, previous, "disabled", true));
 			else
-				out.write(constructLink(offset-steps, previous, null, false));
-			
-			for(int itr=0;itr<count;itr+=steps) {
-				if(offset==itr)
-					out.write(constructLink((itr/5+1)-1 *steps, String.valueOf(itr/5+1), "active", true));
+				out.write(constructLink(offset - steps, previous, null, false));
+
+			for (int itr = 0; itr < count; itr += steps) {
+				if (offset == itr)
+					out.write(constructLink((itr / 5 + 1) - 1 * steps, String.valueOf(itr / 5 + 1), "active", true));
 				else
-					out.write(constructLink(itr/5*steps, String.valueOf(itr/5+1), null , false));
+					out.write(constructLink(itr / 5 * steps, String.valueOf(itr / 5 + 1), null, false));
 			}
 
-			if(offset+steps>=count)
-				out.write(constructLink(offset+steps, next, "disabled", true));
+			if (offset + steps >= count)
+				out.write(constructLink(offset + steps, next, "disabled", true));
 			else
-				out.write(constructLink(offset+steps, next, null , false));
-			
-			
+				out.write(constructLink(offset + steps, next, null, false));
+
 			out.write("</ul>");
 			out.write("</nav>");
 		} catch (java.io.IOException ex) {
 			throw new JspException("Error in Paginator tag", ex);
 		}
 	}
-
 
 	private String constructLink(int page, String text, String className, boolean disabled) {
 		StringBuilder link = new StringBuilder("<li");
@@ -61,10 +59,10 @@ public class PaginationTaglib extends SimpleTagSupport {
 			link.append(className);
 			link.append("\"");
 		}
-		if(disabled)
-			link.append(">").append("<a href=\"#\">"+text+"</a></li>");
+		if (disabled)
+			link.append(">").append("<a href=\"#\">" + text + "</a></li>");
 		else
-			link.append(">").append("<a href=\""+uri+"?offset="+page + "\">"+text+"</a></li>");
+			link.append(">").append("<a href=\"" + uri + "?offset=" + page + "\">" + text + "</a></li>");
 		return link.toString();
 	}
 
@@ -123,5 +121,4 @@ public class PaginationTaglib extends SimpleTagSupport {
 	public void setSteps(int steps) {
 		this.steps = steps;
 	}
-
 }
