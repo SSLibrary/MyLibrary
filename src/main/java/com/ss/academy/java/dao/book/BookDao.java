@@ -15,4 +15,8 @@ public interface BookDao {
 	List<Book> findAllBooks();
 	
 	List<Book> findBooksByTitle(String bookTitle);
+	
+	List<Book> list(Integer offset, Integer maxResults);
+    
+    Long count();
 }

@@ -87,6 +87,10 @@
 				<br />
 			</c:otherwise>
 		</c:choose>
+			<!-- pagination -->		
+					<tag:paginate max="15" offset="${offset}" count="${count}"
+   						uri="../books/" next="&raquo;" previous="&laquo;" /> 
+   			<!-- end of pagination -->	
 		<br />
 		<sec:authorize access="hasAuthority('ADMIN')">
 			<div class="row">

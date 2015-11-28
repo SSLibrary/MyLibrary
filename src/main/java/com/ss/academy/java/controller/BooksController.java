@@ -47,7 +47,7 @@ public class BooksController {
 	 * This method will list all existing books and will check whether they have been rated so far by the current user.
 	 */
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
-	public String listAllBooks(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long id, ModelMap model) {
+	public String listAllBooks(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long id, ModelMap model, Integer offset, Integer maxResults) {
 		Author author = authorService.findById(id);
 		List<Book> books = author.getBooks();
 		
@@ -65,8 +65,13 @@ public class BooksController {
 			}
 		}
 		
-		model.addAttribute("books", books);
+		model.addAttribute("books", bookService.list(offset, maxResults));
+		model.addAttribute("count", bookService.count());
+		model.addAttribute("offset", offset);
+		
+//		model.addAttribute("books", books);
 		model.addAttribute("author", author);
+		
 		
 		return "books/all";
 	}

@@ -16,4 +16,7 @@ public interface UserDao {
 
 	List<User> findUsersByUserName(String userName);
 
+	List<User> list(Integer offset, Integer maxResults);
+	    
+	Long count();
 }

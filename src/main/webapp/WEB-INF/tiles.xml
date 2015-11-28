@@ -95,6 +95,12 @@ Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 		<put-attribute name="body" value="/WEB-INF/views/messages/outbox.jsp"/>	
 		<put-attribute name="current" value="outbox"></put-attribute>
 	</definition>	
+	
+	<definition name="messages/reply" extends="baseLayout">
+		<put-attribute name="title" value="Outbox Messages"/>
+		<put-attribute name="body" value="/WEB-INF/views/messages/reply.jsp"/>	
+		<put-attribute name="current" value="reply"></put-attribute>
+	</definition>	
 <!--end of messages -->
 </tiles-definitions>
 

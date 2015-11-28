@@ -44,4 +44,12 @@ public class BookServiceImpl implements BookService {
 	public List<Book> findBooksByTitle(String bookTitle) {
 		return dao.findBooksByTitle(bookTitle);
 	}
+	
+	public List<Book> list(Integer offset, Integer maxResults) {
+		return dao.list(offset, maxResults);
+	}
+
+	public Long count() {
+		return dao.count();
+	}
 }

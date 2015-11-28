@@ -1,4 +1,5 @@
 <%@ include file="../layout/taglib.jsp" %>
+<%@ taglib prefix="tag" uri="/WEB-INF/taglibs/customTaglib.tld"%>
 
 		<div class="jumbotron">
 			<h1 class="text-center">Users</h1>
@@ -73,4 +74,8 @@
 			</div>
 			<br />
 		</c:forEach>
+		<!-- pagination -->		
+			<tag:paginate max="15" offset="${offset}" count="${count}"
+   					uri="../users/" next="&raquo;" previous="&laquo;" /> 
+   		<!-- end of pagination -->	
 		
