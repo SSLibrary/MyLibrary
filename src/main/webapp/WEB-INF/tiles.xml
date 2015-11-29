@@ -55,12 +55,14 @@ Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 	<definition name="books/addNewBook" extends="baseLayout">
 		<put-attribute name="title" value="Book Details"/>
 		<put-attribute name="body" value="/WEB-INF/views/books/addNewBook.jsp"/>	
+		<put-attribute name="footer" value="/WEB-INF/views/layout/bookFooter.jsp" />
 		<put-attribute name="current" value="addNewBook"></put-attribute>
 	</definition>
 	
 	<definition name="books/all" extends="baseLayout">
 		<put-attribute name="title" value="SoftServe Library All Books"/>
-		<put-attribute name="body" value="/WEB-INF/views/books/all.jsp"/>	
+		<put-attribute name="body" value="/WEB-INF/views/books/all.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/layout/bookFooter.jsp" />	
 		<put-attribute name="current" value="all"></put-attribute>
 	</definition>
 	
