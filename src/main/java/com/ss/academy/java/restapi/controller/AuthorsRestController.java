@@ -20,9 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ss.academy.java.model.author.Author;
 import com.ss.academy.java.model.author.AuthorResource;
 import com.ss.academy.java.model.author.AuthorResourceAssembler;
-import com.ss.academy.java.model.book.Book;
-import com.ss.academy.java.model.book.BookResource;
-import com.ss.academy.java.model.book.BookResourceAssembler;
 import com.ss.academy.java.service.author.AuthorService;
 
 /**
@@ -52,17 +49,6 @@ public class AuthorsRestController {
 			authorResource.add(linkTo(AuthorsRestController.class).slash(author).withSelfRel());
 			authorResource.add(linkTo(AuthorsRestController.class).slash(author).slash("/books").withRel("books"));
 			
-			BookResourceAssembler bookResourceAssembler = new BookResourceAssembler();
-			
-			for (Book book : author.getBooks()) {
-//				Link link = entityLinks.linkToSingleResource(Book.class, book.getId());
-//				authorResource.add(link);
-				
-				authorResource.add(linkTo(BooksRestController.class).slash(book).withSelfRel());
-				
-				
-			}
-
 			authorsResources.add(authorResource);
 		}
 

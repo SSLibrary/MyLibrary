@@ -4,12 +4,10 @@ import javax.servlet.Filter;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
-import org.springframework.core.annotation.Order;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-@Order(1)
 public class SpringMvcInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 	@Override
@@ -35,7 +33,7 @@ public class SpringMvcInitializer extends AbstractAnnotationConfigDispatcherServ
 		characterEncodingFilter.setForceEncoding(true);
 
 		HiddenHttpMethodFilter hiddenHttpMethodFilter = new HiddenHttpMethodFilter();
-		
+
 		return new Filter[] { hiddenHttpMethodFilter, characterEncodingFilter };
 	}
 

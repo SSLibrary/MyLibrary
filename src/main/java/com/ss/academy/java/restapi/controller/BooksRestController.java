@@ -21,8 +21,6 @@ import com.ss.academy.java.model.book.BookResource;
 import com.ss.academy.java.model.book.BookResourceAssembler;
 import com.ss.academy.java.service.author.AuthorService;
 import com.ss.academy.java.service.book.BookService;
-import com.ss.academy.java.service.rating.RatingService;
-import com.ss.academy.java.service.user.UserService;
 
 /**
  * Handles requests for the application authors' books page.

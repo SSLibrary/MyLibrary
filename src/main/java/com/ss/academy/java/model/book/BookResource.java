@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.hateoas.ResourceSupport;
 
-import com.ss.academy.java.model.author.Author;
 import com.ss.academy.java.model.rating.Rating;
 
 public class BookResource extends ResourceSupport {
