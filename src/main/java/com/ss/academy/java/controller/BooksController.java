@@ -1,5 +1,6 @@
 package com.ss.academy.java.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -33,21 +34,23 @@ public class BooksController {
 
 	@Autowired
 	BookService bookService;
-	
+
 	@Autowired
 	AuthorService authorService;
-	
+
 	@Autowired
 	RatingService ratingService;
-	
+
 	@Autowired
 	UserService userService;
 
 	/*
-	 * This method will list all existing books and will check whether they have been rated so far by the current user.
+	 * This method will list all existing books and will check whether they have
+	 * been rated so far by the current user.
 	 */
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
-	public String listAllBooks(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long id, ModelMap model, Integer offset, Integer maxResults) {
+	public String listAllBooks(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long id, ModelMap model,
+			Integer offset, Integer maxResults) {
 		Author author = authorService.findById(id);
 		List<Book> listOfBooks = bookService.list(offset, maxResults);
 		List<Book> books = author.getBooks();
@@ -65,15 +68,14 @@ public class BooksController {
 				}
 			}
 		}
-		
-//		model.addAttribute("books", bookService.list(offset, maxResults));
-		
+
+		// model.addAttribute("books", bookService.list(offset, maxResults));
+
 		model.addAttribute("books", books);
 		model.addAttribute("count", bookService.count());
 		model.addAttribute("offset", offset);
 		model.addAttribute("author", author);
-		
-		
+
 		return "books/all";
 	}
 
@@ -81,13 +83,22 @@ public class BooksController {
 	 * This method provides the ability to search for books by their titles.
 	 */
 	@RequestMapping(value = { "/search" }, method = RequestMethod.GET)
-	public String searchBookByName(@RequestParam("bookTitle") String bookTitle, ModelMap model) {
+	public String searchBookByName(@PathVariable Long id, @RequestParam("bookTitle") String bookTitle, ModelMap model) {
 		List<Book> books = bookService.findBooksByTitle(bookTitle);
-		model.addAttribute("books", books);
+		
+		List<Book> authorBooks = new ArrayList<Book>();
+		
+		for (Book book : books) {
+			if (book.getAuthor().getId() == id) {
+				authorBooks.add(book);
+			}
+		}
+
+		model.addAttribute("books", authorBooks);
 
 		return "books/all";
 	}
-	
+
 	/*
 	 * This method will provide the medium to add a new book.
 	 */
@@ -97,10 +108,9 @@ public class BooksController {
 		model.addAttribute("book", book);
 		model.addAttribute("edit", false);
 		model.addAttribute("statuses", BookStatus.values());
-		
+
 		return "books/addNewBook";
 	}
-
 
 	/*
 	 * This method will be called on form submission, handling POST request for
@@ -117,7 +127,7 @@ public class BooksController {
 		author.getBooks().add(book);
 		book.setAuthor(author);
 		bookService.saveBook(book);
-		
+
 		return "redirect:/authors/{id}/books/";
 	}
 
@@ -128,7 +138,7 @@ public class BooksController {
 	public String editBook(@PathVariable Long id, @PathVariable Long book_id, ModelMap model) {
 		Book book = bookService.findById(book_id);
 		Author author = book.getAuthor();
-		
+
 		model.addAttribute("book", book);
 		model.addAttribute("author", author);
 		model.addAttribute("edit", true);
@@ -148,15 +158,15 @@ public class BooksController {
 		if (result.hasErrors()) {
 			return "books/addNewBook";
 		}
-		
+
 		Author author = authorService.findById(id);
-		Book  dbBook = bookService.findById(book_id);
-		
+		Book dbBook = bookService.findById(book_id);
+
 		dbBook = formBook;
 
 		bookService.updateBook(dbBook);
 		author.getBooks().add(dbBook);
-		
+
 		return "redirect:/authors/{id}/books/";
 	}
 
@@ -167,10 +177,10 @@ public class BooksController {
 	public String deleteBook(@PathVariable Long id, @PathVariable Long book_id) {
 		Book book = bookService.findById(book_id);
 		Author author = authorService.findById(id);
-		
+
 		author.getBooks().remove(book);
 		bookService.deleteBook(book);
-		
+
 		return "redirect:/authors/{id}/books/";
 	}
 }
