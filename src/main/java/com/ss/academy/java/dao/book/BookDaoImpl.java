@@ -50,9 +50,9 @@ public class BookDaoImpl extends AbstractDao<Long, Book> implements BookDao {
 		String searchBy = "%" + bookTitle + "%";
 		Criteria criteria = createEntityCriteria().addOrder(Order.asc("title")).add(Restrictions.like("title", searchBy));
 
-		List<Book> authors = (List<Book>) criteria.list();
+		List<Book> books = (List<Book>) criteria.list();
 
-		return authors;
+		return books;
 	}
 	
 	@SuppressWarnings("unchecked")

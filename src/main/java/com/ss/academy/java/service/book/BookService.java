@@ -14,13 +14,13 @@ public interface BookService {
 	
 	List<Book> findBooksByTitle(String bookTitle);
 
-	@PreAuthorize("hasAuthority('ADMIN')")
+	//@PreAuthorize("hasAuthority('ADMIN')")
 	void saveBook(Book book);
 
-	@PreAuthorize("hasAuthority('ADMIN')")
+	//@PreAuthorize("hasAuthority('ADMIN')")
 	void updateBook(Book book);
 
-	@PreAuthorize("hasAuthority('ADMIN')")
+	//@PreAuthorize("hasAuthority('ADMIN')")
 	void deleteBook(Book book);
 	
 	List<Book> list(Integer offset, Integer maxResults);
