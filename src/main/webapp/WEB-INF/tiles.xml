@@ -12,7 +12,8 @@ Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 	
 	<definition name="home" extends="baseLayout">
 		<put-attribute name="title" value="SoftServe Library"/>		
-		<put-attribute name="body" value="/WEB-INF/views/home.jsp"/>			
+		<put-attribute name="body" value="/WEB-INF/views/home.jsp"/>		
+		<put-attribute name="footer" value="/WEB-INF/views/layout/homePageFooter.jsp" />				
 		<put-attribute name="current" value="home"></put-attribute>
 	</definition>
 <!-- users -->
@@ -97,9 +98,15 @@ Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 	</definition>	
 	
 	<definition name="messages/reply" extends="baseLayout">
-		<put-attribute name="title" value="Outbox Messages"/>
+		<put-attribute name="title" value="Reply Message"/>
 		<put-attribute name="body" value="/WEB-INF/views/messages/reply.jsp"/>	
 		<put-attribute name="current" value="reply"></put-attribute>
+	</definition>	
+	
+	<definition name="messages/display" extends="baseLayout">
+		<put-attribute name="title" value="Display Message"/>
+		<put-attribute name="body" value="/WEB-INF/views/messages/display.jsp"/>	
+		<put-attribute name="current" value="display"></put-attribute>
 	</definition>	
 <!--end of messages -->
 </tiles-definitions>

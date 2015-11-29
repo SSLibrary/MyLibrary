@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ss.academy.java.dao.user.UserDao;
-import com.ss.academy.java.model.author.Author;
 import com.ss.academy.java.model.user.User;
 import com.ss.academy.java.model.user.UserRole;
 import com.ss.academy.java.model.user.UserStatus;

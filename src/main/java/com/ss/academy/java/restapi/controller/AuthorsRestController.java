@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.EntityLinks;
-import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -37,9 +35,6 @@ public class AuthorsRestController {
 
 	@Autowired
 	AuthorService authorService;
-	
-	 @Autowired 
-	 EntityLinks entityLinks;
 
 	/**
 	 * Retrieve All Authors
