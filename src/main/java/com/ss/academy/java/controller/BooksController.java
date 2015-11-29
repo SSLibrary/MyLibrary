@@ -1,5 +1,6 @@
 package com.ss.academy.java.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -49,13 +50,14 @@ public class BooksController {
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String listAllBooks(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long id, ModelMap model, Integer offset, Integer maxResults) {
 		Author author = authorService.findById(id);
+		
 		List<Book> listOfBooks = bookService.list(offset, maxResults);
 		List<Book> books = author.getBooks();
-		books.equals(listOfBooks);
-		if (books.size() == 0) {
+		listOfBooks.addAll(books);
+		if (listOfBooks.size() == 0) {
 			model.addAttribute("emptyList", true);
 		} else {
-			for (Book book : books) {
+			for (Book book : listOfBooks) {
 				List<Rating> bookRatings = book.getRatings();
 				for (Rating rating : bookRatings) {
 					if (rating.getUser().getUsername().equals(userDetails.getUsername())) {
@@ -67,8 +69,9 @@ public class BooksController {
 		}
 		
 //		model.addAttribute("books", bookService.list(offset, maxResults));
-		
-		model.addAttribute("books", books);
+
+		model.addAttribute("books", listOfBooks);
+//		model.addAttribute("books", books);
 		model.addAttribute("count", bookService.count());
 		model.addAttribute("offset", offset);
 		model.addAttribute("author", author);

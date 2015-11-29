@@ -58,6 +58,7 @@ public class BookDaoImpl extends AbstractDao<Long, Book> implements BookDao {
 	@SuppressWarnings("unchecked")
 	@Transactional
 	public List<Book> list(Integer offset, Integer maxResults){
+		
 		return (List<Book>) getSession()
 				.createCriteria(Book.class)
 				.setFirstResult(offset!=null?offset:0)
