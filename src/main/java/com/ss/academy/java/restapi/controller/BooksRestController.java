@@ -1,6 +1,7 @@
 package com.ss.academy.java.restapi.controller;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,12 +56,20 @@ public class BooksRestController {
 					.slash("/books")
 					.slash(book)
 					.withSelfRel());
-
+			bookResource.add(linkTo(AuthorsRestController.class)
+					.slash(author.getId().toString())
+					.slash("/books")
+					.slash(book)
+					.slash("/ratings")
+					.withRel("ratings"));
+			
 			listOfBookResources.add(bookResource);
 		}
-
+		
 		Resources<BookResource> bookResources = new Resources<BookResource>(listOfBookResources);
 
+		bookResources.add(linkTo(methodOn(BooksRestController.class).createBook(id, null)).withRel("newBook"));
+	
 		return new ResponseEntity<Resources<BookResource>>(bookResources, HttpStatus.OK);
 	}
 	
@@ -99,15 +108,24 @@ public class BooksRestController {
 	 * Create new Book for the given Author
 	 */
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
-	public ResponseEntity<Void> createBook(@RequestBody Book book) {
-		if (bookService.findById(book.getId()) == null) {
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+	public ResponseEntity<Void> createBook(@PathVariable Long id, @RequestBody Book book) {
+		Author author = authorService.findById(id);
+		List<Book> authorBooks = author.getBooks();
+		
+		for (Book authorBook : authorBooks) {
+			if (authorBook.getTitle().equals(book.getTitle())) {
+				return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+			}
 		}
-
+		
+		book.setAuthor(author);
 		bookService.saveBook(book);
-
+	
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(linkTo(BooksRestController.class).slash(book).toUri());
+		headers.setLocation(linkTo(AuthorsRestController.class)
+				.slash(id.toString())
+				.slash("/books")
+				.slash(book).toUri());
 
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
