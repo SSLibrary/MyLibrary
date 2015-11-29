@@ -65,11 +65,11 @@ public class BooksController {
 			}
 		}
 		
-		model.addAttribute("books", bookService.list(offset, maxResults));
-		model.addAttribute("count", bookService.count());
-		model.addAttribute("offset", offset);
+//		model.addAttribute("books", bookService.list(offset, maxResults));
+//		model.addAttribute("count", bookService.count());
+//		model.addAttribute("offset", offset);
 		
-//		model.addAttribute("books", books);
+		model.addAttribute("books", books);
 		model.addAttribute("author", author);
 		
 		
