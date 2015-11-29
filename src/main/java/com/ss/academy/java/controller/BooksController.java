@@ -55,6 +55,7 @@ public class BooksController {
 		
 		List<Book> listOfBooks = bookService.list(offset, maxResults);
 		List<Book> books = author.getBooks();
+		listOfBooks.clear();
 		listOfBooks.addAll(books);
 		if (listOfBooks.size() == 0) {
 			model.addAttribute("emptyList", true);

@@ -2,8 +2,6 @@ package com.ss.academy.java.service.book;
 
 import java.util.List;
 
-import org.springframework.security.access.prepost.PreAuthorize;
-
 import com.ss.academy.java.model.book.Book;
 
 public interface BookService {
