@@ -10,7 +10,7 @@ public class AuthorResourceAssembler extends ResourceAssemblerSupport<Author, Au
 
 	public AuthorResource toResource(Author author) {
 		AuthorResource resource = new AuthorResource(author.getName(), author.getCountry(), author.getBooks());
-		
+
 		return resource;
 	}
 

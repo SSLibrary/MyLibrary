@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.hateoas.Identifiable;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ss.academy.java.model.rating.Rating;
 
@@ -21,7 +23,7 @@ import com.ss.academy.java.model.message.Message;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Identifiable<Long>{
 
 	@Id
 	@Column(name = "user_id")

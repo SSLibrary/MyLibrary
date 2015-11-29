@@ -17,6 +17,8 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.hateoas.Identifiable;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -25,7 +27,7 @@ import com.ss.academy.java.model.rating.Rating;
 
 @Entity
 @Table(name = "author_books")
-public class Book {
+public class Book implements Identifiable<Long>{
 
 	@Id
 	@Column(name = "book_id")
