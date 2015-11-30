@@ -110,5 +110,20 @@ Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 		<put-attribute name="current" value="display"></put-attribute>
 	</definition>	
 <!--end of messages -->
+
+<!-- comments -->
+	<definition name="comments/addNewComment" extends="baseLayout">
+		<put-attribute name="title" value="Add new Comment"/>
+		<put-attribute name="body" value="/WEB-INF/views/comments/addNewComment.jsp"/>	
+		<put-attribute name="current" value="addNewComment"></put-attribute>
+	</definition>
+	
+	<definition name="comments/allComments" extends="baseLayout">
+		<put-attribute name="title" value="Show Comments"/>
+		<put-attribute name="body" value="/WEB-INF/views/comments/allComments.jsp"/>	
+		<put-attribute name="current" value="allComments"></put-attribute>
+	</definition>
+<!--end of comments -->
+
 </tiles-definitions>
 

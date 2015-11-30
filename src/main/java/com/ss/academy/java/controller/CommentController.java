@@ -64,10 +64,11 @@ public class CommentController {
 	 *  Add new comment
 	 */
 	@RequestMapping(value = { "/comments/new" }, method = RequestMethod.GET)
-	public String addNewComment(ModelMap model) {
+	public String addNewComment(ModelMap model, @PathVariable Long book_id) {
 		Comment comment = new Comment();
-		model.addAttribute("comments", comment);
-		model.addAttribute("edit", false);
+		Book book = bookService.findById(book_id);
+		model.addAttribute("comment", comment);
+		model.addAttribute("book", book.getTitle());
 		return "comments/addNewComment";
 	}
 

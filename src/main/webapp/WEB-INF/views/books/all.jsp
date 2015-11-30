@@ -42,6 +42,11 @@
 						</div>
 						<div class="col-md-6">
 							<div class="btn-group btn-group-justified">
+							<div class="btn-group">
+										<form:form action="${book.id}/comments" method="GET">
+											<button type="submit" class="btn btn-success">Show all comments</button>
+										</form:form>
+									</div>
 								<sec:authorize access="hasAuthority('ADMIN')">
 									<div class="btn-group">
 										<form:form action="${book.id}" method="GET">
