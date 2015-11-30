@@ -76,7 +76,6 @@ public class BooksController {
 				}
 			}
 		}
-
 //		model.addAttribute("books", listOfBooks);	
 		model.addAttribute("books", books);		
 		model.addAttribute("count", count);			
