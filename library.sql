@@ -100,3 +100,16 @@ CREATE TABLE `messages` (
 	CONSTRAINT `fk_sender_message` FOREIGN KEY (`sender_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
 	CONSTRAINT `fk_receiver_message` FOREIGN KEY (`receiver_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE
 ) ENGINE = InnoDB CHARACTER SET=utf8;
+
+--
+-- Table structure for table `comments`
+--
+CREATE TABLE COMMENTS (
+	comment_id int(6) NOT NULL AUTO_INCREMENT,
+	book_id bigint UNSIGNED NOT NULL,
+	user_id bigint UNSIGNED NOT NULL,
+	comment varchar(200) NOT NULL,
+	PRIMARY KEY (comment_id),
+	CONSTRAINT fk_book_comments FOREIGN KEY (book_id) REFERENCES author_books (book_id) ON DELETE CASCADE,
+	CONSTRAINT fk_comments_user FOREIGN KEY (user_id) REFERENCES USERS (user_id) ON DELETE CASCADE
+)ENGINE = InnoDB CHARACTER SET=utf8;

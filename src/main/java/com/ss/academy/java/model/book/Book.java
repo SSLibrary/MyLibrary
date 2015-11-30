@@ -23,7 +23,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ss.academy.java.model.author.Author;
+import com.ss.academy.java.model.comment.Comment;
 import com.ss.academy.java.model.rating.Rating;
+
+
 
 @Entity
 @Table(name = "author_books")
@@ -60,6 +63,9 @@ public class Book implements Identifiable<Long>{
 	@Transient
 	@JsonIgnore
 	private Double averageRating;
+	
+	@OneToMany(mappedBy = "book")
+	private List<Comment> comment;
 
 	public Double getAverageRating() {
 		return averageRating;
@@ -116,4 +122,13 @@ public class Book implements Identifiable<Long>{
 	public void setAuthor(Author author) {
 		this.author = author;
 	}
+
+	public List<Comment> getComment() {
+		return comment;
+	}
+
+	public void setComment(List<Comment> comment) {
+		this.comment = comment;
+	}
+	
 }

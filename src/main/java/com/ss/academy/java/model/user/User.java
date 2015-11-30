@@ -18,7 +18,7 @@ import org.springframework.hateoas.Identifiable;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ss.academy.java.model.rating.Rating;
-
+import com.ss.academy.java.model.comment.Comment;
 import com.ss.academy.java.model.message.Message;
 
 @Entity
@@ -81,6 +81,9 @@ public class User implements Identifiable<Long>{
     @OneToMany(mappedBy = "receiver")
     private List<Message> receivedMessage;
 
+    @OneToMany(mappedBy = "user")
+	private List<Comment> comment;
+    
 	public Long getId() {
 		return id;
 	}
@@ -152,5 +155,14 @@ public class User implements Identifiable<Long>{
 	public void setReceivedMessage(List<Message> receivedMessage) {
 		this.receivedMessage = receivedMessage;
 	}
+
+	public List<Comment> getComment() {
+		return comment;
+	}
+
+	public void setComment(List<Comment> comment) {
+		this.comment = comment;
+	}
+	
 	
 }
