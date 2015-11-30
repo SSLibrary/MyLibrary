@@ -24,6 +24,7 @@ import com.ss.academy.java.service.author.AuthorService;
 import com.ss.academy.java.service.book.BookService;
 import com.ss.academy.java.service.rating.RatingService;
 import com.ss.academy.java.service.user.UserService;
+import com.sun.glass.ui.Size;
 
 /**
  * Handles requests for the application authors' books page.
@@ -53,14 +54,19 @@ public class BooksController {
 			Integer offset, Integer maxResults) {
 		Author author = authorService.findById(id);
 		
-		List<Book> listOfBooks = bookService.list(offset, maxResults);
+		List<Book> listOfBooks = bookService.list(offset, maxResults, id);
 		List<Book> books = author.getBooks();
-		listOfBooks.clear();
-		listOfBooks.addAll(books);
-		if (listOfBooks.size() == 0) {
+		
+//		System.out.println(books.size());
+//		listOfBooks = new ArrayList<Book>();
+//		
+		Long count = bookService.count();
+		count.equals(books.size());
+		books.equals(listOfBooks);
+		if (books.size() == 0) {
 			model.addAttribute("emptyList", true);
 		} else {
-			for (Book book : listOfBooks) {
+			for (Book book : books) {
 				List<Rating> bookRatings = book.getRatings();
 				for (Rating rating : bookRatings) {
 					if (rating.getUser().getUsername().equals(userDetails.getUsername())) {
@@ -71,15 +77,11 @@ public class BooksController {
 			}
 		}
 
-//		model.addAttribute("books", bookService.list(offset, maxResults));
-
-		model.addAttribute("books", listOfBooks);
-//		model.addAttribute("books", books);
-
-		model.addAttribute("count", bookService.count());
+//		model.addAttribute("books", listOfBooks);	
+		model.addAttribute("books", books);		
+		model.addAttribute("count", count);			
 		model.addAttribute("offset", offset);
 		model.addAttribute("author", author);
-
 		return "books/all";
 	}
 

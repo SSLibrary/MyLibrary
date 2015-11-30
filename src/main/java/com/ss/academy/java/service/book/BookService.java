@@ -21,7 +21,7 @@ public interface BookService {
 	//@PreAuthorize("hasAuthority('ADMIN')")
 	void deleteBook(Book book);
 	
-	List<Book> list(Integer offset, Integer maxResults);
+	List<Book> list(Integer offset, Integer maxResults, Long id);
     
     Long count();
 }

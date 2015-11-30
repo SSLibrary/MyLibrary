@@ -45,8 +45,8 @@ public class BookServiceImpl implements BookService {
 		return dao.findBooksByTitle(bookTitle);
 	}
 	
-	public List<Book> list(Integer offset, Integer maxResults) {
-		return dao.list(offset, maxResults);
+	public List<Book> list(Integer offset, Integer maxResults, Long id) {
+		return dao.list(offset, maxResults, id);
 	}
 
 	public Long count() {
