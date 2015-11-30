@@ -10,7 +10,7 @@
 			<li><a href="/MyLibrary/users/">Users</a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
-			<li><a href="/MyLibrary/messages/inbox">Inbox</a></li>
+			<li><a href="/MyLibrary/messages/inbox">Inbox <span class="badge">${unread}</span></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
 			<li><a href="/MyLibrary/messages/outbox">Outbox</a></li>
