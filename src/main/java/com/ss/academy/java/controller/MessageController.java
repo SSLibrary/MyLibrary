@@ -38,9 +38,24 @@ public class MessageController {
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
 		Collections.sort(messages);
-			model.addAttribute("isEmpty", messages.isEmpty());
-			model.addAttribute("messages", messages);
+		model.addAttribute("isEmpty", messages.isEmpty());
+		model.addAttribute("messages", messages);
 		return "messages/inbox";
+	}
+	
+	public String countUnreadMessages(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
+		User user = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = user.getReceivedMessage();
+		
+		int counter = 0;
+		for(Message message : messages) {
+			if (message.getIsNew() == 1) {
+			counter++;
+			}
+		}
+		
+		model.addAttribute("unread", counter);
+		return "layout/header";
 	}
 	
 	@RequestMapping(value = { "/outbox" }, method = RequestMethod.GET)
@@ -48,8 +63,8 @@ public class MessageController {
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getSentMessage();
 		Collections.sort(messages);
-			model.addAttribute("messages", messages);
-			model.addAttribute("isEmpty", messages.isEmpty());
+		model.addAttribute("messages", messages);
+		model.addAttribute("isEmpty", messages.isEmpty());
 		return "messages/outbox";
 	}
 	
@@ -62,7 +77,6 @@ public class MessageController {
 		return "messages/new";
 	}
 
-
 	@RequestMapping(value = { "/{user_id}/new" }, method = RequestMethod.POST)
 	public String saveMessage(@Valid Message message, BindingResult result, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long user_id) {
@@ -70,6 +84,7 @@ public class MessageController {
 		if (result.hasErrors()) {
 			return "messages/new";
 		}
+		
 		User receiver = userService.findById(user_id);
 		User sender = userService.findByUsername(userDetails.getUsername());
 		sender.getSentMessage().add(message);
@@ -103,7 +118,6 @@ public class MessageController {
 		return "messages/reply";
 	}
 	
-	
 	@RequestMapping(value = { "/{message_id}/reply" }, method = RequestMethod.POST)
 	public String replyToMessage(@Valid Message message, BindingResult result, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer message_id) {
@@ -111,6 +125,7 @@ public class MessageController {
 		if (result.hasErrors()) {
 			return "messages/reply";
 		}
+		
 		Message parent = messageService.findById(message_id);
 		User receiver = userService.findByUsername(parent.getSender().getUsername());
 		User sender = userService.findByUsername(userDetails.getUsername());
@@ -136,7 +151,6 @@ public class MessageController {
 		}
 			
 		model.addAttribute("parents", previousMessages);
-
 		return "messages/display";
 	}
 }
