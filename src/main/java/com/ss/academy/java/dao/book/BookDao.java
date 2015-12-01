@@ -18,5 +18,5 @@ public interface BookDao {
 	
 	List<Book> list(Integer offset, Integer maxResults, Long id);
     
-    Long count();
+    Long count(Long author_id);
 }

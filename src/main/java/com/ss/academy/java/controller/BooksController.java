@@ -24,7 +24,6 @@ import com.ss.academy.java.service.author.AuthorService;
 import com.ss.academy.java.service.book.BookService;
 import com.ss.academy.java.service.rating.RatingService;
 import com.ss.academy.java.service.user.UserService;
-import com.sun.glass.ui.Size;
 
 /**
  * Handles requests for the application authors' books page.
@@ -52,17 +51,9 @@ public class BooksController {
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String listAllBooks(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long id, ModelMap model,
 			Integer offset, Integer maxResults) {
-		Author author = authorService.findById(id);
-		
-		List<Book> listOfBooks = bookService.list(offset, maxResults, id);
-		List<Book> books = author.getBooks();
-		
-//		System.out.println(books.size());
-//		listOfBooks = new ArrayList<Book>();
-//		
-		Long count = bookService.count();
-		count.equals(books.size());
-		books.equals(listOfBooks);
+		Author author = authorService.findById(id);		
+		List<Book> books = bookService.list(offset, maxResults, id);	
+		Long count = bookService.count(id);
 		if (books.size() == 0) {
 			model.addAttribute("emptyList", true);
 		} else {
@@ -76,7 +67,7 @@ public class BooksController {
 				}
 			}
 		}
-//		model.addAttribute("books", listOfBooks);	
+		
 		model.addAttribute("books", books);		
 		model.addAttribute("count", count);			
 		model.addAttribute("offset", offset);

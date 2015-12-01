@@ -49,7 +49,7 @@ public class BookServiceImpl implements BookService {
 		return dao.list(offset, maxResults, id);
 	}
 
-	public Long count() {
-		return dao.count();
+	public Long count(Long author_id) {
+		return dao.count(author_id);
 	}
 }

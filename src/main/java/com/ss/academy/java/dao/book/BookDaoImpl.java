@@ -61,16 +61,17 @@ public class BookDaoImpl extends AbstractDao<Long, Book> implements BookDao {
 		
 		List<Book> list= (List<Book>) getSession()
 				.createCriteria(Book.class)
-//				.add(Restrictions.eq("author", author_id))
+				.add(Restrictions.eq("author.id", author_id))
 				.setFirstResult(offset!=null?offset:0)
 				.setMaxResults(maxResults!=null?maxResults:5)
 				.list();		
 		return list;
 	}
 	
-	public Long count(){
+	public Long count(Long author_id){
 		return (Long)getSession()
 				.createCriteria(Book.class)
+				.add(Restrictions.eq("author.id", author_id))
 				.setProjection(Projections.rowCount())
 				.uniqueResult();
 	}
