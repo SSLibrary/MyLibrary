@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ss.academy.java.model.book.Book;
 import com.ss.academy.java.model.user.User;
 
@@ -28,10 +29,12 @@ public class Comment {
 	
 	@ManyToOne
 	@JoinColumn(name = "BOOK_ID")
+	@JsonBackReference(value = "book-comments")
 	private Book book;
 	
 	@ManyToOne
 	@JoinColumn(name = "USER_ID")
+	@JsonBackReference(value = "user-comments")
 	private User user;
 
 	public Integer getComment_id() {

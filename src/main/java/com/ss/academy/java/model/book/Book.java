@@ -65,6 +65,7 @@ public class Book implements Identifiable<Long>{
 	private Double averageRating;
 	
 	@OneToMany(mappedBy = "book")
+	@JsonManagedReference(value = "book-comments")
 	private List<Comment> comment;
 
 	public Double getAverageRating() {

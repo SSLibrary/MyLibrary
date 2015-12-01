@@ -1,3 +1,7 @@
+<link rel="stylesheet"
+	href="../../../../resources/rating-plugin/css/star-rating.min.css"
+	media="all" rel="stylesheet" type="text/css" />
+
 <%@ include file="../layout/taglib.jsp" %>
 
 		<div class="row">

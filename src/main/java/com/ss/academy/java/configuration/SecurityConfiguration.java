@@ -49,8 +49,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
       http
       	.authorizeRequests()
-	      	.antMatchers("/", "/register").permitAll()
-//	      	.antMatchers("/authors/**").hasAnyAuthority("USER", "ADMIN")
+      		.antMatchers("/", "/register").permitAll()
+	      	.antMatchers("/authors/**").hasAnyAuthority("USER", "ADMIN")
 	      	.and().formLogin()
         	.loginPage("/login").failureUrl("/login?error")
         	.defaultSuccessUrl("/authors/")
@@ -60,6 +60,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         	.and().logout()
       		.logoutUrl("/logout").logoutSuccessUrl("/")
       		.invalidateHttpSession(true).deleteCookies("JSESSIONID")
-      		.permitAll().and().csrf().disable();
+      		.permitAll().and().csrf().disable().httpBasic();
     }
 }
