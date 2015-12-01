@@ -33,13 +33,20 @@ public class MessageController {
 	UserService userService;
 	
 	
+	
 	@RequestMapping(value = { "/inbox" }, method = RequestMethod.GET)
-	public String listAllReceivedMessages(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
-		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getReceivedMessage();
+	public String listAllReceivedMessages(ModelMap model, @AuthenticationPrincipal UserDetails userDetails,Integer offset, Integer maxResults, String username) {
+//		User user = userService.findByUsername(userDetails.getUsername());
+//		List<Message> messages = user.getReceivedMessage();		
+
+		List<Message> messages = messageService.listOfReceivedMessage(offset, maxResults, userDetails.getUsername());
+		Long count = messageService.countOfReceivedMessage(userDetails.getUsername());
+		
 		Collections.sort(messages);
 		model.addAttribute("isEmpty", messages.isEmpty());
-		model.addAttribute("messages", messages);
+		model.addAttribute("messages", messages);		
+		model.addAttribute("count", count);			
+		model.addAttribute("offset", offset);		
 		return "messages/inbox";
 	}
 	
@@ -59,13 +66,21 @@ public class MessageController {
 	}
 	
 	@RequestMapping(value = { "/outbox" }, method = RequestMethod.GET)
-	public String listAllSentMessages(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
-		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getSentMessage();
+	public String listAllSentMessages(ModelMap model, @AuthenticationPrincipal UserDetails userDetails,Integer offset, Integer maxResults, String username) {
+//		User user = userService.findByUsername(userDetails.getUsername());
+//		List<Message> messages = user.getSentMessage();
+		
+		List<Message> messages = messageService.listOfSentMessage(offset, maxResults, userDetails.getUsername());
+		Long count = messageService.countOfSentMessage(userDetails.getUsername());		
+		
 		Collections.sort(messages);
-		model.addAttribute("messages", messages);
 		model.addAttribute("isEmpty", messages.isEmpty());
+		model.addAttribute("messages", messages);		
+		model.addAttribute("count", count);			
+		model.addAttribute("offset", offset);		
 		return "messages/outbox";
+		
+		
 	}
 	
 	@RequestMapping(value = { "/{user_id}/new" }, method = RequestMethod.GET)

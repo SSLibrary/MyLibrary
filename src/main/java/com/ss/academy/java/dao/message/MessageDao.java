@@ -13,4 +13,11 @@ public interface MessageDao {
 	
 	List<Message> findAllMessages();
 
+	List<Message> listOfSentMessage(Integer offset, Integer maxResults, String username);
+	
+	Long countOfSentMessage(String username);
+	
+	List<Message> listOfReceivedMessage(Integer offset, Integer maxResults, String username);
+	
+	Long countOfReceivedMessage(String username);
 }
