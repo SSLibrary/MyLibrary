@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,7 @@ import com.ss.academy.java.service.book.BookService;
  * Each response is in JSON format.
  */
 @RestController
+@ExposesResourceFor(Book.class)
 @RequestMapping(value = "restapi/authors/{id}/books")
 public class BooksRestController {
 
@@ -44,6 +46,11 @@ public class BooksRestController {
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public ResponseEntity<Resources<BookResource>> listAllBooks(@PathVariable Long id) {
 		Author author = authorService.findById(id);
+		
+		if (author == null) {
+			return new ResponseEntity<Resources<BookResource>>(HttpStatus.NO_CONTENT);
+		}
+		
 		List<Book> books = author.getBooks();
 
 		BookResourceAssembler assembler = new BookResourceAssembler();
@@ -52,16 +59,24 @@ public class BooksRestController {
 		for (Book book : books) {
 			BookResource bookResource = assembler.toResource(book);
 			bookResource.add(linkTo(AuthorsRestController.class)
-					.slash(author.getId().toString())
+					.slash(author)
 					.slash("/books")
 					.slash(book)
 					.withSelfRel());
+			
 			bookResource.add(linkTo(AuthorsRestController.class)
-					.slash(author.getId().toString())
+					.slash(author)
 					.slash("/books")
 					.slash(book)
 					.slash("/ratings")
 					.withRel("ratings"));
+
+			bookResource.add(linkTo(AuthorsRestController.class)
+					.slash(author)
+					.slash("/books")
+					.slash(book)
+					.slash("/comments")
+					.withRel("comments"));
 			
 			listOfBookResources.add(bookResource);
 		}
@@ -89,7 +104,7 @@ public class BooksRestController {
 		}
 		
 		if (book == null) {
-			return new ResponseEntity<BookResource>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<BookResource>(HttpStatus.NOT_FOUND);
 		}
 		
 		BookResourceAssembler assembler = new BookResourceAssembler();
@@ -128,5 +143,79 @@ public class BooksRestController {
 				.slash(book).toUri());
 
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+	}
+	
+	/**
+	 * Update Author's Book
+	 */
+	@RequestMapping(value = "/{book_id}", method = RequestMethod.PUT)
+	public ResponseEntity<BookResource> updateBook(@PathVariable("id") long id, @PathVariable("book_id") long book_id, @RequestBody Book book) {
+		Author currentAuthor = authorService.findById(id);
+		List<Book> authorBooks = currentAuthor.getBooks();
+		
+		if (authorBooks == null) {
+			return new ResponseEntity<BookResource>(HttpStatus.NOT_FOUND);
+		}
+		
+		for (Book authorBook : authorBooks) {
+			if (authorBook.getId() == book_id) {
+				bookService.updateBook(book);
+				break;
+			}
+		}
+
+		BookResourceAssembler assembler = new BookResourceAssembler();
+		BookResource bookResource = assembler.toResource(book);
+		
+		bookResource.add(linkTo(AuthorsRestController.class)
+				.slash(currentAuthor)
+				.slash("/books")
+				.slash(book)
+				.withSelfRel());
+		
+		bookResource.add(linkTo(AuthorsRestController.class)
+				.slash(currentAuthor)
+				.slash("/books")
+				.slash(book)
+				.slash("/ratings")
+				.withRel("ratings"));
+		
+		bookResource.add(linkTo(AuthorsRestController.class)
+				.slash(currentAuthor)
+				.slash("/books")
+				.slash(book)
+				.slash("/comments")
+				.withRel("comments"));
+		
+			return new ResponseEntity<BookResource>(bookResource, HttpStatus.OK);
+	}
+	
+	/**
+	 * Delete Author's Book
+	 */
+	@RequestMapping(value = "/{book_id}", method = RequestMethod.DELETE)
+	public ResponseEntity<BookResource> deleteAuthor(@PathVariable("id") long id, @PathVariable("book_id") long book_id) {
+		Author currentAuthor = authorService.findById(id);
+
+		if (currentAuthor == null) {
+			return new ResponseEntity<BookResource>(HttpStatus.NOT_FOUND);
+		}
+		
+		List<Book> authorBooks = currentAuthor.getBooks();
+		boolean found = false;
+		
+		for (Book book : authorBooks) {
+			if (book.getId() == book_id) {
+				bookService.deleteBook(book);
+				found = true;
+				break;
+			}
+		}
+		
+		if (!found) {
+			return new ResponseEntity<BookResource>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<BookResource>(HttpStatus.NO_CONTENT);
 	}
 }

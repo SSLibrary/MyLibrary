@@ -1,8 +1,8 @@
 package com.ss.academy.java.model.author;
 
-import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
+import org.springframework.hateoas.mvc.IdentifiableResourceAssemblerSupport;
 
-public class AuthorResourceAssembler extends ResourceAssemblerSupport<Author, AuthorResource> {
+public class AuthorResourceAssembler extends IdentifiableResourceAssemblerSupport<Author, AuthorResource> {
 
 	public AuthorResourceAssembler() {
 		super(Author.class, AuthorResource.class);
