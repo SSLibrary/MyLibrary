@@ -66,8 +66,7 @@ public class BooksController {
 					}
 				}
 			}
-		}
-		
+		}		
 		model.addAttribute("books", books);		
 		model.addAttribute("count", count);			
 		model.addAttribute("offset", offset);
