@@ -76,12 +76,15 @@ public class User implements Identifiable<Long>{
 	private List<Rating> ratings;
 	
 	@OneToMany(mappedBy = "sender")
+	@JsonManagedReference(value = "sent-messages")
     private List<Message> sentMessage;
     
     @OneToMany(mappedBy = "receiver")
+    @JsonManagedReference(value = "received-messages")
     private List<Message> receivedMessage;
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference(value = "user-comments")
 	private List<Comment> comment;
     
 	public Long getId() {

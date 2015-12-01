@@ -24,7 +24,6 @@ import com.ss.academy.java.service.author.AuthorService;
 import com.ss.academy.java.service.book.BookService;
 import com.ss.academy.java.service.rating.RatingService;
 import com.ss.academy.java.service.user.UserService;
-import com.sun.glass.ui.Size;
 
 /**
  * Handles requests for the application authors' books page.

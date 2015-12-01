@@ -14,6 +14,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ss.academy.java.model.user.User;
 
 @Entity
@@ -44,10 +45,12 @@ public class Message implements Comparable<Message> {
 	
 	@ManyToOne
 	@JoinColumn(name = "sender_id")
+	@JsonBackReference(value = "sent-messages")
 	private User sender;
 	
 	@ManyToOne
 	@JoinColumn(name = "receiver_id")
+	@JsonBackReference(value = "received-messages")
 	private User receiver;
 	
 	

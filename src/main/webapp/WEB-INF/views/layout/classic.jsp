@@ -7,10 +7,6 @@
 <html lang="en">
 <head>
 	<title><tiles:getAsString name="title"></tiles:getAsString></title>
-	<link rel="stylesheet"
-	href="../../../../resources/rating-plugin/css/star-rating.min.css"
-	media="all" rel="stylesheet" type="text/css" />
-	
 </head>
 <body>	
 	<%@ taglib uri="http://tiles.apache.org/tags-tiles-extras" prefix="tilesx" %>	
