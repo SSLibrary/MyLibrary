@@ -1,4 +1,5 @@
 <%@ include file="../layout/taglib.jsp" %>
+<%@ taglib prefix="tag" uri="/WEB-INF/taglibs/customTaglib.tld"%>
 
 		<div class="jumbotron">
 			<h1 class="text-center">Message Outbox</h1>
@@ -19,4 +20,8 @@
 					</c:forEach>
 				</table>
 				</c:otherwise>				
-		</c:choose>		
+		</c:choose>	
+			<!-- pagination -->		
+					<tag:paginate max="15" offset="${offset}" count="${count}"
+   						uri="../messages/outbox" next="&raquo;" previous="&laquo;" /> 
+   			<!-- end of pagination -->	

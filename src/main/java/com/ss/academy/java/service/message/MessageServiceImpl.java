@@ -36,9 +36,22 @@ public class MessageServiceImpl implements MessageService {
 
 		if (entity != null) {
 			entity.setIsNew(0);
-		}
-		
+		}		
+	}
+
+	public List<Message> listOfSentMessage(Integer offset, Integer maxResults, String username) {		
+		return dao.listOfSentMessage(offset, maxResults, username);
+	}
+
+	public Long countOfSentMessage(String username) {
+		return dao.countOfSentMessage(username);
 	}
 	
-	
+	public List<Message> listOfReceivedMessage(Integer offset, Integer maxResults, String username) {		
+		return dao.listOfReceivedMessage(offset, maxResults, username);
+	}
+
+	public Long countOfReceivedMessage(String username) {
+		return dao.countOfReceivedMessage(username);
+	}	
 }

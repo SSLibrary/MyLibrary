@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.ss.academy.java.model.message.Message;
 
-
 public interface MessageService {
 		
 		Message findById(Integer message_id);
@@ -15,4 +14,11 @@ public interface MessageService {
 		
 		void updateMessageStatus(Message message);
 	
+		List<Message> listOfSentMessage(Integer offset, Integer maxResults, String username);
+		
+		Long countOfSentMessage(String username);
+		
+		List<Message> listOfReceivedMessage(Integer offset, Integer maxResults, String username);
+		
+		Long countOfReceivedMessage(String username);
 }
