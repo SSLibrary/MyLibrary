@@ -18,5 +18,4 @@ public interface RatingService {
 
 	@PreAuthorize("hasAuthority('ADMIN')")
 	List<Rating> findAllRatingsByUser(Long userId);
-
 }
