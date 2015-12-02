@@ -35,11 +35,12 @@ public class MessageDaoImpl extends AbstractDao<Integer, Message> implements Mes
 	@SuppressWarnings("unchecked")
 	@Transactional
 	public List<Message> listOfSentMessage(Integer offset, Integer maxResults, String username){
-		
-		List<Message> list= (List<Message>) getSession()
+//		Criteria criteria =  ((Criteria) getSession()).addOrder(Order.desc("date"));
+		List<Message> list= (List<Message>)getSession()
 				.createCriteria(Message.class, "message")
-				.createAlias("message.sender", "sm") // inner join by default
+				.createAlias("message.sender", "sm") // inner join by default				
 				.add(Restrictions.eq("sm.username", username))
+				.addOrder( Order.desc("date"))
 				.setFirstResult(offset!=null?offset:0)
 				.setMaxResults(maxResults!=null?maxResults:5)
 				.list();		
@@ -63,6 +64,7 @@ public class MessageDaoImpl extends AbstractDao<Integer, Message> implements Mes
 				.createCriteria(Message.class, "message")
 				.createAlias("message.receiver", "rm") // inner join by default
 				.add(Restrictions.eq("rm.username", username))
+				.addOrder( Order.desc("date"))
 				.setFirstResult(offset!=null?offset:0)
 				.setMaxResults(maxResults!=null?maxResults:5)
 				.list();		

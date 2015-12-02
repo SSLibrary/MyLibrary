@@ -41,7 +41,6 @@ public class BookDaoImpl extends AbstractDao<Long, Book> implements BookDao {
 																		// avoid
 																		// duplicates.
 		List<Book> books = (List<Book>) criteria.list();
-
 		return books;
 	}
 
