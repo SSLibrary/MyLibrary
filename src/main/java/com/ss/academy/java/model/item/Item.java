@@ -31,7 +31,7 @@ private byte[] itemContent;
 
 @ManyToOne
 @JoinColumn(name = "book_id")
-//@JsonBackReference(value = "book-images")
+@JsonBackReference(value = "book-images")
 private Item items;
 
 
