@@ -60,7 +60,7 @@ public class Book implements Identifiable<Long> {
 	private List<Comment> comments;
 
 	@OneToMany(mappedBy = "items")
-	@JsonManagedReference(value = "book-ratings")
+	@JsonManagedReference(value = "book-items")
 	private List<Item> items;
 	
 	@Transient

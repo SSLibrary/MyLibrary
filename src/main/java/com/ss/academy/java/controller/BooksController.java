@@ -1,8 +1,11 @@
 package com.ss.academy.java.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ss.academy.java.model.author.Author;
 import com.ss.academy.java.model.book.Book;
 import com.ss.academy.java.model.book.BookStatus;
+import com.ss.academy.java.model.item.Item;
 import com.ss.academy.java.model.message.Message;
 import com.ss.academy.java.model.rating.Rating;
 import com.ss.academy.java.model.user.User;
@@ -28,6 +32,7 @@ import com.ss.academy.java.service.message.MessageService;
 import com.ss.academy.java.service.rating.RatingService;
 import com.ss.academy.java.service.user.UserService;
 import com.ss.academy.java.util.UnreadMessagesCounter;
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 /**
  * Handles requests for the application authors' books page.
@@ -57,12 +62,14 @@ public class BooksController {
 	 */
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String listAllBooks(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long id, ModelMap model,
-			Integer offset, Integer maxResults) {
+			Integer offset, Integer maxResults,HttpServletResponse response,HttpServletRequest request) throws UnsupportedEncodingException {
 		
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();	
 		int unread = UnreadMessagesCounter.counter(messages);
-		 
+		
+		
+		
 		Author author = authorService.findById(id);		
 		List<Book> books = bookService.list(offset, maxResults, id);	
 		Long count = bookService.count(id);
@@ -79,7 +86,8 @@ public class BooksController {
 					}
 				}
 			}
-		}		
+		}	
+
 		model.addAttribute("books", books);		
 		model.addAttribute("count", count);			
 		model.addAttribute("offset", offset);
