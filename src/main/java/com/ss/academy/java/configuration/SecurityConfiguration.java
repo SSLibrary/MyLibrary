@@ -50,10 +50,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       http
       	.authorizeRequests()
       		.antMatchers("/", "/register").permitAll()
-	      	.antMatchers("/authors/**").hasAnyAuthority("USER", "ADMIN")
+	      	.antMatchers("/authors/**" , "/users/**", "/messages/**").hasAnyAuthority("USER", "ADMIN")
 	      	.and().formLogin()
         	.loginPage("/login").failureUrl("/login?error")
-        	.defaultSuccessUrl("/authors/")
+        	.defaultSuccessUrl("/")
         	.usernameParameter("username")
         	.passwordParameter("password")
         	.permitAll()

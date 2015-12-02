@@ -5,7 +5,9 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -16,11 +18,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.ss.academy.java.model.author.Author;
 import com.ss.academy.java.model.book.Book;
 import com.ss.academy.java.model.comment.Comment;
+import com.ss.academy.java.model.message.Message;
 import com.ss.academy.java.model.user.User;
 import com.ss.academy.java.service.author.AuthorService;
 import com.ss.academy.java.service.book.BookService;
 import com.ss.academy.java.service.comment.CommentService;
+import com.ss.academy.java.service.message.MessageService;
 import com.ss.academy.java.service.user.UserService;
+import com.ss.academy.java.util.UnreadMessagesCounter;
 
 
 @Controller
@@ -39,11 +44,19 @@ public class CommentController {
 	@Autowired
 	UserService userService;
 
+	@Autowired
+	MessageService messageService;
+	
 	/*
 	 * Show all comments by book
 	 */
 	@RequestMapping(value = { "/comments" }, method = RequestMethod.GET)
-	public String listAllComments(@PathVariable Long book_id, @PathVariable Long author_id, ModelMap model) {
+	public String listAllComments(@PathVariable Long book_id, @PathVariable Long author_id, ModelMap model,
+			@AuthenticationPrincipal UserDetails userDetails) {
+		
+		User user = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = user.getReceivedMessage();	
+		int unread = UnreadMessagesCounter.counter(messages);
 		
 		Author author = authorService.findById(author_id);
 		Book book = bookService.findById(book_id);
@@ -57,6 +70,8 @@ public class CommentController {
 		model.addAttribute("comments", comments);
 		model.addAttribute("author", author.getName());
 		model.addAttribute("book", book.getTitle());
+		model.addAttribute("unread", unread);
+		
 		return "comments/allComments";
 	}
 	
@@ -64,11 +79,19 @@ public class CommentController {
 	 *  Add new comment
 	 */
 	@RequestMapping(value = { "/comments/new" }, method = RequestMethod.GET)
-	public String addNewComment(ModelMap model, @PathVariable Long book_id) {
+	public String addNewComment(ModelMap model, @PathVariable Long book_id,
+			@AuthenticationPrincipal UserDetails userDetails) {
+		
+		User user = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = user.getReceivedMessage();	
+		int unread = UnreadMessagesCounter.counter(messages);
+		
 		Comment comment = new Comment();
 		Book book = bookService.findById(book_id);
 		model.addAttribute("comment", comment);
 		model.addAttribute("book", book.getTitle());
+		model.addAttribute("unread", unread);
+		
 		return "comments/addNewComment";
 	}
 
@@ -91,6 +114,7 @@ public class CommentController {
 		comment.setUser(user);
 		comment.setBook(book);
 		commentService.saveComment(comment);
+		
 		return "redirect:/authors/{author_id}/books/{book_id}/comments";
 	}
 	
@@ -104,6 +128,7 @@ public class CommentController {
 
 		book.getComment().remove(comment);
 		commentService.deleteCommentById(comment_id);
+		
 		return "redirect:/authors/{author_id}/books/{book_id}/comments";
 	}
 	

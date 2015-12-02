@@ -19,9 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ss.academy.java.model.message.Message;
 import com.ss.academy.java.model.user.User;
 import com.ss.academy.java.service.book.BookService;
+import com.ss.academy.java.service.message.MessageService;
 import com.ss.academy.java.service.user.UserService;
+import com.ss.academy.java.util.UnreadMessagesCounter;
 
 /**
  * Handles requests for the application users page plus user login & registration.
@@ -38,18 +41,24 @@ public class UsersController {
 
 	@Autowired
 	MessageSource messageSource;
+	
+	@Autowired
+	MessageService messageService;
 
 	/*
 	 * This method will list all existing users.
 	 */
 	@RequestMapping(value = { "/users" }, method = RequestMethod.GET)
-	public String listAllUsers(@AuthenticationPrincipal UserDetails userDetails, ModelMap model, Integer offset, Integer maxResults) {
-//		List<User> allUsers = userService.findAllUsers();
-//		model.addAttribute("allUsers", allUsers);
-
+	public String listAllUsers(@AuthenticationPrincipal UserDetails userDetails, ModelMap model, 
+			Integer offset, Integer maxResults) {
+		User user = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = user.getReceivedMessage();	
+		int unread = UnreadMessagesCounter.counter(messages);
+		
 		 model.addAttribute("allUsers", userService.list(offset, maxResults));
-		   model.addAttribute("count", userService.count());
-		   model.addAttribute("offset", offset);
+		 model.addAttribute("count", userService.count());
+		 model.addAttribute("offset", offset);
+		 model.addAttribute("unread", unread);
 		   
 		return "users/all";
 	}

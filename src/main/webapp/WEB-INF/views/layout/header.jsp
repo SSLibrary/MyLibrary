@@ -22,8 +22,7 @@
 	</ul>
 	<sec:authorize access="isAuthenticated()">
 		<p class="text-right">
-			Hello,
-			<sec:authentication property="principal.username" />
+			Hello, <strong>${user}</strong>
 		</p>
 		<form action="/MyLibrary/logout" method="post"
 			class="navbar-form navbar-right">

@@ -1,5 +1,7 @@
 package com.ss.academy.java.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +15,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ss.academy.java.model.book.Book;
+import com.ss.academy.java.model.message.Message;
 import com.ss.academy.java.model.rating.Rating;
 import com.ss.academy.java.model.user.User;
 import com.ss.academy.java.service.author.AuthorService;
 import com.ss.academy.java.service.book.BookService;
+import com.ss.academy.java.service.message.MessageService;
 import com.ss.academy.java.service.rating.RatingService;
 import com.ss.academy.java.service.user.UserService;
 import com.ss.academy.java.util.RatingCalculator;
+import com.ss.academy.java.util.UnreadMessagesCounter;
 
 /**
  * Handles requests for the application books's rating page.
@@ -39,16 +44,25 @@ public class RatingsController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	MessageService messageService;
 
 	/*
 	 * This method will provide the medium to add a new rating.
 	 */
 	@RequestMapping(value = { "/rating" }, method = RequestMethod.GET)
-	public String addNewRating(@PathVariable Long book_id, ModelMap model) {
+	public String addNewRating(@PathVariable Long book_id, ModelMap model,
+			@AuthenticationPrincipal UserDetails userDetails) {
+		User user = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = user.getReceivedMessage();	
+		int unread = UnreadMessagesCounter.counter(messages);
+		
 		Book book = bookService.findById(book_id);
 		Rating rating = new Rating();
 		model.addAttribute("rating", rating);
 		model.addAttribute("book", book);
+		model.addAttribute("unread", unread);
 
 		return "books/rating";
 	}
@@ -77,12 +91,18 @@ public class RatingsController {
 	 * This method provides the ability the average rating to be calculated and displayed.
 	 */
 	@RequestMapping(value = { "/ratingCheck" }, method = RequestMethod.GET)
-	public String checkRating(@PathVariable Long book_id, ModelMap model) {
+	public String checkRating(@PathVariable Long book_id, ModelMap model,
+			@AuthenticationPrincipal UserDetails userDetails) {
+		User user = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = user.getReceivedMessage();	
+		int unread = UnreadMessagesCounter.counter(messages);
+		
 		Book book = bookService.findById(book_id);
 		book.setAverageRating(RatingCalculator.calculate(book.getRatings()));
 		System.out.println(book.getAverageRating());
 
 		model.addAttribute("book", book);
+		model.addAttribute("unread", unread);
 
 		return "books/ratingCheck";
 	}

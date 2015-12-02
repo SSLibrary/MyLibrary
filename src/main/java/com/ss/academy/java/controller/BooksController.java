@@ -19,11 +19,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ss.academy.java.model.author.Author;
 import com.ss.academy.java.model.book.Book;
 import com.ss.academy.java.model.book.BookStatus;
+import com.ss.academy.java.model.message.Message;
 import com.ss.academy.java.model.rating.Rating;
+import com.ss.academy.java.model.user.User;
 import com.ss.academy.java.service.author.AuthorService;
 import com.ss.academy.java.service.book.BookService;
+import com.ss.academy.java.service.message.MessageService;
 import com.ss.academy.java.service.rating.RatingService;
 import com.ss.academy.java.service.user.UserService;
+import com.ss.academy.java.util.UnreadMessagesCounter;
 
 /**
  * Handles requests for the application authors' books page.
@@ -43,6 +47,9 @@ public class BooksController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	MessageService messageService;
 
 	/*
 	 * This method will list all existing books and will check whether they have
@@ -51,9 +58,15 @@ public class BooksController {
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String listAllBooks(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long id, ModelMap model,
 			Integer offset, Integer maxResults) {
+		
+		User user = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = user.getReceivedMessage();	
+		int unread = UnreadMessagesCounter.counter(messages);
+		 
 		Author author = authorService.findById(id);		
 		List<Book> books = bookService.list(offset, maxResults, id);	
 		Long count = bookService.count(id);
+		 
 		if (books.size() == 0) {
 			model.addAttribute("emptyList", true);
 		} else {
@@ -71,6 +84,7 @@ public class BooksController {
 		model.addAttribute("count", count);			
 		model.addAttribute("offset", offset);
 		model.addAttribute("author", author);
+		model.addAttribute("unread", unread);
 		return "books/all";
 	}
 
@@ -98,11 +112,17 @@ public class BooksController {
 	 * This method will provide the medium to add a new book.
 	 */
 	@RequestMapping(value = { "/new" }, method = RequestMethod.GET)
-	public String addNewBook(ModelMap model) {
+	public String addNewBook(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
+		
+		User user = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = user.getReceivedMessage();	
+		int unread = UnreadMessagesCounter.counter(messages);
+		
 		Book book = new Book();
 		model.addAttribute("book", book);
 		model.addAttribute("edit", false);
 		model.addAttribute("statuses", BookStatus.values());
+		model.addAttribute("unread", unread);
 
 		return "books/addNewBook";
 	}
@@ -130,7 +150,12 @@ public class BooksController {
 	 * This method will provide the medium to update an existing book.
 	 */
 	@RequestMapping(value = { "/{book_id}" }, method = RequestMethod.GET)
-	public String editBook(@PathVariable Long id, @PathVariable Long book_id, ModelMap model) {
+	public String editBook(@PathVariable Long id, @PathVariable Long book_id, ModelMap model,
+			@AuthenticationPrincipal UserDetails userDetails) {
+		User user = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = user.getReceivedMessage();	
+		int unread = UnreadMessagesCounter.counter(messages);
+		
 		Book book = bookService.findById(book_id);
 		Author author = book.getAuthor();
 
@@ -138,6 +163,7 @@ public class BooksController {
 		model.addAttribute("author", author);
 		model.addAttribute("edit", true);
 		model.addAttribute("statuses", BookStatus.values());
+		model.addAttribute("unread", unread);
 
 		return "books/addNewBook";
 	}
