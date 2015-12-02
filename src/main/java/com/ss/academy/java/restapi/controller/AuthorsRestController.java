@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,7 @@ import com.ss.academy.java.service.author.AuthorService;
  * Each response is in JSON format.
  */
 @RestController
+@ExposesResourceFor(Author.class)
 @RequestMapping({ "/restapi/authors" })
 public class AuthorsRestController {
 
@@ -67,7 +69,7 @@ public class AuthorsRestController {
 		Author author = authorService.findById(id);
 
 		if (author == null) {
-			return new ResponseEntity<AuthorResource>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<AuthorResource>(HttpStatus.NOT_FOUND);
 		}
 
 		AuthorResourceAssembler assembler = new AuthorResourceAssembler();
@@ -85,6 +87,7 @@ public class AuthorsRestController {
 	 */
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
 	public ResponseEntity<Void> createAuthor(@RequestBody Author author) {
+		
 		if (!authorService.findAuthorsByName(author.getName()).isEmpty()) {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}

@@ -26,11 +26,9 @@ import com.ss.academy.java.model.author.Author;
 import com.ss.academy.java.model.comment.Comment;
 import com.ss.academy.java.model.rating.Rating;
 
-
-
 @Entity
 @Table(name = "author_books")
-public class Book implements Identifiable<Long>{
+public class Book implements Identifiable<Long> {
 
 	@Id
 	@Column(name = "book_id")
@@ -55,6 +53,10 @@ public class Book implements Identifiable<Long>{
 	@OneToMany(mappedBy = "book")
 	@JsonManagedReference(value = "book-ratings")
 	private List<Rating> ratings;
+	
+	@OneToMany(mappedBy = "book")
+	@JsonManagedReference(value = "book-comments")
+	private List<Comment> comments;
 
 	@Transient
 	@JsonIgnore
@@ -63,10 +65,6 @@ public class Book implements Identifiable<Long>{
 	@Transient
 	@JsonIgnore
 	private Double averageRating;
-	
-	@OneToMany(mappedBy = "book")
-	@JsonManagedReference(value = "book-comments")
-	private List<Comment> comment;
 
 	public Double getAverageRating() {
 		return averageRating;
@@ -125,11 +123,11 @@ public class Book implements Identifiable<Long>{
 	}
 
 	public List<Comment> getComment() {
-		return comment;
+		return comments;
 	}
 
-	public void setComment(List<Comment> comment) {
-		this.comment = comment;
+	public void setComment(List<Comment> comments) {
+		this.comments = comments;
 	}
-	
+
 }

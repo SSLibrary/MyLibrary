@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.hateoas.ResourceSupport;
 
+import com.ss.academy.java.model.comment.Comment;
 import com.ss.academy.java.model.rating.Rating;
 
 public class BookResource extends ResourceSupport {
@@ -11,12 +12,14 @@ public class BookResource extends ResourceSupport {
 	private String title;
 	private BookStatus status;
 	private List<Rating> ratings;
-
-	public BookResource(String title, BookStatus status, List<Rating> ratings) {
+	private List<Comment> comments;
+	
+	public BookResource(String title, BookStatus status, List<Rating> ratings, List<Comment> comments) {
 		super();
 		this.title = title;
 		this.status = status;
 		this.ratings = ratings;
+		this.comments = comments;
 	}
 
 	public String getTitle() {
@@ -41,5 +44,13 @@ public class BookResource extends ResourceSupport {
 
 	public void setRatings(List<Rating> ratings) {
 		this.ratings = ratings;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
 	}
 }
