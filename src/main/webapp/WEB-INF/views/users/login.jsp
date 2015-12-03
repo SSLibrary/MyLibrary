@@ -20,19 +20,19 @@
 							</div>
 						</c:if>
 						<div class="input-group input-sm">
-							<div class="col-md-2">
+							<div class="col-md-2" style="padding-top:3px">
 								<label class="input-group-addon" for="username">Username:</label>
 							</div>
-							<div class="col-md-10">
+							<div class="col-md-10" style="left:32px">
 								<input type="text" class="form-control" id="username"
 									name="username" placeholder="Enter Username" autocomplete="off">
 							</div>
 						</div>
 						<div class="input-group input-sm">
-							<div class="col-md-2">
+							<div class="col-md-2" style="padding-top:3px">
 								<label class="input-group-addon" for="password">Password:</label>
 							</div>
-							<div class="col-md-10">
+							<div class="col-md-10" style="left:32px">
 								<input type="password" class="form-control" id="password"
 									name="password" placeholder="Enter Password" autocomplete="off">
 							</div>
@@ -40,7 +40,7 @@
 						<input type="hidden" name="${_csrf.parameterName}"
 							value="${_csrf.token}" />
 
-						<div class="form-actions">
+						<div class="form-actions" style="margin:12px 320px">
 							<input type="submit"
 								class="btn btn-primary" value="Log in">
 						</div>
