@@ -36,10 +36,10 @@ CREATE TABLE `author_books` (
 `author_id` BIGINT UNSIGNED NOT NULL,
 `title` VARCHAR(50) NOT NULL,
 `status` VARCHAR(30) NOT NULL,
-`image` LONGBLOB ,
+`image` LONGBLOB,
 CONSTRAINT `author_books_author` FOREIGN KEY (`author_id`)
 REFERENCES `authors`(`author_id`) ON DELETE CASCADE
-) ENGINE = InnoDB CHARACTER SET=utf8;
+) ENGINE = InnoDB CHARSET=utf8;
 
 --
 -- Sample data for table `author_books`
@@ -64,7 +64,7 @@ create table `users` (
    `role` VARCHAR(30) NOT NULL,
    `status` VARCHAR(30) NOT NULL,
    UNIQUE (username)
-);
+) ENGINE = InnoDB CHARSET=utf8;
 
 --
 -- Populate one Admin User: user/pass - admin/admin
@@ -82,46 +82,44 @@ CREATE TABLE `book_ratings` (
 `user_id` BIGINT UNSIGNED NOT NULL,
 CONSTRAINT `book_ratings_author_books` FOREIGN KEY (`book_id`) REFERENCES `author_books`(`book_id`) ON DELETE CASCADE,
 CONSTRAINT `book_ratings_users` FOREIGN KEY (`user_id`) REFERENCES `users`(`user_id`) ON DELETE CASCADE
-) ENGINE = InnoDB CHARACTER SET=utf8;
+) ENGINE = InnoDB CHARSET=utf8;
 
 
 --
 -- Table structure for table `messages`
 --
 CREATE TABLE `messages` (
-	`message_id` int(6) NOT NULL AUTO_INCREMENT,
-	`header` varchar(60) NOT NULL,
-	`body` text NOT NULL,
+	`message_id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`header` VARCHAR(60) NOT NULL,
+	`body` TEXT NOT NULL,
 	`date` DATETIME NOT NULL DEFAULT NOW(),
-	`sender_id` bigint UNSIGNED NOT NULL,
-	`receiver_id` bigint UNSIGNED NOT NULL,
+	`sender_id` BIGINT UNSIGNED NOT NULL,
+	`receiver_id` BIGINT UNSIGNED NOT NULL,
 	`is_new` TINYINT(1) NOT NULL,
-	`in_reply_to` int(6) NOT NULL,
-	PRIMARY KEY (`message_id`),
+	`in_reply_to` INT(6) NOT NULL,
 	CONSTRAINT `fk_sender_message` FOREIGN KEY (`sender_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
 	CONSTRAINT `fk_receiver_message` FOREIGN KEY (`receiver_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE
-) ENGINE = InnoDB CHARACTER SET=utf8;
+) ENGINE = InnoDB CHARSET=utf8;
 
 --
 -- Table structure for table `comments`
 --
-CREATE TABLE COMMENTS (
-	comment_id int(6) NOT NULL AUTO_INCREMENT,
-	book_id bigint UNSIGNED NOT NULL,
-	user_id bigint UNSIGNED NOT NULL,
-	comment varchar(200) NOT NULL,
-	PRIMARY KEY (comment_id),
-	CONSTRAINT fk_book_comments FOREIGN KEY (book_id) REFERENCES author_books (book_id) ON DELETE CASCADE,
-	CONSTRAINT fk_comments_user FOREIGN KEY (user_id) REFERENCES USERS (user_id) ON DELETE CASCADE
-)ENGINE = InnoDB CHARACTER SET=utf8;
+CREATE TABLE `comments` (
+	`comment_id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`book_id` BIGINT UNSIGNED NOT NULL,
+	`user_id` BIGINT UNSIGNED NOT NULL,
+	`comment` VARCHAR(200) NOT NULL,
+	CONSTRAINT `fk_book_comments` FOREIGN KEY (`book_id`) REFERENCES `author_books` (`book_id`) ON DELETE CASCADE,
+	CONSTRAINT `fk_comments_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE
+) ENGINE = InnoDB CHARACTER SET=utf8;
 
 
 CREATE table `history`(
-id int (6) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-book_id BIGINT UNSIGNED NOT NULL,
-user_id BIGINT UNSIGNED NOT NULL,
-get_date DATETIME NOT NULL DEFAULT NOW(),
-return_date DATETIME NOT NULL,
-CONSTRAINT fk_book_id FOREIGN KEY (book_id) REFERENCES author_books(book_id) ON DELETE CASCADE,
-CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
-)ENGINE = InnoDB CHARSET=utf8;
+	id int (6) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	book_id BIGINT UNSIGNED NOT NULL,
+	user_id BIGINT UNSIGNED NOT NULL,
+	get_date DATETIME NOT NULL DEFAULT NOW(),
+	return_date DATETIME NOT NULL,
+	CONSTRAINT fk_book_id FOREIGN KEY (book_id) REFERENCES author_books(book_id) ON DELETE CASCADE,
+	CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+) ENGINE = InnoDB CHARSET=utf8;
