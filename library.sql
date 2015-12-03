@@ -123,4 +123,12 @@ CREATE TABLE `items` (
 CONSTRAINT  `items_book` FOREIGN KEY (`book_id`) REFERENCES `author_books`(`book_id`) ON DELETE CASCADE
 ) ENGINE = InnoDB CHARSET=utf8;
 
-
+CREATE table `history`(
+id int (6) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+book_id BIGINT UNSIGNED NOT NULL,
+user_id BIGINT UNSIGNED NOT NULL,
+get_date DATETIME NOT NULL DEFAULT NOW(),
+return_date DATETIME NOT NULL,
+CONSTRAINT fk_book_id FOREIGN KEY (book_id) REFERENCES author_books(book_id) ON DELETE CASCADE,
+CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+)ENGINE = InnoDB CHARSET=utf8;
