@@ -1,6 +1,7 @@
 package com.ss.academy.java.model.book;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -22,15 +24,16 @@ public class BookHistory {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@OneToMany(mappedBy = "userId")
+//	@OneToOne(mappedBy = "userId")
 	@Column(name = "user_id")
-	@JsonManagedReference(value = "userId-book")
 	private int userId;
 	
-	@ManyToOne()
 	@Column(name = "book_id")
-	@JsonManagedReference(value = "book-userId")
 	private int bookId;
+	
+	@OneToMany(mappedBy = "userId")
+	@JsonManagedReference(value = "userId-book")
+	private List<Book> books;
 	
 	@Column(name = "get_date")
 	private Date getDate;
