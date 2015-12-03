@@ -1,19 +1,17 @@
 package com.ss.academy.java.model.book;
 
 import java.sql.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.ss.academy.java.model.user.User;
 
 @Entity
 @Table(name = "history")
@@ -24,46 +22,30 @@ public class BookHistory {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-//	@OneToOne(mappedBy = "userId")
-	@Column(name = "user_id")
-	private int userId;
-	
+	@OneToMany(mappedBy = "user")
 	@Column(name = "book_id")
-	private int bookId;
+	@JsonManagedReference(value = "user-book")
+	private Book book;
 	
-	@OneToMany(mappedBy = "userId")
-	@JsonManagedReference(value = "userId-book")
-	private List<Book> books;
+//	@ManyToOne()
+	@Column(name = "user_id")
+	private User user;
 	
-	@Column(name = "get_date")
-	private Date getDate;
-	
-	@Column(name = "return_date")
-	private Date returnDate;
+//	@OneToOne(mappedBy = "userId")
+//	@Column(name = "user_id")
+//	private int userId;
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public int getUserId() {
-		return userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-
-	public int getBookId() {
-		return bookId;
-	}
-
-	public void setBookId(int bookId) {
-		this.bookId = bookId;
-	}
+//	@OneToMany(mappedBy = "userId")
+//	@JsonManagedReference(value = "userId-book")
+//	private List<Book> books;
+//	
+//	public List<Book> getBooks() {
+//		return books;
+//	}
+//
+//	public void setBooks(List<Book> books) {
+//		this.books = books;
+//	}
 
 	public Date getGetDate() {
 		return getDate;
@@ -80,4 +62,36 @@ public class BookHistory {
 	public void setReturnDate(Date returnDate) {
 		this.returnDate = returnDate;
 	}
+
+	public Book getBook() {
+		return book;
+	}
+
+	public void setBook(Book book) {
+		this.book = book;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	@Column(name = "get_date")
+	private Date getDate;
+	
+	@Column(name = "return_date")
+	private Date returnDate;
+
+	public int getId() {
+		return id;
+	}
+
+	
 }
