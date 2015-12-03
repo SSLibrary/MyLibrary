@@ -157,11 +157,18 @@ public class BooksRestController {
 			return new ResponseEntity<BookResource>(HttpStatus.NOT_FOUND);
 		}
 		
+		boolean found = false;
+		
 		for (Book authorBook : authorBooks) {
 			if (authorBook.getId() == book_id) {
 				bookService.updateBook(book);
+				found = true;
 				break;
 			}
+		}
+		
+		if (!found) {
+			return new ResponseEntity<BookResource>(HttpStatus.NOT_FOUND);
 		}
 
 		BookResourceAssembler assembler = new BookResourceAssembler();
