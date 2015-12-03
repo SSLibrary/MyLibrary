@@ -74,4 +74,14 @@ public class BookDaoImpl extends AbstractDao<Long, Book> implements BookDao {
 				.setProjection(Projections.rowCount())
 				.uniqueResult();
 	}
+
+	public void cahngeStatus(Long id) {
+		Query query = getSession().createSQLQuery("UPDATE author_books SET status = CASE "
+				+ "WHEN status = 'Available' THEN 'Loaned' "
+				+ "WHEN status = 'Loaned' THEN 'Available' "
+				+ "ELSE status END WHERE book_id= :id");
+		query.setLong("id", id);
+		query.executeUpdate();
+		
+	}
 }
