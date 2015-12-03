@@ -60,7 +60,7 @@ public class CommentController {
 		
 		Author author = authorService.findById(author_id);
 		Book book = bookService.findById(book_id);
-		List<Comment> comments = book.getComment();
+		List<Comment> comments = book.getComments();
 		model.addAttribute("isEmpty", false);
 		
 		if (comments.isEmpty()) {
@@ -110,7 +110,7 @@ public class CommentController {
 				SecurityContextHolder.getContext().getAuthentication().getName());
 		
 		user.getComment().add(comment);
-		book.getComment().add(comment);
+		book.getComments().add(comment);
 		comment.setUser(user);
 		comment.setBook(book);
 		commentService.saveComment(comment);
@@ -126,7 +126,7 @@ public class CommentController {
 		Comment comment = commentService.findById(comment_id);
 		Book book = bookService.findById(book_id);
 
-		book.getComment().remove(comment);
+		book.getComments().remove(comment);
 		commentService.deleteCommentById(comment_id);
 		
 		return "redirect:/authors/{author_id}/books/{book_id}/comments";

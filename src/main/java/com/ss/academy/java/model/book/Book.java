@@ -127,10 +127,6 @@ public class Book implements Identifiable<Long> {
 		this.author = author;
 	}
 
-	public List<Comment> getComment() {
-		return comments;
-	}
-
 	public void setComment(List<Comment> comments) {
 		this.comments = comments;
 	}
