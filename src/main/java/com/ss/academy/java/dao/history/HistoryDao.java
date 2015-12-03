@@ -7,7 +7,7 @@ import com.ss.academy.java.model.user.User;
 
 public interface HistoryDao {
 
-	List<Book> showMyHistory(User userId);
+	List<Book> showMyHistory();
 
 	void getBook(User userId, Book bookId);
 	

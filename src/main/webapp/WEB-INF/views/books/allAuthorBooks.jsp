@@ -64,6 +64,11 @@
 												Rating</button>
 										</form:form>
 									</div>
+									<div class="btn-group">
+										<form:form action="${book.id}/getbook" method="GET">
+											<button type="submit" class="btn btn-default">Get</button>
+										</form:form>
+									</div>
 								</sec:authorize>
 								<sec:authorize access="hasAuthority('USER')">
 									<c:choose>

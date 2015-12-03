@@ -18,8 +18,8 @@ public class HistoryServiceImpl implements HistoryService {
 //    @Autowired
 //    private UserDao userDao;
 
-    public List<Book> showMyHistory(Long userId) {
-        return dao.showMyHistory(userId);
+    public List<Book> showMyHistory() {
+        return dao.showMyHistory();
     }
 
     public void getBook(User userId, Book bookId) {

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping(value = { "/history" })
+@RequestMapping(value = { "{user_id}/history" })
 public class HistoryController {
 
 	@Autowired
@@ -31,33 +31,32 @@ public class HistoryController {
 	@Autowired
 	HistoryService historyService;
 
-	@RequestMapping(value = { "/" }, method = { RequestMethod.GET })
+	@RequestMapping(value = { "${book_id}/getbook" }, method = { RequestMethod.GET })
 	public String getBook(Long user_id, Long book_id) {
 		User user = this.userService.findById(user_id);
 		Book book = this.bookService.findById(book_id);
 		this.historyService.getBook(user, book);
-		return "redirect:/history/myhistory";
+		return "/authors";
 	}
 
-	@RequestMapping(value = { "/" }, method = { RequestMethod.GET })
+	@RequestMapping(value = { "/history/myhistory" }, method = { RequestMethod.GET })
 	public String returnBook(Long book_id) {
 		Book book = this.bookService.findById(book_id);
 		historyService.returnBook(book);
-		return "redirect:/history/myhistory";
+		return "redirect:/authors";
 	}
 
-	@RequestMapping(value = { "/history" }, method = RequestMethod.GET)
-	public String showMyHistory(HttpServletRequest request, ModelMap model, Long userId,
-			@AuthenticationPrincipal UserDetails userDetails) {
-
-		List<Book> myBooks = historyService.showMyHistory(userId);
+	@RequestMapping(value = { "/myhistory" }, method = RequestMethod.GET)
+	public String showMyHistory(HttpServletRequest request, ModelMap model, User userId) {
+//		User user = userService.findById(id);
+		List<Book> myBooks = historyService.showMyHistory();
 
 		if (myBooks.isEmpty()) {
 			model.addAttribute("emptyListOfBooks", true);
 		}
 		model.addAttribute("books", myBooks);
 
-		return "/myhistory";
+		return "/history/myhistory";
 	}
 
 }

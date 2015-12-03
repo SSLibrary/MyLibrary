@@ -18,13 +18,16 @@ public class HistoryDaoImpl extends AbstractDao<Integer, BookHistory> implements
 	BookDaoImpl bookDao;
 
     @SuppressWarnings("unchecked")
-	public List<Book> showMyHistory(User userId) {
+	public List<Book> showMyHistory() {
+    	Criteria criteria = createEntityCriteria().addOrder(Order.desc("book_id"));
+    	List<Book> history = (List<Book>) criteria.list();
+		return history;
     	
-    	SQLQuery query = this.getSession().createSQLQuery("select * from history where user_id = :userId");
-    	query.setLong("userId", userId.getId());
-    	query.executeUpdate();
-    	List<Book> historyList = query.list();
-    	return historyList;
+//    	SQLQuery query = this.getSession().createSQLQuery("select * from history where user_id = :userId");
+//    	query.setLong("userId", userId.getId());
+//    	query.executeUpdate();
+//    	List<Book> historyList = query.list();
+//    	return historyList;
 //        Criteria criteria = this.createEntityCriteria().addOrder(Order.asc((String)"title"));
 //        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 //        List books = criteria.list();
@@ -32,9 +35,9 @@ public class HistoryDaoImpl extends AbstractDao<Integer, BookHistory> implements
     }
 
     public void getBook(User userId, Book bookId) {
-        SQLQuery query = this.getSession().createSQLQuery("INSERT INTO history VALUES (:userId, :bookId)");
-        query.setLong("userId", userId.getId().longValue());
-        query.setLong("bookId", bookId.getId().longValue());
+        SQLQuery query = this.getSession().createSQLQuery("INSERT INTO history VALUES (?, ?)");
+        query.setLong("user_id", userId.getId().longValue());
+        query.setLong("book_id", bookId.getId().longValue());
         query.executeUpdate();
         bookDao.changeStatus(bookId.getId());
     }
