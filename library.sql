@@ -132,3 +132,4 @@ return_date DATETIME NOT NULL,
 CONSTRAINT fk_book_id FOREIGN KEY (book_id) REFERENCES author_books(book_id) ON DELETE CASCADE,
 CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 )ENGINE = InnoDB CHARSET=utf8;
+
