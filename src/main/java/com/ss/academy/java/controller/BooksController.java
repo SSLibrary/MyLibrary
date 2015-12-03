@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -111,38 +112,17 @@ public class BooksController {
 			List<Book> books = bookService.list(offset, maxResults, id);	
 			Long count = bookService.count(id);
 			 
-			if (books.size() == 0) {
-				model.addAttribute("emptyList", true);
-			} else {
-				for (Book book : books) {
-					List<Rating> bookRatings = book.getRatings();
-					for (Rating rating : bookRatings) {
-						if (rating.getUser().getUsername().equals(userDetails.getUsername())) {
-							book.setIsRated(true);
-							break;
-						}
-					}
-				}
-			}	
-//			
-//			Book findBook = bookService.findById(id);
-//			byte[] itemssssss = itemService.findById(id).getItemContent();
+		
+			byte[] image = itemService.findById(id).getItemContent();
+			
+			Book findBook = bookService.findById(id);
+			byte[] itemssssss = itemService.findById(id).getItemContent();
 //			response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
 //		  
 //			byte[] encodeBase64 = Base64.encodeBase64(itemssssss);
 //			 
 //	   	  	String base64Encoded= new String(encodeBase64, "UTF-8");
-//			 
-//			String base64Encoded = null;
-//		    for (Item item : items) {
-//		    	 
-		    	   
-//				if (item.getUser().getUsername().equals(userDetails.getUsername())) {
-//					book.setIsRated(true);
-//					break;
-		    	  
-//				}
-//		   
+//		  
 //		    model.addAttribute("galleria", base64Encoded );
 //		    response.getOutputStream().close();
 			model.addAttribute("books", books);		
