@@ -114,14 +114,6 @@ CREATE TABLE `comments` (
 ) ENGINE = InnoDB CHARACTER SET=utf8;
 
 
-CREATE TABLE `items` (
-	`itemId` 	BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`itemName`	VARCHAR(50) NOT NULL,
-	`itemContent` 	LONGBLOB NOT NULL,
-	`book_id` bigint UNSIGNED NOT NULL,
-	CONSTRAINT  `items_book` FOREIGN KEY (`book_id`) REFERENCES `author_books`(`book_id`) ON DELETE CASCADE
-) ENGINE = InnoDB CHARSET=utf8;
-
 CREATE table `history`(
 	id int (6) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	book_id BIGINT UNSIGNED NOT NULL,
