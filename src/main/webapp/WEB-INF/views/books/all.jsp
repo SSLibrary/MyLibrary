@@ -22,7 +22,12 @@
 						</div>
 					</div>
 				</form:form>
-				<div class="row">				
+				<div class="row">	
+				<!-- 
+					<div class="col-md-3 col-xs-6 text-center">
+						<h2>Picture</h2>
+					</div>
+					-->			
 					<div class="col-md-3 col-xs-6 text-center">
 						<h2>Title</h2>
 					</div>
@@ -31,7 +36,11 @@
 					</div>
 				</div>
 				<c:forEach items="${books}" var="book">
-					<div class="row">						
+					<div class="row">
+				<!-- 	<div class="col-md-3 col-xs-6 text-center">
+							<img src="data:image/jpeg;base64,${galleria.itemContent.encodeBase64()}"/>	
+						</div>	
+						 -->									
 						<div class="col-md-3 col-xs-6 text-center">
 							<h4>${book.title}</h4>
 						</div>

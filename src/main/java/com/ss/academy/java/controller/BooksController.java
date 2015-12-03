@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,11 +29,11 @@ import com.ss.academy.java.model.rating.Rating;
 import com.ss.academy.java.model.user.User;
 import com.ss.academy.java.service.author.AuthorService;
 import com.ss.academy.java.service.book.BookService;
+import com.ss.academy.java.service.item.ItemService;
 import com.ss.academy.java.service.message.MessageService;
 import com.ss.academy.java.service.rating.RatingService;
 import com.ss.academy.java.service.user.UserService;
 import com.ss.academy.java.util.UnreadMessagesCounter;
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 /**
  * Handles requests for the application authors' books page.
@@ -41,6 +42,9 @@ import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 @RequestMapping(value = "/authors/{id}/books")
 public class BooksController {
 
+	@Autowired
+	ItemService itemService;
+	
 	@Autowired
 	BookService bookService;
 
@@ -62,7 +66,7 @@ public class BooksController {
 	 */
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String listAllBooks(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long id, ModelMap model,
-			Integer offset, Integer maxResults,HttpServletResponse response,HttpServletRequest request) throws UnsupportedEncodingException {
+			Integer offset, Integer maxResults){
 		
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();	
@@ -95,6 +99,63 @@ public class BooksController {
 		model.addAttribute("unread", unread);
 		return "books/all";
 	}
+	
+	 
+		@RequestMapping(value = { "/{id}/images" }, method = RequestMethod.GET)
+		public String listBooksItems(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long id, ModelMap model,
+				Integer offset, Integer maxResults,HttpServletResponse response,HttpServletRequest request) throws UnsupportedEncodingException {
+			
+			User user = userService.findByUsername(userDetails.getUsername());
+			List<Message> messages = user.getReceivedMessage();	
+			int unread = UnreadMessagesCounter.counter(messages);
+			
+			
+			
+			Author author = authorService.findById(id);		
+			List<Book> books = bookService.list(offset, maxResults, id);	
+			Long count = bookService.count(id);
+			 
+			if (books.size() == 0) {
+				model.addAttribute("emptyList", true);
+			} else {
+				for (Book book : books) {
+					List<Rating> bookRatings = book.getRatings();
+					for (Rating rating : bookRatings) {
+						if (rating.getUser().getUsername().equals(userDetails.getUsername())) {
+							book.setIsRated(true);
+							break;
+						}
+					}
+				}
+			}	
+//			
+//			Book findBook = bookService.findById(id);
+//			byte[] itemssssss = itemService.findById(id).getItemContent();
+//			response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+//		  
+//			byte[] encodeBase64 = Base64.encodeBase64(itemssssss);
+//			 
+//	   	  	String base64Encoded= new String(encodeBase64, "UTF-8");
+//			 
+//			String base64Encoded = null;
+//		    for (Item item : items) {
+//		    	 
+		    	   
+//				if (item.getUser().getUsername().equals(userDetails.getUsername())) {
+//					book.setIsRated(true);
+//					break;
+		    	  
+//				}
+//		   
+//		    model.addAttribute("galleria", base64Encoded );
+//		    response.getOutputStream().close();
+			model.addAttribute("books", books);		
+			model.addAttribute("count", count);			
+			model.addAttribute("offset", offset);
+			model.addAttribute("author", author);
+			model.addAttribute("unread", unread);
+			return "books/all";
+		}
 
 	/*
 	 * This method provides the ability to search for books by their titles.

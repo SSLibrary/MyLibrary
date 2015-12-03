@@ -125,6 +125,13 @@
 			<artifactId>tiles-extras</artifactId>
 			<version>${apache.tiles}</version>
 		</dependency>
+		
+		<!-- Apache Base64 -->
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.9</version>
+		</dependency>
 
 		<!-- Servlet+JSP+JSTL -->
 		<dependency>
