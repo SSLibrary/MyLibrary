@@ -43,7 +43,7 @@ public class HistoryController {
 	public String returnBook(Long book_id) {
 		Book book = this.bookService.findById(book_id);
 		historyService.returnBook(book);
-		return "redirect:/myhistory";
+		return "redirect:/history/myhistory";
 	}
 
 	@RequestMapping(value = { "/history" }, method = RequestMethod.GET)
@@ -57,7 +57,7 @@ public class HistoryController {
 		}
 		model.addAttribute("books", myBooks);
 
-		return "/history";
+		return "/myhistory";
 	}
 
 }
