@@ -85,7 +85,7 @@ public class User implements Identifiable<Long>{
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference(value = "user-comments")
-	private List<Comment> comment;
+	private List<Comment> comments;
     
 	public Long getId() {
 		return id;
@@ -159,12 +159,12 @@ public class User implements Identifiable<Long>{
 		this.receivedMessage = receivedMessage;
 	}
 
-	public List<Comment> getComment() {
-		return comment;
+	public List<Comment> getComments() {
+		return comments;
 	}
 
-	public void setComment(List<Comment> comment) {
-		this.comment = comment;
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
 	}
 	
 	

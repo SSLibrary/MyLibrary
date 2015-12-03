@@ -109,7 +109,7 @@ public class CommentController {
 		User user = userService.findByUsername(
 				SecurityContextHolder.getContext().getAuthentication().getName());
 		
-		user.getComment().add(comment);
+		user.getComments().add(comment);
 		book.getComments().add(comment);
 		comment.setUser(user);
 		comment.setBook(book);
