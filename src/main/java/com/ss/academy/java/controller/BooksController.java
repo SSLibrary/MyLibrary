@@ -1,6 +1,5 @@
 package com.ss.academy.java.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,11 +26,12 @@ import com.ss.academy.java.model.rating.Rating;
 import com.ss.academy.java.model.user.User;
 import com.ss.academy.java.service.author.AuthorService;
 import com.ss.academy.java.service.book.BookService;
-import com.ss.academy.java.service.item.ItemService;
 import com.ss.academy.java.service.message.MessageService;
 import com.ss.academy.java.service.rating.RatingService;
 import com.ss.academy.java.service.user.UserService;
 import com.ss.academy.java.util.UnreadMessagesCounter;
+
+import sun.misc.BASE64Encoder;
 
 /**
  * Handles requests for the application authors' books page.
@@ -41,9 +40,6 @@ import com.ss.academy.java.util.UnreadMessagesCounter;
 @RequestMapping(value = "/authors/{id}/books")
 public class BooksController {
 
-	@Autowired
-	ItemService itemService;
-	
 	@Autowired
 	BookService bookService;
 
@@ -69,9 +65,7 @@ public class BooksController {
 		
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();	
-		int unread = UnreadMessagesCounter.counter(messages);
-		
-		
+		int unread = UnreadMessagesCounter.counter(messages);		
 		
 		Author author = authorService.findById(id);		
 		List<Book> books = bookService.list(offset, maxResults, id);	
@@ -100,35 +94,28 @@ public class BooksController {
 	}
 	
 	 
-		@RequestMapping(value = { "/{id}/images" }, method = RequestMethod.GET)
-		public String listBooksItems(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long id, ModelMap model,
-				Integer offset, Integer maxResults,HttpServletResponse response,HttpServletRequest request) throws UnsupportedEncodingException {
+		@RequestMapping(value = { "/{id}/image" }, method = RequestMethod.GET)
+		public String listBooksItems( @PathVariable Long id, ModelMap model,
+				Integer offset, Integer maxResults,HttpServletResponse response,HttpServletRequest request) {
 			
-			User user = userService.findByUsername(userDetails.getUsername());
-			List<Message> messages = user.getReceivedMessage();	
-			int unread = UnreadMessagesCounter.counter(messages);		
+//			PartnerRegistrationIndividual PartRegIndv =(PartnerRegistrationIndividual) objnew;
+//			Blob imgdata=bookService.findById(id).getImage();
+//	        imgdata.getBinaryStream();
+//	        OutputStream output = response.getOutputStream();
+//	        response.setContentType("image/jpeg");
+//	        response.getOutputStream().flush();
+//	        response.getOutputStream().close();
 			
-			Author author = authorService.findById(id);		
-			List<Book> books = bookService.list(offset, maxResults, id);	
-			Long count = bookService.count(id);
-			 
-		
-			byte[] image = itemService.findById(id).getItemContent();
-			
-			Book findBook = bookService.findById(id);
-			byte[] itemssssss = itemService.findById(id).getItemContent();
-//			response.setContentType("image/jpeg, image/jpg, image/png, image/gif");//		  
-//			byte[] encodeBase64 = Base64.encodeBase64(itemssssss);//			 
-//	   	  	String base64Encoded= new String(encodeBase64, "UTF-8");
-//		  
-//		    model.addAttribute("galleria", base64Encoded );
-//		    response.getOutputStream().close();
-			model.addAttribute("books", books);		
-			model.addAttribute("count", count);			
-			model.addAttribute("offset", offset);
-			model.addAttribute("author", author);
-			model.addAttribute("unread", unread);
-			return "books/all";
+
+			byte [] bytes = bookService.findById(id).getImage();
+			BASE64Encoder base64Encoder = new BASE64Encoder();
+	        StringBuilder imageString = new StringBuilder();
+	        imageString.append("data:image/png;base64,");
+	        imageString.append(base64Encoder.encode(bytes));
+	        String image = imageString.toString();
+	        
+			model.addAttribute("image", image);			
+			return "books/image";
 		}
 
 	/*
@@ -182,6 +169,7 @@ public class BooksController {
 		}
 
 		Author author = authorService.findById(id);
+//		author.getBooks().add(book);s
 		author.getBooks().add(book);
 		book.setAuthor(author);
 		bookService.saveBook(book);
