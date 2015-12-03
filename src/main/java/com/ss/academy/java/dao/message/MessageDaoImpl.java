@@ -34,7 +34,7 @@ public class MessageDaoImpl extends AbstractDao<Integer, Message> implements Mes
 	
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public List<Message> listOfSentMessage(Integer offset, Integer maxResults, String username){
+	public List<Message> listAllSentMessages(Integer offset, Integer maxResults, String username){
 		List<Message> list= (List<Message>)getSession()
 				.createCriteria(Message.class, "message")
 				.createAlias("message.sender", "sm") // inner join by default				
@@ -46,7 +46,7 @@ public class MessageDaoImpl extends AbstractDao<Integer, Message> implements Mes
 		return list;
 	}
 	
-	public Long countOfSentMessage(String username){
+	public Long countSentMessages(String username){
 		return (Long)getSession()
 				.createCriteria(Message.class, "message")
 				.createAlias("message.sender", "sm") // inner join by default
@@ -57,7 +57,7 @@ public class MessageDaoImpl extends AbstractDao<Integer, Message> implements Mes
 	
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public List<Message> listOfReceivedMessage(Integer offset, Integer maxResults, String username){		
+	public List<Message> listAllReceivedMessages(Integer offset, Integer maxResults, String username){		
 		List<Message> list= (List<Message>) getSession()
 				.createCriteria(Message.class, "message")
 				.createAlias("message.receiver", "rm") // inner join by default
@@ -69,7 +69,7 @@ public class MessageDaoImpl extends AbstractDao<Integer, Message> implements Mes
 		return list;
 	}
 	
-	public Long countOfReceivedMessage(String username){
+	public Long countReceivedMessages(String username){
 		return (Long)getSession()
 				.createCriteria(Message.class, "message")
 				.createAlias("message.receiver", "rm") // inner join by default

@@ -60,7 +60,11 @@ public class Book implements Identifiable<Long> {
 	private List<Comment> comments;
 
 	@OneToMany(mappedBy = "items")
+<<<<<<< .mine
 	@JsonManagedReference(value = "book-items")
+=======
+	@JsonManagedReference(value = "book-images")
+>>>>>>> .theirs
 	private List<Item> items;
 	
 	@Transient
@@ -125,10 +129,6 @@ public class Book implements Identifiable<Long> {
 
 	public void setAuthor(Author author) {
 		this.author = author;
-	}
-
-	public List<Comment> getComment() {
-		return comments;
 	}
 
 	public void setComment(List<Comment> comments) {

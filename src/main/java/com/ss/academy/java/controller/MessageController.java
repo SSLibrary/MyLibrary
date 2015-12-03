@@ -1,7 +1,6 @@
 package com.ss.academy.java.controller;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -40,8 +39,8 @@ public class MessageController {
 		List<Message> allMessages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(allMessages);
 
-		List<Message> messages = messageService.listOfReceivedMessage(offset, maxResults, userDetails.getUsername());
-		Long count = messageService.countOfReceivedMessage(userDetails.getUsername());
+		List<Message> messages = messageService.listAllReceivedMessages(offset, maxResults, userDetails.getUsername());
+		Long count = messageService.countReceivedMessages(userDetails.getUsername());
 		
 		model.addAttribute("isEmpty", messages.isEmpty());
 		model.addAttribute("messages", messages);		
@@ -60,10 +59,9 @@ public class MessageController {
 		List<Message> allMessages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(allMessages);
 		
-		List<Message> messages = messageService.listOfSentMessage(offset, maxResults, userDetails.getUsername());
-		Long count = messageService.countOfSentMessage(userDetails.getUsername());		
+		List<Message> messages = messageService.listAllSentMessages(offset, maxResults, userDetails.getUsername());
+		Long count = messageService.countSentMessages(userDetails.getUsername());		
 		
-		Collections.sort(messages);
 		model.addAttribute("isEmpty", messages.isEmpty());
 		model.addAttribute("messages", messages);		
 		model.addAttribute("count", count);			

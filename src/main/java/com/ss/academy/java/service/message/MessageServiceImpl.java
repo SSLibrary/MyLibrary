@@ -39,19 +39,19 @@ public class MessageServiceImpl implements MessageService {
 		}		
 	}
 
-	public List<Message> listOfSentMessage(Integer offset, Integer maxResults, String username) {		
-		return dao.listOfSentMessage(offset, maxResults, username);
+	public List<Message> listAllSentMessages(Integer offset, Integer maxResults, String username) {		
+		return dao.listAllSentMessages(offset, maxResults, username);
 	}
 
-	public Long countOfSentMessage(String username) {
-		return dao.countOfSentMessage(username);
+	public Long countSentMessages(String username) {
+		return dao.countSentMessages(username);
 	}
 	
-	public List<Message> listOfReceivedMessage(Integer offset, Integer maxResults, String username) {		
-		return dao.listOfReceivedMessage(offset, maxResults, username);
+	public List<Message> listAllReceivedMessages(Integer offset, Integer maxResults, String username) {		
+		return dao.listAllReceivedMessages(offset, maxResults, username);
 	}
 
-	public Long countOfReceivedMessage(String username) {
-		return dao.countOfReceivedMessage(username);
+	public Long countReceivedMessages(String username) {
+		return dao.countReceivedMessages(username);
 	}	
 }

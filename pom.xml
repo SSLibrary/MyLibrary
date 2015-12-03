@@ -12,7 +12,7 @@
 		<springframework.version>4.2.2.RELEASE</springframework.version>
 		<springsecurity.version>4.0.3.RELEASE</springsecurity.version>
 		<hibernate.version>4.3.6.Final</hibernate.version>
-		<mysql.connector.version>5.1.31</mysql.connector.version>		
+		<mysql.connector.version>5.1.31</mysql.connector.version>
 		<apache.tiles>3.0.5</apache.tiles>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -88,7 +88,7 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.connector.version}</version>
 		</dependency>
-		
+
 		<!-- Apache Tiles -->
 		<dependency>
 			<groupId>org.apache.tiles</groupId>
@@ -149,8 +149,8 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-		
-			<!-- Logging -->
+
+		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -210,6 +210,14 @@
 						<warSourceDirectory>src/main/webapp</warSourceDirectory>
 						<warName>MyLibrary</warName>
 						<failOnMissingWebXml>false</failOnMissingWebXml>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.0.2</version>
+					<configuration>
+						<source>1.8</source>
+						<target>1.8</target>
 					</configuration>
 				</plugin>
 			</plugins>
