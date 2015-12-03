@@ -81,7 +81,6 @@ public class BookDaoImpl extends AbstractDao<Long, Book> implements BookDao {
 				+ "WHEN status = 'Loaned' THEN 'Available' "
 				+ "ELSE status END WHERE book_id= :id");
 		query.setLong("id", id);
-		query.executeUpdate();
-		
+		query.executeUpdate();		
 	}
 }
