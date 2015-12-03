@@ -21,7 +21,7 @@
 		</sec:authorize>
 	</ul>
 	<sec:authorize access="isAuthenticated()">
-		<p class="text-right">
+		<p class="text-right" style="padding:4px">
 			Hello, <strong>${user}</strong>
 		</p>
 		<form action="/MyLibrary/logout" method="post"

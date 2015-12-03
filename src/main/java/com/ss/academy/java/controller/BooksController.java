@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ss.academy.java.model.author.Author;
 import com.ss.academy.java.model.book.Book;
 import com.ss.academy.java.model.book.BookStatus;
-import com.ss.academy.java.model.item.Item;
 import com.ss.academy.java.model.message.Message;
 import com.ss.academy.java.model.rating.Rating;
 import com.ss.academy.java.model.user.User;
@@ -107,9 +105,7 @@ public class BooksController {
 			
 			User user = userService.findByUsername(userDetails.getUsername());
 			List<Message> messages = user.getReceivedMessage();	
-			int unread = UnreadMessagesCounter.counter(messages);
-			
-			
+			int unread = UnreadMessagesCounter.counter(messages);		
 			
 			Author author = authorService.findById(id);		
 			List<Book> books = bookService.list(offset, maxResults, id);	
