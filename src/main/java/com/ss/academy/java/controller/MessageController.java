@@ -78,11 +78,17 @@ public class MessageController {
 	@RequestMapping(value = { "/{user_id}/new" }, method = RequestMethod.GET)
 	public String sendNewMessage(ModelMap model, @PathVariable Long user_id,
 			@AuthenticationPrincipal UserDetails userDetails) {
+		User user = userService.findById(user_id);
+		
+		if (user == null) {
+			return "redirect:/{user_id}/messages/inbox";
+		}
+		
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> allMessages = currentUser.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(allMessages);
 
-		User user = userService.findById(user_id);
+		
 		Message message = new Message();
 		model.addAttribute("message", message);
 		model.addAttribute("receiver", user.getUsername());
@@ -115,11 +121,20 @@ public class MessageController {
 	public String replyToMessage(ModelMap model, @PathVariable Integer message_id,
 			@AuthenticationPrincipal UserDetails userDetails) {
 		Message parent = messageService.findById(message_id);
-
+		if (parent == null) {
+			return "redirect:/{user_id}/messages/inbox";
+		}
+		
+		if (!parent.getReceiver().getUsername().equals(userDetails.getUsername()) &&
+				!parent.getSender().getUsername().equals(userDetails.getUsername())) {
+			return "redirect:/{user_id}/messages/inbox";
+		}
+		
 		if (parent.getIsNew() == 1) {
 			messageService.updateMessageStatus(parent);
 		}
 
+		
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> allMessages = currentUser.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(allMessages);
@@ -172,6 +187,17 @@ public class MessageController {
 		int unread = UnreadMessagesCounter.counter(allMessages);
 
 		Message parent = messageService.findById(message_id);
+		
+		if (parent == null) {
+			return "redirect:/{user_id}/messages/outbox";
+		}
+		
+		if (!parent.getReceiver().getUsername().equals(userDetails.getUsername()) &&
+				!parent.getSender().getUsername().equals(userDetails.getUsername())) {
+			return "redirect:/{user_id}/messages/outbox";
+		}
+		
+		
 		List<Message> previousMessages = new ArrayList<Message>();
 		previousMessages.add(parent);
 

@@ -31,7 +31,7 @@ public class HistoryController {
 	@Autowired
 	HistoryService historyService;
 
-	@RequestMapping(value = { "/{book_id}" }, method = { RequestMethod.GET })
+	/*@RequestMapping(value = { "/{book_id}" }, method = { RequestMethod.GET })
 	public String getBook(Long user_id, Long book_id) {
 		User user = this.userService.findById(user_id);
 		Book book = this.bookService.findById(book_id);
@@ -44,7 +44,7 @@ public class HistoryController {
 		Book book = this.bookService.findById(book_id);
 		historyService.returnBook(book);
 		return "redirect:/history/myhistory";
-	}
+	}*/
 
 	@RequestMapping(value = { "/history" }, method = RequestMethod.GET)
 	public String showMyHistory(HttpServletRequest request, ModelMap model, Long userId,

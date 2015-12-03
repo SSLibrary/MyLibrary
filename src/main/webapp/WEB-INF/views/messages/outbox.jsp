@@ -9,7 +9,7 @@
 				<h3 class="text-center">There are no messages sent!</h3>
  	 		</c:when>
 			<c:otherwise>		
-				<table class="table table-striped">	
+				<table class="table">	
 					<c:forEach items="${messages}" var="message">
 						<tr>
 								<td>To: <i>${message.receiver.username}</i></td>
