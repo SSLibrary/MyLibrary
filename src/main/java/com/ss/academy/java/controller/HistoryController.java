@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping(value = { "/authors/{id}/books" })
+@RequestMapping(value = { "/history" })
 public class HistoryController {
 
 	@Autowired
@@ -31,15 +31,15 @@ public class HistoryController {
 	@Autowired
 	HistoryService historyService;
 
-	@RequestMapping(value = { "/{book_id}" }, method = { RequestMethod.GET })
+	@RequestMapping(value = { "/" }, method = { RequestMethod.GET })
 	public String getBook(Long user_id, Long book_id) {
 		User user = this.userService.findById(user_id);
 		Book book = this.bookService.findById(book_id);
 		this.historyService.getBook(user, book);
-		return "redirect:/myhistory";
+		return "redirect:/history/myhistory";
 	}
 
-	@RequestMapping(value = { "/{book_id}" }, method = { RequestMethod.GET })
+	@RequestMapping(value = { "/" }, method = { RequestMethod.GET })
 	public String returnBook(Long book_id) {
 		Book book = this.bookService.findById(book_id);
 		historyService.returnBook(book);
