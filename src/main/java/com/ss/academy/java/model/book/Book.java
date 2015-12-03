@@ -25,7 +25,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ss.academy.java.model.author.Author;
 import com.ss.academy.java.model.comment.Comment;
-import com.ss.academy.java.model.item.Item;
 import com.ss.academy.java.model.rating.Rating;
 
 @Entity
@@ -63,11 +62,7 @@ public class Book implements Identifiable<Long> {
 	@OneToMany(mappedBy = "book")
 	@JsonManagedReference(value = "book-comments")
 	private List<Comment> comments;
-
-	@OneToMany(mappedBy = "items")
-	@JsonManagedReference(value = "book-images")
-	private List<Item> items;
-
+	
 	@Transient
 	@JsonIgnore
 	private boolean isRated;
@@ -132,30 +127,14 @@ public class Book implements Identifiable<Long> {
 		this.author = author;
 	}
 
-	public void setComment(List<Comment> comments) {
+
+	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
 
-	/**
-	 * @return the comments
-	 */
+	
 	public List<Comment> getComments() {
 		return comments;
-	}
-
-	/**
-	 * @return the items
-	 */
-	public List<Item> getItems() {
-		return items;
-	}
-
-	/**
-	 * @param items
-	 *            the items to set
-	 */
-	public void setItems(List<Item> items) {
-		this.items = items;
 	}
 
 	/**

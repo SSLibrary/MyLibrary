@@ -15,25 +15,25 @@ import com.ss.academy.java.model.book.Book;
 import com.ss.academy.java.model.user.User;
 
 @Entity
-@Table(name = "COMMENTS")
+@Table(name = "comments")
 public class Comment {
-	
+
 	@Id
-	@Column(name = "COMMENT_ID", nullable = false)
+	@Column(name = "comment_id", nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer comment_id;
-	
+
 	@Size(max = 200)
-	@Column(name = "COMMENT", nullable = false)
+	@Column(name = "comment", nullable = false)
 	private String comment;
-	
+
 	@ManyToOne
-	@JoinColumn(name = "BOOK_ID")
+	@JoinColumn(name = "book_id")
 	@JsonBackReference(value = "book-comments")
 	private Book book;
-	
+
 	@ManyToOne
-	@JoinColumn(name = "USER_ID")
+	@JoinColumn(name = "user_id")
 	@JsonBackReference(value = "user-comments")
 	private User user;
 
@@ -69,4 +69,3 @@ public class Comment {
 		this.user = user;
 	}
 }
-	

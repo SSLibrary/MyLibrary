@@ -18,11 +18,11 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ss.academy.java.model.user.User;
 
 @Entity
-@Table(name = "MESSAGES")
+@Table(name = "messages")
 public class Message {
 
 	@Id
-	@Column(name = "MESSAGE_ID", nullable = false)
+	@Column(name = "message_id", nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer message_id;
 
@@ -32,28 +32,27 @@ public class Message {
 
 	@Column(name = "body", nullable = false)
 	private String body;
-	
-	@Type(type="timestamp")
+
+	@Type(type = "timestamp")
 	@Column(name = "date", nullable = false)
-    private Date date = new Date();
+	private Date date = new Date();
 
 	@Column(name = "is_new", nullable = false)
 	private int isNew = 1;
-	
+
 	@Column(name = "in_reply_to", nullable = false)
 	private Integer in_reply_to = 0;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "sender_id")
 	@JsonBackReference(value = "sent-messages")
 	private User sender;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "receiver_id")
 	@JsonBackReference(value = "received-messages")
 	private User receiver;
-	
-	
+
 	public Integer getMessage_id() {
 		return message_id;
 	}
@@ -116,12 +115,5 @@ public class Message {
 
 	public void setReceiver(User receiver) {
 		this.receiver = receiver;
-	}
-	
-
-	@Override
-	public String toString() {
-		return "Messages [message_id=" + message_id + ", header=" + header + ", body=" + body 
-			 + ", date=" + date + "]";
 	}
 }

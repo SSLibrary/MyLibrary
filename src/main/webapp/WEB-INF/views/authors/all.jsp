@@ -58,15 +58,10 @@
 			</div>
 			<br />
 		</c:forEach>
-		<br />
-			<!-- pagination -->		
-					<tag:paginate max="15" offset="${offset}" count="${count}"
-   						uri="../authors/" next="&raquo;" previous="&laquo;" /> 
-   			<!-- end of pagination -->		
+		<br />	
 		<sec:authorize access="hasAuthority('ADMIN')">
 			<div class="row">
-				<div class="col-md-2"></div>
-				<div class="col-md-8 ">
+				<div class="col-md-4">
 					<form:form action="/MyLibrary/authors/new/" method="GET">
 						<button type="submit" class="btn btn-primary btn-block">Add
 							New Author</button>
@@ -74,4 +69,10 @@
 				</div>
 			</div>
 		</sec:authorize>
+			<!-- pagination -->
+				<div class="text-center">	
+					<tag:paginate max="15" offset="${offset}" count="${count}"
+   						uri="../authors/" next="&raquo;" previous="&laquo;" /> 
+   				</div>	
+   			<!-- end of pagination -->	
 		

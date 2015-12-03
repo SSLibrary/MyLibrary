@@ -33,6 +33,8 @@
 		</c:otherwise>
 		</c:choose>
 			<!-- pagination -->		
+				<div class="text-center">	
 					<tag:paginate max="15" offset="${offset}" count="${count}"
    						uri="../messages/inbox" next="&raquo;" previous="&laquo;" /> 
+   				</div>
    			<!-- end of pagination -->	

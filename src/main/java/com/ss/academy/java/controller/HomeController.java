@@ -32,7 +32,7 @@ public class HomeController {
 
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	MessageService messageService;
 
@@ -42,26 +42,25 @@ public class HomeController {
 	@RequestMapping(value = { "/" })
 	public String home(@AuthenticationPrincipal UserDetails user, ModelMap model) {
 		model.addAttribute("logged", false);
-		
+
 		if (user != null) {
 			User currentUser = userService.findByUsername(user.getUsername());
-			List<Message> messages = currentUser.getReceivedMessage();	
+			List<Message> messages = currentUser.getReceivedMessage();
 			int unread = UnreadMessagesCounter.counter(messages);
 			model.addAttribute("logged", true);
 			model.addAttribute("unread", unread);
 			model.addAttribute("user", currentUser.getUsername());
 		}
-		
+
 		int authorsCount = authorService.findAllAuthors().size();
 		int booksCount = bookService.findAllBooks().size();
 		int usersCount = userService.findAllUsers().size();
-		
+
 		model.addAttribute("authorsCount", authorsCount);
 		model.addAttribute("booksCount", booksCount);
 		model.addAttribute("usersCount", usersCount);
-		
+
 		return "home";
 	}
-	
 
 }

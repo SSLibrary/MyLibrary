@@ -22,12 +22,7 @@
 						</div>
 					</div>
 				</form:form>
-				<div class="row">	
-				<!-- 
-					<div class="col-md-3 col-xs-6 text-center">
-						<h2>Picture</h2>
-					</div>
-					-->			
+				<div class="row">						
 					<div class="col-md-3 col-xs-6 text-center">
 						<h2>Title</h2>
 					</div>
@@ -36,13 +31,11 @@
 					</div>
 				</div>
 				<c:forEach items="${books}" var="book">
-					<div class="row">
-				<!-- 	<div class="col-md-3 col-xs-6 text-center">
-							<img src="data:image/jpeg;base64,${galleria.itemContent.encodeBase64()}"/>	
-						</div>	
-						 -->									
-						<div class="col-md-3 col-xs-6 text-center">
-							<h4>${book.title}</h4>
+					<div class="row">																					
+						<div class="col-md-3 col-xs-6 text-center">							
+							<h4>
+								<a href="<c:url value='../books/${book.id}/image' />" >${book.title}</a>
+							</h4>
 						</div>
 						<div class="col-md-3 col-xs-6 text-center">
 							<h4>${book.status}</h4>
@@ -51,7 +44,7 @@
 							<div class="btn-group btn-group-justified">
 							<div class="btn-group">
 										<form:form action="${book.id}/comments" method="GET">
-											<button type="submit" class="btn btn-success">Show all comments</button>
+											<button type="submit" class="btn btn-success">Comments</button>
 										</form:form>
 									</div>
 								<sec:authorize access="hasAuthority('ADMIN')">
@@ -100,11 +93,7 @@
 				</c:forEach>
 				<br />
 			</c:otherwise>
-		</c:choose>
-			<!-- pagination -->		
-					<tag:paginate max="15" offset="${offset}" count="${count}"
-   						uri="../books/" next="&raquo;" previous="&laquo;" /> 
-   			<!-- end of pagination -->	
+		</c:choose>			
 		<br />
 		<sec:authorize access="hasAuthority('ADMIN')">
 			<div class="row">
@@ -117,3 +106,9 @@
 				</div>
 			</div>
 		</sec:authorize>
+			<!-- pagination -->
+				<div class="centered" style="top:780px;position:absolute;">	
+					<tag:paginate max="15" offset="${offset}" count="${count}"
+   						uri="../books/" next="&raquo;" previous="&laquo;" /> 
+   				</div>	
+   			<!-- end of pagination -->	

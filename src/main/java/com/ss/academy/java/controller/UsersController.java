@@ -27,7 +27,7 @@ import com.ss.academy.java.service.user.UserService;
 import com.ss.academy.java.util.UnreadMessagesCounter;
 
 /**
- * Handles requests for the application users page plus user login & registration.
+ * Handles requests for the application users page plus user login/registration.
  */
 @Controller
 @RequestMapping(value = "/")
@@ -41,7 +41,7 @@ public class UsersController {
 
 	@Autowired
 	MessageSource messageSource;
-	
+
 	@Autowired
 	MessageService messageService;
 
@@ -49,17 +49,17 @@ public class UsersController {
 	 * This method will list all existing users.
 	 */
 	@RequestMapping(value = { "/users" }, method = RequestMethod.GET)
-	public String listAllUsers(@AuthenticationPrincipal UserDetails userDetails, ModelMap model, 
-			Integer offset, Integer maxResults) {
+	public String listAllUsers(@AuthenticationPrincipal UserDetails userDetails, ModelMap model, Integer offset,
+			Integer maxResults) {
 		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getReceivedMessage();	
+		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
-		
-		 model.addAttribute("allUsers", userService.list(offset, maxResults));
-		 model.addAttribute("count", userService.count());
-		 model.addAttribute("offset", offset);
-		 model.addAttribute("unread", unread);
-		   
+
+		model.addAttribute("allUsers", userService.list(offset, maxResults));
+		model.addAttribute("count", userService.count());
+		model.addAttribute("offset", offset);
+		model.addAttribute("unread", unread);
+
 		return "users/all";
 	}
 
@@ -75,7 +75,8 @@ public class UsersController {
 	}
 
 	/*
-	 * This method provides the ability the admin to be able to update the users' status.
+	 * This method provides the ability the admin to be able to update the
+	 * users' status.
 	 */
 	@RequestMapping(value = { "/users/{id}" }, method = RequestMethod.PUT)
 	public String updateUserStatus(ModelMap model, @PathVariable Long id) {
@@ -87,7 +88,8 @@ public class UsersController {
 	}
 
 	/*
-	 * This method will provide the medium to log in existing user into the system.
+	 * This method will provide the medium to log in existing user into the
+	 * system.
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginPage() {
@@ -107,7 +109,8 @@ public class UsersController {
 
 	/*
 	 * This method will be called on form submission, handling POST request for
-	 * saving user in database. It also validates the user input and check whether the username is unique.
+	 * saving user in database. It also validates the user input and check
+	 * whether the username is unique.
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String registerUser(@ModelAttribute @Valid User user, BindingResult result) {
