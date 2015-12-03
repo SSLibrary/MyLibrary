@@ -59,12 +59,8 @@ public class Book implements Identifiable<Long> {
 	@JsonManagedReference(value = "book-comments")
 	private List<Comment> comments;
 
-	@OneToMany(mappedBy = "items")
-<<<<<<< .mine
-	@JsonManagedReference(value = "book-items")
-=======
+
 	@JsonManagedReference(value = "book-images")
->>>>>>> .theirs
 	private List<Item> items;
 	
 	@Transient
@@ -140,20 +136,6 @@ public class Book implements Identifiable<Long> {
 	 */
 	public List<Comment> getComments() {
 		return comments;
-	}
-
-	/**
-	 * @param comments the comments to set
-	 */
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
-	}
-
-	/**
-	 * @param isRated the isRated to set
-	 */
-	public void setRated(boolean isRated) {
-		this.isRated = isRated;
 	}
 
 	/**
