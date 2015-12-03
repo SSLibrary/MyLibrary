@@ -21,7 +21,9 @@
 				</table>
 				</c:otherwise>				
 		</c:choose>	
-			<!-- pagination -->		
+			<!-- pagination -->	
+			<div class="text-center">		
 					<tag:paginate max="15" offset="${offset}" count="${count}"
    						uri="../messages/outbox" next="&raquo;" previous="&laquo;" /> 
+   			</div>
    			<!-- end of pagination -->	
