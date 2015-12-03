@@ -59,7 +59,7 @@ public class Book implements Identifiable<Long> {
 	@OneToMany(mappedBy = "book")
 	@JsonManagedReference(value = "book-ratings")
 	private List<Rating> ratings;
-	
+
 	@OneToMany(mappedBy = "book")
 	@JsonManagedReference(value = "book-comments")
 	private List<Comment> comments;
@@ -67,7 +67,7 @@ public class Book implements Identifiable<Long> {
 	@OneToMany(mappedBy = "items")
 	@JsonManagedReference(value = "book-images")
 	private List<Item> items;
-	
+
 	@Transient
 	@JsonIgnore
 	private boolean isRated;
@@ -151,7 +151,8 @@ public class Book implements Identifiable<Long> {
 	}
 
 	/**
-	 * @param items the items to set
+	 * @param items
+	 *            the items to set
 	 */
 	public void setItems(List<Item> items) {
 		this.items = items;
@@ -170,6 +171,5 @@ public class Book implements Identifiable<Long> {
 	public void setImage(byte[] image) {
 		this.image = image;
 	}
-
 
 }
