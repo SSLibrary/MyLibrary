@@ -90,6 +90,7 @@ public class BooksController {
 		model.addAttribute("offset", offset);
 		model.addAttribute("author", author);
 		model.addAttribute("unread", unread);
+		model.addAttribute("currUser", user.getId());
 		return "books/all";
 	}
 	
@@ -158,6 +159,7 @@ public class BooksController {
 		model.addAttribute("edit", false);
 		model.addAttribute("statuses", BookStatus.values());
 		model.addAttribute("unread", unread);
+		model.addAttribute("currUser", user.getId());
 
 		return "books/addNewBook";
 	}
@@ -200,6 +202,7 @@ public class BooksController {
 		model.addAttribute("edit", true);
 		model.addAttribute("statuses", BookStatus.values());
 		model.addAttribute("unread", unread);
+		model.addAttribute("currUser", user.getId());
 
 		return "books/addNewBook";
 	}
