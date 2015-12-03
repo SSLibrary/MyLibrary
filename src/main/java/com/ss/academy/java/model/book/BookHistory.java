@@ -1,4 +1,4 @@
-package com.ss.academy.java.model.history;
+package com.ss.academy.java.model.book;
 
 import java.sql.Date;
 
@@ -19,19 +19,15 @@ public class BookHistory {
 	private Long id;
 	
 	@Column(name = "user_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long userId;
 	
 	@Column(name = "book_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long bookId;
 	
 	@Column(name = "get_date")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Date getDate;
 	
 	@Column(name = "return_date")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Date returnDate;
 
 	public Long getId() {
