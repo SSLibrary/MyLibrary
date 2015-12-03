@@ -106,15 +106,20 @@ public class BooksController {
 //	        response.getOutputStream().flush();
 //	        response.getOutputStream().close();
 			
-
-			byte [] bytes = bookService.findById(id).getImage();
-			BASE64Encoder base64Encoder = new BASE64Encoder();
-	        StringBuilder imageString = new StringBuilder();
-	        imageString.append("data:image/png;base64,");
-	        imageString.append(base64Encoder.encode(bytes));
-	        String image = imageString.toString();
-	        
-			model.addAttribute("image", image);			
+		 try {
+			 byte [] bytes = bookService.findById(id).getImage();
+				
+				BASE64Encoder base64Encoder = new BASE64Encoder();
+		        StringBuilder imageString = new StringBuilder();
+		        imageString.append("data:image/png;base64,");
+		        imageString.append(base64Encoder.encode(bytes));
+		        String image = imageString.toString();
+		    	
+				model.addAttribute("image", image);		
+		 	} catch (Exception e) {
+			model.addAttribute("emptyList", true);
+		 	}
+				
 			return "books/image";
 		}
 
