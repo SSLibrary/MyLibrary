@@ -75,7 +75,7 @@ public class BookDaoImpl extends AbstractDao<Long, Book> implements BookDao {
 				.uniqueResult();
 	}
 
-	public void cahngeStatus(Long id) {
+	public void changeStatus(Long id) {
 		Query query = getSession().createSQLQuery("UPDATE author_books SET status = CASE "
 				+ "WHEN status = 'Available' THEN 'Loaned' "
 				+ "WHEN status = 'Loaned' THEN 'Available' "
