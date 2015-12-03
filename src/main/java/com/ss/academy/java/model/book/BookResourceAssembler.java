@@ -9,7 +9,7 @@ public class BookResourceAssembler extends IdentifiableResourceAssemblerSupport<
 	}
 
 	public BookResource toResource(Book book) {
-		BookResource resource = new BookResource(book.getTitle(), book.getStatus(), book.getRatings(), book.getComment(), book.getItems());
+		BookResource resource = new BookResource(book.getTitle(), book.getStatus(), book.getRatings(), book.getComments(), book.getItems());
 
 		return resource;
 	}

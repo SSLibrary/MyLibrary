@@ -21,12 +21,12 @@
 		</sec:authorize>
 	</ul>
 	<sec:authorize access="isAuthenticated()">
-		<p class="text-right">
+		<p class="text-right" style="margin-right:10px">
 			Hello, <strong>${user}</strong>
 		</p>
 		<form action="/MyLibrary/logout" method="post"
 			class="navbar-form navbar-right">
-			<button type="submit" class="btn btn-default btn-sm">
+			<button type="submit" class="btn btn-default btn-sm" style="margin-right:10px">
 				<span class="glyphicon glyphicon-log-out"></span> Log out
 			</button>
 			<input type="hidden" name="${_csrf.parameterName}"

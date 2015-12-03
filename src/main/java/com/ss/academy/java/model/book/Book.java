@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -46,6 +47,10 @@ public class Book implements Identifiable<Long> {
 	@NotNull
 	private BookStatus status;
 
+	@Lob
+	@Column(name="image")
+	private byte[] image;
+
 	@ManyToOne()
 	@JoinColumn(name = "author_id")
 	@JsonBackReference(value = "author-books")
@@ -54,7 +59,7 @@ public class Book implements Identifiable<Long> {
 	@OneToMany(mappedBy = "book")
 	@JsonManagedReference(value = "book-ratings")
 	private List<Rating> ratings;
-	
+
 	@OneToMany(mappedBy = "book")
 	@JsonManagedReference(value = "book-comments")
 	private List<Comment> comments;
@@ -62,7 +67,7 @@ public class Book implements Identifiable<Long> {
 	@OneToMany(mappedBy = "items")
 	@JsonManagedReference(value = "book-images")
 	private List<Item> items;
-	
+
 	@Transient
 	@JsonIgnore
 	private boolean isRated;
@@ -127,10 +132,6 @@ public class Book implements Identifiable<Long> {
 		this.author = author;
 	}
 
-	public List<Comment> getComment() {
-		return comments;
-	}
-
 	public void setComment(List<Comment> comments) {
 		this.comments = comments;
 	}
@@ -143,20 +144,6 @@ public class Book implements Identifiable<Long> {
 	}
 
 	/**
-	 * @param comments the comments to set
-	 */
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
-	}
-
-	/**
-	 * @param isRated the isRated to set
-	 */
-	public void setRated(boolean isRated) {
-		this.isRated = isRated;
-	}
-
-	/**
 	 * @return the items
 	 */
 	public List<Item> getItems() {
@@ -164,11 +151,25 @@ public class Book implements Identifiable<Long> {
 	}
 
 	/**
-	 * @param items the items to set
+	 * @param items
+	 *            the items to set
 	 */
 	public void setItems(List<Item> items) {
 		this.items = items;
 	}
 
+	/**
+	 * @return the image
+	 */
+	public byte[] getImage() {
+		return image;
+	}
+
+	/**
+	 * @param image the image to set
+	 */
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
 
 }
