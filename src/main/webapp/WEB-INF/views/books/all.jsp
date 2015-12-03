@@ -100,11 +100,7 @@
 				</c:forEach>
 				<br />
 			</c:otherwise>
-		</c:choose>
-			<!-- pagination -->		
-					<tag:paginate max="15" offset="${offset}" count="${count}"
-   						uri="../books/" next="&raquo;" previous="&laquo;" /> 
-   			<!-- end of pagination -->	
+		</c:choose>			
 		<br />
 		<sec:authorize access="hasAuthority('ADMIN')">
 			<div class="row">
@@ -117,3 +113,9 @@
 				</div>
 			</div>
 		</sec:authorize>
+			<!-- pagination -->
+				<div class="centered" style="top:780px;position:absolute;">	
+					<tag:paginate max="15" offset="${offset}" count="${count}"
+   						uri="../books/" next="&raquo;" previous="&laquo;" /> 
+   				</div>	
+   			<!-- end of pagination -->	

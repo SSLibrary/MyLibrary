@@ -74,8 +74,10 @@
 			</div>
 			<br />
 		</c:forEach>
-		<!-- pagination -->		
-			<tag:paginate max="15" offset="${offset}" count="${count}"
-   					uri="../users/" next="&raquo;" previous="&laquo;" /> 
-   		<!-- end of pagination -->	
+			<!-- pagination -->
+				<div class="text-center">	
+					<tag:paginate max="15" offset="${offset}" count="${count}"
+   						uri="../users/" next="&raquo;" previous="&laquo;" /> 
+   				</div>	
+   			<!-- end of pagination -->	
 		
