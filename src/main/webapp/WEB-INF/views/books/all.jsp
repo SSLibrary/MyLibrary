@@ -51,7 +51,7 @@
 							<div class="btn-group btn-group-justified">
 							<div class="btn-group">
 										<form:form action="${book.id}/comments" method="GET">
-											<button type="submit" class="btn btn-success">Show all comments</button>
+											<button type="submit" class="btn btn-success">Comments</button>
 										</form:form>
 									</div>
 								<sec:authorize access="hasAuthority('ADMIN')">

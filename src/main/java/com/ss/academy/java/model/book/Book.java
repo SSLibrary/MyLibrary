@@ -132,13 +132,12 @@ public class Book implements Identifiable<Long> {
 		this.author = author;
 	}
 
-	public void setComment(List<Comment> comments) {
+
+	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
 
-	/**
-	 * @return the comments
-	 */
+	
 	public List<Comment> getComments() {
 		return comments;
 	}
