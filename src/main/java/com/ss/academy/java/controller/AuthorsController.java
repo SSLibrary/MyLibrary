@@ -34,47 +34,37 @@ public class AuthorsController {
 
 	@Autowired
 	AuthorService service;
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	MessageService messageService;
 
-//	/*
-//	 * This method will list all existing authors.
-//	 */
-//	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
-//	public String listAllAuthors(ModelMap model) {
-//		List<Author> authors = service.findAllAuthors();
-//		model.addAttribute("authors", authors);
-//
-//		return "authors/all";
-//	}
-	
-	   /*
-  * This method will list all existing authors.
-  */ 
- @RequestMapping(value = { "/" }, method = RequestMethod.GET)
-public String listAuthors(HttpServletRequest request,ModelMap model, Integer offset, 
-		Integer maxResults, @AuthenticationPrincipal UserDetails userDetails) { 
-	 
-	 User user = userService.findByUsername(userDetails.getUsername());
-	 List<Message> messages = user.getReceivedMessage();	
-	 int unread = UnreadMessagesCounter.counter(messages);
-	 
-     List<Author> authors = service.list(offset, maxResults); 
-     
-   if (authors.isEmpty()) {
-			model.addAttribute("emptyListOfAuthors", true);
-		}        
-   model.addAttribute("authors", service.list(offset, maxResults));
-   model.addAttribute("count", service.count());
-   model.addAttribute("offset", offset);
-   model.addAttribute("unread", unread);
 
-   return "authors/all";
-}   
+	/*
+	 * This method will list all existing authors.
+	 */
+	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
+	public String listAuthors(HttpServletRequest request, ModelMap model, Integer offset, Integer maxResults,
+			@AuthenticationPrincipal UserDetails userDetails) {
+
+		User user = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = user.getReceivedMessage();
+		int unread = UnreadMessagesCounter.counter(messages);
+
+		List<Author> authors = service.list(offset, maxResults);
+
+		if (authors.isEmpty()) {
+			model.addAttribute("emptyListOfAuthors", true);
+		}
+		model.addAttribute("authors", service.list(offset, maxResults));
+		model.addAttribute("count", service.count());
+		model.addAttribute("offset", offset);
+		model.addAttribute("unread", unread);
+
+		return "authors/all";
+	}
 
 	/*
 	 * This method provides the ability to search for authors by their names.
@@ -92,11 +82,11 @@ public String listAuthors(HttpServletRequest request,ModelMap model, Integer off
 	 */
 	@RequestMapping(value = { "/new" }, method = RequestMethod.GET)
 	public String addNewAuthor(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
-		
+
 		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getReceivedMessage();	
+		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
-		
+
 		Author author = new Author();
 		model.addAttribute("author", author);
 		model.addAttribute("edit", false);
@@ -126,13 +116,12 @@ public String listAuthors(HttpServletRequest request,ModelMap model, Integer off
 	 * This method will provide the medium to update an existing author.
 	 */
 	@RequestMapping(value = { "/{id}" }, method = RequestMethod.GET)
-	public String editAuthor(@PathVariable Long id, ModelMap model,
-			@AuthenticationPrincipal UserDetails userDetails) {
-		
+	public String editAuthor(@PathVariable Long id, ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
+
 		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getReceivedMessage();	
+		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
-		
+
 		Author author = service.findById(id);
 		model.addAttribute("author", author);
 		model.addAttribute("edit", true);

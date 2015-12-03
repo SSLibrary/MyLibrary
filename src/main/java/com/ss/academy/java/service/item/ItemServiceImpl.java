@@ -25,13 +25,13 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	public void updateItem(Item item) {
-//		Item entity = dao.findById(author.getId());
-//
-//		if (entity != null) {
-//			entity.setName(author.getName());
-//			entity.setCountry(author.getCountry());
-//			entity.setBooks(author.getBooks());
-//		}
+		// Item entity = dao.findById(author.getId());
+		//
+		// if (entity != null) {
+		// entity.setName(author.getName());
+		// entity.setCountry(author.getCountry());
+		// entity.setBooks(author.getBooks());
+		// }
 	}
 
 	public void deleteItem(Item item) {

@@ -44,7 +44,7 @@ public class RatingsController {
 
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	MessageService messageService;
 
@@ -55,9 +55,9 @@ public class RatingsController {
 	public String addNewRating(@PathVariable Long book_id, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getReceivedMessage();	
+		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
-		
+
 		Book book = bookService.findById(book_id);
 		Rating rating = new Rating();
 		model.addAttribute("rating", rating);
@@ -69,7 +69,7 @@ public class RatingsController {
 
 	/*
 	 * This method will be called on form submission, handling POST request for
-	 * saving book's rating in database. 
+	 * saving book's rating in database.
 	 */
 	@RequestMapping(value = { "/rating" }, method = RequestMethod.POST)
 	public String saveRating(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long book_id,
@@ -88,15 +88,16 @@ public class RatingsController {
 	}
 
 	/*
-	 * This method provides the ability the average rating to be calculated and displayed.
+	 * This method provides the ability the average rating to be calculated and
+	 * displayed.
 	 */
 	@RequestMapping(value = { "/ratingCheck" }, method = RequestMethod.GET)
 	public String checkRating(@PathVariable Long book_id, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getReceivedMessage();	
+		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
-		
+
 		Book book = bookService.findById(book_id);
 		book.setAverageRating(RatingCalculator.calculate(book.getRatings()));
 		System.out.println(book.getAverageRating());

@@ -12,7 +12,7 @@ public class SpringMvcInitializer extends AbstractAnnotationConfigDispatcherServ
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class[] { HibernateConfiguration.class, SecurityConfiguration.class  };
+		return new Class[] { HibernateConfiguration.class, SecurityConfiguration.class };
 	}
 
 	@Override
@@ -38,10 +38,9 @@ public class SpringMvcInitializer extends AbstractAnnotationConfigDispatcherServ
 	}
 
 	@Override
-    public void onStartup(ServletContext servletContext)
-            throws ServletException {
-        super.onStartup(servletContext);
-        servletContext.setInitParameter("defaultHtmlEscape", "true"); // Avoiding XSS attacks
-    }
+	public void onStartup(ServletContext servletContext) throws ServletException {
+		super.onStartup(servletContext);
+		servletContext.setInitParameter("defaultHtmlEscape", "true");
+	}
 
 }

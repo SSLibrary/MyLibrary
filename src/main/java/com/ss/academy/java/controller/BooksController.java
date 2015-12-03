@@ -43,7 +43,7 @@ public class BooksController {
 
 	@Autowired
 	ItemService itemService;
-	
+
 	@Autowired
 	BookService bookService;
 
@@ -55,7 +55,7 @@ public class BooksController {
 
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	MessageService messageService;
 
@@ -65,18 +65,16 @@ public class BooksController {
 	 */
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String listAllBooks(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long id, ModelMap model,
-			Integer offset, Integer maxResults){
-		
+			Integer offset, Integer maxResults) {
+
 		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getReceivedMessage();	
+		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
-		
-		
-		
-		Author author = authorService.findById(id);		
-		List<Book> books = bookService.list(offset, maxResults, id);	
+
+		Author author = authorService.findById(id);
+		List<Book> books = bookService.list(offset, maxResults, id);
 		Long count = bookService.count(id);
-		 
+
 		if (books.size() == 0) {
 			model.addAttribute("emptyList", true);
 		} else {
@@ -89,47 +87,47 @@ public class BooksController {
 					}
 				}
 			}
-		}	
+		}
 
-		model.addAttribute("books", books);		
-		model.addAttribute("count", count);			
+		model.addAttribute("books", books);
+		model.addAttribute("count", count);
 		model.addAttribute("offset", offset);
 		model.addAttribute("author", author);
 		model.addAttribute("unread", unread);
 		return "books/all";
 	}
-	
-	 
-		@RequestMapping(value = { "/{id}/images" }, method = RequestMethod.GET)
-		public String listBooksItems(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long id, ModelMap model,
-				Integer offset, Integer maxResults,HttpServletResponse response,HttpServletRequest request) throws UnsupportedEncodingException {
-			
-			User user = userService.findByUsername(userDetails.getUsername());
-			List<Message> messages = user.getReceivedMessage();	
-			int unread = UnreadMessagesCounter.counter(messages);		
-			
-			Author author = authorService.findById(id);		
-			List<Book> books = bookService.list(offset, maxResults, id);	
-			Long count = bookService.count(id);
-			 
-		
-			byte[] image = itemService.findById(id).getItemContent();
-			
-			Book findBook = bookService.findById(id);
-			byte[] itemssssss = itemService.findById(id).getItemContent();
-//			response.setContentType("image/jpeg, image/jpg, image/png, image/gif");//		  
-//			byte[] encodeBase64 = Base64.encodeBase64(itemssssss);//			 
-//	   	  	String base64Encoded= new String(encodeBase64, "UTF-8");
-//		  
-//		    model.addAttribute("galleria", base64Encoded );
-//		    response.getOutputStream().close();
-			model.addAttribute("books", books);		
-			model.addAttribute("count", count);			
-			model.addAttribute("offset", offset);
-			model.addAttribute("author", author);
-			model.addAttribute("unread", unread);
-			return "books/all";
-		}
+
+	@RequestMapping(value = { "/{id}/images" }, method = RequestMethod.GET)
+	public String listBooksItems(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long id,
+			ModelMap model, Integer offset, Integer maxResults, HttpServletResponse response,
+			HttpServletRequest request) throws UnsupportedEncodingException {
+
+		User user = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = user.getReceivedMessage();
+		int unread = UnreadMessagesCounter.counter(messages);
+
+		Author author = authorService.findById(id);
+		List<Book> books = bookService.list(offset, maxResults, id);
+		Long count = bookService.count(id);
+
+		byte[] image = itemService.findById(id).getItemContent();
+
+		Book findBook = bookService.findById(id);
+		byte[] itemssssss = itemService.findById(id).getItemContent();
+		// response.setContentType("image/jpeg, image/jpg, image/png,
+		// image/gif");//
+		// byte[] encodeBase64 = Base64.encodeBase64(itemssssss);//
+		// String base64Encoded= new String(encodeBase64, "UTF-8");
+		//
+		// model.addAttribute("galleria", base64Encoded );
+		// response.getOutputStream().close();
+		model.addAttribute("books", books);
+		model.addAttribute("count", count);
+		model.addAttribute("offset", offset);
+		model.addAttribute("author", author);
+		model.addAttribute("unread", unread);
+		return "books/all";
+	}
 
 	/*
 	 * This method provides the ability to search for books by their titles.
@@ -137,9 +135,9 @@ public class BooksController {
 	@RequestMapping(value = { "/search" }, method = RequestMethod.GET)
 	public String searchBookByName(@PathVariable Long id, @RequestParam("bookTitle") String bookTitle, ModelMap model) {
 		List<Book> books = bookService.findBooksByTitle(bookTitle);
-		
+
 		List<Book> authorBooks = new ArrayList<Book>();
-		
+
 		for (Book book : books) {
 			if (book.getAuthor().getId() == id) {
 				authorBooks.add(book);
@@ -156,11 +154,11 @@ public class BooksController {
 	 */
 	@RequestMapping(value = { "/new" }, method = RequestMethod.GET)
 	public String addNewBook(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
-		
+
 		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getReceivedMessage();	
+		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
-		
+
 		Book book = new Book();
 		model.addAttribute("book", book);
 		model.addAttribute("edit", false);
@@ -196,9 +194,9 @@ public class BooksController {
 	public String editBook(@PathVariable Long id, @PathVariable Long book_id, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getReceivedMessage();	
+		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
-		
+
 		Book book = bookService.findById(book_id);
 		Author author = book.getAuthor();
 
