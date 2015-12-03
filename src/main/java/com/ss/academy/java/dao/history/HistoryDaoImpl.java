@@ -17,7 +17,7 @@ public class HistoryDaoImpl extends AbstractDao<Integer, BookHistory> implements
     
 	BookDaoImpl bookDao;
 
-    public List<Book> showMyHistory() {
+    public List<Book> showMyHistory(Long userId) {
         Criteria criteria = this.createEntityCriteria().addOrder(Order.asc((String)"title"));
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         List books = criteria.list();
