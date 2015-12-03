@@ -11,13 +11,14 @@ public class BookResource extends ResourceSupport {
 
 	private String title;
 	private BookStatus status;
+	private byte[] image;
 	private List<Rating> ratings;
 	private List<Comment> comments;
 
-	public BookResource(String title, BookStatus status, List<Rating> ratings, List<Comment> comments) {
-		super();
+	public BookResource(String title, BookStatus status, byte[] image, List<Rating> ratings, List<Comment> comments) {
 		this.title = title;
 		this.status = status;
+		this.image = image;
 		this.ratings = ratings;
 		this.comments = comments;
 	}
@@ -36,6 +37,14 @@ public class BookResource extends ResourceSupport {
 
 	public void setStatus(BookStatus status) {
 		this.status = status;
+	}
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 
 	public List<Rating> getRatings() {

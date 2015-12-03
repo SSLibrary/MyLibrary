@@ -30,7 +30,10 @@ public class AuthorServiceImpl implements AuthorService {
 		if (entity != null) {
 			entity.setName(author.getName());
 			entity.setCountry(author.getCountry());
-			entity.setBooks(author.getBooks());
+
+			if (author.getBooks() != null) {
+				entity.setBooks(author.getBooks());
+			}
 		}
 	}
 
@@ -45,7 +48,7 @@ public class AuthorServiceImpl implements AuthorService {
 	public List<Author> findAuthorsByName(String authorName) {
 		return dao.findAuthorsByName(authorName);
 	}
-	
+
 	public List<Author> list(Integer offset, Integer maxResults) {
 		return dao.list(offset, maxResults);
 	}
