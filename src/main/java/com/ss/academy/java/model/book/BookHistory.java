@@ -16,13 +16,13 @@ public class BookHistory {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private int id;
 	
 	@Column(name = "user_id")
-	private Long userId;
+	private int userId;
 	
 	@Column(name = "book_id")
-	private Long bookId;
+	private int bookId;
 	
 	@Column(name = "get_date")
 	private Date getDate;
@@ -30,27 +30,27 @@ public class BookHistory {
 	@Column(name = "return_date")
 	private Date returnDate;
 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	public Long getUserId() {
+	public int getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(int userId) {
 		this.userId = userId;
 	}
 
-	public Long getBookId() {
+	public int getBookId() {
 		return bookId;
 	}
 
-	public void setBookId(Long bookId) {
+	public void setBookId(int bookId) {
 		this.bookId = bookId;
 	}
 
