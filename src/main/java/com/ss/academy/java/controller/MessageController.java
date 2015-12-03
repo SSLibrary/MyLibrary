@@ -25,7 +25,7 @@ import com.ss.academy.java.util.UnreadMessagesCounter;
  * Handles requests for the application messaging service.
  */
 @Controller
-@RequestMapping(value = { "/messages" })
+@RequestMapping(value = { "{user_id}/messages" })
 public class MessageController {
 
 	@Autowired
@@ -49,6 +49,7 @@ public class MessageController {
 		model.addAttribute("count", count);
 		model.addAttribute("offset", offset);
 		model.addAttribute("unread", unread);
+		model.addAttribute("currUser", user.getId());
 
 		return "messages/inbox";
 	}
@@ -68,6 +69,7 @@ public class MessageController {
 		model.addAttribute("count", count);
 		model.addAttribute("offset", offset);
 		model.addAttribute("unread", unread);
+		model.addAttribute("currUser", user.getId());
 
 		return "messages/outbox";
 
@@ -83,8 +85,9 @@ public class MessageController {
 		User user = userService.findById(user_id);
 		Message message = new Message();
 		model.addAttribute("message", message);
-		model.addAttribute("user", user.getUsername());
+		model.addAttribute("receiver", user.getUsername());
 		model.addAttribute("unread", unread);
+		model.addAttribute("currUser", currentUser.getId());
 
 		return "messages/new";
 	}
@@ -105,7 +108,7 @@ public class MessageController {
 		message.setSender(sender);
 		messageService.saveMessage(message);
 
-		return "redirect:/messages/outbox";
+		return "redirect:/{user_id}/messages/outbox";
 	}
 
 	@RequestMapping(value = { "/{message_id}/reply" }, method = RequestMethod.GET)
@@ -134,6 +137,7 @@ public class MessageController {
 		model.addAttribute("parents", previousMessages);
 		model.addAttribute("receiver", parent.getSender().getUsername());
 		model.addAttribute("unread", unread);
+		model.addAttribute("currUser", currentUser.getId());
 
 		return "messages/reply";
 	}
@@ -157,7 +161,7 @@ public class MessageController {
 		message.setHeader("Re: " + parent.getHeader());
 		messageService.saveMessage(message);
 
-		return "redirect:/messages/outbox";
+		return "redirect:/{user_id}/messages/outbox";
 	}
 
 	@RequestMapping(value = { "/{message_id}/display" }, method = RequestMethod.GET)
@@ -178,6 +182,7 @@ public class MessageController {
 
 		model.addAttribute("parents", previousMessages);
 		model.addAttribute("unread", unread);
+		model.addAttribute("currUser", currentUser.getId());
 
 		return "messages/display";
 	}

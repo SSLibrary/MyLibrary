@@ -62,6 +62,7 @@ public class AuthorsController {
 		model.addAttribute("count", service.count());
 		model.addAttribute("offset", offset);
 		model.addAttribute("unread", unread);
+		model.addAttribute("currUser", user.getId());
 
 		return "authors/all";
 	}
@@ -92,6 +93,7 @@ public class AuthorsController {
 		model.addAttribute("edit", false);
 		model.addAttribute("countries", AuthorCountry.values());
 		model.addAttribute("unread", unread);
+		model.addAttribute("currUser", user.getId());
 
 		return "authors/addNewAuthor";
 	}
@@ -126,6 +128,7 @@ public class AuthorsController {
 		model.addAttribute("author", author);
 		model.addAttribute("edit", true);
 		model.addAttribute("unread", unread);
+		model.addAttribute("currUser", user.getId());
 
 		return "authors/addNewAuthor";
 	}

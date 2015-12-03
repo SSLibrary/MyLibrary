@@ -70,6 +70,7 @@ public class CommentController {
 		model.addAttribute("author", author.getName());
 		model.addAttribute("book", book.getTitle());
 		model.addAttribute("unread", unread);
+		model.addAttribute("currUser", user.getId());
 
 		return "comments/allComments";
 	}
@@ -90,6 +91,7 @@ public class CommentController {
 		model.addAttribute("comment", comment);
 		model.addAttribute("book", book.getTitle());
 		model.addAttribute("unread", unread);
+		model.addAttribute("currUser", user.getId());
 
 		return "comments/addNewComment";
 	}

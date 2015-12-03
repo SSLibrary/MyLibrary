@@ -59,6 +59,7 @@ public class UsersController {
 		model.addAttribute("count", userService.count());
 		model.addAttribute("offset", offset);
 		model.addAttribute("unread", unread);
+		model.addAttribute("currUser", user.getId());
 
 		return "users/all";
 	}
@@ -127,6 +128,6 @@ public class UsersController {
 
 		userService.save(user);
 
-		return "redirect:/authors/";
+		return "redirect:/";
 	}
 }

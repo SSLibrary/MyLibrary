@@ -49,7 +49,7 @@ public class HomeController {
 			int unread = UnreadMessagesCounter.counter(messages);
 			model.addAttribute("logged", true);
 			model.addAttribute("unread", unread);
-			model.addAttribute("user", currentUser.getUsername());
+			model.addAttribute("currUser", currentUser.getId());
 		}
 
 		int authorsCount = authorService.findAllAuthors().size();
@@ -59,6 +59,7 @@ public class HomeController {
 		model.addAttribute("authorsCount", authorsCount);
 		model.addAttribute("booksCount", booksCount);
 		model.addAttribute("usersCount", usersCount);
+		
 
 		return "home";
 	}

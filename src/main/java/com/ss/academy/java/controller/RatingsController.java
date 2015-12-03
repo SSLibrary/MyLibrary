@@ -63,6 +63,7 @@ public class RatingsController {
 		model.addAttribute("rating", rating);
 		model.addAttribute("book", book);
 		model.addAttribute("unread", unread);
+		model.addAttribute("currUser", user.getId());
 
 		return "books/rating";
 	}
@@ -104,6 +105,7 @@ public class RatingsController {
 
 		model.addAttribute("book", book);
 		model.addAttribute("unread", unread);
+		model.addAttribute("currUser", user.getId());
 
 		return "books/ratingCheck";
 	}
