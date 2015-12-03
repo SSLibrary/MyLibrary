@@ -7,11 +7,10 @@
 					<li><a href="/MyLibrary/register/">Register</a></li>
 				</ul>
 			</div>
-		</div>
-
-		<div>
+		</div>		
 			<div>
 				<div class="login-form">
+					<div>
 					<c:url var="loginUrl" value="/login" />
 					<form action="${loginUrl}" method="post" class="form-horizontal">
 						<c:if test="${param.error != null}">

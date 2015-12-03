@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -45,6 +46,10 @@ public class Book implements Identifiable<Long> {
 	@Enumerated(EnumType.STRING)
 	@NotNull
 	private BookStatus status;
+
+	@Lob
+	@Column(name="image")
+	private byte[] image;
 
 	@ManyToOne()
 	@JoinColumn(name = "author_id")
@@ -150,6 +155,20 @@ public class Book implements Identifiable<Long> {
 	 */
 	public void setItems(List<Item> items) {
 		this.items = items;
+	}
+
+	/**
+	 * @return the image
+	 */
+	public byte[] getImage() {
+		return image;
+	}
+
+	/**
+	 * @param image the image to set
+	 */
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 
 
