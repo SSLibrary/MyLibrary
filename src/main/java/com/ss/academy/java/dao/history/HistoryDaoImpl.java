@@ -18,10 +18,15 @@ public class HistoryDaoImpl extends AbstractDao<Integer, BookHistory> implements
 	BookDaoImpl bookDao;
 
     public List<Book> showMyHistory(Long userId) {
-        Criteria criteria = this.createEntityCriteria().addOrder(Order.asc((String)"title"));
-        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-        List books = criteria.list();
-        return books;
+    	SQLQuery query = this.getSession().createSQLQuery("select * from history where user_id = :userId");
+    	query.setLong("userId", userId);
+    	query.executeUpdate();
+    	List historyList = query.list();
+    	return historyList;
+//        Criteria criteria = this.createEntityCriteria().addOrder(Order.asc((String)"title"));
+//        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+//        List books = criteria.list();
+//        return books;
     }
 
     public void getBook(User userId, Book bookId) {
@@ -29,10 +34,10 @@ public class HistoryDaoImpl extends AbstractDao<Integer, BookHistory> implements
         query.setLong("userId", userId.getId().longValue());
         query.setLong("bookId", bookId.getId().longValue());
         query.executeUpdate();
-        bookDao.cahngeStatus(bookId.getId());
+        bookDao.changeStatus(bookId.getId());
     }
 
     public void returnBook(Book bookId) {
-        bookDao.cahngeStatus(bookId.getId());
+        bookDao.changeStatus(bookId.getId());
     }
 }
