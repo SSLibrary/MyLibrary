@@ -60,11 +60,18 @@ Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 		<put-attribute name="current" value="addNewBook"></put-attribute>
 	</definition>
 	
-	<definition name="books/all" extends="baseLayout">
+	<definition name="books/allAuthorBooks" extends="baseLayout">
 		<put-attribute name="title" value="SoftServe Library All Books"/>
-		<put-attribute name="body" value="/WEB-INF/views/books/all.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/books/allAuthorBooks.jsp"/>
 		<put-attribute name="footer" value="/WEB-INF/views/layout/bookFooter.jsp" />	
-		<put-attribute name="current" value="all"></put-attribute>
+		<put-attribute name="current" value="allAuthorBooks"></put-attribute>
+	</definition>
+	
+	<definition name="books/allBooks" extends="baseLayout">
+		<put-attribute name="title" value="SoftServe Library All Books"/>
+		<put-attribute name="body" value="/WEB-INF/views/books/allBooks.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/layout/bookFooter.jsp" />	
+		<put-attribute name="current" value="allBooks"></put-attribute>
 	</definition>
 	
 	<definition name="books/rating" extends="baseLayout">

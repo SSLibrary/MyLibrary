@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -63,6 +64,7 @@ public class RatingsController {
 		model.addAttribute("rating", rating);
 		model.addAttribute("book", book);
 		model.addAttribute("unread", unread);
+		model.addAttribute("currUser", user.getId());
 
 		return "books/rating";
 	}
@@ -104,6 +106,7 @@ public class RatingsController {
 
 		model.addAttribute("book", book);
 		model.addAttribute("unread", unread);
+		model.addAttribute("currUser", user.getId());
 
 		return "books/ratingCheck";
 	}

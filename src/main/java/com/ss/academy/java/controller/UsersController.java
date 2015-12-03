@@ -5,6 +5,7 @@ import java.util.Locale;
 
 import javax.validation.Valid;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -59,6 +60,7 @@ public class UsersController {
 		model.addAttribute("count", userService.count());
 		model.addAttribute("offset", offset);
 		model.addAttribute("unread", unread);
+		model.addAttribute("currUser", user.getId());
 
 		return "users/all";
 	}
@@ -127,6 +129,6 @@ public class UsersController {
 
 		userService.save(user);
 
-		return "redirect:/authors/";
+		return "redirect:/";
 	}
 }
