@@ -117,10 +117,8 @@ public class BooksController {
 			
 			Book findBook = bookService.findById(id);
 			byte[] itemssssss = itemService.findById(id).getItemContent();
-//			response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
-//		  
-//			byte[] encodeBase64 = Base64.encodeBase64(itemssssss);
-//			 
+//			response.setContentType("image/jpeg, image/jpg, image/png, image/gif");//		  
+//			byte[] encodeBase64 = Base64.encodeBase64(itemssssss);//			 
 //	   	  	String base64Encoded= new String(encodeBase64, "UTF-8");
 //		  
 //		    model.addAttribute("galleria", base64Encoded );
