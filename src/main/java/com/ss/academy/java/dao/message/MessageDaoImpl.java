@@ -16,15 +16,23 @@ import com.ss.academy.java.model.message.Message;
 @Repository("messageDao")
 public class MessageDaoImpl extends AbstractDao<Integer, Message> implements MessageDao  {
 
+	/*
+	 * Find message by message_id
+	 */
 	public Message findById(Integer message_id) {
 		return getByKey(message_id);
 	}
 
+	/*
+	 * Save message
+	 */
 	public void saveMessage(Message message) {
 		persist(message);
-		
 	}
-
+	
+	/*
+	 * Find all messages
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Message> findAllMessages() {
 		Criteria criteria = createEntityCriteria().addOrder(Order.desc("date"));
@@ -32,6 +40,9 @@ public class MessageDaoImpl extends AbstractDao<Integer, Message> implements Mes
         return messages;
 	}
 	
+	/*
+	 * Find all sent messages of the authenticated user
+	 */
 	@SuppressWarnings("unchecked")
 	@Transactional
 	public List<Message> listAllSentMessages(Integer offset, Integer maxResults, String username){
@@ -55,6 +66,9 @@ public class MessageDaoImpl extends AbstractDao<Integer, Message> implements Mes
 				.uniqueResult();
 	}
 	
+	/*
+	 * Find all received messages of the authenticated user
+	 */
 	@SuppressWarnings("unchecked")
 	@Transactional
 	public List<Message> listAllReceivedMessages(Integer offset, Integer maxResults, String username){		
@@ -77,5 +91,4 @@ public class MessageDaoImpl extends AbstractDao<Integer, Message> implements Mes
 				.setProjection(Projections.rowCount())
 				.uniqueResult();
 	}
-	
 }
