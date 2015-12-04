@@ -9,11 +9,11 @@
 				<h3 class="text-center">There are no messages sent!</h3>
  	 		</c:when>
 			<c:otherwise>		
-				<table class="table table-striped">	
+				<table class="table">	
 					<c:forEach items="${messages}" var="message">
 						<tr>
 								<td>To: <i>${message.receiver.username}</i></td>
-								<td>Subject: <i><a href="<c:url value="/messages/${message.message_id}/display" />">${message.header}</a></i></td>
+								<td>Subject: <i><a href="<c:url value="/${currUser}/messages/${message.message_id}/display" />">${message.header}</a></i></td>
 								<td>Date: <i><fmt:formatDate pattern="yyyy-MM-dd, hh:mm a" value="${message.date}" /></i></td>	
 								</tr>
 						<br />

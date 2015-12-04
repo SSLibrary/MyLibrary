@@ -16,14 +16,14 @@ public class MessageServiceImpl implements MessageService {
 
 	@Autowired
 	private MessageDao dao;
-	
+
 	public Message findById(Integer message_id) {
 		return dao.findById(message_id);
 	}
 
 	public void saveMessage(Message message) {
 		dao.saveMessage(message);
-		
+
 	}
 
 	public List<Message> findAllMessages() {
@@ -36,22 +36,22 @@ public class MessageServiceImpl implements MessageService {
 
 		if (entity != null) {
 			entity.setIsNew(0);
-		}		
+		}
 	}
 
-	public List<Message> listAllSentMessages(Integer offset, Integer maxResults, String username) {		
+	public List<Message> listAllSentMessages(Integer offset, Integer maxResults, String username) {
 		return dao.listAllSentMessages(offset, maxResults, username);
 	}
 
 	public Long countSentMessages(String username) {
 		return dao.countSentMessages(username);
 	}
-	
-	public List<Message> listAllReceivedMessages(Integer offset, Integer maxResults, String username) {		
+
+	public List<Message> listAllReceivedMessages(Integer offset, Integer maxResults, String username) {
 		return dao.listAllReceivedMessages(offset, maxResults, username);
 	}
 
 	public Long countReceivedMessages(String username) {
 		return dao.countReceivedMessages(username);
-	}	
+	}
 }

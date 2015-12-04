@@ -14,7 +14,7 @@
 					<div class="form-group">
 						<div class="col-sm-1"></div>
 						<div class="col-sm-2">
-							<form:form action="messages/${message_id}/reply" method="POST">
+							<form:form action="/${currUser}/messages/${message_id}/reply" method="POST">
 								<button type="submit" class="btn btn-primary form-control">Reply</button>
 							</form:form>
 						</div>

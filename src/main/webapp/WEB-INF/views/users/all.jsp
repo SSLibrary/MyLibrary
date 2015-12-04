@@ -34,7 +34,7 @@
 		<c:forEach items="${allUsers}" var="user">
 			<div class="row">
 				<div class="col-md-3 col-xs-4 text-center">
-				<h4><a href="<c:url value='/messages/${user.id}/new' />">${user.username}</a>
+				<h4><a href="<c:url value='/${currUser}/messages/${user.id}/new' />">${user.username}</a>
 					</h4>
 				</div>
 				<sec:authorize access="hasAuthority('ADMIN')">

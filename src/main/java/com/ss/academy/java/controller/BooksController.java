@@ -34,6 +34,7 @@ import com.ss.academy.java.util.UnreadMessagesCounter;
 
 import sun.misc.BASE64Encoder;
 
+
 /**
  * Handles requests for the application authors' books page.
  */
@@ -91,7 +92,8 @@ public class BooksController {
 		model.addAttribute("offset", offset);
 		model.addAttribute("author", author);
 		model.addAttribute("unread", unread);
-		return "books/all";
+		model.addAttribute("currUser", user.getId());
+		return "books/allAuthorBooks";
 	}
 	
 	 
@@ -116,9 +118,13 @@ public class BooksController {
 	 * This method provides the ability to search for books by their titles.
 	 */
 	@RequestMapping(value = { "/search" }, method = RequestMethod.GET)
-	public String searchBookByName(@PathVariable Long id, @RequestParam("bookTitle") String bookTitle, ModelMap model) {
+	public String searchBookByName(@PathVariable Long id, @RequestParam("bookTitle") String bookTitle, 
+			ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
+		User user = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = user.getReceivedMessage();	
+		int unread = UnreadMessagesCounter.counter(messages);
+
 		List<Book> books = bookService.findBooksByTitle(bookTitle);
-		
 		List<Book> authorBooks = new ArrayList<Book>();
 		
 		for (Book book : books) {
@@ -128,8 +134,10 @@ public class BooksController {
 		}
 
 		model.addAttribute("books", authorBooks);
+		model.addAttribute("unread", unread);
+		model.addAttribute("currUser", user.getId());
 
-		return "books/all";
+		return "books/allAuthorBooks";
 	}
 
 	/*
@@ -147,6 +155,7 @@ public class BooksController {
 		model.addAttribute("edit", false);
 		model.addAttribute("statuses", BookStatus.values());
 		model.addAttribute("unread", unread);
+		model.addAttribute("currUser", user.getId());
 
 		return "books/addNewBook";
 	}
@@ -193,6 +202,7 @@ public class BooksController {
 		model.addAttribute("edit", true);
 		model.addAttribute("statuses", BookStatus.values());
 		model.addAttribute("unread", unread);
+		model.addAttribute("currUser", user.getId());
 
 		return "books/addNewBook";
 	}
