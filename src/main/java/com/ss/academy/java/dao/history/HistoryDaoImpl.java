@@ -17,11 +17,13 @@ public class HistoryDaoImpl extends AbstractDao<Integer, BookHistory> implements
     
 	BookDaoImpl bookDao;
 
-    public List<Book> showMyHistory(Long userId) {
+    @SuppressWarnings("unchecked")
+	public List<Book> showMyHistory(User userId) {
+    	
     	SQLQuery query = this.getSession().createSQLQuery("select * from history where user_id = :userId");
-    	query.setLong("userId", userId);
+    	query.setLong("userId", userId.getId());
     	query.executeUpdate();
-    	List historyList = query.list();
+    	List<Book> historyList = query.list();
     	return historyList;
 //        Criteria criteria = this.createEntityCriteria().addOrder(Order.asc((String)"title"));
 //        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
