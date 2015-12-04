@@ -8,7 +8,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ss.academy.java.model.book.Book;
 import com.ss.academy.java.model.message.Message;
 import com.ss.academy.java.model.user.User;
 import com.ss.academy.java.service.author.AuthorService;
@@ -63,5 +66,41 @@ public class HomeController {
 
 		return "home";
 	}
+	
+	/*
+	 * This method will show the list of all books.
+	 */
+	@RequestMapping(value = { "/books" })
+	public String showAllBooks(@AuthenticationPrincipal UserDetails user, ModelMap model) {
 
-}
+			User currentUser = userService.findByUsername(user.getUsername());
+			List<Message> messages = currentUser.getReceivedMessage();
+			int unread = UnreadMessagesCounter.counter(messages);
+			List<Book> books = bookService.findAllBooks();
+			
+			model.addAttribute("books", books);
+			model.addAttribute("unread", unread);
+			model.addAttribute("currUser", currentUser.getId());
+		
+		return "books/allBooks";
+	}
+		/*
+		 * This method provides the ability to search for books by their titles.
+		 */
+	@RequestMapping(value = { "/books/search" }, method = RequestMethod.GET)
+	public String searchBookByTitle(@RequestParam("title") String bookTitle, 
+			ModelMap model, @AuthenticationPrincipal UserDetails user) {
+			
+			User currentUser = userService.findByUsername(user.getUsername());
+			List<Message> messages = currentUser.getReceivedMessage();
+			int unread = UnreadMessagesCounter.counter(messages);
+			
+			List<Book> books = bookService.findBooksByTitle(bookTitle);
+			model.addAttribute("books", books);
+			model.addAttribute("unread", unread);
+			model.addAttribute("currUser", currentUser.getId());
+
+			return "books/allBooks";
+		}
+	}
+

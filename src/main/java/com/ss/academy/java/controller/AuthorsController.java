@@ -71,10 +71,17 @@ public class AuthorsController {
 	 * This method provides the ability to search for authors by their names.
 	 */
 	@RequestMapping(value = { "/search" }, method = RequestMethod.GET)
-	public String searchAuthorByName(@RequestParam("author_name") String author_name, ModelMap model) {
+	public String searchAuthorByName(@RequestParam("author_name") String author_name, 
+			ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
 		List<Author> authors = service.findAuthorsByName(author_name);
+		User user = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = user.getReceivedMessage();
+		int unread = UnreadMessagesCounter.counter(messages);
+		
 		model.addAttribute("authors", authors);
-
+		model.addAttribute("unread", unread);
+		model.addAttribute("currUser", user.getId());
+		
 		return "authors/all";
 	}
 
