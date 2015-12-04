@@ -3,9 +3,6 @@
 	
 <div class="navbar navbar-default">
 	<ul class="nav navbar-nav">		
-	<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
-			<li><a href="/MyLibrary/books">Books</a></li>
-		</sec:authorize>
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
 			<li><a href="/MyLibrary/authors/">Authors</a></li>
 		</sec:authorize>
@@ -21,9 +18,6 @@
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
 			<li><a href="/MyLibrary/${currUser}/messages/outbox">Outbox</a></li>
 		</sec:authorize>
-		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
-			<li><a href="/MyLibrary/${currUser}/history/myhistory">My History</a></li>
-		</sec:authorize>		
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
 			<li><a href="/MyLibrary/statistics/choiceList">Statistics</a></li>
 		</sec:authorize>
