@@ -1,6 +1,6 @@
 <%@ include file="../layout/taglib.jsp" %>
 		<c:choose>
-			<c:when test="${emptyList == null}">
+			<c:when test="${emptyList}">
 				<h2 class="text-center"></h2>
 			</c:when>
 			<c:otherwise>		

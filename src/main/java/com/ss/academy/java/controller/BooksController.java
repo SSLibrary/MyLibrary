@@ -1,5 +1,6 @@
 package com.ss.academy.java.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
+//import com.ss.academy.java.configuration.HibernateUtil;
 import com.ss.academy.java.model.author.Author;
 import com.ss.academy.java.model.book.Book;
 import com.ss.academy.java.model.book.BookStatus;
@@ -97,32 +98,20 @@ public class BooksController {
 		@RequestMapping(value = { "/{id}/image" }, method = RequestMethod.GET)
 		public String listBooksItems( @PathVariable Long id, ModelMap model,
 				Integer offset, Integer maxResults,HttpServletResponse response,HttpServletRequest request) {
-			
-//			PartnerRegistrationIndividual PartRegIndv =(PartnerRegistrationIndividual) objnew;
-//			Blob imgdata=bookService.findById(id).getImage();
-//	        imgdata.getBinaryStream();
-//	        OutputStream output = response.getOutputStream();
-//	        response.setContentType("image/jpeg");
-//	        response.getOutputStream().flush();
-//	        response.getOutputStream().close();
-			
+
 		 try {
-			 byte [] bytes = bookService.findById(id).getImage();
-				
+			 byte [] bytes = bookService.findById(id).getImage();				
 				BASE64Encoder base64Encoder = new BASE64Encoder();
 		        StringBuilder imageString = new StringBuilder();
 		        imageString.append("data:image/png;base64,");
 		        imageString.append(base64Encoder.encode(bytes));
-		        String image = imageString.toString();
-		    	
+		        String image = imageString.toString();		    	
 				model.addAttribute("image", image);		
 		 	} catch (Exception e) {
 			model.addAttribute("emptyList", true);
-		 	}
-				
-			return "books/image";
+		 	}		
+		return "books/image";
 		}
-
 	/*
 	 * This method provides the ability to search for books by their titles.
 	 */
@@ -167,20 +156,24 @@ public class BooksController {
 	 * saving book in database. It also validates the user input.
 	 */
 	@RequestMapping(value = { "/new" }, method = RequestMethod.POST)
-	public String saveBook(@Valid Book book, BindingResult result, @PathVariable Long id) {
-
+	public String saveBook(@Valid Book book,HttpServletRequest request,HttpServletResponse response, BindingResult result,
+			@PathVariable Long id){
+		String image =  request.getParameter("image");
 		if (result.hasErrors()) {
 			return "books/addNewBook";
 		}
+		File ImgPath = new File(image);
+		byte[] bFile = new byte[(int) ImgPath.length()];
 
 		Author author = authorService.findById(id);
-//		author.getBooks().add(book);s
 		author.getBooks().add(book);
+		book.setImage(bFile);
 		book.setAuthor(author);
 		bookService.saveBook(book);
 
 		return "redirect:/authors/{id}/books/";
-	}
+	}	
+		
 
 	/*
 	 * This method will provide the medium to update an existing book.

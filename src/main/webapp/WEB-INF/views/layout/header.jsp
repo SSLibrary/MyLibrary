@@ -2,9 +2,12 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles-extras" prefix="tilesx" %>
 	
 <div class="navbar navbar-default">
-	<ul class="nav navbar-nav">
+	<ul class="nav navbar-nav">		
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
 			<li><a href="/MyLibrary/authors/">Authors</a></li>
+		</sec:authorize>
+		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
+			<li><a href="/MyLibrary/books">Books</a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
 			<li><a href="/MyLibrary/users/">Users</a></li>
@@ -14,6 +17,9 @@
 		</sec:authorize>
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
 			<li><a href="/MyLibrary/messages/outbox">Outbox</a></li>
+		</sec:authorize>
+		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
+			<li><a href="/MyLibrary/statistics/choiceList">Statistics</a></li>
 		</sec:authorize>
 		<sec:authorize access="!isAuthenticated()">
 			<li class="${current == 'login' ? 'active' : '' }"><a href="/MyLibrary/login/">Login</a></li>

@@ -11,6 +11,7 @@ import org.springframework.hateoas.config.EnableHypermediaSupport;
 import org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType;
 import org.springframework.hateoas.hal.CurieProvider;
 import org.springframework.hateoas.hal.DefaultCurieProvider;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -25,6 +26,11 @@ import org.springframework.web.servlet.view.JstlView;
 @ComponentScan(basePackages = "com.ss.academy.java")
 public class WebAppConfiguration extends WebMvcConfigurerAdapter {
 
+	@Bean(name = "multipartResolver")
+	 public StandardServletMultipartResolver resolver() {
+	  return new StandardServletMultipartResolver();
+	 }
+	
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
