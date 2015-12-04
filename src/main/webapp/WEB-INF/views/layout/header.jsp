@@ -2,12 +2,15 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles-extras" prefix="tilesx" %>
 	
 <div class="navbar navbar-default">
-	<ul class="nav navbar-nav">
+	<ul class="nav navbar-nav">		
 	<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
 			<li><a href="/MyLibrary/books">Books</a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
 			<li><a href="/MyLibrary/authors/">Authors</a></li>
+		</sec:authorize>
+		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
+			<li><a href="/MyLibrary/books">Books</a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
 			<li><a href="/MyLibrary/users/">Users</a></li>
@@ -19,8 +22,13 @@
 			<li><a href="/MyLibrary/${currUser}/messages/outbox">Outbox</a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
+<<<<<<< HEAD
 			<li><a href="/MyLibrary/${currUser}/history/myhistory">My History</a></li>
 		</sec:authorize>		
+=======
+			<li><a href="/MyLibrary/statistics/choiceList">Statistics</a></li>
+		</sec:authorize>
+>>>>>>> 0cf1a694a7d23621716598a424449b782b844f88
 		<sec:authorize access="!isAuthenticated()">
 			<li class="${current == 'login' ? 'active' : '' }"><a href="/MyLibrary/login/">Login</a></li>
 			<li class="${current == 'register' ? 'active' : '' }"><a href="/MyLibrary/register/">Register</a></li>			

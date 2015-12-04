@@ -18,6 +18,15 @@
 					</form:select>
 				</div>
 			</div>
+			<!--
+			<div class="form-group">
+				<label for="image" class="control-label col-sm-2">Image:</label>
+				<div class="col-sm-10">
+					<form:input type="file" path="image" id="image" class="form-control" name="image" />
+					<form:errors path="image" cssClass="error" />
+				</div>
+			</div>
+			-->
 			<c:choose>
 				<c:when test="${edit}">
 					<div class="form-group">
@@ -29,15 +38,16 @@
 						</div>
 					</div>
 				</c:when>
-				<c:otherwise>
+				<c:otherwise>				
 					<div class="form-group">
 						<div class="col-sm-2"></div>
 						<div class="col-sm-10">
-							<form:form action="new" method="POST">
+							<form:form action="new" method="POST" enctype="multipart/form-data">
+							  	<input type="file"  class="form-control" placeholder="Image" name="image" > 
 								<button type="submit" class="btn btn-primary form-control">Add</button>
 							</form:form>
 						</div>
-					</div>
+					</div>				
 				</c:otherwise>
 			</c:choose>
 		</form:form>

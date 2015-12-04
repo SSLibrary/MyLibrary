@@ -140,6 +140,27 @@ Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 		<put-attribute name="current" value="allComments"></put-attribute>
 	</definition>
 <!--end of comments -->
-
+<!-- statistic -->
+	<definition name="statistics/authorCount" extends="baseLayout">
+		<put-attribute name="title" value="Show Comments"/>
+		<put-attribute name="body" value="/WEB-INF/views/statistics/authorCount.jsp"/>	
+		<put-attribute name="current" value="authorCount"></put-attribute>
+	</definition>
+	<definition name="statistics/booksCount" extends="baseLayout">
+		<put-attribute name="title" value="Show Comments"/>
+		<put-attribute name="body" value="/WEB-INF/views/statistics/booksCount.jsp"/>	
+		<put-attribute name="current" value="booksCount"></put-attribute>
+	</definition>
+	<definition name="statistics/choiceList" extends="baseLayout">
+		<put-attribute name="title" value="Show Comments"/>
+		<put-attribute name="body" value="/WEB-INF/views/statistics/choiceList.jsp"/>	
+		<put-attribute name="current" value="choiceList"></put-attribute>
+	</definition>
+	<definition name="statistics/userCount" extends="baseLayout">
+		<put-attribute name="title" value="Show Comments"/>
+		<put-attribute name="body" value="/WEB-INF/views/statistics/userCount.jsp"/>	
+		<put-attribute name="current" value="userCount"></put-attribute>
+	</definition>	
+<!--end of statistic -->
 </tiles-definitions>
 

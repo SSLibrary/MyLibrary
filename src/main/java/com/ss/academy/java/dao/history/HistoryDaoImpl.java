@@ -25,7 +25,7 @@ public class HistoryDaoImpl extends AbstractDao<Integer, BookHistory> implements
     }
 
     public void getBook(User user, Book book) {
-        SQLQuery query = this.getSession().createSQLQuery("INSERT INTO history VALUES (?, ?)");
+        SQLQuery query = this.getSession().createSQLQuery("INSERT INTO history (user_id, book_id) VALUES (?, ?)");
         query.setLong("user_id", user.getId());
         query.setLong("book_id", book.getId());
         query.executeUpdate();

@@ -1,5 +1,6 @@
 package com.ss.academy.java.model.book;
 
+import java.sql.Blob;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -49,6 +50,9 @@ public class Book implements Identifiable<Long> {
 	@Lob
 	@Column(name="image")
 	private byte[] image;
+//	@Column(name="image")
+//	@Lob
+//	private Blob image;
 
 	@ManyToOne()
 	@JoinColumn(name = "author_id")
@@ -136,6 +140,21 @@ public class Book implements Identifiable<Long> {
 	public List<Comment> getComments() {
 		return comments;
 	}
+
+//	/**
+//	 * @return the image
+//	 */
+//	public Blob getImage() {
+//		return image;
+//	}
+//
+//	/**
+//	 * @param image the image to set
+//	 */
+//	public void setImage(Blob image) {
+//		this.image = image;
+//	}
+	
 
 	/**
 	 * @return the image

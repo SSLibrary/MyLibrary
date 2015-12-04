@@ -112,7 +112,7 @@
 			</div>
 		</sec:authorize>
 			<!-- pagination -->
-				<div class="centered" style="top:780px;position:absolute;">	
+				<div class="text-center" >	
 					<tag:paginate max="15" offset="${offset}" count="${count}"
    						uri="../books/" next="&raquo;" previous="&laquo;" /> 
    				</div>	
