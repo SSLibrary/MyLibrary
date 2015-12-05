@@ -1,9 +1,6 @@
 package com.ss.academy.java.controller;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,7 +14,6 @@ import com.ss.academy.java.service.book.BookService;
 import com.ss.academy.java.service.user.UserService;
 import com.ss.academy.java.util.UnreadMessagesCounter;
 import com.ss.academy.java.model.author.Author;
-import com.ss.academy.java.model.book.Book;
 import com.ss.academy.java.model.message.Message;
 import com.ss.academy.java.model.user.User;
 

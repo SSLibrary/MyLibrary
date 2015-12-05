@@ -11,7 +11,7 @@ import org.springframework.hateoas.config.EnableHypermediaSupport;
 import org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType;
 import org.springframework.hateoas.hal.CurieProvider;
 import org.springframework.hateoas.hal.DefaultCurieProvider;
-import org.springframework.web.multipart.support.StandardServletMultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -26,10 +26,6 @@ import org.springframework.web.servlet.view.JstlView;
 @ComponentScan(basePackages = "com.ss.academy.java")
 public class WebAppConfiguration extends WebMvcConfigurerAdapter {
 
-	@Bean(name = "multipartResolver")
-	 public StandardServletMultipartResolver resolver() {
-	  return new StandardServletMultipartResolver();
-	 }
 	
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
@@ -53,7 +49,17 @@ public class WebAppConfiguration extends WebMvcConfigurerAdapter {
 		messageSource.setDefaultEncoding("UTF-8");
 		return messageSource;
 	}
-
+	
+	@Bean(name = "multipartResolver")
+	public CommonsMultipartResolver createMultipartResolver() {
+	    CommonsMultipartResolver resolver=new CommonsMultipartResolver();
+	    resolver.setMaxUploadSize(20971520);   // 20MB
+	    resolver.setMaxInMemorySize(1048576);  // 1MB
+	    resolver.setDefaultEncoding("utf-8");
+	    return resolver;
+	}
+	
+	
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer c) {
 		c.defaultContentType(MediaTypes.HAL_JSON);

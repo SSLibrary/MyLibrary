@@ -14,8 +14,6 @@ import org.springframework.stereotype.Repository;
 import com.ss.academy.java.dao.AbstractDao;
 import com.ss.academy.java.model.book.Book;
 
-import sun.print.resources.serviceui;
-
 @Repository("bookDao")
 public class BookDaoImpl extends AbstractDao<Long, Book> implements BookDao {
 
@@ -25,12 +23,6 @@ public class BookDaoImpl extends AbstractDao<Long, Book> implements BookDao {
 
 	public void saveBook(Book book) {
 		persist(book);
-//		String sql = "INSERT INTO author_books(title, status, image) VALUES(?,?,?)";
-//		Query query = getSession().createSQLQuery(sql);
-//		query.setString(1, book.getTitle());
-//		query.setEntity(2, book.getStatus());
-//		query.setEntity(3, book.getImage());
-//		query.executeUpdate();
 	}
 
 	public void deleteBookById(Long id) {

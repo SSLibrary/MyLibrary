@@ -23,6 +23,8 @@ public class BookResource extends ResourceSupport {
 		this.comments = comments;
 	}
 
+	
+
 	public String getTitle() {
 		return title;
 	}
@@ -46,6 +48,7 @@ public class BookResource extends ResourceSupport {
 	public void setImage(byte[] image) {
 		this.image = image;
 	}
+	
 
 	public List<Rating> getRatings() {
 		return ratings;

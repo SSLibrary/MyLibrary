@@ -1,6 +1,5 @@
 package com.ss.academy.java.controller;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 //import com.ss.academy.java.configuration.HibernateUtil;
 import com.ss.academy.java.model.author.Author;
 import com.ss.academy.java.model.book.Book;
@@ -38,6 +39,7 @@ import sun.misc.BASE64Encoder;
 /**
  * Handles requests for the application authors' books page.
  */
+@SuppressWarnings("restriction")
 @Controller
 @RequestMapping(value = "/authors/{id}/books")
 public class BooksController {
@@ -97,12 +99,12 @@ public class BooksController {
 	}
 	
 	 
+		
 		@RequestMapping(value = { "/{id}/image" }, method = RequestMethod.GET)
-		public String listBooksItems( @PathVariable Long id, ModelMap model,
-				Integer offset, Integer maxResults,HttpServletResponse response,HttpServletRequest request) {
-
+		public String booksImage( @PathVariable Long id, ModelMap model,
+				Integer offset, Integer maxResults,HttpServletResponse response,HttpServletRequest request) {			
 		 try {
-			 byte [] bytes = bookService.findById(id).getImage();				
+			 byte [] bytes = bookService.findById(id).getImage();					
 				BASE64Encoder base64Encoder = new BASE64Encoder();
 		        StringBuilder imageString = new StringBuilder();
 		        imageString.append("data:image/png;base64,");
@@ -113,7 +115,7 @@ public class BooksController {
 			model.addAttribute("emptyList", true);
 		 	}		
 		return "books/image";
-		}
+		}		
 	/*
 	 * This method provides the ability to search for books by their titles.
 	 */
@@ -165,22 +167,24 @@ public class BooksController {
 	 * saving book in database. It also validates the user input.
 	 */
 	@RequestMapping(value = { "/new" }, method = RequestMethod.POST)
-	public String saveBook(@Valid Book book,HttpServletRequest request,HttpServletResponse response, BindingResult result,
-			@PathVariable Long id){
-		String image =  request.getParameter("image");
+	public  String saveBook(@Valid Book book, BindingResult result,
+			@RequestParam CommonsMultipartFile[] fileUpload, @PathVariable Long id){
+
 		if (result.hasErrors()) {
 			return "books/addNewBook";
 		}
-		File ImgPath = new File(image);
-		byte[] bFile = new byte[(int) ImgPath.length()];
-
-		Author author = authorService.findById(id);
-		author.getBooks().add(book);
-		book.setImage(bFile);
-		book.setAuthor(author);
-		bookService.saveBook(book);
-
-		return "redirect:/authors/{id}/books/";
+		
+		if (fileUpload != null && fileUpload.length > 0) {
+            for (CommonsMultipartFile aFile : fileUpload){                  
+                System.out.println("Saving file: " + aFile.getOriginalFilename());                 
+                Author author = authorService.findById(id);
+        		author.getBooks().add(book);
+        		book.setAuthor(author);                
+        		book.setImage(aFile.getBytes());
+        		bookService.saveBook(book);           
+            }
+        }			
+		return "redirect:/authors/{id}/books/";		
 	}	
 		
 
