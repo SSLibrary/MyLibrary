@@ -35,7 +35,6 @@ import com.ss.academy.java.util.UnreadMessagesCounter;
 
 import sun.misc.BASE64Encoder;
 
-
 /**
  * Handles requests for the application authors' books page.
  */
@@ -55,7 +54,7 @@ public class BooksController {
 
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	MessageService messageService;
 
@@ -65,16 +64,16 @@ public class BooksController {
 	 */
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String listAllBooks(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long id, ModelMap model,
-			Integer offset, Integer maxResults){
-		
+			Integer offset, Integer maxResults) {
+
 		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getReceivedMessage();	
-		int unread = UnreadMessagesCounter.counter(messages);		
-		
-		Author author = authorService.findById(id);		
-		List<Book> books = bookService.list(offset, maxResults, id);	
+		List<Message> messages = user.getReceivedMessage();
+		int unread = UnreadMessagesCounter.counter(messages);
+
+		Author author = authorService.findById(id);
+		List<Book> books = bookService.list(offset, maxResults, id);
 		Long count = bookService.count(id);
-		 
+
 		if (books.size() == 0) {
 			model.addAttribute("emptyList", true);
 		} else {
@@ -87,48 +86,47 @@ public class BooksController {
 					}
 				}
 			}
-		}	
-
-		model.addAttribute("books", books);		
-		model.addAttribute("count", count);			
+		}
+		model.addAttribute("books", books);
+		model.addAttribute("count", count);
 		model.addAttribute("offset", offset);
 		model.addAttribute("author", author);
 		model.addAttribute("unread", unread);
 		model.addAttribute("currUser", user.getId());
+		
 		return "books/allAuthorBooks";
 	}
-	
-	 
-		
-		@RequestMapping(value = { "/{id}/image" }, method = RequestMethod.GET)
-		public String booksImage( @PathVariable Long id, ModelMap model,
-				Integer offset, Integer maxResults,HttpServletResponse response,HttpServletRequest request) {			
-		 try {
-			 byte [] bytes = bookService.findById(id).getImage();					
-				BASE64Encoder base64Encoder = new BASE64Encoder();
-		        StringBuilder imageString = new StringBuilder();
-		        imageString.append("data:image/png;base64,");
-		        imageString.append(base64Encoder.encode(bytes));
-		        String image = imageString.toString();		    	
-				model.addAttribute("image", image);		
-		 	} catch (Exception e) {
+
+	@RequestMapping(value = { "/{id}/image" }, method = RequestMethod.GET)
+	public String booksImage(@Valid Book book, BindingResult result, @PathVariable Long id, ModelMap model,
+			Integer offset, Integer maxResults, HttpServletResponse response, HttpServletRequest request) {
+		byte[] bytes = bookService.findById(id).getImage();
+		if (bytes.length == 0) {
 			model.addAttribute("emptyList", true);
-		 	}		
+		}
+		BASE64Encoder base64Encoder = new BASE64Encoder();
+		StringBuilder imageString = new StringBuilder();
+		imageString.append("data:image/png;base64,");
+		imageString.append(base64Encoder.encode(bytes));
+		String image = imageString.toString();
+		model.addAttribute("image", image);
+		
 		return "books/image";
-		}		
+	}
+
 	/*
 	 * This method provides the ability to search for books by their titles.
 	 */
 	@RequestMapping(value = { "/search" }, method = RequestMethod.GET)
-	public String searchBookByName(@PathVariable Long id, @RequestParam("bookTitle") String bookTitle, 
-			ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
+	public String searchBookByName(@PathVariable Long id, @RequestParam("bookTitle") String bookTitle, ModelMap model,
+			@AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getReceivedMessage();	
+		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
 
 		List<Book> books = bookService.findBooksByTitle(bookTitle);
 		List<Book> authorBooks = new ArrayList<Book>();
-		
+
 		for (Book book : books) {
 			if (book.getAuthor().getId() == id) {
 				authorBooks.add(book);
@@ -147,11 +145,11 @@ public class BooksController {
 	 */
 	@RequestMapping(value = { "/new" }, method = RequestMethod.GET)
 	public String addNewBook(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
-		
+
 		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getReceivedMessage();	
+		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
-		
+
 		Book book = new Book();
 		model.addAttribute("book", book);
 		model.addAttribute("edit", false);
@@ -167,26 +165,26 @@ public class BooksController {
 	 * saving book in database. It also validates the user input.
 	 */
 	@RequestMapping(value = { "/new" }, method = RequestMethod.POST)
-	public  String saveBook(@Valid Book book, BindingResult result,
-			@RequestParam CommonsMultipartFile[] fileUpload, @PathVariable Long id){
+	public String saveBook(@Valid Book book, BindingResult result, @RequestParam CommonsMultipartFile[] fileUpload,
+			@PathVariable Long id) {
 
 		if (result.hasErrors()) {
 			return "books/addNewBook";
 		}
-		
+
 		if (fileUpload != null && fileUpload.length > 0) {
-            for (CommonsMultipartFile aFile : fileUpload){                  
-                System.out.println("Saving file: " + aFile.getOriginalFilename());                 
-                Author author = authorService.findById(id);
-        		author.getBooks().add(book);
-        		book.setAuthor(author);                
-        		book.setImage(aFile.getBytes());
-        		bookService.saveBook(book);           
-            }
-        }			
-		return "redirect:/authors/{id}/books/";		
-	}	
-		
+			for (CommonsMultipartFile aFile : fileUpload) {
+				System.out.println("Saving file: " + aFile.getOriginalFilename());
+				Author author = authorService.findById(id);
+				author.getBooks().add(book);
+				book.setAuthor(author);
+				book.setImage(aFile.getBytes());
+
+				bookService.saveBook(book);
+			}
+		}
+		return "redirect:/authors/{id}/books/";
+	}
 
 	/*
 	 * This method will provide the medium to update an existing book.
@@ -195,9 +193,9 @@ public class BooksController {
 	public String editBook(@PathVariable Long id, @PathVariable Long book_id, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getReceivedMessage();	
+		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
-		
+
 		Book book = bookService.findById(book_id);
 		Author author = book.getAuthor();
 
