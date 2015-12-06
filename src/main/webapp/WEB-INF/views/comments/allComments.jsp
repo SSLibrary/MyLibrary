@@ -32,7 +32,7 @@
             </tr>
         </table>
 			<div class="row">
-				<div class="col-md-2 ">
+				<div class="col-md-2 " >
 					<form:form action="comments/new" method="GET">
 						<button type="submit" class="btn btn-primary btn-block">Add
 							New Comment</button>

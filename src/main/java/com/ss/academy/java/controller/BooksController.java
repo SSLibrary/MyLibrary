@@ -1,10 +1,9 @@
 package com.ss.academy.java.controller;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,18 +98,19 @@ public class BooksController {
 
 	@RequestMapping(value = { "/{id}/image" }, method = RequestMethod.GET)
 	public String booksImage(@Valid Book book, BindingResult result, @PathVariable Long id, ModelMap model,
-			Integer offset, Integer maxResults, HttpServletResponse response, HttpServletRequest request) {
+			Integer offset, Integer maxResults){
 		byte[] bytes = bookService.findById(id).getImage();
-		if (bytes.length == 0) {
+		if (bytes.length == 0 ) {
 			model.addAttribute("emptyList", true);
 		}
 		BASE64Encoder base64Encoder = new BASE64Encoder();
 		StringBuilder imageString = new StringBuilder();
 		imageString.append("data:image/png;base64,");
 		imageString.append(base64Encoder.encode(bytes));
-		String image = imageString.toString();
-		model.addAttribute("image", image);
 		
+		String image = imageString.toString();	
+
+			model.addAttribute("image", image);
 		return "books/image";
 	}
 
@@ -168,13 +168,22 @@ public class BooksController {
 	public String saveBook(@Valid Book book, BindingResult result, @RequestParam CommonsMultipartFile[] fileUpload,
 			@PathVariable Long id) {
 
+
 		if (result.hasErrors()) {
 			return "books/addNewBook";
 		}
 
 		if (fileUpload != null && fileUpload.length > 0) {
 			for (CommonsMultipartFile aFile : fileUpload) {
-				System.out.println("Saving file: " + aFile.getOriginalFilename());
+				System.out.println("Saving file: " + aFile.getOriginalFilename());				
+				
+				if(aFile.toString().startsWith("FF D8 FF")) 
+				    System.out.println(aFile.getName() +" is JPG ");
+				else if(aFile.toString().startsWith("47 49 46 38 37 61") || aFile.toString().startsWith("47 49 46 38 39 61"))
+				    System.out.println(aFile.getName() +" is GIF ");
+				else if(aFile.toString().startsWith("89 50 4E 47 0D 0A 1A 0A"))
+				    System.out.println(aFile.getName() +" is PNG ");			
+				
 				Author author = authorService.findById(id);
 				author.getBooks().add(book);
 				book.setAuthor(author);

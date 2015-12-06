@@ -75,9 +75,15 @@
 			<br />
 		</c:forEach>
 			<!-- pagination -->
-				<div class="text-center">	
+			<c:choose>
+				<c:when test="${count > 4}">
+				<div class="text-center" style="top:773px;position:absolute;margin-left:520px;">	
 					<tag:paginate max="15" offset="${offset}" count="${count}"
    						uri="../users/" next="&raquo;" previous="&laquo;" /> 
    				</div>	
+   				</c:when>
+				<c:otherwise>
+				</c:otherwise>
+			</c:choose>
    			<!-- end of pagination -->	
 		

@@ -21,9 +21,15 @@
 				</table>
 				</c:otherwise>				
 		</c:choose>	
-			<!-- pagination -->	
-			<div class="text-center">		
+			<!-- pagination -->				
+   			<c:choose>
+				<c:when test="${count > 4}">
+				<div class="text-center" style="top:773px;position:absolute;margin-left:520px;">		
 					<tag:paginate max="15" offset="${offset}" count="${count}"
    						uri="../messages/outbox" next="&raquo;" previous="&laquo;" /> 
-   			</div>
+   				</div>
+   				</c:when>
+				<c:otherwise>
+				</c:otherwise>
+			</c:choose>	
    			<!-- end of pagination -->	
