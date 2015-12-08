@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ss.academy.java.dao.book.BookDao;
 import com.ss.academy.java.model.book.Book;
+import com.ss.academy.java.model.book.BookHistory;
 
 @Service("bookService")
 @Transactional
@@ -52,4 +53,24 @@ public class BookServiceImpl implements BookService {
 	public Long count(Long author_id) {
 		return dao.count(author_id);
 	}
+
+	public void changeStatus(Long book_id) {
+		dao.changeStatus(book_id);
+		
+	}
+
+	public void getThisBook(Long user_id, Long book_id) {
+		dao.getThisBook(user_id, book_id);
+		
+	}
+
+	public void returnThisBook(Long user_id, Long book_id) {
+		dao.returnThisBook(user_id, book_id);
+		
+	}
+
+	public List<Book> listMyBooks(Long user_id) {
+		return dao.listMyBooks(user_id);
+	}
+
 }

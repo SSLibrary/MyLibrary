@@ -254,4 +254,15 @@ public class BooksController {
 
 		return "redirect:/authors/{id}/books/";
 	}
+	
+	@RequestMapping(value = {"/{book_id}"})
+	public String getThisBook(@PathVariable Long book_id, @AuthenticationPrincipal UserDetails userDetails){
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		Long user_id = currentUser.getId();
+		bookService.getThisBook(user_id, book_id);
+		return "redirect:/authors/{id}/books/";
+		
+	}
+	
+	
 }
