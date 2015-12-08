@@ -3,7 +3,6 @@ package com.ss.academy.java.dao.book;
 import java.util.List;
 
 import com.ss.academy.java.model.book.Book;
-import com.ss.academy.java.model.book.BookHistory;
 
 public interface BookDao {
 	

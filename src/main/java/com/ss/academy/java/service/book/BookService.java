@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.ss.academy.java.model.book.Book;
-import com.ss.academy.java.model.book.BookHistory;
 
 public interface BookService {
 

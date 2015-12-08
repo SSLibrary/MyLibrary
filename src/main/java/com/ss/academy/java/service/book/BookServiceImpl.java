@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ss.academy.java.dao.book.BookDao;
 import com.ss.academy.java.model.book.Book;
-import com.ss.academy.java.model.book.BookHistory;
 
 @Service("bookService")
 @Transactional

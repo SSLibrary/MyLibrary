@@ -264,5 +264,14 @@ public class BooksController {
 		
 	}
 	
+	@RequestMapping(value = {"/myhistory/{book_id}"}, method = RequestMethod.GET)
+	public String returnThisBook(@PathVariable Long book_id, @AuthenticationPrincipal UserDetails userDetails){
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		Long user_id = currentUser.getId();
+		bookService.returnThisBook(user_id, book_id);
+		return "books/myhistory";
+		
+	}
+	
 	
 }
