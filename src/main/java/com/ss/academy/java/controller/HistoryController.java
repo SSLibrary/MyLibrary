@@ -34,15 +34,15 @@ public class HistoryController {
 //		return "redirect:/authors/{id}/books/";
 //	}
 	
-	@RequestMapping(value = {"/myhistory"}, method = RequestMethod.GET)
-	public String listMyBooks(ModelMap model, @AuthenticationPrincipal UserDetails userDetails, Long user_id){
+	@RequestMapping(value = {"/books/myhistory"}, method = RequestMethod.GET)
+	public String listMyBooks(ModelMap model, @AuthenticationPrincipal UserDetails userDetails){
 		User currentUser = userService.findByUsername(userDetails.getUsername());
-		user_id = currentUser.getId();
+		Long user_id = currentUser.getId();
 		List<Book> books = bookService.listMyBooks(user_id);
 		
 		model.addAttribute("books", books);
 		model.addAttribute("currUser", currentUser.getId());
-		return "/books/myhistory";
+		return "books/myhistory";
 		
 	}
 	

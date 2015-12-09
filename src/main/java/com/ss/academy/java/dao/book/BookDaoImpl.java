@@ -117,7 +117,7 @@ public class BookDaoImpl extends AbstractDao<Long, Book> implements BookDao {
 	public List<Book> listMyBooks(Long user_id){
 		
 		List<Book> list= (List<Book>) getSession()
-				.createCriteria(BookHistory.class)
+				.createCriteria(Book.class)
 //				.createAlias("history.user_id", "u") // inner join by default
 //				.add(Restrictions.eq("u.id", user_id))
 				.add(Restrictions.eq("id", user_id))
