@@ -1,6 +1,7 @@
 <%@ include file="../layout/taglib.jsp" %>
 <%@ taglib prefix="tag" uri="/WEB-INF/taglibs/customTaglib.tld"%>
-
+			
+		
 		<div class="jumbotron">
 			<h1 class="text-center">${author.name}</h1>
 		</div>
@@ -54,8 +55,8 @@
 										</form:form>
 									</div>
 									<div class="btn-group">
-										<form:form action="${book.id}" method="DELETE">
-											<button type="submit" class="btn btn-default">Delete</button>
+										<form:form action="${book.id}" method="DELETE" >
+											<button id="deleteForm" type="submit" class="btn btn-default  btn-sm triggerRemove">Delete</button>
 										</form:form>
 									</div>
 									<div class="btn-group">
@@ -123,3 +124,4 @@
 				</c:otherwise>
 			</c:choose>	
    			<!-- end of pagination -->	
+			

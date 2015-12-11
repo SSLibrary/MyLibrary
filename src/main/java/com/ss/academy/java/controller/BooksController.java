@@ -98,19 +98,22 @@ public class BooksController {
 
 	@RequestMapping(value = { "/{id}/image" }, method = RequestMethod.GET)
 	public String booksImage(@Valid Book book, BindingResult result, @PathVariable Long id, ModelMap model,
-			Integer offset, Integer maxResults){
-		byte[] bytes = bookService.findById(id).getImage();
-		if (bytes.length == 0 ) {
-			model.addAttribute("emptyList", true);
-		}
-		BASE64Encoder base64Encoder = new BASE64Encoder();
-		StringBuilder imageString = new StringBuilder();
-		imageString.append("data:image/png;base64,");
-		imageString.append(base64Encoder.encode(bytes));
-		
-		String image = imageString.toString();	
-
+			Integer offset, Integer maxResults){		 
+		try {
+			byte[] bytes = bookService.findById(id).getImage();					
+			if (bytes.length == 0) {
+				model.addAttribute("emptyList", true);
+			}
+			BASE64Encoder base64Encoder = new BASE64Encoder();
+			StringBuilder imageString = new StringBuilder();
+			imageString.append("data:image/png;base64,");
+			imageString.append(base64Encoder.encode(bytes));
+			
+			String image = imageString.toString();	
 			model.addAttribute("image", image);
+		} catch (NullPointerException e) {
+			model.addAttribute("emptyList", true);
+		}			
 		return "books/image";
 	}
 

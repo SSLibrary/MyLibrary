@@ -1,6 +1,8 @@
+
 <%@ include file="../layout/taglib.jsp" %>
 <%@ taglib prefix="tag" uri="/WEB-INF/taglibs/customTaglib.tld"%>
 
+			
 		<div class="jumbotron">
 			<h1 class="text-center">Authors</h1>
 		</div>
@@ -44,7 +46,7 @@
 						<sec:authorize access="hasAuthority('ADMIN')">
 							<div class="btn-group">
 								<form:form action="${author.id}" method="DELETE">
-									<button type="submit" class="btn btn-default">Delete</button>
+									<button type="submit" class="btn btn-default triggerRemove">Delete</button>
 								</form:form>
 							</div>
 						</sec:authorize>
