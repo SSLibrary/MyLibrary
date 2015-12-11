@@ -24,8 +24,12 @@ public class BookHistory {
 	@Id
 	@Column(name = "id", nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	@JsonBackReference(value = "user-history")
@@ -43,14 +47,6 @@ public class BookHistory {
 	@Type(type = "timestamp")
 	@Column(name = "return_date", nullable = false)
 	private Date returnDate;
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public User getUser() {
 		return user;

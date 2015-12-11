@@ -12,6 +12,7 @@
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
 			<li><a href="/MyLibrary/users/">Users</a></li>
 		</sec:authorize>
+		
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
 			<li><a href="/MyLibrary/${currUser}/messages/inbox">Inbox <span class="badge">${unread}</span></a></li>
 		</sec:authorize>
@@ -20,6 +21,9 @@
 		</sec:authorize>
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
 			<li><a href="/MyLibrary/statistics/choiceList">Statistics</a></li>
+		</sec:authorize>
+		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
+			<li><a href="/MyLibrary/${currUser}/books/myhistory">MyHistory</a></li>
 		</sec:authorize>
 
 		<sec:authorize access="!isAuthenticated()">

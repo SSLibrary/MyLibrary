@@ -66,7 +66,7 @@
 										</form:form>
 									</div>
 									<div class="btn-group">
-										<form:form action="${book.id}/getbook" method="GET">
+										<form:form action="${book.id}">
 											<button type="submit" class="btn btn-default">Get</button>
 										</form:form>
 									</div>
