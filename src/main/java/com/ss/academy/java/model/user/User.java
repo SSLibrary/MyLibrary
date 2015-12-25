@@ -30,22 +30,22 @@ public class User implements Identifiable<Long>{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Size(min = 3, max = 50)
+	@Size(min = 3, max = 20)
 	@Column(name = "username", unique = true)
 	@NotNull
 	private String username;
 
-    @Size(min = 6, max = 60)
+    @Size(min = 4, max = 60)
 	@Column(name = "password")
 	@NotNull
 	private String password;
 
-	@Size(min = 3, max = 50)
+	@Size(min = 2, max = 20)
 	@Column(name = "first_name")
 	@NotNull
 	private String firstName;
 
-	@Size(min = 3, max = 50)
+	@Size(min = 2, max = 20)
 	@Column(name = "last_name")
 	@NotNull
 	private String lastName;

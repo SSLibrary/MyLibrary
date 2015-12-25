@@ -36,6 +36,12 @@ Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 		<put-attribute name="body" value="/WEB-INF/views/users/all.jsp"/>	
 		<put-attribute name="current" value="all"></put-attribute>
 	</definition>
+	
+	<definition name="users/registrationSuccess" extends="baseLayout">
+		<put-attribute name="title" value="Registration successful"/>
+		<put-attribute name="body" value="/WEB-INF/views/users/registrationSuccess.jsp"/>	
+		<put-attribute name="current" value="registrationSuccess"></put-attribute>
+	</definition>
 <!--end of users -->	
 
 <!-- authors -->

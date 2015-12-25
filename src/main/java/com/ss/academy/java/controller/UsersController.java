@@ -115,7 +115,7 @@ public class UsersController {
 	 * whether the username is unique.
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String registerUser(@ModelAttribute @Valid User user, BindingResult result) {
+	public String registerUser(@ModelAttribute @Valid User user, BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
 			return "users/register";
 		}
@@ -129,6 +129,8 @@ public class UsersController {
 
 		userService.save(user);
 
-		return "redirect:/";
+		 model.addAttribute("newUser", user.getUsername());
+
+			return "users/registrationSuccess";
 	}
 }
