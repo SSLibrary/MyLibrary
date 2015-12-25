@@ -42,21 +42,21 @@
 							<h4>${book.status}</h4>
 						</div>
 						<div class="col-md-6">
-							<div class="btn-group btn-group-justified">
-							<div class="btn-group">
-										<form:form action="${book.id}/comments" method="GET">
-											<button type="submit" class="btn btn-success">Comments</button>
-										</form:form>
-									</div>
+							<div class="btn-toolbar">			
 								<sec:authorize access="hasAuthority('ADMIN')">
 									<div class="btn-group">
 										<form:form action="${book.id}" method="GET">
-											<button type="submit" class="btn btn-primary">Edit</button>
+											<button type="submit" class="btn btn-default  btn-sm triggerRemove">Edit</button>
 										</form:form>
 									</div>
 									<div class="btn-group">
 										<form:form action="${book.id}" method="DELETE" >
 											<button id="deleteForm" type="submit" class="btn btn-default  btn-sm triggerRemove">Delete</button>
+										</form:form>
+									</div>
+									<div class="btn-group">
+										<form:form action="${book.id}/comments" method="GET">
+											<button type="submit" class="btn btn-info">Comments</button>
 										</form:form>
 									</div>
 									<div class="btn-group">
@@ -74,14 +74,12 @@
 								<sec:authorize access="hasAuthority('USER')">
 									<c:choose>
 										<c:when test="${book.isRated}">
-
 											<div class="btn-group">
 												<form:form action="${book.id}/ratingCheck" method="GET">
 													<button type="submit" class="btn btn-info">Check
 														Rating</button>
 												</form:form>
 											</div>
-
 										</c:when>
 										<c:otherwise>
 											<div class="btn-group">
@@ -103,10 +101,9 @@
 		<br />
 		<sec:authorize access="hasAuthority('ADMIN')">
 			<div class="row">
-				<div class="col-md-2"></div>
-				<div class="col-md-8 ">
+				<div class="col-md-4">
 					<form:form action="new" method="GET">
-						<button type="submit" class="btn btn-primary btn-block">Add
+						<button type="submit" class="btn btn-primary">Add
 							New Book</button>
 					</form:form>
 				</div>

@@ -21,10 +21,10 @@
 				<h2>Title</h2>
 			</div>
 			<div class="col-md-3 col-xs-4 text-center">
-				<h2>Status</h2>
+				<h2>Author</h2>
 			</div>
 			<div class="col-md-3 col-xs-4 text-center">
-				<h2>Author</h2>
+				<h2>Status</h2>
 			</div>
 	
 			
@@ -36,10 +36,10 @@
 					</h4>
 				</div>
 				<div class="col-md-3 col-xs-6 text-center">
-					<h4>${book.status}</h4>
+					<h4>${book.author.name}</h4>
 				</div>
 				<div class="col-md-3 col-xs-6 text-center">
-					<h4>${book.author.name}</h4>
+					<h4>${book.status}</h4>
 				</div>
 			</div>
 			<br />

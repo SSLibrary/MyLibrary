@@ -5,14 +5,14 @@
 			<form:input type="hidden" path="id" id="id" />
 			<div class="form-group">
 				<label for="title" class="control-label col-sm-2">Title:</label>
-				<div class="col-sm-10">
+				<div class="col-sm-3">
 					<form:input path="title" id="title" class="form-control"/>
 					<form:errors path="title" cssClass="error" />
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="status" class="control-label col-sm-2">Status:</label>
-				<div class="col-sm-10">
+				<div class="col-sm-3">
 					<form:select path="status" id="status" class="form-control" >
 						<form:options items="${statuses}" />
 					</form:select>
@@ -20,7 +20,7 @@
 			</div>
 			<div class="form-group">
 				<label for="fileUpload" class="control-label col-sm-2">Pic:</label>
-				<div class="col-sm-10">					
+				<div class="col-sm-3">					
 					<input type="file"  id="fileUpload" name="fileUpload" class="form-control"/>
 					<form:errors path="image" cssClass="error" />				
 				</div>
@@ -29,9 +29,9 @@
 				<c:when test="${edit}">
 					<div class="form-group">
 						<div class="col-sm-2"></div>
-						<div class="col-sm-10">
+						<div class="col-sm-5">
 							<form:form action="${book.id}" method="PUT" >
-								<button type="submit" class="btn btn-primary form-control">Edit</button>
+								<button type="submit" class="btn btn-primary">Edit</button>
 							</form:form>
 						</div>
 					</div>
@@ -39,9 +39,9 @@
 				<c:otherwise>				
 					<div class="form-group">
 						<div class="col-sm-2"></div>
-						<div class="col-sm-10">
+						<div class="col-sm-5">
 							<form:form action="new" method="POST" >									  	
-								<button type="submit" class="btn btn-primary form-control">Add</button>
+								<button type="submit" class="btn btn-primary">Add</button>
 							</form:form>
 						</div>
 					</div>				

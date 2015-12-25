@@ -5,14 +5,14 @@
 			<form:input type="hidden" path="id" id="id" />
 			<div class="form-group">
 				<label for="name" class="control-label col-sm-2">Name:</label>
-				<div class="col-sm-10">
+				<div class="col-sm-3">
 					<form:input path="name" id="name" class="form-control" />
 					<form:errors path="name" />
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="country" class="control-label col-sm-2">Country:</label>
-				<div class="col-sm-10">
+				<div class="col-sm-3">
 					<form:select path="country" id="country" class="form-control">
 						<form:options items="${countries}" />
 					</form:select>
@@ -22,9 +22,9 @@
 				<c:when test="${edit}">
 					<div class="form-group">
 						<div class="col-sm-2"></div>
-						<div class="col-sm-10">
+						<div class="col-sm-5">
 							<form:form action="/${author.id}" method="PUT">
-								<button type="submit" class="btn btn-primary form-control">Edit</button>
+								<button type="submit" class="btn btn-primary">Edit</button>
 							</form:form>
 						</div>
 					</div>
@@ -32,9 +32,9 @@
 				<c:otherwise>
 					<div class="form-group">
 						<div class="col-sm-2"></div>
-						<div class="col-sm-10">
+						<div class="col-sm-5">
 							<form:form action="/new" method="GET">
-								<button type="submit" class="btn btn-primary form-control">Add</button>
+								<button type="submit" class="btn btn-primary">Add</button>
 								<input type="hidden" name="${_csrf.parameterName}"
 									value="${_csrf.token}" />
 							</form:form>

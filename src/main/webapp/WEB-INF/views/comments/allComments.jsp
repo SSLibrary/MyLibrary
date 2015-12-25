@@ -15,11 +15,11 @@
 		        <c:forEach items="${comments}" var="comment">
 		           <tr>
 					<td>"${comment.comment}"</td>
-					<td>posted by <a href="<c:url value='/messages/${comment.user.id}/new' />"><b>${comment.user.username}</b></a></td>
+					<td>posted by <a href="<c:url value='/${currUser}/messages/${comment.user.id}/new' />"><b>${comment.user.username}</b></a></td>
 						<sec:authorize access="hasAuthority('ADMIN')">
 						<td>
 								<form:form action="comments/${comment.comment_id}" method="DELETE">
-									<button type="submit" class="btn btn-primary">Delete</button>
+									<button type="submit" class="btn btn-default  btn-sm triggerRemove">Delete</button>
 								</form:form>
 							</td>
 						</sec:authorize>
@@ -34,8 +34,7 @@
 			<div class="row">
 				<div class="col-md-2 " >
 					<form:form action="comments/new" method="GET">
-						<button type="submit" class="btn btn-primary btn-block">Add
-							New Comment</button>
+						<button type="submit" class="btn btn-primary btn-block">Add New Comment</button>
 					</form:form>
 				</div>
 			</div>

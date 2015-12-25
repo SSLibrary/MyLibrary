@@ -34,12 +34,12 @@
 				<div class="col-md-3 col-xs-6 text-center">
 					<h4>${author.country}</h4>
 				</div>
-				<div class="col-md-6">
-					<div class="btn-group btn-group-justified">
+				<div class="col-md-5">
+					<div class="btn-toolbar">
 						<sec:authorize access="hasAuthority('ADMIN')">
 							<div class="btn-group">
 								<form:form action="${author.id}" method="GET">
-									<button type="submit" class="btn btn-primary">Edit</button>
+									<button type="submit" class="btn btn-default triggerRemove">Edit</button>
 								</form:form>
 							</div>
 						</sec:authorize>
@@ -52,7 +52,7 @@
 						</sec:authorize>
 						<div class="btn-group">
 							<form:form action="${author.id}/books/" method="GET">
-								<button type="submit" class="btn btn-primary">Books</button>
+								<button type="submit" class="btn btn-info">Books</button>
 							</form:form>
 						</div>
 					</div>
@@ -65,7 +65,7 @@
 			<div class="row">
 				<div class="col-md-4">
 					<form:form action="/MyLibrary/authors/new/" method="GET">
-						<button type="submit" class="btn btn-primary btn-block">Add
+						<button type="submit" class="btn btn-primary">Add
 							New Author</button>
 					</form:form>
 				</div>
