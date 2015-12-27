@@ -44,7 +44,7 @@ public class Book implements Identifiable<Long> {
 	@Column(name = "status")
 	@Enumerated(EnumType.STRING)
 	@NotNull
-	private BookStatus status;
+	private BookStatus status = BookStatus.Available;
 
 	@Lob
 	@Column(name="image")

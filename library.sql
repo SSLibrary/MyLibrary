@@ -46,9 +46,9 @@ REFERENCES `authors`(`author_id`) ON DELETE CASCADE
 --
 INSERT INTO `author_books` (`book_id`, `author_id`, `title`, `status`) VALUES
 (1, 1, 'Pod Igoto', 'Available'),
-(2, 3, 'The Godfather', 'Loaned'),
-(3, 4, 'Introduction to programming with Java', 'Loaned'),
-(4, 1, 'O,Shipka!', 'Loaned'),
+(2, 3, 'The Godfather', 'Available'),
+(3, 4, 'Introduction to programming with Java', 'Available'),
+(4, 1, 'O,Shipka!', 'Available'),
 (5, 3, 'The Sicilian', 'Available');
 
 --
@@ -114,12 +114,13 @@ CREATE TABLE `comments` (
 ) ENGINE = InnoDB CHARACTER SET=utf8;
 
 
-CREATE table `history`(
+CREATE table `books_history`(
 	id int (6) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	book_id BIGINT UNSIGNED NOT NULL,
 	user_id varbinary(36) NOT NULL,
 	get_date DATETIME NOT NULL DEFAULT NOW(),
 	return_date DATETIME NOT NULL,
+	is_returned TINYINT(1) NOT NULL,
 	CONSTRAINT fk_book_id FOREIGN KEY (book_id) REFERENCES author_books(book_id) ON DELETE CASCADE,
 	CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 ) ENGINE = InnoDB CHARSET=utf8;

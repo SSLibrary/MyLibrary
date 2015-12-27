@@ -41,6 +41,13 @@
 				<div class="col-md-3 col-xs-6 text-center">
 					<h4>${book.status}</h4>
 				</div>
+				<c:choose>
+				<c:when test="${book.status =='Available'}">
+				<div class="btn-group">
+				<a href="/MyLibrary/${currUser}/books/${book.id}/addToHistory" class="btn btn-default" role="button">Get</a>
+				</div>
+				</c:when>
+					</c:choose>
 			</div>
 			<br />
 		</c:forEach>

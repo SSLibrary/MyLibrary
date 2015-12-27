@@ -16,7 +16,7 @@ import org.hibernate.annotations.Type;
 import com.ss.academy.java.model.user.User;
 
 @Entity
-@Table(name = "history")
+@Table(name = "books_history")
 public class BookHistory {
 
 	@Id
@@ -39,6 +39,9 @@ public class BookHistory {
 	@Type(type = "timestamp")
 	@Column(name = "return_date", nullable = false)
 	private Date returnDate;
+	
+	@Column(name = "is_returned", nullable = false)
+	private int isReturned = 0;
 
 	public Long getId() {
 		return id;
@@ -78,5 +81,13 @@ public class BookHistory {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public int getIsReturned() {
+		return isReturned;
+	}
+
+	public void setIsReturned(int isReturned) {
+		this.isReturned = isReturned;
 	}
 }

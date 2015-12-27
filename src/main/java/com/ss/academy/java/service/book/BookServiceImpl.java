@@ -30,7 +30,6 @@ public class BookServiceImpl implements BookService {
 
 		if (entity != null) {
 			entity.setTitle(book.getTitle());
-			entity.setStatus(book.getStatus());
 		}
 	}
 
@@ -55,12 +54,13 @@ public class BookServiceImpl implements BookService {
 	}
 
 	public void changeBookStatus(Book book) {
-		if (book.getStatus().equals(BookStatus.Available)) {
-			book.setStatus(BookStatus.Loaned);
-		} else {
-			book.setStatus(BookStatus.Available);
-		}	
+		
+		Book entity = dao.findById(book.getId());
+
+		if (entity != null && entity.getStatus().equals(BookStatus.Available)) {
+			entity.setStatus(BookStatus.Loaned);
+		} else if (entity != null && entity.getStatus().equals(BookStatus.Loaned)){
+			entity.setStatus(BookStatus.Available);
+		}
 	}
-	
-	
 }

@@ -21,4 +21,13 @@ public class BookHistoryServiceImpl implements BookHistoryService {
 	public void saveBookHistory(BookHistory bookHistory) {
 		dao.saveBookHistory(bookHistory);
 	}
+	
+	public void updateBookHistory(BookHistory bookHistory) {
+		BookHistory entity = dao.findById(bookHistory.getId());
+
+		if (entity != null) {
+			entity.setIsReturned(1);
+			entity.setReturnDate(bookHistory.getReturnDate());
+		}
+	}
 }

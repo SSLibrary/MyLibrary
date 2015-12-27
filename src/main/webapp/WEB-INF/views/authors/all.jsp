@@ -39,14 +39,14 @@
 						<sec:authorize access="hasAuthority('ADMIN')">
 							<div class="btn-group">
 								<form:form action="${author.id}" method="GET">
-									<button type="submit" class="btn btn-default triggerRemove">Edit</button>
+									<button type="submit" class="btn btn-default">Edit</button>
 								</form:form>
 							</div>
 						</sec:authorize>
 						<sec:authorize access="hasAuthority('ADMIN')">
 							<div class="btn-group">
 								<form:form action="${author.id}" method="DELETE">
-									<button type="submit" class="btn btn-default triggerRemove">Delete</button>
+									<button type="submit" class="btn btn-default">Delete</button>
 								</form:form>
 							</div>
 						</sec:authorize>

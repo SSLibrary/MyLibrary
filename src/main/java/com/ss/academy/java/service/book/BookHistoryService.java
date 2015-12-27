@@ -7,4 +7,6 @@ public interface BookHistoryService {
 	BookHistory findById(Long id);
 
 	void saveBookHistory(BookHistory bookHistory);
+	
+	void updateBookHistory(BookHistory bookHistory);
 }

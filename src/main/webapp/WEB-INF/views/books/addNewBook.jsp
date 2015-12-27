@@ -11,14 +11,6 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="status" class="control-label col-sm-2">Status:</label>
-				<div class="col-sm-3">
-					<form:select path="status" id="status" class="form-control" >
-						<form:options items="${statuses}" />
-					</form:select>
-				</div>
-			</div>
-			<div class="form-group">
 				<label for="fileUpload" class="control-label col-sm-2">Pic:</label>
 				<div class="col-sm-3">					
 					<input type="file"  id="fileUpload" name="fileUpload" class="form-control"/>

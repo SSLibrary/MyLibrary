@@ -17,9 +17,8 @@
 					<td>"${comment.comment}"</td>
 					<td>posted by <a href="<c:url value='/${currUser}/messages/${comment.user.id}/new' />"><b>${comment.user.username}</b></a></td>
 						<sec:authorize access="hasAuthority('ADMIN')">
-						<td>
-								<form:form action="comments/${comment.comment_id}" method="DELETE">
-									<button type="submit" class="btn btn-default  btn-sm triggerRemove">Delete</button>
+						<td><form:form action="comments/${comment.comment_id}" method="DELETE">
+									<button type="submit" class="btn btn-default">Delete</button>
 								</form:form>
 							</td>
 						</sec:authorize>

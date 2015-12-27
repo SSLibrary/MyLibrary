@@ -42,21 +42,16 @@
 							<h4>${book.status}</h4>
 						</div>
 						<div class="col-md-6">
-							<div class="btn-toolbar">			
+							<div class="btn-toolbar">	
 								<sec:authorize access="hasAuthority('ADMIN')">
 									<div class="btn-group">
 										<form:form action="${book.id}" method="GET">
-											<button type="submit" class="btn btn-default  btn-sm triggerRemove">Edit</button>
+											<button type="submit" class="btn btn-default">Edit</button>
 										</form:form>
 									</div>
 									<div class="btn-group">
 										<form:form action="${book.id}" method="DELETE" >
-											<button id="deleteForm" type="submit" class="btn btn-default  btn-sm triggerRemove">Delete</button>
-										</form:form>
-									</div>
-									<div class="btn-group">
-										<form:form action="${book.id}/comments" method="GET">
-											<button type="submit" class="btn btn-info">Comments</button>
+											<button id="deleteForm" type="submit" class="btn btn-default">Delete</button>
 										</form:form>
 									</div>
 									<div class="btn-group">
@@ -65,12 +60,12 @@
 												Rating</button>
 										</form:form>
 									</div>
-									<div class="btn-group">
-										<form:form action="${book.id}/addToHistory/${currUser}" method="POST">
-											<button type="submit" class="btn btn-default">Get</button>
+								</sec:authorize>
+								<div class="btn-group">
+										<form:form action="${book.id}/comments" method="GET">
+											<button type="submit" class="btn btn-info">Comments</button>
 										</form:form>
 									</div>
-								</sec:authorize>
 								<sec:authorize access="hasAuthority('USER')">
 									<c:choose>
 										<c:when test="${book.isRated}">
@@ -91,6 +86,14 @@
 										</c:otherwise>
 									</c:choose>
 								</sec:authorize>
+								<c:choose>
+											<c:when test="${book.status =='Available'}">
+												<div class="btn-group">
+													<a href="/MyLibrary/${currUser}/books/${book.id}/addToHistory" 
+															class="btn btn-default" role="button">Get</a>
+												</div>
+											</c:when>
+										</c:choose>
 							</div>
 						</div>
 					</div>
