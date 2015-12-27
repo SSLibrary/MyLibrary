@@ -18,6 +18,7 @@ import org.springframework.hateoas.Identifiable;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ss.academy.java.model.rating.Rating;
+import com.ss.academy.java.model.book.BookHistory;
 import com.ss.academy.java.model.comment.Comment;
 import com.ss.academy.java.model.message.Message;
 
@@ -63,14 +64,6 @@ public class User implements Identifiable<Long>{
 	@Enumerated(EnumType.STRING)
 	private UserStatus userStatus;
 
-	public UserStatus getUserStatus() {
-		return userStatus;
-	}
-
-	public void setUserStatus(UserStatus userStatus) {
-		this.userStatus = userStatus;
-	}
-
 	@OneToMany(mappedBy = "user")
 	@JsonManagedReference(value = "user-ratings")
 	private List<Rating> ratings;
@@ -86,6 +79,9 @@ public class User implements Identifiable<Long>{
     @OneToMany(mappedBy = "user")
     @JsonManagedReference(value = "user-comments")
 	private List<Comment> comments;
+    
+    @OneToMany (mappedBy = "user")
+	private List<BookHistory> booksHistory;
     
 	public Long getId() {
 		return id;
@@ -167,5 +163,19 @@ public class User implements Identifiable<Long>{
 		this.comments = comments;
 	}
 	
-	
+	public List<BookHistory> getBooksHistory() {
+		return booksHistory;
+	}
+
+	public void setBooksHistory(List<BookHistory> booksHistory) {
+		this.booksHistory = booksHistory;
+	}
+
+	public UserStatus getUserStatus() {
+		return userStatus;
+	}
+
+	public void setUserStatus(UserStatus userStatus) {
+		this.userStatus = userStatus;
+	}
 }

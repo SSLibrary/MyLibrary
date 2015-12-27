@@ -23,8 +23,6 @@ public class BookResource extends ResourceSupport {
 		this.comments = comments;
 	}
 
-	
-
 	public String getTitle() {
 		return title;
 	}

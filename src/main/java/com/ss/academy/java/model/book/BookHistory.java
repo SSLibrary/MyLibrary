@@ -1,6 +1,5 @@
 package com.ss.academy.java.model.book;
 
-
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,7 +13,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ss.academy.java.model.user.User;
 
 @Entity
@@ -25,43 +23,29 @@ public class BookHistory {
 	@Column(name = "id", nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	@ManyToOne
-	@JoinColumn(name = "user_id")
-	@JsonBackReference(value = "user-history")
-	private User user;
+	@JoinColumn(name = "book_id")
+	private Book book;
 	
 	@ManyToOne
-	@JoinColumn(name = "book_id")
-	@JsonBackReference(value = "book-history")
-	private Book book;
+	@JoinColumn(name = "user_id")
+	private User user;
 	
 	@Type(type = "timestamp")
 	@Column(name = "get_date", nullable = false)
-	private Date getDate;
+	private Date getDate = new Date();
 	
 	@Type(type = "timestamp")
 	@Column(name = "return_date", nullable = false)
 	private Date returnDate;
 
-	public User getUser() {
-		return user;
+	public Long getId() {
+		return id;
 	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Book getBook() {
-		return book;
-	}
-
-	public void setBook(Book book) {
-		this.book = book;
+	
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Date getGetDate() {
@@ -79,5 +63,20 @@ public class BookHistory {
 	public void setReturnDate(Date returnDate) {
 		this.returnDate = returnDate;
 	}
-	
+
+	public Book getBook() {
+		return book;
+	}
+
+	public void setBook(Book book) {
+		this.book = book;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 }

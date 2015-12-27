@@ -27,13 +27,6 @@ public interface BookService {
     
     Long count(Long author_id);
     
-    void changeStatus(Long book_id);
+    void changeBookStatus(Book book);
     
-    @PreAuthorize("hasAuthority('ADMIN')")
-    void getThisBook(Long user_id, Long book_id);
-
-    @PreAuthorize("hasAuthority('ADMIN')")
-	void returnThisBook(Long user_id, Long book_id);
-    
-    List<Book> listMyBooks(Long user_id);
 }

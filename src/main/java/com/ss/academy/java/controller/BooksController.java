@@ -257,7 +257,7 @@ public class BooksController {
 
 		return "redirect:/authors/{id}/books/";
 	}
-	
+	/*
 	@RequestMapping(value = {"/{book_id}"})
 	public String getThisBook(@PathVariable Long book_id, @AuthenticationPrincipal UserDetails userDetails){
 		User currentUser = userService.findByUsername(userDetails.getUsername());
@@ -274,7 +274,7 @@ public class BooksController {
 		bookService.returnThisBook(user_id, book_id);
 		return "books/myhistory";
 		
-	}
+	}*/
 	
 	
 }

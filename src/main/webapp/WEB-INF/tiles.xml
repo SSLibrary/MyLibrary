@@ -147,5 +147,12 @@ Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 	</definition>
 <!--end of comments -->
 
-</tiles-definitions>
+<!-- books history -->
+<definition name="users/booksHistory" extends="baseLayout">
+		<put-attribute name="title" value="Show user's books history"/>
+		<put-attribute name="body" value="/WEB-INF/views/users/booksHistory.jsp"/>	
+		<put-attribute name="current" value="booksHistory"></put-attribute>
+	</definition>
+<!--end of books history -->
 
+</tiles-definitions>

@@ -66,6 +66,9 @@ public class Book implements Identifiable<Long> {
 	@JsonManagedReference(value = "book-comments")
 	private List<Comment> comments;
 	
+	@OneToMany(mappedBy = "book")
+	private List<BookHistory> booksHistory;
+	
 	@Transient
 	@JsonIgnore
 	private boolean isRated;
@@ -130,28 +133,27 @@ public class Book implements Identifiable<Long> {
 		this.author = author;
 	}
 
-
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
 
-	
 	public List<Comment> getComments() {
 		return comments;
 	}
 
-	/**
-	 * @return the image
-	 */
 	public byte[] getImage() {
 		return image;
 	}
 
-	/**
-	 * @param image the image to set
-	 */
 	public void setImage(byte[] image) {
 		this.image = image;
 	}
 
+	public List<BookHistory> getBooksHistory() {
+		return booksHistory;
+	}
+
+	public void setBooksHistory(List<BookHistory> booksHistory) {
+		this.booksHistory = booksHistory;
+	}
 }

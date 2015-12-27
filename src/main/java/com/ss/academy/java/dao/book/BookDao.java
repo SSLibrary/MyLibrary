@@ -19,12 +19,4 @@ public interface BookDao {
 	List<Book> list(Integer offset, Integer maxResults, Long id);
     
     Long count(Long author_id);
-    
-    void changeStatus(Long book_id);
-    
-    void getThisBook(Long user_id, Long book_id);
-
-	void returnThisBook(Long user_id, Long book_id);
-	
-	List<Book> listMyBooks(Long user_id);
 }
