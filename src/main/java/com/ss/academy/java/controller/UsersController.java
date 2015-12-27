@@ -2,9 +2,9 @@ package com.ss.academy.java.controller;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 import javax.validation.Valid;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -81,7 +81,7 @@ public class UsersController {
 	 * users' status.
 	 */
 	@RequestMapping(value = { "/users/{id}" }, method = RequestMethod.PUT)
-	public String updateUserStatus(ModelMap model, @PathVariable Long id) {
+	public String updateUserStatus(ModelMap model, @PathVariable String id) {
 		User user = userService.findById(id);
 
 		userService.updateUserStatus(user);
@@ -120,7 +120,7 @@ public class UsersController {
 			return "users/register";
 		}
 
-		if (!userService.isUsernameUnique(user.getId(), user.getUsername())) {
+		if (userService.isUsernameUnique(user.getUsername())) {
 			FieldError loginError = new FieldError("username", "username", messageSource
 					.getMessage("non.unique.username", new String[] { user.getUsername() }, Locale.getDefault()));
 			result.addError(loginError);
@@ -129,8 +129,8 @@ public class UsersController {
 
 		userService.save(user);
 
-		 model.addAttribute("newUser", user.getUsername());
+		model.addAttribute("newUser", user.getUsername());
 
-			return "users/registrationSuccess";
+		return "users/registrationSuccess";
 	}
 }

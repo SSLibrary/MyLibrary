@@ -55,7 +55,7 @@ INSERT INTO `author_books` (`book_id`, `author_id`, `title`, `status`) VALUES
 -- Table structure for table `users`
 --
 create table `users` (
-   `user_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   `user_id` varbinary(36) NOT NULL PRIMARY KEY,
    `username` VARCHAR(30) NOT NULL,
    `password` VARCHAR(60) NOT NULL,
    `first_name` VARCHAR(30) NOT NULL,
@@ -69,8 +69,8 @@ create table `users` (
 --
 -- Populate one Admin User: user/pass - admin/admin
 --
-INSERT INTO `users`(`username`, `password`, `first_name`, `last_name`, `email`, `role`, `status`)
-VALUES ('admin','$2a$10$oMBvbuqBRgsamQYLVvXgsempbOV8d879sc.HyKYquJTxeGY1qNpCS', 'Adminec','Adminov','admin@softserveinc.com', 'ADMIN', 'ACTIVE');
+INSERT INTO `users`(`user_id`, `username`, `password`, `first_name`, `last_name`, `email`, `role`, `status`)
+VALUES (uuid(), 'admin','$2a$10$oMBvbuqBRgsamQYLVvXgsempbOV8d879sc.HyKYquJTxeGY1qNpCS', 'Adminec','Adminov','admin@softserveinc.com', 'ADMIN', 'ACTIVE');
 
 --
 -- Table structure for table `book_ratings`
@@ -79,7 +79,7 @@ CREATE TABLE `book_ratings` (
 `rating_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 `rating` BIGINT UNSIGNED NOT NULL,
 `book_id` BIGINT UNSIGNED NOT NULL,
-`user_id` BIGINT UNSIGNED NOT NULL,
+`user_id` varbinary(36) NOT NULL,
 CONSTRAINT `book_ratings_author_books` FOREIGN KEY (`book_id`) REFERENCES `author_books`(`book_id`) ON DELETE CASCADE,
 CONSTRAINT `book_ratings_users` FOREIGN KEY (`user_id`) REFERENCES `users`(`user_id`) ON DELETE CASCADE
 ) ENGINE = InnoDB CHARSET=utf8;
@@ -93,8 +93,8 @@ CREATE TABLE `messages` (
 	`header` VARCHAR(60) NOT NULL,
 	`body` TEXT NOT NULL,
 	`date` DATETIME NOT NULL DEFAULT NOW(),
-	`sender_id` BIGINT UNSIGNED NOT NULL,
-	`receiver_id` BIGINT UNSIGNED NOT NULL,
+	`sender_id` varbinary(36) NOT NULL,
+	`receiver_id` varbinary(36) NOT NULL,
 	`is_new` TINYINT(1) NOT NULL,
 	`in_reply_to` INT(6) NOT NULL,
 	CONSTRAINT `fk_sender_message` FOREIGN KEY (`sender_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
@@ -107,7 +107,7 @@ CREATE TABLE `messages` (
 CREATE TABLE `comments` (
 	`comment_id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`book_id` BIGINT UNSIGNED NOT NULL,
-	`user_id` BIGINT UNSIGNED NOT NULL,
+	`user_id` varbinary(36) NOT NULL,
 	`comment` VARCHAR(200) NOT NULL,
 	CONSTRAINT `fk_book_comments` FOREIGN KEY (`book_id`) REFERENCES `author_books` (`book_id`) ON DELETE CASCADE,
 	CONSTRAINT `fk_comments_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE
@@ -117,7 +117,7 @@ CREATE TABLE `comments` (
 CREATE table `history`(
 	id int (6) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	book_id BIGINT UNSIGNED NOT NULL,
-	user_id BIGINT UNSIGNED NOT NULL,
+	user_id varbinary(36) NOT NULL,
 	get_date DATETIME NOT NULL DEFAULT NOW(),
 	return_date DATETIME NOT NULL,
 	CONSTRAINT fk_book_id FOREIGN KEY (book_id) REFERENCES author_books(book_id) ON DELETE CASCADE,

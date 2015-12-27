@@ -1,6 +1,7 @@
 package com.ss.academy.java.model.user;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.hateoas.Identifiable;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -24,19 +26,20 @@ import com.ss.academy.java.model.message.Message;
 
 @Entity
 @Table(name = "users")
-public class User implements Identifiable<Long>{
+public class User implements Identifiable<String> {
 
 	@Id
-	@Column(name = "user_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid2")
+	@Column(name = "user_id", unique = true, columnDefinition = "CHAR(16)")
+	private String id;
 
 	@Size(min = 3, max = 20)
 	@Column(name = "username", unique = true)
 	@NotNull
 	private String username;
 
-    @Size(min = 4, max = 60)
+	@Size(min = 4, max = 60)
 	@Column(name = "password")
 	@NotNull
 	private String password;
@@ -67,28 +70,36 @@ public class User implements Identifiable<Long>{
 	@OneToMany(mappedBy = "user")
 	@JsonManagedReference(value = "user-ratings")
 	private List<Rating> ratings;
-	
+
 	@OneToMany(mappedBy = "sender")
 	@JsonManagedReference(value = "sent-messages")
-    private List<Message> sentMessage;
-    
-    @OneToMany(mappedBy = "receiver")
-    @JsonManagedReference(value = "received-messages")
-    private List<Message> receivedMessage;
+	private List<Message> sentMessage;
 
-    @OneToMany(mappedBy = "user")
-    @JsonManagedReference(value = "user-comments")
+	@OneToMany(mappedBy = "receiver")
+	@JsonManagedReference(value = "received-messages")
+	private List<Message> receivedMessage;
+
+	@OneToMany(mappedBy = "user")
+	@JsonManagedReference(value = "user-comments")
 	private List<Comment> comments;
-    
-    @OneToMany (mappedBy = "user")
+
+	@OneToMany(mappedBy = "user")
 	private List<BookHistory> booksHistory;
-    
-	public Long getId() {
+
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
+	}
+
+	public List<Rating> getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(List<Rating> ratings) {
+		this.ratings = ratings;
 	}
 
 	public String getUsername() {
@@ -162,7 +173,7 @@ public class User implements Identifiable<Long>{
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
-	
+
 	public List<BookHistory> getBooksHistory() {
 		return booksHistory;
 	}

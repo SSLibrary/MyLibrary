@@ -14,7 +14,7 @@ import com.ss.academy.java.dao.AbstractDao;
 import com.ss.academy.java.model.user.User;
 
 @Repository("userDao")
-public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
+public class UserDaoImpl extends AbstractDao<String, User> implements UserDao {
 
 	@SuppressWarnings("unchecked")
 	public List<User> findAllUsers() {
@@ -28,7 +28,7 @@ public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
 		persist(user);
 	}
 
-	public User findById(Long id) {
+	public User findById(String id) {
 		return getByKey(id);
 	}
 

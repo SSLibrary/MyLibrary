@@ -1,6 +1,7 @@
 package com.ss.academy.java.service.user;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,10 +31,11 @@ public class UserServiceImpl implements UserService {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		user.setUserRole(UserRole.USER);
 		user.setUserStatus(UserStatus.ACTIVE);
+		user.setId(UUID.randomUUID().toString());
 		dao.save(user);
 	}
 
-	public User findById(Long id) {
+	public User findById(String id) {
 		return dao.findById(id);
 	}
 
@@ -57,9 +59,14 @@ public class UserServiceImpl implements UserService {
 		return dao.findUsersByUserName(userName);
 	}
 
-	public boolean isUsernameUnique(Long id, String username) {
+	public boolean isUsernameUnique(String username) {
 		User user = findByUsername(username);
-	        return ( user == null || ((id != null) && (user.getId() == id)));
+	   
+		if (user == null) {
+			return false;
+		}
+		
+		return true;
 	}
 	
 	public List<User> list(Integer offset, Integer maxResults) {

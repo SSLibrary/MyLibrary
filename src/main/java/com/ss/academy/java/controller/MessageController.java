@@ -86,7 +86,7 @@ public class MessageController {
 	 * This method will create new message
 	 */
 	@RequestMapping(value = { "/{user_id}/new" }, method = RequestMethod.GET)
-	public String sendNewMessage(ModelMap model, @PathVariable Long user_id,
+	public String sendNewMessage(ModelMap model, @PathVariable String user_id,
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findById(user_id);
 		
@@ -113,7 +113,7 @@ public class MessageController {
 	 */
 	@RequestMapping(value = { "/{user_id}/new" }, method = RequestMethod.POST)
 	public String saveMessage(@Valid Message message, BindingResult result, ModelMap model,
-			@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long user_id) {
+			@AuthenticationPrincipal UserDetails userDetails, @PathVariable String user_id) {
 
 		if (result.hasErrors()) {
 			return "messages/new";
@@ -121,6 +121,11 @@ public class MessageController {
 
 		User receiver = userService.findById(user_id);
 		User sender = userService.findByUsername(userDetails.getUsername());
+		
+		if (receiver.getUsername().equals(sender.getUsername())) {
+			return "redirect:/{user_id}/messages/inbox";
+		}
+		
 		sender.getSentMessage().add(message);
 		receiver.getReceivedMessage().add(message);
 		message.setReceiver(receiver);

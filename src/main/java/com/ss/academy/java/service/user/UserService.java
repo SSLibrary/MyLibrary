@@ -14,14 +14,14 @@ public interface UserService {
 
 	void save(User user);
 
-	User findById(Long id);
+	User findById(String id);
 
 	User findByUsername(String username);
 
 	@PreAuthorize("hasAuthority('ADMIN')")
 	void updateUserStatus(User user);
 
-	boolean isUsernameUnique(Long id, String username);
+	boolean isUsernameUnique(String username);
 	
 	List<User> list(Integer offset, Integer maxResults);
     
