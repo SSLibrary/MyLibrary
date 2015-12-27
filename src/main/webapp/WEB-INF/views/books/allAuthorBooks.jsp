@@ -51,7 +51,9 @@
 									</div>
 									<div class="btn-group">
 										<form:form action="${book.id}" method="DELETE" >
-											<button id="deleteForm" type="submit" class="btn btn-default">Delete</button>
+											<button
+											onclick="if (confirm('Are you sure you want to delete this book?')) { form.action='${book.id}'; } else { return false; }"
+											id="deleteForm" type="submit" class="btn btn-default">Delete</button>
 										</form:form>
 									</div>
 									<div class="btn-group">
