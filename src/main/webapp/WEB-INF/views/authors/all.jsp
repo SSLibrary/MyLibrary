@@ -49,6 +49,7 @@
 									<button type="submit" class="btn btn-default">Delete</button>
 								</form:form>
 							</div>
+							<p></p>
 						</sec:authorize>
 						<div class="btn-group">
 							<form:form action="${author.id}/books/" method="GET">
