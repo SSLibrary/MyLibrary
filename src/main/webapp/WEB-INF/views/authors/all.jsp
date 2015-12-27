@@ -46,10 +46,11 @@
 						<sec:authorize access="hasAuthority('ADMIN')">
 							<div class="btn-group">
 								<form:form action="${author.id}" method="DELETE">
-									<button type="submit" class="btn btn-default">Delete</button>
+									<button
+									onclick="if (confirm('Are you sure you want to delete the author?')) { form.action='${author.id}'; } else { return false; }"
+									type="submit" class="btn btn-default">Delete</button>
 								</form:form>
-							</div>
-							<p></p>
+							</div>							
 						</sec:authorize>
 						<div class="btn-group">
 							<form:form action="${author.id}/books/" method="GET">
