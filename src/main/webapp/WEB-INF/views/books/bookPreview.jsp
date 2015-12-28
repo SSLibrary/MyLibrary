@@ -1,15 +1,16 @@
 <%@ include file="../layout/taglib.jsp" %>
 
 <c:choose>
-	<c:when test="${emptyList}">
-		<div class="alert alert-danger">
-			<h2 class="text-center">Empty book cover</h2>				
+	<c:when test="${emptyList}">			
+		<div class="col-md-2 ">	
+			<img class="img-responsive"	src="<c:url value='/resources/images/noCoverImage.gif' />"
+			alt="SoftServe Logo"  width="300" height="300" alt="book cover">											
 		</div>						
 	</c:when>
 	<c:otherwise>		
 		<div class="text-center">
 			<div class="col-md-3 col-xs-6 text-center">						
-				<img src="${image}"  width="300" height="300" alt="book cover">				
+				<img src="${image}"  width="300" height="300" alt="book cover"/>				
 			</div>			
 		</div>
 	</c:otherwise>	
