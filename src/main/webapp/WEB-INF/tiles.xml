@@ -11,37 +11,35 @@ Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 	</definition>
 
 	<definition name="home" extends="baseLayout">
-		<put-attribute name="title" value="SoftServe Library" />
+		<put-attribute name="title" value="Home page" />
 		<put-attribute name="body" value="/WEB-INF/views/home.jsp" />
-		<put-attribute name="footer"
-			value="/WEB-INF/views/layout/homePageFooter.jsp" />
 		<put-attribute name="current" value="home"></put-attribute>
 	</definition>
+	
 	<!-- users -->
 	<definition name="users/register" extends="baseLayout">
-		<put-attribute name="title" value="SoftServe Library Register page" />
+		<put-attribute name="title" value="Register page" />
 		<put-attribute name="header" value="" />
 		<put-attribute name="body" value="/WEB-INF/views/users/register.jsp" />
 		<put-attribute name="current" value="register"></put-attribute>
 	</definition>
 
 	<definition name="users/login" extends="baseLayout">
-		<put-attribute name="title" value="SoftServe Library Login page" />
+		<put-attribute name="title" value="Login page" />
 		<put-attribute name="header" value="" />
 		<put-attribute name="body" value="/WEB-INF/views/users/login.jsp" />
 		<put-attribute name="current" value="login"></put-attribute>
 	</definition>
 
 	<definition name="users/all" extends="baseLayout">
-		<put-attribute name="title" value="SoftServe Library Users List" />
+		<put-attribute name="title" value="Users List" />
 		<put-attribute name="body" value="/WEB-INF/views/users/all.jsp" />
 		<put-attribute name="current" value="all"></put-attribute>
 	</definition>
 
 	<definition name="users/registrationSuccess" extends="baseLayout">
 		<put-attribute name="title" value="Registration successful" />
-		<put-attribute name="body"
-			value="/WEB-INF/views/users/registrationSuccess.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/users/registrationSuccess.jsp" />
 		<put-attribute name="current" value="registrationSuccess"></put-attribute>
 	</definition>
 
@@ -55,13 +53,12 @@ Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 	<!-- authors -->
 	<definition name="authors/addNewAuthor" extends="baseLayout">
 		<put-attribute name="title" value="Author Details" />
-		<put-attribute name="body"
-			value="/WEB-INF/views/authors/addNewAuthor.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/authors/addNewAuthor.jsp" />
 		<put-attribute name="current" value="addNewAuthor"></put-attribute>
 	</definition>
 
 	<definition name="authors/all" extends="baseLayout">
-		<put-attribute name="title" value="SoftServe Library All Authors" />
+		<put-attribute name="title" value="List of All Authors" />
 		<put-attribute name="body" value="/WEB-INF/views/authors/all.jsp" />
 		<put-attribute name="current" value="all"></put-attribute>
 	</definition>
@@ -70,27 +67,19 @@ Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 	<!-- books -->
 	<definition name="books/addNewBook" extends="baseLayout">
 		<put-attribute name="title" value="Book Details" />
-		<put-attribute name="body"
-			value="/WEB-INF/views/books/addNewBook.jsp" />
-		<put-attribute name="footer"
-			value="/WEB-INF/views/layout/bookFooter.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/books/addNewBook.jsp" />
 		<put-attribute name="current" value="addNewBook"></put-attribute>
 	</definition>
 
 	<definition name="books/allAuthorBooks" extends="baseLayout">
-		<put-attribute name="title" value="SoftServe Library All Books" />
-		<put-attribute name="body"
-			value="/WEB-INF/views/books/allAuthorBooks.jsp" />
-		<put-attribute name="footer"
-			value="/WEB-INF/views/layout/bookFooter.jsp" />
+		<put-attribute name="title" value="List of All Author's Books" />
+		<put-attribute name="body" value="/WEB-INF/views/books/allAuthorBooks.jsp" />
 		<put-attribute name="current" value="allAuthorBooks"></put-attribute>
 	</definition>
 
 	<definition name="books/allBooks" extends="baseLayout">
-		<put-attribute name="title" value="SoftServe Library All Books" />
+		<put-attribute name="title" value="List of All Books" />
 		<put-attribute name="body" value="/WEB-INF/views/books/allBooks.jsp" />
-		<put-attribute name="footer"
-			value="/WEB-INF/views/layout/bookFooter.jsp" />
 		<put-attribute name="current" value="allBooks"></put-attribute>
 	</definition>
 
@@ -102,17 +91,13 @@ Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 	<definition name="books/ratingCheck" extends="baseLayout">
 		<put-attribute name="title" value="Rating check" />
-		<put-attribute name="body"
-			value="/WEB-INF/views/books/ratingCheck.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/books/ratingCheck.jsp" />
 		<put-attribute name="current" value="ratingCheck"></put-attribute>
 	</definition>
 
 	<definition name="books/bookPreview" extends="baseLayout">
-		<put-attribute name="title" value="SoftServe Library Book Preview" />
-		<put-attribute name="body"
-			value="/WEB-INF/views/books/bookPreview.jsp" />
-		<put-attribute name="footer"
-			value="/WEB-INF/views/layout/bookFooter.jsp" />
+		<put-attribute name="title" value="Book Preview" />
+		<put-attribute name="body" value="/WEB-INF/views/books/bookPreview.jsp" />
 		<put-attribute name="current" value="bookPreview"></put-attribute>
 	</definition>
 
@@ -145,8 +130,7 @@ Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 	<definition name="messages/display" extends="baseLayout">
 		<put-attribute name="title" value="Display Message" />
-		<put-attribute name="body"
-			value="/WEB-INF/views/messages/display.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/messages/display.jsp" />
 		<put-attribute name="current" value="display"></put-attribute>
 	</definition>
 	<!--end of messages -->
@@ -154,15 +138,13 @@ Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 	<!-- comments -->
 	<definition name="comments/addNewComment" extends="baseLayout">
 		<put-attribute name="title" value="Add new Comment" />
-		<put-attribute name="body"
-			value="/WEB-INF/views/comments/addNewComment.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/comments/addNewComment.jsp" />
 		<put-attribute name="current" value="addNewComment"></put-attribute>
 	</definition>
 
 	<definition name="comments/allComments" extends="baseLayout">
 		<put-attribute name="title" value="Show Comments" />
-		<put-attribute name="body"
-			value="/WEB-INF/views/comments/allComments.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/comments/allComments.jsp" />
 		<put-attribute name="current" value="allComments"></put-attribute>
 	</definition>
 	<!--end of comments -->
@@ -170,8 +152,7 @@ Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 	<!-- books history -->
 	<definition name="users/booksHistory" extends="baseLayout">
 		<put-attribute name="title" value="Show user's books history" />
-		<put-attribute name="body"
-			value="/WEB-INF/views/users/booksHistory.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/users/booksHistory.jsp" />
 		<put-attribute name="current" value="booksHistory"></put-attribute>
 	</definition>
 	<!--end of books history -->
