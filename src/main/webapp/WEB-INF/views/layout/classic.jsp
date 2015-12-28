@@ -29,7 +29,7 @@
 <script
 	src="//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
-<body style="background-color: 	rgba(245,245,245,0.5);">
+<body style="background-color: rgba(245,245,245,0.5);">
 	<tilesx:useAttribute name="current" />
 	<div class="container">	
 		<tiles:insertAttribute name="header" />
