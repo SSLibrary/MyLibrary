@@ -49,10 +49,16 @@ public class Book implements Identifiable<Long> {
 	@Lob
 	@Column(name="image")
 	private byte[] image;
-//	@Column(name="image")
-//	@Lob
-//	private Blob image;
 
+	@Column(name = "pages")
+	@NotNull
+	private int pages;
+	
+	@Size(max = 5000)
+	@Column(name = "book_description")
+	@NotNull
+	private String bookDescription;
+	
 	@ManyToOne()
 	@JoinColumn(name = "author_id")
 	@JsonBackReference(value = "author-books")
@@ -156,4 +162,21 @@ public class Book implements Identifiable<Long> {
 	public void setBooksHistory(List<BookHistory> booksHistory) {
 		this.booksHistory = booksHistory;
 	}
+
+	public int getPages() {
+		return pages;
+	}
+
+	public void setPages(int pages) {
+		this.pages = pages;
+	}
+
+	public String getBookDescription() {
+		return bookDescription;
+	}
+
+	public void setBookDescription(String bookDescription) {
+		this.bookDescription = bookDescription;
+	}
+
 }

@@ -97,7 +97,12 @@ public class AuthorBooksController {
 	}
 
 	@RequestMapping(value = { "/{book_id}/preview" }, method = RequestMethod.GET)
-	public String previewBook(@PathVariable Long book_id, ModelMap model){	
+	public String previewBook(@PathVariable Long book_id, ModelMap model, 
+			@AuthenticationPrincipal UserDetails userDetails){	
+		User user = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = user.getReceivedMessage();
+		int unread = UnreadMessagesCounter.counter(messages);
+		
 		Book book = bookService.findById(book_id);
 		
 		try {
@@ -116,6 +121,8 @@ public class AuthorBooksController {
 			model.addAttribute("emptyList", true);
 		}			
 		
+		model.addAttribute("currUser", user.getId());
+		model.addAttribute("unread", unread);
 		model.addAttribute("book", book);
 		
 		return "books/bookPreview";
@@ -160,7 +167,6 @@ public class AuthorBooksController {
 		Book book = new Book();
 		model.addAttribute("book", book);
 		model.addAttribute("edit", false);
-		model.addAttribute("statuses", BookStatus.values());
 		model.addAttribute("unread", unread);
 		model.addAttribute("currUser", user.getId());
 

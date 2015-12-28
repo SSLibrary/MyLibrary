@@ -37,6 +37,8 @@ CREATE TABLE `author_books` (
 `title` VARCHAR(50) NOT NULL,
 `status` VARCHAR(30) NOT NULL,
 `image` LONGBLOB,
+`pages` INT(6) NOT NULL,
+`book_description` TEXT NOT NULL,
 CONSTRAINT `author_books_author` FOREIGN KEY (`author_id`)
 REFERENCES `authors`(`author_id`) ON DELETE CASCADE
 ) ENGINE = InnoDB CHARSET=utf8;
