@@ -170,23 +170,19 @@ public class AuthorBooksController {
 	@RequestMapping(value = { "/new" }, method = RequestMethod.POST)
 	public String saveBook(@Valid Book book, BindingResult result, @RequestParam CommonsMultipartFile[] fileUpload,
 			@PathVariable Long id) {
-
-
 		if (result.hasErrors()) {
 			return "books/addNewBook";
 		}
 
 		if (fileUpload != null && fileUpload.length > 0) {
-			for (CommonsMultipartFile aFile : fileUpload) {
-				System.out.println("Saving file: " + aFile.getOriginalFilename());				
-				
-				if(aFile.toString().startsWith("FF D8 FF")) 
-				    System.out.println(aFile.getName() +" is JPG ");
-				else if(aFile.toString().startsWith("47 49 46 38 37 61") || aFile.toString().startsWith("47 49 46 38 39 61"))
-				    System.out.println(aFile.getName() +" is GIF ");
-				else if(aFile.toString().startsWith("89 50 4E 47 0D 0A 1A 0A"))
-				    System.out.println(aFile.getName() +" is PNG ");			
-				
+			for (CommonsMultipartFile aFile : fileUpload) {				
+				if(aFile.toString().startsWith("FF D8 FF")){ 
+						//check if format of file is JPG
+					}else if(aFile.toString().startsWith("47 49 46 38 37 61") || aFile.toString().startsWith("47 49 46 38 39 61")){
+						//check if format of file is GIF
+					}else if(aFile.toString().startsWith("89 50 4E 47 0D 0A 1A 0A")){
+						//check if format of file is PNG			
+					}
 				Author author = authorService.findById(id);
 				author.getBooks().add(book);
 				book.setAuthor(author);
@@ -234,16 +230,14 @@ public class AuthorBooksController {
 		}
 
 		if (fileUpload != null && fileUpload.length > 0) {
-			for (CommonsMultipartFile aFile : fileUpload) {
-				System.out.println("Saving file: " + aFile.getOriginalFilename());				
-				
-				if(aFile.toString().startsWith("FF D8 FF")) 
-				    System.out.println(aFile.getName() +" is JPG ");
-				else if(aFile.toString().startsWith("47 49 46 38 37 61") || aFile.toString().startsWith("47 49 46 38 39 61"))
-				    System.out.println(aFile.getName() +" is GIF ");
-				else if(aFile.toString().startsWith("89 50 4E 47 0D 0A 1A 0A"))
-				    System.out.println(aFile.getName() +" is PNG ");			
-			
+			for (CommonsMultipartFile aFile : fileUpload) {				
+				if(aFile.toString().startsWith("FF D8 FF")){ 
+					// check if format of file is JPG
+				}else if(aFile.toString().startsWith("47 49 46 38 37 61") || aFile.toString().startsWith("47 49 46 38 39 61")){
+					// check if format of file is GIF
+				}else if(aFile.toString().startsWith("89 50 4E 47 0D 0A 1A 0A")){
+					// check if format of file is PNG			
+				}
 				author = authorService.findById(id);
 				dbBook = bookService.findById(book_id);
 				formBook.setImage(aFile.getBytes());
