@@ -92,11 +92,11 @@ Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 		<put-attribute name="current" value="ratingCheck"></put-attribute>
 	</definition>	
 	
-	<definition name="books/image" extends="baseLayout">
-		<put-attribute name="title" value="SoftServe Library Image"/>
-		<put-attribute name="body" value="/WEB-INF/views/books/image.jsp"/>
+	<definition name="books/bookPreview" extends="baseLayout">
+		<put-attribute name="title" value="SoftServe Library Book Preview"/>
+		<put-attribute name="body" value="/WEB-INF/views/books/bookPreview.jsp"/>
 		<put-attribute name="footer" value="/WEB-INF/views/layout/bookFooter.jsp" />	
-		<put-attribute name="current" value="all"></put-attribute>
+		<put-attribute name="current" value="bookPreview"></put-attribute>
 	</definition>
 		
 <!--end of books -->

@@ -35,7 +35,7 @@
 					<div class="row">																					
 						<div class="col-md-3 col-xs-6 text-center">							
 							<h4>
-								<a href="<c:url value='../books/${book.id}/image' />" >${book.title}</a>
+								<a href="<c:url value='../books/${book.id}/preview' />" >${book.title}</a>
 							</h4>
 						</div>
 						<div class="col-md-3 col-xs-6 text-center">

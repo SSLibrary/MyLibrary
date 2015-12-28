@@ -96,11 +96,12 @@ public class AuthorBooksController {
 		return "books/allAuthorBooks";
 	}
 
-	@RequestMapping(value = { "/{id}/image" }, method = RequestMethod.GET)
-	public String booksImage(@Valid Book book, BindingResult result, @PathVariable Long id, ModelMap model,
-			Integer offset, Integer maxResults){		 
+	@RequestMapping(value = { "/{book_id}/preview" }, method = RequestMethod.GET)
+	public String previewBook(@PathVariable Long book_id, ModelMap model){	
+		Book book = bookService.findById(book_id);
+		
 		try {
-			byte[] bytes = bookService.findById(id).getImage();					
+			byte[] bytes = book.getImage();					
 			if (bytes.length == 0) {
 				model.addAttribute("emptyList", true);
 			}
@@ -114,7 +115,10 @@ public class AuthorBooksController {
 		} catch (NullPointerException e) {
 			model.addAttribute("emptyList", true);
 		}			
-		return "books/image";
+		
+		model.addAttribute("book", book);
+		
+		return "books/bookPreview";
 	}
 
 	/*
