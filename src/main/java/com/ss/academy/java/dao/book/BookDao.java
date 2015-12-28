@@ -20,7 +20,7 @@ public interface BookDao {
     
     Long count(Long author_id);
     
-    List<Book> listOfAllBooks(Integer offset, Integer maxResults);
+    List<Book> listAllBooks(Integer offset, Integer maxResults);
     
     Long count();
 }

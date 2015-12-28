@@ -67,8 +67,8 @@ public class BookServiceImpl implements BookService {
 		}
 	}
 	
-	public List<Book> listOfAllBooks(Integer offset, Integer maxResults) {
-		return dao.listOfAllBooks(offset, maxResults);
+	public List<Book> listAllBooks(Integer offset, Integer maxResults) {
+		return dao.listAllBooks(offset, maxResults);
 	}
 	
 	public Long count() {
