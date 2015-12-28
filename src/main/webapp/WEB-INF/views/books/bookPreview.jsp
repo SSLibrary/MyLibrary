@@ -15,14 +15,23 @@
 		</div>
 	</c:otherwise>	
 </c:choose>
-<div style="float:left;margin:50px;padding:0px">
+<div style="float:left;margin:30px;padding:0px">
+
 	<div>
-		<h1><strong>Title: ${book.title}</strong></h1>
+		<h3><strong>Title: ${book.title}</strong></h3>
 	</div>	
-	<div class="row">
-	    <h3>Author: ${book.author.name}</h3>
-	    <h3>Status:${book.status}</h3>				    
-	</div>	
+	<div class="col-sm-10">
+	<dl class="dl-horizontal">
+  		<dt>Author:</dt>
+  	<dd>${book.author.name}</dd>
+  	<dt>Pages:</dt>
+  	<dd>${book.pages}</dd>
+  	<dt>Description:</dt>
+  	<dd>${book.bookDescription}</dd>
+  	<dt>Status:</dt>
+  	<dd>${book.status}</dd>
+		</dl>
+	</div>
 </div>
 
 	
