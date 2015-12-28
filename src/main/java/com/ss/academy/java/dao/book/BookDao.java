@@ -19,4 +19,8 @@ public interface BookDao {
 	List<Book> list(Integer offset, Integer maxResults, Long id);
     
     Long count(Long author_id);
+    
+    List<Book> listOfAllBooks(Integer offset, Integer maxResults);
+    
+    Long count();
 }

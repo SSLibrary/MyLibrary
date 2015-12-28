@@ -58,7 +58,7 @@ public class AuthorsController {
 		if (authors.isEmpty()) {
 			model.addAttribute("emptyListOfAuthors", true);
 		}
-		model.addAttribute("authors", service.list(offset, maxResults));
+		model.addAttribute("authors", authors);
 		model.addAttribute("count", service.count());
 		model.addAttribute("offset", offset);
 		model.addAttribute("unread", unread);

@@ -66,4 +66,14 @@ public class BookServiceImpl implements BookService {
 			entity.setStatus(BookStatus.Available);
 		}
 	}
+	
+	public List<Book> listOfAllBooks(Integer offset, Integer maxResults) {
+		return dao.listOfAllBooks(offset, maxResults);
+	}
+	
+	public Long count() {
+		return dao.count();
+	}
+	
+	
 }

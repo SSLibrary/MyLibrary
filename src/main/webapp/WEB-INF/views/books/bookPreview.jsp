@@ -16,20 +16,19 @@
 	</c:otherwise>	
 </c:choose>
 <div style="float:left;margin:30px;padding:0px">
-
 	<div>
 		<h3><strong>Title: ${book.title}</strong></h3>
-	</div>	
+	</div>
 	<div class="col-sm-10">
-	<dl class="dl-horizontal">
-  		<dt>Author:</dt>
-  	<dd>${book.author.name}</dd>
-  	<dt>Pages:</dt>
-  	<dd>${book.pages}</dd>
-  	<dt>Description:</dt>
-  	<dd>${book.bookDescription}</dd>
-  	<dt>Status:</dt>
-  	<dd>${book.status}</dd>
+		<dl class="dl-horizontal">
+	  		<dt>Author:</dt>
+		  	<dd>${book.author.name}</dd>
+		  	<dt>Pages:</dt>
+		  	<dd>${book.pages}</dd>
+		  	 <dt>Description:</dt>
+		  	<dd><textarea rows="4" cols="70" readonly>${book.bookDescription}</textarea></dd>
+		  	<dt>Status:</dt>  	
+		  	<dd>${book.status}</dd>
 		</dl>
 	</div>
 </div>

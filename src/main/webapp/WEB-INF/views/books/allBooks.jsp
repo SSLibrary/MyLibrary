@@ -50,3 +50,14 @@
 	</div>
 	<br />
 </c:forEach>
+
+<!-- pagination -->				
+<c:choose>
+	<c:when test="${count > 4}">
+		<div class="text-center" style="top:773px;position:absolute;margin-left:520px;">	
+			<tag:paginate max="15" offset="${offset}" count="${count}"
+ 						uri="./books" next="&raquo;" previous="&laquo;" /> 
+		</div>
+	</c:when>
+</c:choose>	
+<!-- end of pagination -->		

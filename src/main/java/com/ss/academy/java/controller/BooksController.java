@@ -33,14 +33,17 @@ public class BooksController {
 	 * This method will show the list of all books.
 	 */
 	@RequestMapping(value = { "/books" })
-	public String showAllBooks(@AuthenticationPrincipal UserDetails user, ModelMap model) {
+	public String showAllBooks(@AuthenticationPrincipal UserDetails user, ModelMap model,
+			Integer offset, Integer maxResults) {
 
 			User currentUser = userService.findByUsername(user.getUsername());
 			List<Message> messages = currentUser.getReceivedMessage();
 			int unread = UnreadMessagesCounter.counter(messages);
-			List<Book> books = bookService.findAllBooks();
-			
+//			List<Book> books = bookService.findAllBooks();
+			List<Book> books = bookService.listOfAllBooks(offset, maxResults);
 			model.addAttribute("books", books);
+			model.addAttribute("count", bookService.count());
+			model.addAttribute("offset", offset);
 			model.addAttribute("unread", unread);
 			model.addAttribute("currUser", currentUser.getId());
 		

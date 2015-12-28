@@ -74,4 +74,20 @@ public class BookDaoImpl extends AbstractDao<Long, Book> implements BookDao {
 				.setProjection(Projections.rowCount())
 				.uniqueResult();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Book> listOfAllBooks(Integer offset, Integer maxResults){
+		return getSession()
+				.createCriteria(Book.class)
+				.setFirstResult(offset!=null?offset:0)
+				.setMaxResults(maxResults!=null?maxResults:5)
+				.list();
+	}
+	
+	public Long count(){
+		return (Long)getSession()
+				.createCriteria(Book.class)
+				.setProjection(Projections.rowCount())
+				.uniqueResult();
+	}
 }

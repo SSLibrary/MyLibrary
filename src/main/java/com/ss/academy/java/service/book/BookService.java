@@ -29,4 +29,7 @@ public interface BookService {
     
     void changeBookStatus(Book book);
     
+    List<Book> listOfAllBooks(Integer offset, Integer maxResults);
+    
+    Long count();
 }
