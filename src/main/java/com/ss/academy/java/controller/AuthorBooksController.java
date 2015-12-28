@@ -224,22 +224,35 @@ public class AuthorBooksController {
 	 * This method will be called on form submission, handling POST request for
 	 * updating book in database. It also validates the user input.
 	 */
-	@RequestMapping(value = { "/{book_id}" }, method = RequestMethod.PUT)
-	public String updateBook(@Valid Book formBook, BindingResult result, @PathVariable Long id,
-			@PathVariable Long book_id) {
-
+	@RequestMapping(value = { "/{book_id}" }, method = RequestMethod.POST)
+	public String updateBook(@Valid Book formBook, BindingResult result,@RequestParam CommonsMultipartFile[] fileUpload,
+			@PathVariable Long book_id, @PathVariable Long id) {
+		Author author = new Author();
+		Book dbBook = new Book();
 		if (result.hasErrors()) {
 			return "books/addNewBook";
 		}
 
-		Author author = authorService.findById(id);
-		Book dbBook = bookService.findById(book_id);
-
-		dbBook = formBook;
-
-		bookService.updateBook(dbBook);
-		author.getBooks().add(dbBook);
-
+		if (fileUpload != null && fileUpload.length > 0) {
+			for (CommonsMultipartFile aFile : fileUpload) {
+				System.out.println("Saving file: " + aFile.getOriginalFilename());				
+				
+				if(aFile.toString().startsWith("FF D8 FF")) 
+				    System.out.println(aFile.getName() +" is JPG ");
+				else if(aFile.toString().startsWith("47 49 46 38 37 61") || aFile.toString().startsWith("47 49 46 38 39 61"))
+				    System.out.println(aFile.getName() +" is GIF ");
+				else if(aFile.toString().startsWith("89 50 4E 47 0D 0A 1A 0A"))
+				    System.out.println(aFile.getName() +" is PNG ");			
+			
+				author = authorService.findById(id);
+				dbBook = bookService.findById(book_id);
+				formBook.setImage(aFile.getBytes());
+				dbBook = formBook;
+				author.getBooks().add(dbBook);
+				
+				bookService.updateBook(dbBook);
+			}
+		}
 		return "redirect:/authors/{id}/books/";
 	}
 

@@ -22,7 +22,7 @@
 					<div class="form-group">
 						<div class="col-sm-2"></div>
 						<div class="col-sm-5">
-							<form:form action="${book.id}" method="PUT" >
+							<form:form action="${book.id}" method="POST" >
 								<button type="submit" class="btn btn-primary">Edit</button>
 							</form:form>
 						</div>

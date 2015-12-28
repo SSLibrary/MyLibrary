@@ -30,6 +30,7 @@ public class BookServiceImpl implements BookService {
 
 		if (entity != null) {
 			entity.setTitle(book.getTitle());
+			entity.setImage(book.getImage());
 		}
 	}
 
