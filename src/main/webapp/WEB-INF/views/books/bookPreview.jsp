@@ -30,7 +30,7 @@
 		  	<dd>${book.status}</dd>
 		</dl>
 	</div>
-	<div style="float:left; margin-left:50px;">
+	<div style="float:left; margin-left:130px;">
 	
 	   <div class="btn-group">
 			<a href="/MyLibrary/authors/${book.author.id}/books/${book.id}/comments" 

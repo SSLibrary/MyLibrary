@@ -3,20 +3,10 @@
 	media="all" rel="stylesheet" type="text/css" />	
 <%@ include file="../layout/taglib.jsp" %>
 
+
 <div class="row">
 	<div class="col-md-3 col-xs-6 text-center">
-		<h2>Title</h2>
-	</div>
-	<div class="col-md-3 col-xs-6 text-center">
-		<h2>Status</h2>
-	</div>
-</div>
-<div class="row">
-	<div class="col-md-3 col-xs-6 text-center">
-		<h4>${book.title}</h4>
-	</div>
-	<div class="col-md-3 col-xs-6 text-center">
-		<h4>${book.status}</h4>
+		<h3>Title: ${book.title}</h3>
 	</div>
 </div>
 <div class="row">

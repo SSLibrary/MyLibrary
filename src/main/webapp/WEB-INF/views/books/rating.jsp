@@ -5,18 +5,7 @@
 
 <div class="row">
 	<div class="col-md-3 col-xs-6 text-center">
-		<h2>Title</h2>
-	</div>
-	<div class="col-md-3 col-xs-6 text-center">
-		<h2>Status</h2>
-	</div>
-</div>
-<div class="row">
-	<div class="col-md-3 col-xs-6 text-center">
-		<h4>${book.title}</h4>
-	</div>
-	<div class="col-md-3 col-xs-6 text-center">
-		<h4>${book.status}</h4>
+		<h3>Title: ${book.title}</h3>
 	</div>
 </div>
 <div class="row">
@@ -26,7 +15,7 @@
 			<form:input type="hidden" path="ratingValue" id="ratingValue" />
 			<form:errors path="ratingValue" cssClass="error" />
 			<input id="input-21b" class="form-control rating" min='0' max='5' step='1' data-size="lg" type="number" />
-			<button type="submit" class="btn btn-primary form-control">Add Rating</button>
+			<button type="submit" class="btn btn-primary">Add Rating</button>
 		</form:form>
 	</div>
 </div>

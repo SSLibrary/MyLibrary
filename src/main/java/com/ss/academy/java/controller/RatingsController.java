@@ -86,7 +86,7 @@ public class RatingsController {
 
 		ratingService.saveRating(ratingToSave);
 
-		return "redirect:/authors/{id}/books/";
+		return "redirect:/authors/{id}/books/{book_id}/preview";
 	}
 
 	/*
