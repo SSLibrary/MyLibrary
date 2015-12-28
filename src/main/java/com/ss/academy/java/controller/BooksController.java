@@ -39,8 +39,8 @@ public class BooksController {
 			User currentUser = userService.findByUsername(user.getUsername());
 			List<Message> messages = currentUser.getReceivedMessage();
 			int unread = UnreadMessagesCounter.counter(messages);
-//			List<Book> books = bookService.findAllBooks();
 			List<Book> books = bookService.listAllBooks(offset, maxResults);
+			
 			model.addAttribute("books", books);
 			model.addAttribute("count", bookService.count());
 			model.addAttribute("offset", offset);

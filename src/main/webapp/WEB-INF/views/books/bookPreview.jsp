@@ -25,8 +25,10 @@
 		  	<dd>${book.author.name}</dd>
 		  	<dt>Pages:</dt>
 		  	<dd>${book.pages}</dd>
-		  	 <dt>Description:</dt>
-		  	<dd><textarea rows="4" cols="70" readonly>${book.bookDescription}</textarea></dd>
+		  	<dt>Description:</dt>
+		  	<dd style="width: 550px">
+		  		<blockquote style="display: block; margin: 0px;padding: 3px;">${book.bookDescription}</blockquote>
+		  	</dd>
 		  	<dt>Status:</dt>  	
 		  	<dd>${book.status}</dd>
 		</dl>
