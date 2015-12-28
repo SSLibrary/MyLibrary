@@ -17,37 +17,41 @@
 			</div>
 		</form:form>
 		<div class="row">
-			<div class="col-md-3 col-xs-4 text-center">
-				<h2>Name</h2>
-				
+			<div class="col-md-2 col-xs-4 text-center">
+				<h3>Name</h3>
+			</div>
+			<div class="col-md-2 col-xs-1 text-center">
 			</div>
 			<sec:authorize access="hasAuthority('ADMIN')">
-			<div class="col-md-3 col-xs-4 text-center">
-				<h2>Status</h2>
+			<div class="col-md-2 col-xs-4 text-center">
+				<h3>Status</h3>
 			</div>
-			
-			<div class="col-md-3 col-xs-4 text-center">
-				<h2>Role</h2>
+			<div class="col-md-2 col-xs-4 text-center">
+				<h3>Role</h3>
 			</div>
 			</sec:authorize>
 		</div>
 		<c:forEach items="${allUsers}" var="user">
 			<div class="row">
-				<div class="col-md-3 col-xs-4 text-center">
-				<h4><a href="<c:url value='/${currUser}/messages/${user.id}/new' />">${user.username}</a>
-					</h4>
+				<div class="col-md-2 col-xs-4 text-center">
+				<h5>${user.username}</h5>
+				</div>
+				<div class="col-md-2 col-xs-1 text-center">
+				<a href="/MyLibrary/${currUser}/messages/${user.id}/new" 
+				class="btn btn-primary btn-md active" role="button">
+				<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
 				</div>
 				<sec:authorize access="hasAuthority('ADMIN')">
-				<div class="col-md-3 col-xs-4 text-center">
-					<h4>${user.userStatus}</h4>
+				<div class="col-md-2 col-xs-4 text-center">
+					<h5>${user.userStatus}</h5>
 				</div>
-				<div class="col-md-3 col-xs-4 text-center">
-					<h4>${user.userRole}</h4>
+				<div class="col-md-2 col-xs-4 text-center">
+					<h5>${user.userRole}</h5>
 				</div>
 				
 				<c:choose>
 				<c:when test="${ user.userRole == 'ADMIN'}">
-					<div class="col-md-3">
+					<div class="col-md-2">
 					<div class="btn-group btn-group-justified">
 						<div class="btn-group">
 							<button type="submit" class="btn btn-primary disabled">Change Status</button>
@@ -56,7 +60,7 @@
 				</div>
 				</c:when>
 				<c:otherwise>
-					<div class="col-md-3">
+					<div class="col-md-2">
 					<div class="btn-group btn-group-justified">
 						<sec:authorize access="hasAuthority('ADMIN')">
 							<div class="btn-group">
