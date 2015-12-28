@@ -37,7 +37,7 @@
 				<h5>${user.username}</h5>
 				</div>
 				<div class="col-md-2 col-xs-1 text-center">
-				<a href="/MyLibrary/${currUserId}/messages/${user.id}/new" 
+				<a href="/MyLibrary/${currUser}/messages/${user.id}/new" 
 				class="btn btn-primary btn-md active" role="button">
 				<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
 				</div>
