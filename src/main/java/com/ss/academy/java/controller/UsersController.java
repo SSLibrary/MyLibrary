@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -148,14 +149,65 @@ public class UsersController {
 	/*
 	 * This method will provide the medium to update current user profile details.
 	 */
-	@RequestMapping(value = "/profile", method = RequestMethod.GET)
-	public String showMyProfile(@AuthenticationPrincipal UserDetails userDetails, ModelMap model) {
+	@RequestMapping(value = "users/{id}/profile", method = RequestMethod.GET)
+	public String showMyProfile(@AuthenticationPrincipal UserDetails userDetails, @PathVariable String id, ModelMap model) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
+		currentUser.setPassword("");
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
 
 		model.addAttribute("unread", unread);
+		model.addAttribute("currUser", currentUser.getId());
 		model.addAttribute("user", currentUser);
+		
+		return "users/profile";
+	}
+	
+	/*
+	 * This method will be called on form submission, handling PUT request for
+	 * editing user profile in database. It also validates the user input and check
+	 * whether the entered password match with the one stored in the DB.
+	 */
+	@RequestMapping(value = "users/{id}/profile", method = RequestMethod.POST)
+	public String editMyProfile(@ModelAttribute @Valid User user, BindingResult result, 
+			@AuthenticationPrincipal UserDetails userDetails, @PathVariable String id, ModelMap model) {
+		
+		if (result.hasErrors()) {
+			return "users/profile";
+		}
+		
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		
+		if (!user.getFirstName().equals(currentUser.getFirstName())) {
+			currentUser.setFirstName(user.getFirstName());
+		}
+		
+		if (!user.getLastName().equals(currentUser.getLastName())) {
+			currentUser.setLastName(user.getLastName());
+		}
+		
+		if (!user.getEmail().equals(currentUser.getEmail())) {
+			currentUser.setEmail(user.getEmail());
+		}
+		
+		if (!user.getPassword().isEmpty()) {
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			
+			String userPassword = encoder.encode(user.getPassword());
+			
+			if (currentUser.getPassword().equals(userPassword)) {
+				if (user.getNewPassword().equals(user.getNewPassword2())) {
+					user.setPassword(user.getNewPassword());
+				}
+				
+				return "users/profile";
+			}
+			
+			return "users/profile";
+		}
+		
+		userService.saveUser(user);
+		
 
 		return "users/profile";
 	}

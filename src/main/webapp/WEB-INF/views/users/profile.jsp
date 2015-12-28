@@ -1,5 +1,4 @@
-<%@ include file="../layout/taglib.jsp"%>
-<%@ taglib prefix="tag" uri="/WEB-INF/taglibs/customTaglib.tld"%>
+<%@ include file="../layout/taglib.jsp" %>
 
 <form:form modelAttribute="user" class="form-horizontal" role="form">
 	<div>
@@ -12,22 +11,6 @@
 						<b>${user.username}' Profile</b>
 					</h2>
 					<br />
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="username">Username:</label>
-						<div class="col-sm-3">
-							<form:input path="username" id="username" class="form-control"
-								autocomplete="off" value="${user.username}" />
-							<form:errors path="username" cssClass="error" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="password">Password:</label>
-						<div class="col-sm-3">
-							<form:input path="password" id="password" class="form-control"
-								autocomplete="off" type="password" value="" />
-							<form:errors path="password" cssClass="error" />
-						</div>
-					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="firstName">First
 							Name:</label>
@@ -54,13 +37,38 @@
 							<form:errors path="email" cssClass="error" />
 						</div>
 					</div>
-					<br /> <input type="hidden" name="${_csrf.parameterName}"
-						value="${_csrf.token}" />
-					<div class="form-actions">
-						<div class="col-sm-offset-2 col-sm-10">
-							<button type="submit" class="btn btn-primary">Register</button>
+					<h3>
+						<b>Change Password</b>
+					</h3>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="password">Current Password:</label>
+						<div class="col-sm-3">
+							<form:input path="password" id="currentPassword" class="form-control"
+								autocomplete="off" type="password" />
+							<form:errors path="password" cssClass="error" />
 						</div>
 					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="password">New Password:</label>
+						<div class="col-sm-3">
+							<form:input path="newPassword" id="newPassword" class="form-control"
+								autocomplete="off" type="password" />
+							<form:errors path="password" cssClass="error" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="password">Enter Again New Password:</label>
+						<div class="col-sm-3">
+							<form:input path="newPassword2" id="repeatNewPassword" class="form-control"
+								autocomplete="off" type="password" />
+							<form:errors path="password" cssClass="error" />
+						</div>
+					</div>
+					<br /> <input type="hidden" name="${_csrf.parameterName}"
+						value="${_csrf.token}" />
+					<form:form action="/profile" method="POST">
+						<button type="submit" class="btn btn-primary">Edit</button>
+					</form:form>
 				</form>
 			</div>
 		</div>

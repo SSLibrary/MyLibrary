@@ -10,12 +10,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.hateoas.Identifiable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ss.academy.java.model.book.BookHistory;
 import com.ss.academy.java.model.comment.Comment;
@@ -29,7 +31,7 @@ public class User implements Identifiable<String> {
 	@Id
 	@GeneratedValue(generator = "system-uuid")
 	@GenericGenerator(name = "system-uuid", strategy = "uuid2")
-	@Column(name = "user_id", unique = true, columnDefinition = "CHAR(16)")
+	@Column(name = "user_id", unique = true)
 	private String id;
 
 	@Size(min = 3, max = 20)
@@ -83,6 +85,14 @@ public class User implements Identifiable<String> {
 
 	@OneToMany(mappedBy = "user")
 	private List<BookHistory> booksHistory;
+	
+	@Transient
+	@JsonIgnore
+	private String newPassword;
+	
+	@Transient
+	@JsonIgnore
+	private String newPassword2;
 
 	public String getId() {
 		return id;
@@ -186,5 +196,21 @@ public class User implements Identifiable<String> {
 
 	public void setUserStatus(UserStatus userStatus) {
 		this.userStatus = userStatus;
+	}
+
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+
+	public String getNewPassword2() {
+		return newPassword2;
+	}
+
+	public void setNewPassword2(String newPassword2) {
+		this.newPassword2 = newPassword2;
 	}
 }
