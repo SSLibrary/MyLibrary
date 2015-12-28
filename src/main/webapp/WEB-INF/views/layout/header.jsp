@@ -4,7 +4,6 @@
 <div class="navbar navbar-default">
 	<ul class="nav navbar-nav">			
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
-			<li><a href="/MyLibrary/">Home</a></li>
 			<li><a href="/MyLibrary/books">Books</a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
@@ -22,7 +21,7 @@
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
 			<li><a href="/MyLibrary/${currUser}/books/">Books History</a></li>
 		</sec:authorize>
-		<sec:authorize access="!isAuthenticated()">
+		<sec:authorize access="!isAuthenticated()">	
 			<li class="${current == 'login' ? 'active' : '' }"><a href="/MyLibrary/login/">Login</a></li>
 			<li class="${current == 'register' ? 'active' : '' }"><a href="/MyLibrary/register/">Register</a></li>			
 		</sec:authorize>
