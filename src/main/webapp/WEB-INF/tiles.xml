@@ -5,154 +5,175 @@ Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
 
 	<definition name="baseLayout" template="/WEB-INF/views/layout/classic.jsp">
-		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp"/>		
-		<put-attribute name="body" value=""/>		
-		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />		 
-	</definition>	
-	
+		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
+	</definition>
+
 	<definition name="home" extends="baseLayout">
-		<put-attribute name="title" value="SoftServe Library"/>		
-		<put-attribute name="body" value="/WEB-INF/views/home.jsp"/>
-		<put-attribute name="footer" value="/WEB-INF/views/layout/homePageFooter.jsp" />			
+		<put-attribute name="title" value="SoftServe Library" />
+		<put-attribute name="body" value="/WEB-INF/views/home.jsp" />
+		<put-attribute name="footer"
+			value="/WEB-INF/views/layout/homePageFooter.jsp" />
 		<put-attribute name="current" value="home"></put-attribute>
 	</definition>
-<!-- users -->
+	<!-- users -->
 	<definition name="users/register" extends="baseLayout">
-		<put-attribute name="title" value="SoftServe Library Register page"/>		
-		<put-attribute name="header" value=""/>	
-		<put-attribute name="body" value="/WEB-INF/views/users/register.jsp"/>	
+		<put-attribute name="title" value="SoftServe Library Register page" />
+		<put-attribute name="header" value="" />
+		<put-attribute name="body" value="/WEB-INF/views/users/register.jsp" />
 		<put-attribute name="current" value="register"></put-attribute>
-	</definition>		
-		
+	</definition>
+
 	<definition name="users/login" extends="baseLayout">
-		<put-attribute name="title" value="SoftServe Library Login page"/>			
-		<put-attribute name="header" value=""/>	
-		<put-attribute name="body" value="/WEB-INF/views/users/login.jsp"/>	
+		<put-attribute name="title" value="SoftServe Library Login page" />
+		<put-attribute name="header" value="" />
+		<put-attribute name="body" value="/WEB-INF/views/users/login.jsp" />
 		<put-attribute name="current" value="login"></put-attribute>
-	</definition>		
-			
+	</definition>
+
 	<definition name="users/all" extends="baseLayout">
-		<put-attribute name="title" value="SoftServe Library Users List"/>
-		<put-attribute name="body" value="/WEB-INF/views/users/all.jsp"/>	
+		<put-attribute name="title" value="SoftServe Library Users List" />
+		<put-attribute name="body" value="/WEB-INF/views/users/all.jsp" />
 		<put-attribute name="current" value="all"></put-attribute>
 	</definition>
-	
+
 	<definition name="users/registrationSuccess" extends="baseLayout">
-		<put-attribute name="title" value="Registration successful"/>
-		<put-attribute name="body" value="/WEB-INF/views/users/registrationSuccess.jsp"/>	
+		<put-attribute name="title" value="Registration successful" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/users/registrationSuccess.jsp" />
 		<put-attribute name="current" value="registrationSuccess"></put-attribute>
 	</definition>
-<!--end of users -->	
 
-<!-- authors -->
+	<definition name="users/profile" extends="baseLayout">
+		<put-attribute name="title" value="User Profile" />
+		<put-attribute name="body" value="/WEB-INF/views/users/profile.jsp" />
+		<put-attribute name="current" value="profile"></put-attribute>
+	</definition>
+	<!--end of users -->
+
+	<!-- authors -->
 	<definition name="authors/addNewAuthor" extends="baseLayout">
-		<put-attribute name="title" value="Author Details"/>
-		<put-attribute name="body" value="/WEB-INF/views/authors/addNewAuthor.jsp"/>	
+		<put-attribute name="title" value="Author Details" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/authors/addNewAuthor.jsp" />
 		<put-attribute name="current" value="addNewAuthor"></put-attribute>
 	</definition>
-	
+
 	<definition name="authors/all" extends="baseLayout">
-		<put-attribute name="title" value="SoftServe Library All Authors"/>
-		<put-attribute name="body" value="/WEB-INF/views/authors/all.jsp"/>	
+		<put-attribute name="title" value="SoftServe Library All Authors" />
+		<put-attribute name="body" value="/WEB-INF/views/authors/all.jsp" />
 		<put-attribute name="current" value="all"></put-attribute>
 	</definition>
-<!--end of authors -->	
+	<!--end of authors -->
 
-<!-- books -->
+	<!-- books -->
 	<definition name="books/addNewBook" extends="baseLayout">
-		<put-attribute name="title" value="Book Details"/>
-		<put-attribute name="body" value="/WEB-INF/views/books/addNewBook.jsp"/>	
-		<put-attribute name="footer" value="/WEB-INF/views/layout/bookFooter.jsp" />
+		<put-attribute name="title" value="Book Details" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/books/addNewBook.jsp" />
+		<put-attribute name="footer"
+			value="/WEB-INF/views/layout/bookFooter.jsp" />
 		<put-attribute name="current" value="addNewBook"></put-attribute>
 	</definition>
-	
+
 	<definition name="books/allAuthorBooks" extends="baseLayout">
-		<put-attribute name="title" value="SoftServe Library All Books"/>
-		<put-attribute name="body" value="/WEB-INF/views/books/allAuthorBooks.jsp"/>
-		<put-attribute name="footer" value="/WEB-INF/views/layout/bookFooter.jsp" />	
+		<put-attribute name="title" value="SoftServe Library All Books" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/books/allAuthorBooks.jsp" />
+		<put-attribute name="footer"
+			value="/WEB-INF/views/layout/bookFooter.jsp" />
 		<put-attribute name="current" value="allAuthorBooks"></put-attribute>
 	</definition>
-	
+
 	<definition name="books/allBooks" extends="baseLayout">
-		<put-attribute name="title" value="SoftServe Library All Books"/>
-		<put-attribute name="body" value="/WEB-INF/views/books/allBooks.jsp"/>
-		<put-attribute name="footer" value="/WEB-INF/views/layout/bookFooter.jsp" />	
+		<put-attribute name="title" value="SoftServe Library All Books" />
+		<put-attribute name="body" value="/WEB-INF/views/books/allBooks.jsp" />
+		<put-attribute name="footer"
+			value="/WEB-INF/views/layout/bookFooter.jsp" />
 		<put-attribute name="current" value="allBooks"></put-attribute>
 	</definition>
-	
+
 	<definition name="books/rating" extends="baseLayout">
-		<put-attribute name="title" value="Rating"/>
-		<put-attribute name="body" value="/WEB-INF/views/books/rating.jsp"/>	
+		<put-attribute name="title" value="Rating" />
+		<put-attribute name="body" value="/WEB-INF/views/books/rating.jsp" />
 		<put-attribute name="current" value="rating"></put-attribute>
-	</definition>	
-		
+	</definition>
+
 	<definition name="books/ratingCheck" extends="baseLayout">
-		<put-attribute name="title" value="Rating check"/>
-		<put-attribute name="body" value="/WEB-INF/views/books/ratingCheck.jsp"/>	
+		<put-attribute name="title" value="Rating check" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/books/ratingCheck.jsp" />
 		<put-attribute name="current" value="ratingCheck"></put-attribute>
-	</definition>	
-	
+	</definition>
+
 	<definition name="books/bookPreview" extends="baseLayout">
-		<put-attribute name="title" value="SoftServe Library Book Preview"/>
-		<put-attribute name="body" value="/WEB-INF/views/books/bookPreview.jsp"/>
-		<put-attribute name="footer" value="/WEB-INF/views/layout/bookFooter.jsp" />	
+		<put-attribute name="title" value="SoftServe Library Book Preview" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/books/bookPreview.jsp" />
+		<put-attribute name="footer"
+			value="/WEB-INF/views/layout/bookFooter.jsp" />
 		<put-attribute name="current" value="bookPreview"></put-attribute>
 	</definition>
-		
-<!--end of books -->
-	
-<!-- messages -->		
+
+	<!--end of books -->
+
+	<!-- messages -->
 	<definition name="messages/inbox" extends="baseLayout">
-		<put-attribute name="title" value="Inbox Messages"/>
-		<put-attribute name="body" value="/WEB-INF/views/messages/inbox.jsp"/>	
+		<put-attribute name="title" value="Inbox Messages" />
+		<put-attribute name="body" value="/WEB-INF/views/messages/inbox.jsp" />
 		<put-attribute name="current" value="inbox"></put-attribute>
 	</definition>
-	
+
 	<definition name="messages/new" extends="baseLayout">
-		<put-attribute name="title" value="Send new Message"/>
-		<put-attribute name="body" value="/WEB-INF/views/messages/new.jsp"/>	
+		<put-attribute name="title" value="Send new Message" />
+		<put-attribute name="body" value="/WEB-INF/views/messages/new.jsp" />
 		<put-attribute name="current" value="new"></put-attribute>
 	</definition>
-		
-	<definition name="messages/outbox" extends="baseLayout">
-		<put-attribute name="title" value="Outbox Messages"/>
-		<put-attribute name="body" value="/WEB-INF/views/messages/outbox.jsp"/>	
-		<put-attribute name="current" value="outbox"></put-attribute>
-	</definition>	
-	
-	<definition name="messages/reply" extends="baseLayout">
-		<put-attribute name="title" value="Reply Message"/>
-		<put-attribute name="body" value="/WEB-INF/views/messages/reply.jsp"/>	
-		<put-attribute name="current" value="reply"></put-attribute>
-	</definition>	
-	
-	<definition name="messages/display" extends="baseLayout">
-		<put-attribute name="title" value="Display Message"/>
-		<put-attribute name="body" value="/WEB-INF/views/messages/display.jsp"/>	
-		<put-attribute name="current" value="display"></put-attribute>
-	</definition>	
-<!--end of messages -->
 
-<!-- comments -->
+	<definition name="messages/outbox" extends="baseLayout">
+		<put-attribute name="title" value="Outbox Messages" />
+		<put-attribute name="body" value="/WEB-INF/views/messages/outbox.jsp" />
+		<put-attribute name="current" value="outbox"></put-attribute>
+	</definition>
+
+	<definition name="messages/reply" extends="baseLayout">
+		<put-attribute name="title" value="Reply Message" />
+		<put-attribute name="body" value="/WEB-INF/views/messages/reply.jsp" />
+		<put-attribute name="current" value="reply"></put-attribute>
+	</definition>
+
+	<definition name="messages/display" extends="baseLayout">
+		<put-attribute name="title" value="Display Message" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/messages/display.jsp" />
+		<put-attribute name="current" value="display"></put-attribute>
+	</definition>
+	<!--end of messages -->
+
+	<!-- comments -->
 	<definition name="comments/addNewComment" extends="baseLayout">
-		<put-attribute name="title" value="Add new Comment"/>
-		<put-attribute name="body" value="/WEB-INF/views/comments/addNewComment.jsp"/>	
+		<put-attribute name="title" value="Add new Comment" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/comments/addNewComment.jsp" />
 		<put-attribute name="current" value="addNewComment"></put-attribute>
 	</definition>
-	
+
 	<definition name="comments/allComments" extends="baseLayout">
-		<put-attribute name="title" value="Show Comments"/>
-		<put-attribute name="body" value="/WEB-INF/views/comments/allComments.jsp"/>	
+		<put-attribute name="title" value="Show Comments" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/comments/allComments.jsp" />
 		<put-attribute name="current" value="allComments"></put-attribute>
 	</definition>
-<!--end of comments -->
+	<!--end of comments -->
 
-<!-- books history -->
-<definition name="users/booksHistory" extends="baseLayout">
-		<put-attribute name="title" value="Show user's books history"/>
-		<put-attribute name="body" value="/WEB-INF/views/users/booksHistory.jsp"/>	
+	<!-- books history -->
+	<definition name="users/booksHistory" extends="baseLayout">
+		<put-attribute name="title" value="Show user's books history" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/users/booksHistory.jsp" />
 		<put-attribute name="current" value="booksHistory"></put-attribute>
 	</definition>
-<!--end of books history -->
+	<!--end of books history -->
 
 </tiles-definitions>

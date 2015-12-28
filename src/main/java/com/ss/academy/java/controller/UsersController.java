@@ -1,5 +1,6 @@
 package com.ss.academy.java.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -51,15 +52,26 @@ public class UsersController {
 	@RequestMapping(value = { "/users" }, method = RequestMethod.GET)
 	public String listAllUsers(@AuthenticationPrincipal UserDetails userDetails, ModelMap model, Integer offset,
 			Integer maxResults) {
-		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getReceivedMessage();
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = currentUser.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
 
-		model.addAttribute("allUsers", userService.list(offset, maxResults));
+		// Removing the current user from the list of users
+		List<User> allUsers = userService.list(offset, maxResults);
+		List<User> filteredList = new ArrayList<User>();
+		
+		for (User user : allUsers) {
+			if (!user.getUsername().equals(currentUser.getUsername())) {
+				filteredList.add(user);
+			}
+		}
+		
+		
+		model.addAttribute("allUsers", filteredList);
 		model.addAttribute("count", userService.count());
 		model.addAttribute("offset", offset);
 		model.addAttribute("unread", unread);
-		model.addAttribute("currUser", user.getId());
+		model.addAttribute("currUser", currentUser.getId());
 
 		return "users/all";
 	}
@@ -131,5 +143,20 @@ public class UsersController {
 		model.addAttribute("newUser", user.getUsername());
 
 		return "users/registrationSuccess";
+	}
+	
+	/*
+	 * This method will provide the medium to update current user profile details.
+	 */
+	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	public String showMyProfile(@AuthenticationPrincipal UserDetails userDetails, ModelMap model) {
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = currentUser.getReceivedMessage();
+		int unread = UnreadMessagesCounter.counter(messages);
+
+		model.addAttribute("unread", unread);
+		model.addAttribute("user", currentUser);
+
+		return "users/profile";
 	}
 }
