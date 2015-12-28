@@ -12,7 +12,7 @@ public interface UserService {
 
 	List<User> findUsersByUserName(String userName);
 
-	void save(User user);
+	void saveUser(User user);
 
 	User findById(String id);
 

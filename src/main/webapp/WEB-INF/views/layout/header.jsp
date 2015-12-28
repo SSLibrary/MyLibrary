@@ -1,6 +1,6 @@
-<%@ include file="../layout/taglib.jsp" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles-extras" prefix="tilesx" %>
-	
+
 <div class="navbar navbar-default">
 	<ul class="nav navbar-nav">			
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">

@@ -27,7 +27,7 @@ public class MessageDaoImpl extends AbstractDao<Integer, Message> implements Mes
 	 * Save message
 	 */
 	public void saveMessage(Message message) {
-		persist(message);
+		save(message);
 	}
 	
 	/*

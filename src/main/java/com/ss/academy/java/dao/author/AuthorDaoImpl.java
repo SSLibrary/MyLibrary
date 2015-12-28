@@ -22,7 +22,7 @@ public class AuthorDaoImpl extends AbstractDao<Long, Author> implements AuthorDa
 	}
 
 	public void saveAuthor(Author author) {
-		persist(author);
+		save(author);
 	}
 
 	public void deleteAuthorById(Long id) {

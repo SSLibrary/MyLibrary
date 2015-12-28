@@ -1,14 +1,12 @@
 package com.ss.academy.java.model.user;
 
 import java.util.List;
-import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -19,18 +17,18 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.hateoas.Identifiable;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.ss.academy.java.model.rating.Rating;
 import com.ss.academy.java.model.book.BookHistory;
 import com.ss.academy.java.model.comment.Comment;
 import com.ss.academy.java.model.message.Message;
+import com.ss.academy.java.model.rating.Rating;
 
 @Entity
 @Table(name = "users")
 public class User implements Identifiable<String> {
 
 	@Id
-	@GeneratedValue(generator="system-uuid")
-	@GenericGenerator(name="system-uuid", strategy = "uuid2")
+	@GeneratedValue(generator = "system-uuid")
+	@GenericGenerator(name = "system-uuid", strategy = "uuid2")
 	@Column(name = "user_id", unique = true, columnDefinition = "CHAR(16)")
 	private String id;
 

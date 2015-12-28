@@ -14,6 +14,6 @@ public class BookHistoryDaoImpl extends AbstractDao<Long, BookHistory> implement
 	}
 
 	public void saveBookHistory(BookHistory bookHistory) {
-		persist(bookHistory);
+		save(bookHistory);
 	}
 }

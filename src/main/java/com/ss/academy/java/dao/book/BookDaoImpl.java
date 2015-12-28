@@ -22,7 +22,7 @@ public class BookDaoImpl extends AbstractDao<Long, Book> implements BookDao {
 	}
 
 	public void saveBook(Book book) {
-		persist(book);
+		save(book);
 	}
 
 	public void deleteBookById(Long id) {

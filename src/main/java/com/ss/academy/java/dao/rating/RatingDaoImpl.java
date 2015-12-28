@@ -17,7 +17,7 @@ public class RatingDaoImpl extends AbstractDao<Long, Rating> implements RatingDa
 	}
 
 	public void saveRating(Rating rating) {
-		persist(rating);
+		save(rating);
 
 	}
 
