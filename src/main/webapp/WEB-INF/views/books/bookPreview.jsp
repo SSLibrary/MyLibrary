@@ -26,9 +26,7 @@
 		  	<dt>Pages:</dt>
 		  	<dd>${book.pages}</dd>
 		  	<dt>Description:</dt>
-		  	<dd style="width: 550px">
-		  		<blockquote style="display: block; margin: 0px;padding: 3px;">${book.bookDescription}</blockquote>
-		  	</dd>
+		  	<dd style="width: 550px">${book.bookDescription}</dd>
 		  	<dt>Status:</dt>  	
 		  	<dd>${book.status}</dd>
 		</dl>
