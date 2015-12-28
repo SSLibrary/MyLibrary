@@ -8,8 +8,8 @@
 		</ul>
 	</div>
 </div>		
-	<div>
-		<div class="login-form">
+	<div style="background-color:rgba(192,192,192,0.3);padding: 1px 10px 530px 10px;">
+		<div class="login-form" >
 			<div>
 				<c:url var="loginUrl" value="/login" />					
 				<form action="${loginUrl}" method="post" class="form-horizontal">

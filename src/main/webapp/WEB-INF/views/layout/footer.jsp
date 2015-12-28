@@ -2,5 +2,5 @@
 <br/>
 <a href="<c:url value='/' />" >
 	<img class="img-responsive"	src="<c:url value='/resources/images/SoftServe-logo.jpg' />"
-		alt="SoftServe Logo"  style="top:850px;position:absolute;width:1150px;">
+		alt="SoftServe Logo"  style="top:850px;position:absolute;width:1140px;">
 </a>

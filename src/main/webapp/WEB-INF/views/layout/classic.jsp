@@ -8,6 +8,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style type="text/css">
+	body {
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center top;
+} 
+</style>
 <title><tiles:getAsString name="title"></tiles:getAsString></title>
 <link rel="shortcut icon" href="/MyLibrary/favicon.ico" />
 <link rel="stylesheet"
@@ -22,12 +29,12 @@
 <script
 	src="//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
-<body>
+<body style="background-color: 	rgba(245,245,245,0.5);">
 	<tilesx:useAttribute name="current" />
-	<div class="container">
+	<div class="container">	
 		<tiles:insertAttribute name="header" />
-		<tiles:insertAttribute name="body" />
-		<tiles:insertAttribute name="footer" />
+		<tiles:insertAttribute name="body" />	
+		<tiles:insertAttribute name="footer" />	
 	</div>
 </body>
 </html>
