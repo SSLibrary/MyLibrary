@@ -31,22 +31,17 @@
 	<div class="row">
 		<div class="col-md-3 col-xs-6 text-center">
 			<h4>
-				<a href="<c:url value='/authors/${book.author.id}/books/${book.id}/comments' />">${book.title}</a>
+				<a href="<c:url value='/authors/${book.author.id}/books/${book.id}/preview' />">${book.title}</a>
 			</h4>
 		</div>
 		<div class="col-md-3 col-xs-6 text-center">
-			<h4>${book.author.name}</h4>
+			<h4>
+			<a href="<c:url value='/authors/${book.author.id}/books/' />">${book.author.name}</a>
+			</h4>
 		</div>
 		<div class="col-md-3 col-xs-6 text-center">
 			<h4>${book.status}</h4>
 		</div>
-		<c:choose>
-			<c:when test="${book.status =='Available'}">
-				<div class="btn-group">
-				<a href="/MyLibrary/${currUser}/books/${book.id}/addToHistory" class="btn btn-default" role="button">Get</a>
-				</div>
-			</c:when>
-		</c:choose>
 	</div>
 	<br />
 </c:forEach>

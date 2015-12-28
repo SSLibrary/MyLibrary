@@ -15,24 +15,55 @@
 		</div>
 	</c:otherwise>	
 </c:choose>
-<div style="float:left;margin:30px;padding:0px">
+<div style="float:left; margin-left:50px; padding:0px">
 	<div>
 		<h3><strong>Title: ${book.title}</strong></h3>
 	</div>
-	<div class="col-sm-10">
 		<dl class="dl-horizontal">
 	  		<dt>Author:</dt>
 		  	<dd>${book.author.name}</dd>
 		  	<dt>Pages:</dt>
 		  	<dd>${book.pages}</dd>
 		  	<dt>Description:</dt>
-		  	<dd style="width: 550px">${book.bookDescription}</dd>
+		  	<dd style="width: 500px">${book.bookDescription}</dd>
 		  	<dt>Status:</dt>  	
 		  	<dd>${book.status}</dd>
 		</dl>
 	</div>
-</div>
-
+	<div style="float:left; margin-left:50px; padding:0px">
 	
-		
-		
+	   <div class="btn-group">
+			<a href="/MyLibrary/authors/${book.author.id}/books/${book.id}/comments" 
+				class="btn btn-info" role="button">Show Comments</a>
+			</div>	
+		<sec:authorize access="hasAuthority('ADMIN')">
+			  <div class="btn-group">
+					<a href="/MyLibrary/authors/${book.author.id}/books/${book.id}/ratingCheck" 
+						class="btn btn-info" role="button">Check Rating</a>
+			  </div>
+		</sec:authorize>
+		<sec:authorize access="hasAuthority('USER')">
+				<c:choose>		
+				<c:when test="${book.isRated}">
+						<div class="btn-group">
+							<a href="/MyLibrary/authors/${book.author.id}/books/${book.id}/ratingCheck" 
+									class="btn btn-info" role="button">Check Rating</a>
+						</div>
+				    </c:when>						  
+				   <c:otherwise>
+				   <div class="btn-group">
+							<a href="/MyLibrary/authors/${book.author.id}/books/${book.id}/rating" 
+									class="btn btn-info" role="button">Add Rating</a>
+						</div>							
+				  </c:otherwise>
+				</c:choose>
+				<c:choose>
+				    <c:when test="${book.status =='Available'}">
+						<div class="btn-group">
+							<a href="/MyLibrary/${currUser}/books/${book.id}/addToHistory" 
+									class="btn btn-success" role="button">Get Book</a>
+						</div>
+				    </c:when>
+				</c:choose>
+		</sec:authorize>
+	</div>

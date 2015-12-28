@@ -55,44 +55,7 @@
 									id="deleteForm" type="submit" class="btn btn-default">Delete</button>
 								</form:form>
 							</div>
-							<div class="btn-group">
-								<form:form action="${book.id}/ratingCheck" method="GET">
-									<button type="submit" class="btn btn-info">Check
-										Rating</button>
-								</form:form>
-							</div>
-						</sec:authorize>
-						<div class="btn-group">
-							<form:form action="${book.id}/comments" method="GET">
-								<button type="submit" class="btn btn-info">Comments</button>
-							</form:form>
-						</div>
-						<sec:authorize access="hasAuthority('USER')">
-							<c:choose>
-								<c:when test="${book.isRated}">
-									<div class="btn-group">
-										<form:form action="${book.id}/ratingCheck" method="GET">
-											<button type="submit" class="btn btn-info">Check Rating</button>
-										</form:form>
-									</div>
-								</c:when>
-								<c:otherwise>
-									<div class="btn-group">
-										<form:form action="${book.id}/rating" method="GET">
-											<button type="submit" class="btn btn-info">Add Rating</button>
-										</form:form>
-									</div>
-								</c:otherwise>
-							</c:choose>
-						</sec:authorize>
-						<c:choose>
-							<c:when test="${book.status =='Available'}">
-								<div class="btn-group">
-									<a href="/MyLibrary/${currUser}/books/${book.id}/addToHistory" 
-											class="btn btn-default" role="button">Get</a>
-								</div>
-							</c:when>
-						</c:choose>
+							</sec:authorize>					
 					</div>
 				</div>
 			</div>
