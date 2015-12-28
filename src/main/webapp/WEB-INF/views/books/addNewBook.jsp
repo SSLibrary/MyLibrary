@@ -11,6 +11,20 @@
 		</div>
 	</div>
 	<div class="form-group">
+		<label for="pages" class="control-label col-sm-2">Pages:</label>
+		<div class="col-sm-3">
+			<form:input path="pages" id="pages" class="form-control"/>
+			<form:errors path="pages" cssClass="error" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="bookDescription" class="control-label col-sm-2">Description:</label>
+		<div class="col-sm-3">
+			<form:input path="bookDescription" id="bookDescription" class="form-control"/>
+			<form:errors path="bookDescription" cssClass="error" />
+		</div>
+	</div>
+	<div class="form-group">
 		<label for="fileUpload" class="control-label col-sm-2">Pic:</label>
 		<div class="col-sm-3">					
 			<input type="file"  id="fileUpload" name="fileUpload" class="form-control"/>

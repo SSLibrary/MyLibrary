@@ -18,10 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-//import com.ss.academy.java.configuration.HibernateUtil;
 import com.ss.academy.java.model.author.Author;
 import com.ss.academy.java.model.book.Book;
-import com.ss.academy.java.model.book.BookStatus;
 import com.ss.academy.java.model.message.Message;
 import com.ss.academy.java.model.rating.Rating;
 import com.ss.academy.java.model.user.User;

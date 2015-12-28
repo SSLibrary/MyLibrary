@@ -46,12 +46,11 @@ REFERENCES `authors`(`author_id`) ON DELETE CASCADE
 --
 -- Sample data for table `author_books`
 --
-INSERT INTO `author_books` (`book_id`, `author_id`, `title`, `status`) VALUES
-(1, 1, 'Pod Igoto', 'Available'),
-(2, 3, 'The Godfather', 'Available'),
-(3, 4, 'Introduction to programming with Java', 'Available'),
-(4, 1, 'O,Shipka!', 'Available'),
-(5, 3, 'The Sicilian', 'Available');
+INSERT INTO `author_books` (`book_id`, `author_id`, `title`, `status`, `pages`, `book_description`) VALUES
+(1, 1, 'Pod Igoto', 'Available', 528, 'There is no description for this book yet'),
+(2, 3, 'The Godfather','Available', 448, 'The story of Don Vito Corleone, the head of a New York Mafia family, inspired some of the most successful movies ever. It is in The Godfather of Mario Puzo  that Corleone first appears. As Corleone`s desperate struggle to control the Mafia underworld unfolds, so does the story of his family. The novel is full of exquisitely detailed characters who, despite leading unconventional lifestyles within a notorious crime family, experience the triumphs and failures of the human condition. Filled with the requisite valor, love, and rancor of a great epic, The Godfather is the definitive gangster novel.' ),
+(3, 4, 'Introduction to programming with Java', 'Available', 909, 'There is no description for this book yet' ),
+(5, 3, 'The Sicilian', 'Available', 416 ,'There is no description for this book yet');
 
 --
 -- Table structure for table `users`
