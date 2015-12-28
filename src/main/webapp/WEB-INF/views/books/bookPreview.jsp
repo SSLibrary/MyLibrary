@@ -19,7 +19,7 @@
 	<div>
 		<h3><strong>Title: ${book.title}</strong></h3>
 	</div>
-		<dl class="dl-horizontal">
+		<dl class="dl-horizontal" style="margin-left:-80px;">
 	  		<dt>Author:</dt>
 		  	<dd>${book.author.name}</dd>
 		  	<dt>Pages:</dt>
@@ -30,7 +30,7 @@
 		  	<dd>${book.status}</dd>
 		</dl>
 	</div>
-	<div style="float:left; margin-left:50px; padding:0px">
+	<div style="float:left; margin-left:50px;">
 	
 	   <div class="btn-group">
 			<a href="/MyLibrary/authors/${book.author.id}/books/${book.id}/comments" 
