@@ -27,12 +27,12 @@ public class UserServiceImpl implements UserService {
 		return dao.findAllUsers();
 	}
 
-	public void save(User user) {
+	public void saveUser(User user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		user.setUserRole(UserRole.USER);
 		user.setUserStatus(UserStatus.ACTIVE);
-		user.setId(UUID.randomUUID().toString());
-		dao.save(user);
+		
+		dao.saveUser(user);
 	}
 
 	public User findById(String id) {

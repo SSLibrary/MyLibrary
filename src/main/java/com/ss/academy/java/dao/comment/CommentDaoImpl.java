@@ -25,7 +25,7 @@ public class CommentDaoImpl extends AbstractDao<Integer, Comment> implements Com
 	 * Save comment
 	 */
 	public void saveComment(Comment comment){
-		persist(comment);
+		save(comment);
 	}
 	
 	/*

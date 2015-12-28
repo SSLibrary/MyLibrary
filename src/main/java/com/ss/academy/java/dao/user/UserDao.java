@@ -8,7 +8,7 @@ public interface UserDao {
 
 	List<User> findAllUsers();
 
-	void save(User user);
+	void saveUser(User user);
 
 	User findById(String id);
 

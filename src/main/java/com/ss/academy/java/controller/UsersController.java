@@ -2,7 +2,6 @@ package com.ss.academy.java.controller;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
 
 import javax.validation.Valid;
 
@@ -127,7 +126,7 @@ public class UsersController {
 			return "users/register";
 		}
 
-		userService.save(user);
+		userService.saveUser(user);
 
 		model.addAttribute("newUser", user.getUsername());
 
