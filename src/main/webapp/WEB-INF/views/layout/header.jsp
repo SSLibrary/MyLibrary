@@ -4,7 +4,7 @@
 <div class="navbar navbar-default">
 	<ul class="nav navbar-nav">			
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
-			<li><a href="/MyLibrary/">Home</a></li>
+			<li><a href="/MyLibrary/"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
 			<li><a href="/MyLibrary/books">Books</a></li>
