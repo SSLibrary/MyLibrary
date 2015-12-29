@@ -18,5 +18,5 @@ public interface AuthorDao {
     
     List<Author> listAllAuthors(Integer offset, Integer maxResults);
     
-    Long rowCount();
+    Long countAllAuthors();
 }

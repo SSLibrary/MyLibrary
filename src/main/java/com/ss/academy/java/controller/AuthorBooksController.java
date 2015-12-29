@@ -37,7 +37,7 @@ import sun.misc.BASE64Encoder;
  */
 @SuppressWarnings("restriction")
 @Controller
-@RequestMapping(value = "/authors/{id}/books")
+@RequestMapping(value = "/authors/{author_id}/books")
 public class AuthorBooksController {
 
 	@Autowired
@@ -60,18 +60,17 @@ public class AuthorBooksController {
 	 * been rated so far by the current user.
 	 */
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
-	public String listAllBooks(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long id, ModelMap model,
-			Integer offset, Integer maxResults) {
-
+	public String listAllBooks(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long author_id, 
+			ModelMap model, Integer offset, Integer maxResults) {
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
 
-		Author author = authorService.findById(id);
-		List<Book> books = bookService.list(offset, maxResults, id);
-		Long count = bookService.count(id);
+		Author author = authorService.findById(author_id);
+		List<Book> books = bookService.listAllBooks(offset, maxResults, author_id);
+		Long count = bookService.countAllBooks(author_id);
 
-		if (books.size() == 0) {
+		if (books.isEmpty()) {
 			model.addAttribute("emptyList", true);
 		} else {
 			for (Book book : books) {
@@ -96,7 +95,7 @@ public class AuthorBooksController {
 
 	@RequestMapping(value = { "/{book_id}/preview" }, method = RequestMethod.GET)
 	public String previewBook(@PathVariable Long book_id, ModelMap model, 
-			@AuthenticationPrincipal UserDetails userDetails){	
+			@AuthenticationPrincipal UserDetails userDetails) {	
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
@@ -130,8 +129,8 @@ public class AuthorBooksController {
 	 * This method provides the ability to search for books by their titles.
 	 */
 	@RequestMapping(value = { "/search" }, method = RequestMethod.GET)
-	public String searchBookByName(@PathVariable Long id, @RequestParam("bookTitle") String bookTitle, ModelMap model,
-			@AuthenticationPrincipal UserDetails userDetails) {
+	public String searchBookByName(@PathVariable Long author_id, @RequestParam("bookTitle") String bookTitle,
+			ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
@@ -140,7 +139,7 @@ public class AuthorBooksController {
 		List<Book> authorBooks = new ArrayList<Book>();
 
 		for (Book book : books) {
-			if (book.getAuthor().getId() == id) {
+			if (book.getAuthor().getId() == author_id) {
 				authorBooks.add(book);
 			}
 		}
@@ -199,14 +198,14 @@ public class AuthorBooksController {
 				bookService.saveBook(book);
 			}
 		}
-		return "redirect:/authors/{id}/books/";
+		return "redirect:/authors/{author_id}/books/";
 	}
 
 	/*
 	 * This method will provide the medium to update an existing book.
 	 */
 	@RequestMapping(value = { "/{book_id}" }, method = RequestMethod.GET)
-	public String editBook(@PathVariable Long id, @PathVariable Long book_id, ModelMap model,
+	public String editBook(@PathVariable Long book_id, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
@@ -230,7 +229,7 @@ public class AuthorBooksController {
 	 */
 	@RequestMapping(value = { "/{book_id}" }, method = RequestMethod.POST)
 	public String updateBook(@Valid Book formBook, BindingResult result,@RequestParam CommonsMultipartFile[] fileUpload,
-			@PathVariable Long book_id, @PathVariable Long id) {
+			@PathVariable Long book_id, @PathVariable Long author_id) {
 		Author author = new Author();
 		Book dbBook = new Book();
 		if (result.hasErrors()) {
@@ -246,7 +245,7 @@ public class AuthorBooksController {
 				}else if(aFile.toString().startsWith("89 50 4E 47 0D 0A 1A 0A")){
 					// check if format of file is PNG			
 				}
-				author = authorService.findById(id);
+				author = authorService.findById(author_id);
 				dbBook = bookService.findById(book_id);
 				formBook.setImage(aFile.getBytes());
 				dbBook = formBook;
@@ -255,20 +254,20 @@ public class AuthorBooksController {
 				bookService.updateBook(dbBook);
 			}
 		}
-		return "redirect:/authors/{id}/books/";
+		return "redirect:/authors/{author_id}/books/";
 	}
 
 	/*
 	 * This method will delete a book by it's ID value.
 	 */
 	@RequestMapping(value = { "/{book_id}" }, method = RequestMethod.DELETE)
-	public String deleteBook(@PathVariable Long id, @PathVariable Long book_id) {
+	public String deleteBook(@PathVariable Long author_id, @PathVariable Long book_id) {
 		Book book = bookService.findById(book_id);
-		Author author = authorService.findById(id);
+		Author author = authorService.findById(author_id);
 
 		author.getBooks().remove(book);
 		bookService.deleteBook(book);
 
-		return "redirect:/authors/{id}/books/";
+		return "redirect:/authors/{author_id}/books/";
 	}
 }

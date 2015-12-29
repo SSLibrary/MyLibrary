@@ -10,5 +10,13 @@ public interface BookHistoryDao {
 
 	void saveBookHistory(BookHistory bookHistory);
 	
-	List<BookHistory> findAllBooksHistory();
+	List<BookHistory> findAllBooksHistory();	
+
+	List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults); 
+	
+	List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults, byte isReturned);
+	
+	Long countAllBooksHistory();
+	
+	Long countAllBooksHistory(byte isReturned);
 } 

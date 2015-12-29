@@ -14,9 +14,9 @@ public interface MessageDao {
 
 	List<Message> listAllSentMessages(Integer offset, Integer maxResults, String username);
 
-	Long countSentMessages(String username);
-
 	List<Message> listAllReceivedMessages(Integer offset, Integer maxResults, String username);
 
 	Long countReceivedMessages(String username);
+	
+	Long countSentMessages(String username);
 }

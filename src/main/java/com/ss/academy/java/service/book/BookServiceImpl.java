@@ -48,12 +48,12 @@ public class BookServiceImpl implements BookService {
 		return dao.findBooksByTitle(bookTitle);
 	}
 	
-	public List<Book> list(Integer offset, Integer maxResults, Long id) {
-		return dao.list(offset, maxResults, id);
+	public List<Book> listAllBooks(Integer offset, Integer maxResults, Long id) {
+		return dao.listAllBooks(offset, maxResults, id);
 	}
 
-	public Long count(Long author_id) {
-		return dao.count(author_id);
+	public Long countAllBooks(Long author_id) {
+		return dao.countAllBooks(author_id);
 	}
 
 	public void changeBookStatus(Book book) {
@@ -71,9 +71,7 @@ public class BookServiceImpl implements BookService {
 		return dao.listAllBooks(offset, maxResults);
 	}
 	
-	public Long count() {
-		return dao.count();
-	}
-	
-	
+	public Long countAllBooks() {
+		return dao.countAllBooks();
+	}	
 }

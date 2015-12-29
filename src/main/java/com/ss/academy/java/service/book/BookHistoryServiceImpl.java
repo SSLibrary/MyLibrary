@@ -28,7 +28,7 @@ public class BookHistoryServiceImpl implements BookHistoryService {
 		BookHistory entity = dao.findById(bookHistory.getId());
 
 		if (entity != null) {
-			entity.setIsReturned(1);
+			entity.setIsReturned(bookHistory.getIsReturned());
 			entity.setReturnDate(bookHistory.getReturnDate());
 		}
 	}
@@ -37,4 +37,22 @@ public class BookHistoryServiceImpl implements BookHistoryService {
 		List<BookHistory> booksHistory = dao.findAllBooksHistory();
 		return booksHistory;
 	}
+	
+	public List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults) {
+		List<BookHistory> booksHistory = dao.findAllBooksHistory(offset, maxResults);
+		return booksHistory;
+	}
+	
+	public List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults,byte isReturned) {
+		List<BookHistory> booksHistory = dao.findAllBooksHistory(offset, maxResults, isReturned);
+		return booksHistory;
+	}
+	
+	public Long countAllBooksHistory() {
+		return dao.countAllBooksHistory();
+	}	
+	
+	public Long countAllBooksHistory(byte isReturned) {
+		return dao.countAllBooksHistory(isReturned);
+	}	
 }

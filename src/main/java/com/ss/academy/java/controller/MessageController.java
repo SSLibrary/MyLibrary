@@ -97,8 +97,7 @@ public class MessageController {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> allMessages = currentUser.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(allMessages);
-
-		
+	
 		Message message = new Message();
 		model.addAttribute("message", message);
 		model.addAttribute("receiver", user.getUsername());
@@ -114,7 +113,6 @@ public class MessageController {
 	@RequestMapping(value = { "/{user_id}/new" }, method = RequestMethod.POST)
 	public String saveMessage(@Valid Message message, BindingResult result, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails, @PathVariable String user_id) {
-
 		if (result.hasErrors()) {
 			return "messages/new";
 		}
@@ -141,6 +139,8 @@ public class MessageController {
 	@RequestMapping(value = { "/{message_id}/reply" }, method = RequestMethod.GET)
 	public String replyToMessage(ModelMap model, @PathVariable Integer message_id,
 			@AuthenticationPrincipal UserDetails userDetails) {
+		byte newMessage = 1;
+		byte notRepliedTo = 0;
 		Message parent = messageService.findById(message_id);
 		if (parent == null) {
 			return "redirect:/{user_id}/messages/inbox";
@@ -151,11 +151,10 @@ public class MessageController {
 			return "redirect:/{user_id}/messages/inbox";
 		}
 		
-		if (parent.getIsNew() == 1) {
+		if (parent.getIsNew() == newMessage) {
 			messageService.updateMessageStatus(parent);
 		}
-
-		
+	
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> allMessages = currentUser.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(allMessages);
@@ -163,7 +162,7 @@ public class MessageController {
 		List<Message> previousMessages = new ArrayList<Message>();
 		previousMessages.add(parent);
 
-		while (parent.getIn_reply_to() != 0) {
+		while (parent.getIn_reply_to() != notRepliedTo) {
 			parent = messageService.findById(parent.getIn_reply_to());
 			previousMessages.add(parent);
 		}
@@ -184,7 +183,6 @@ public class MessageController {
 	@RequestMapping(value = { "/{message_id}/reply" }, method = RequestMethod.POST)
 	public String replyToMessage(@Valid Message message, BindingResult result, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer message_id) {
-
 		if (result.hasErrors()) {
 			return "messages/reply";
 		}
@@ -209,6 +207,8 @@ public class MessageController {
 	@RequestMapping(value = { "/{message_id}/display" }, method = RequestMethod.GET)
 	public String displayMessage(ModelMap model, @PathVariable Integer message_id,
 			@AuthenticationPrincipal UserDetails userDetails) {
+		byte notRepliedTo = 0;
+
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> allMessages = currentUser.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(allMessages);
@@ -228,7 +228,7 @@ public class MessageController {
 		List<Message> previousMessages = new ArrayList<Message>();
 		previousMessages.add(parent);
 
-		while (parent.getIn_reply_to() != 0) {
+		while (parent.getIn_reply_to() != notRepliedTo) {
 			parent = messageService.findById(parent.getIn_reply_to());
 			previousMessages.add(parent);
 		}

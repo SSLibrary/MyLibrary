@@ -53,7 +53,7 @@ public class AuthorServiceImpl implements AuthorService {
 		return dao.listAllAuthors(offset, maxResults);
 	}
 
-	public Long rowCount() {
-		return dao.rowCount();
+	public Long countAllAuthors() {
+		return dao.countAllAuthors();
 	}
 }

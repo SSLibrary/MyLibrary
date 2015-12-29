@@ -65,7 +65,7 @@ public class AuthorDaoImpl extends AbstractDao<Long, Author> implements AuthorDa
 				.list();
 	}
 	
-	public Long rowCount(){
+	public Long countAllAuthors(){
 		return (Long)getSession()
 				.createCriteria(Author.class)
 				.setProjection(Projections.rowCount())

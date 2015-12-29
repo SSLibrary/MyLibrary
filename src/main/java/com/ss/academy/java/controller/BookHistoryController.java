@@ -1,6 +1,5 @@
 package com.ss.academy.java.controller;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -38,18 +37,22 @@ public class BookHistoryController {
 	BookService bookService;
 	
 	@RequestMapping(value = {"/{user_id}"}, method = RequestMethod.GET)
-	public String listBooksHistory(ModelMap model, @AuthenticationPrincipal UserDetails userDetails){
+	public String listBooksHistory(ModelMap model, @AuthenticationPrincipal UserDetails userDetails, 
+			Integer offset, Integer maxResults) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
-		List<BookHistory> booksHistory = currentUser.getBooksHistory();
-		
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
+		
+		List<BookHistory> booksHistory = bookHistoryService.findAllBooksHistory(offset, maxResults);
+		Long countAllBookHistory = bookHistoryService.countAllBooksHistory();
 		
 		if (booksHistory.isEmpty()) {
 			model.addAttribute("isEmpty", true);
 		} else {
 			model.addAttribute("isEmpty", false);
 			model.addAttribute("booksHistory", booksHistory);
+			model.addAttribute("count", countAllBookHistory);
+			model.addAttribute("offset", offset);
 		}
 		
 		model.addAttribute("unread", unread);
@@ -72,10 +75,11 @@ public class BookHistoryController {
 		bookHistory.setBook(book);
 		bookHistory.setUser(user);
 		
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(bookHistory.getGetDate());
-		cal.add(Calendar.DAY_OF_MONTH, 90);
-		bookHistory.setReturnDate(cal.getTime());
+		int loanPeriod = 90;
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(bookHistory.getGetDate());
+		calendar.add(Calendar.DAY_OF_MONTH, loanPeriod);
+		bookHistory.setReturnDate(calendar.getTime());
 		
 		bookHistoryService.saveBookHistory(bookHistory);
 		}
@@ -85,11 +89,16 @@ public class BookHistoryController {
 	
 	@RequestMapping(value = "/{user_id}/{history_id}/return", method = RequestMethod.GET)
 	public String returnBook(@PathVariable Long history_id, @AuthenticationPrincipal UserDetails userDetails) {	
+		byte notReturned = 0;
+		byte returned = 1;
+		
 		BookHistory bookHistory = bookHistoryService.findById(history_id);
 		
-		if (bookHistory.getIsReturned() == 0 && bookHistory.getBook().getStatus().equals(BookStatus.Loaned)) {
+		if (bookHistory.getIsReturned() == notReturned 
+				&& bookHistory.getBook().getStatus().equals(BookStatus.Loaned)) {
 		Date currDate = new Date(System.currentTimeMillis());
 		bookHistory.setReturnDate(currDate);
+		bookHistory.setIsReturned(returned);
 		bookHistoryService.updateBookHistory(bookHistory);
 		bookService.changeBookStatus(bookHistory.getBook());
 		}
@@ -98,27 +107,25 @@ public class BookHistoryController {
 	}
 	
 	@RequestMapping(value = "/loaned", method = RequestMethod.GET)
-	public String showAllLoanedBooks(@AuthenticationPrincipal UserDetails userDetails, ModelMap model) {	
+	public String showAllLoanedBooks(@AuthenticationPrincipal UserDetails userDetails, ModelMap model,
+			Integer offset, Integer maxResults, BookHistory bookHistories) {	
+		byte notReturned = 0;
+		
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
+		
 		Date currDate = new Date(System.currentTimeMillis());		
+		List<BookHistory> bookHistory = bookHistoryService.findAllBooksHistory(offset, maxResults, notReturned);
+		Long countAllBookHistory = bookHistoryService.countAllBooksHistory(notReturned);
 		
-		List<BookHistory> bookHistory = bookHistoryService.findAllBooksHistory();
-		List<BookHistory> loanedBooks = new ArrayList<BookHistory>();
-		
-		for (BookHistory book : bookHistory) {
-		 
-			if (book.getIsReturned() == 0) {
-				loanedBooks.add(book);
-			}
-		}
-		
-		if (loanedBooks.isEmpty()) {
+		if (bookHistory.isEmpty()) {
 			model.addAttribute("isEmpty", true);
 		} else {
 			model.addAttribute("isEmpty", false);
-			model.addAttribute("loanedBooks", loanedBooks);
+			model.addAttribute("loanedBooks", bookHistory);
+			model.addAttribute("count", countAllBookHistory);
+			model.addAttribute("offset", offset);
 			model.addAttribute("currDate", currDate);
 		}
 			

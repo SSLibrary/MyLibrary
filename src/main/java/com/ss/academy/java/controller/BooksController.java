@@ -35,14 +35,13 @@ public class BooksController {
 	@RequestMapping(value = { "/books" })
 	public String showAllBooks(@AuthenticationPrincipal UserDetails user, ModelMap model,
 			Integer offset, Integer maxResults) {
-
 			User currentUser = userService.findByUsername(user.getUsername());
 			List<Message> messages = currentUser.getReceivedMessage();
 			int unread = UnreadMessagesCounter.counter(messages);
 			List<Book> books = bookService.listAllBooks(offset, maxResults);
 			
 			model.addAttribute("books", books);
-			model.addAttribute("count", bookService.count());
+			model.addAttribute("count", bookService.countAllBooks());
 			model.addAttribute("offset", offset);
 			model.addAttribute("unread", unread);
 			model.addAttribute("currUser", currentUser.getId());
@@ -55,12 +54,11 @@ public class BooksController {
 	@RequestMapping(value = { "/books/search" }, method = RequestMethod.GET)
 	public String searchBookByTitle(@RequestParam("title") String bookTitle, 
 			ModelMap model, @AuthenticationPrincipal UserDetails user) {
-			
 			User currentUser = userService.findByUsername(user.getUsername());
 			List<Message> messages = currentUser.getReceivedMessage();
-			int unread = UnreadMessagesCounter.counter(messages);
-			
+			int unread = UnreadMessagesCounter.counter(messages);	
 			List<Book> books = bookService.findBooksByTitle(bookTitle);
+			
 			model.addAttribute("books", books);
 			model.addAttribute("unread", unread);
 			model.addAttribute("currUser", currentUser.getId());

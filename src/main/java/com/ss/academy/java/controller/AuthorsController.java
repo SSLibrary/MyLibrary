@@ -48,7 +48,6 @@ public class AuthorsController {
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String listAuthors(HttpServletRequest request, ModelMap model, Integer offset, Integer maxResults,
 			@AuthenticationPrincipal UserDetails userDetails) {
-
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
@@ -59,7 +58,7 @@ public class AuthorsController {
 			model.addAttribute("emptyListOfAuthors", true);
 		}
 		model.addAttribute("authors", authors);
-		model.addAttribute("count", authorService.rowCount());
+		model.addAttribute("count", authorService.countAllAuthors());
 		model.addAttribute("offset", offset);
 		model.addAttribute("unread", unread);
 		model.addAttribute("currUser", user.getId());
@@ -91,7 +90,6 @@ public class AuthorsController {
 	 */
 	@RequestMapping(value = { "/new" }, method = RequestMethod.GET)
 	public String addNewAuthor(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
-
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
@@ -112,7 +110,6 @@ public class AuthorsController {
 	 */
 	@RequestMapping(value = { "/new" }, method = RequestMethod.POST)
 	public String saveAuthor(@Valid Author author, BindingResult result, ModelMap model) {
-
 		if (result.hasErrors()) {
 			return "authors/addNewAuthor";
 		}
@@ -125,14 +122,14 @@ public class AuthorsController {
 	/*
 	 * This method will provide the medium to update an existing author.
 	 */
-	@RequestMapping(value = { "/{id}" }, method = RequestMethod.GET)
-	public String editAuthor(@PathVariable Long id, ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
-
+	@RequestMapping(value = { "/{author_id}" }, method = RequestMethod.GET)
+	public String editAuthor(@PathVariable Long author_id, ModelMap model, 
+			@AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
 
-		Author author = authorService.findById(id);
+		Author author = authorService.findById(author_id);
 		model.addAttribute("author", author);
 		model.addAttribute("edit", true);
 		model.addAttribute("unread", unread);
@@ -145,9 +142,9 @@ public class AuthorsController {
 	 * This method will be called on form submission, handling POST request for
 	 * updating author in database. It also validates the user input.
 	 */
-	@RequestMapping(value = { "/{id}" }, method = RequestMethod.PUT)
-	public String updateAuthor(@Valid Author author, BindingResult result, ModelMap model, @PathVariable Long id) {
-
+	@RequestMapping(value = { "/{author_id}" }, method = RequestMethod.PUT)
+	public String updateAuthor(@Valid Author author, BindingResult result, ModelMap model, 
+			@PathVariable Long author_id) {
 		if (result.hasErrors()) {
 			return "authors/addNewAuthor";
 		}
@@ -160,9 +157,9 @@ public class AuthorsController {
 	/*
 	 * This method will delete an author by it's ID value.
 	 */
-	@RequestMapping(value = { "/{id}" }, method = RequestMethod.DELETE)
-	public String deleteAuthor(@PathVariable Long id) {
-		authorService.deleteAuthor(authorService.findById(id));
+	@RequestMapping(value = { "/{author_id}" }, method = RequestMethod.DELETE)
+	public String deleteAuthor(@PathVariable Long author_id) {
+		authorService.deleteAuthor(authorService.findById(author_id));
 
 		return "redirect:/authors/";
 	}
