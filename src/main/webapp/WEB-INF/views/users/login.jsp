@@ -3,8 +3,10 @@
 <div class="navbar navbar-default">
 	<div class="navbar-header">
 		<ul class="nav navbar-nav">
-			<li><a href="/MyLibrary/"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
-			<li><a href="/MyLibrary/register/">Register</a></li>					
+			<li><a href="/MyLibrary/">
+			<span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+			<li><a href="/MyLibrary/register/">
+			<span class="glyphicon glyphicon-copy" aria-hidden="true"></span> Register</a></li>					
 		</ul>
 	</div>
 </div>		
