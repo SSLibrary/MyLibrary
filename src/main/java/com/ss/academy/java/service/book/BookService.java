@@ -23,13 +23,13 @@ public interface BookService {
 	@PreAuthorize("hasAuthority('ADMIN')")
 	void deleteBook(Book book);
 	
-	List<Book> list(Integer offset, Integer maxResults, Long id);
+	List<Book> listAllBooks(Integer offset, Integer maxResults, Long id);
     
-    Long count(Long author_id);
+    Long countAllBooks(Long author_id);
     
     void changeBookStatus(Book book);
     
     List<Book> listAllBooks(Integer offset, Integer maxResults);
     
-    Long count();
+    Long countAllBooks();
 }

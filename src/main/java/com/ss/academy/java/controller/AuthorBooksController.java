@@ -68,8 +68,8 @@ public class AuthorBooksController {
 		int unread = UnreadMessagesCounter.counter(messages);
 
 		Author author = authorService.findById(id);
-		List<Book> books = bookService.list(offset, maxResults, id);
-		Long count = bookService.count(id);
+		List<Book> books = bookService.listAllBooks(offset, maxResults, id);
+		Long count = bookService.countAllBooks(id);
 
 		if (books.size() == 0) {
 			model.addAttribute("emptyList", true);

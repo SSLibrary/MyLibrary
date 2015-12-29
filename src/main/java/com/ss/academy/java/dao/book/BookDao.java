@@ -16,11 +16,11 @@ public interface BookDao {
 	
 	List<Book> findBooksByTitle(String bookTitle);
 	
-	List<Book> list(Integer offset, Integer maxResults, Long id);
+	List<Book> listAllBooks(Integer offset, Integer maxResults, Long id);
     
-    Long count(Long author_id);
+    Long countAllBooks(Long author_id);
     
     List<Book> listAllBooks(Integer offset, Integer maxResults);
     
-    Long count();
+    Long countAllBooks();
 }

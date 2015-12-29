@@ -37,4 +37,13 @@ public class BookHistoryServiceImpl implements BookHistoryService {
 		List<BookHistory> booksHistory = dao.findAllBooksHistory();
 		return booksHistory;
 	}
+	
+	public List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults) {
+		List<BookHistory> booksHistory = dao.findAllBooksHistory(offset, maxResults);
+		return booksHistory;
+	}
+	
+	public Long countAllBooksHistory() {
+		return dao.countAllBooksHistory();
+	}	
 }

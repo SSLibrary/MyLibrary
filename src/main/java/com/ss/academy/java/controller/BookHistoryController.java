@@ -38,18 +38,24 @@ public class BookHistoryController {
 	BookService bookService;
 	
 	@RequestMapping(value = {"/{user_id}"}, method = RequestMethod.GET)
-	public String listBooksHistory(ModelMap model, @AuthenticationPrincipal UserDetails userDetails){
+	public String listBooksHistory(ModelMap model, @AuthenticationPrincipal UserDetails userDetails, 
+			Integer offset, Integer maxResults){
 		User currentUser = userService.findByUsername(userDetails.getUsername());
-		List<BookHistory> booksHistory = currentUser.getBooksHistory();
+//		List<BookHistory> booksHistory = currentUser.getBooksHistory();
 		
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
+		
+		List<BookHistory> booksHistory = bookHistoryService.findAllBooksHistory(offset, maxResults);
+		Long countAllBookHistory = bookHistoryService.countAllBooksHistory();
 		
 		if (booksHistory.isEmpty()) {
 			model.addAttribute("isEmpty", true);
 		} else {
 			model.addAttribute("isEmpty", false);
 			model.addAttribute("booksHistory", booksHistory);
+			model.addAttribute("count", countAllBookHistory);
+			model.addAttribute("offset", offset);
 		}
 		
 		model.addAttribute("unread", unread);

@@ -42,7 +42,7 @@ public class BooksController {
 			List<Book> books = bookService.listAllBooks(offset, maxResults);
 			
 			model.addAttribute("books", books);
-			model.addAttribute("count", bookService.count());
+			model.addAttribute("count", bookService.countAllBooks());
 			model.addAttribute("offset", offset);
 			model.addAttribute("unread", unread);
 			model.addAttribute("currUser", currentUser.getId());
