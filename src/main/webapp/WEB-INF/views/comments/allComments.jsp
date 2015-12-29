@@ -19,7 +19,8 @@
 							<form:form action="comments/${comment.comment_id}" method="DELETE">
 									<button
 									 onclick="if (confirm('Are you sure you want to delete this comment?')) { form.action='comments/${comment.comment_id}'; } else { return false; }"
-									 type="submit" class="btn btn-default">Delete</button>
+									 type="submit" class="btn btn-default">
+									 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</button>
 							</form:form>
 						</td>
 						</sec:authorize>
