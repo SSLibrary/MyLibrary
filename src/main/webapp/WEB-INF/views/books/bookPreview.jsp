@@ -43,6 +43,19 @@
 						class="btn btn-info" role="button">
 						<span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Check Rating</a>
 			  </div>
+			  <div class="btn-group">
+								<a href="/MyLibrary/authors/${book.author.id}/books/${book.id}" 
+						class="btn btn-default" role="button">
+									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</a>
+							</div>
+							<div class="btn-group">
+								<form:form action="${book.id}" method="DELETE" >
+									<button
+									onclick="if (confirm('Are you sure you want to delete this book?')) { form.action='${book.id}'; } else { return false; }"
+									id="deleteForm" type="submit" class="btn btn-default">
+									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</button>
+								</form:form>
+							</div>	  
 		</sec:authorize>
 		<sec:authorize access="hasAuthority('USER')">
 				<c:choose>		

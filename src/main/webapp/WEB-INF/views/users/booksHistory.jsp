@@ -22,7 +22,6 @@
 					<td>${bookHistory.book.author.name}</td>
 					<td><fmt:formatDate pattern="yyyy-MM-dd, hh:mm a" value="${bookHistory.getDate}" /></td>			
 					<td><fmt:formatDate pattern="yyyy-MM-dd, hh:mm a" value="${bookHistory.returnDate}" /></td>		
-					
 					<c:choose>
 				<c:when test="${bookHistory.isReturned=='0'}">
 				<td>
