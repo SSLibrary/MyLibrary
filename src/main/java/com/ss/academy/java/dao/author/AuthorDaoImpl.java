@@ -57,7 +57,7 @@ public class AuthorDaoImpl extends AbstractDao<Long, Author> implements AuthorDa
 	
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public List<Author> list(Integer offset, Integer maxResults){
+	public List<Author> listAllAuthors(Integer offset, Integer maxResults){
 		return getSession()
 				.createCriteria(Author.class)
 				.setFirstResult(offset!=null?offset:0)
@@ -65,7 +65,7 @@ public class AuthorDaoImpl extends AbstractDao<Long, Author> implements AuthorDa
 				.list();
 	}
 	
-	public Long count(){
+	public Long rowCount(){
 		return (Long)getSession()
 				.createCriteria(Author.class)
 				.setProjection(Projections.rowCount())

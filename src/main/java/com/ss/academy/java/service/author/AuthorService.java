@@ -23,7 +23,7 @@ public interface AuthorService {
 	@PreAuthorize("hasAuthority('ADMIN')")
 	void deleteAuthor(Author author);
 	
-	List<Author> list(Integer offset, Integer maxResults);	
+	List<Author> listAllAuthors(Integer offset, Integer maxResults);	
 	
-	Long count();
+	Long rowCount();
 }

@@ -33,7 +33,7 @@ import com.ss.academy.java.util.UnreadMessagesCounter;
 public class AuthorsController {
 
 	@Autowired
-	AuthorService service;
+	AuthorService authorService;
 
 	@Autowired
 	UserService userService;
@@ -53,13 +53,13 @@ public class AuthorsController {
 		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
 
-		List<Author> authors = service.list(offset, maxResults);
+		List<Author> authors = authorService.listAllAuthors(offset, maxResults);
 
 		if (authors.isEmpty()) {
 			model.addAttribute("emptyListOfAuthors", true);
 		}
 		model.addAttribute("authors", authors);
-		model.addAttribute("count", service.count());
+		model.addAttribute("count", authorService.rowCount());
 		model.addAttribute("offset", offset);
 		model.addAttribute("unread", unread);
 		model.addAttribute("currUser", user.getId());
@@ -73,7 +73,7 @@ public class AuthorsController {
 	@RequestMapping(value = { "/search" }, method = RequestMethod.GET)
 	public String searchAuthorByName(@RequestParam("author_name") String author_name, 
 			ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
-		List<Author> authors = service.findAuthorsByName(author_name);
+		List<Author> authors = authorService.findAuthorsByName(author_name);
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
@@ -117,7 +117,7 @@ public class AuthorsController {
 			return "authors/addNewAuthor";
 		}
 
-		service.saveAuthor(author);
+		authorService.saveAuthor(author);
 
 		return "redirect:/authors/";
 	}
@@ -132,7 +132,7 @@ public class AuthorsController {
 		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
 
-		Author author = service.findById(id);
+		Author author = authorService.findById(id);
 		model.addAttribute("author", author);
 		model.addAttribute("edit", true);
 		model.addAttribute("unread", unread);
@@ -152,7 +152,7 @@ public class AuthorsController {
 			return "authors/addNewAuthor";
 		}
 
-		service.updateAuthor(author);
+		authorService.updateAuthor(author);
 
 		return "redirect:/authors/";
 	}
@@ -162,7 +162,7 @@ public class AuthorsController {
 	 */
 	@RequestMapping(value = { "/{id}" }, method = RequestMethod.DELETE)
 	public String deleteAuthor(@PathVariable Long id) {
-		service.deleteAuthor(service.findById(id));
+		authorService.deleteAuthor(authorService.findById(id));
 
 		return "redirect:/authors/";
 	}

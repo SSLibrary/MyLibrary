@@ -49,11 +49,11 @@ public class AuthorServiceImpl implements AuthorService {
 		return dao.findAuthorsByName(authorName);
 	}
 
-	public List<Author> list(Integer offset, Integer maxResults) {
-		return dao.list(offset, maxResults);
+	public List<Author> listAllAuthors(Integer offset, Integer maxResults) {
+		return dao.listAllAuthors(offset, maxResults);
 	}
 
-	public Long count() {
-		return dao.count();
+	public Long rowCount() {
+		return dao.rowCount();
 	}
 }
