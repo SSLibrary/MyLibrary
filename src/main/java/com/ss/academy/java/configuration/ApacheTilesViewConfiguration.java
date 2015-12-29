@@ -19,10 +19,7 @@ public class ApacheTilesViewConfiguration {
 	@Bean
 	public TilesViewResolver tilesViewResolver() {
 		TilesViewResolver tilesViewResolver = new TilesViewResolver();
-		tilesViewResolver.setContentType("text/html; charset=UTF-8");
 		tilesViewResolver.setOrder(1);
 		return tilesViewResolver;
-	}
-	
-	
+	}	
 }
