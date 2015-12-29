@@ -104,13 +104,15 @@ public class BookHistoryController {
 	}
 	
 	@RequestMapping(value = "/loaned", method = RequestMethod.GET)
-	public String showAllLoanedBooks(@AuthenticationPrincipal UserDetails userDetails, ModelMap model) {	
+	public String showAllLoanedBooks(@AuthenticationPrincipal UserDetails userDetails, ModelMap model,
+			Integer offset, Integer maxResults) {	
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
 		Date currDate = new Date(System.currentTimeMillis());		
 		
-		List<BookHistory> bookHistory = bookHistoryService.findAllBooksHistory();
+		List<BookHistory> bookHistory = bookHistoryService.findAllBooksHistory(offset, maxResults);
+		Long countAllBookHistory = bookHistoryService.countAllBooksHistory();
 		List<BookHistory> loanedBooks = new ArrayList<BookHistory>();
 		
 		for (BookHistory book : bookHistory) {
@@ -125,6 +127,8 @@ public class BookHistoryController {
 		} else {
 			model.addAttribute("isEmpty", false);
 			model.addAttribute("loanedBooks", loanedBooks);
+			model.addAttribute("count", countAllBookHistory);
+			model.addAttribute("offset", offset);
 			model.addAttribute("currDate", currDate);
 		}
 			
