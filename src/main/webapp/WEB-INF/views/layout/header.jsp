@@ -34,8 +34,10 @@
 			<li><a href="/MyLibrary/books/loaned">Loaned Books</a></li>
 		</sec:authorize>
 		<sec:authorize access="!isAuthenticated()">	
-			<li class="${current == 'login' ? 'active' : '' }"><a href="/MyLibrary/login/">Login</a></li>
-			<li class="${current == 'register' ? 'active' : '' }"><a href="/MyLibrary/register/">Register</a></li>			
+			<li class="${current == 'login' ? 'active' : '' }"><a href="/MyLibrary/login/">
+			<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Login</a></li>
+			<li class="${current == 'register' ? 'active' : '' }"><a href="/MyLibrary/register/">
+			<span class="glyphicon glyphicon-copy" aria-hidden="true"></span> Register</a></li>			
 		</sec:authorize>
 	</ul>
 	<sec:authorize access="isAuthenticated()">
