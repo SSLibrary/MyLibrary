@@ -61,7 +61,7 @@ public class BookHistoryDaoImpl extends AbstractDao<Long, BookHistory> implement
 	
 	// List of all book history for user in lianed books menu
 	@SuppressWarnings("unchecked")
-	public List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults, Integer isReturned) {
+	public List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults, byte isReturned) {
 		return getSession()
 				.createCriteria(BookHistory.class)
 				.addOrder( Order.desc("returnDate"))
@@ -72,7 +72,7 @@ public class BookHistoryDaoImpl extends AbstractDao<Long, BookHistory> implement
 	}
 	
 	//Count all books history for user in lianed books menu
-	public Long countAllBooksHistory(Integer isReturned){
+	public Long countAllBooksHistory(byte isReturned){
 		return (Long)getSession()
 				.createCriteria(BookHistory.class)
 				.add(Restrictions.eq("isReturned", isReturned))				

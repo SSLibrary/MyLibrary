@@ -48,7 +48,6 @@ public class AuthorsController {
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String listAuthors(HttpServletRequest request, ModelMap model, Integer offset, Integer maxResults,
 			@AuthenticationPrincipal UserDetails userDetails) {
-
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
@@ -91,7 +90,6 @@ public class AuthorsController {
 	 */
 	@RequestMapping(value = { "/new" }, method = RequestMethod.GET)
 	public String addNewAuthor(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
-
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
@@ -112,7 +110,6 @@ public class AuthorsController {
 	 */
 	@RequestMapping(value = { "/new" }, method = RequestMethod.POST)
 	public String saveAuthor(@Valid Author author, BindingResult result, ModelMap model) {
-
 		if (result.hasErrors()) {
 			return "authors/addNewAuthor";
 		}
@@ -126,8 +123,8 @@ public class AuthorsController {
 	 * This method will provide the medium to update an existing author.
 	 */
 	@RequestMapping(value = { "/{author_id}" }, method = RequestMethod.GET)
-	public String editAuthor(@PathVariable Long author_id, ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
-
+	public String editAuthor(@PathVariable Long author_id, ModelMap model, 
+			@AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
@@ -146,8 +143,8 @@ public class AuthorsController {
 	 * updating author in database. It also validates the user input.
 	 */
 	@RequestMapping(value = { "/{author_id}" }, method = RequestMethod.PUT)
-	public String updateAuthor(@Valid Author author, BindingResult result, ModelMap model, @PathVariable Long author_id) {
-
+	public String updateAuthor(@Valid Author author, BindingResult result, ModelMap model, 
+			@PathVariable Long author_id) {
 		if (result.hasErrors()) {
 			return "authors/addNewAuthor";
 		}

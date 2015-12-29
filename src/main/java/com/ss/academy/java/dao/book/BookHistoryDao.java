@@ -14,9 +14,9 @@ public interface BookHistoryDao {
 
 	List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults); 
 	
-	List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults, Integer isReturned);
+	List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults, byte isReturned);
 	
 	Long countAllBooksHistory();
 	
-	Long countAllBooksHistory(Integer isReturned);
+	Long countAllBooksHistory(byte isReturned);
 } 

@@ -53,7 +53,6 @@ public class CommentController {
 	@RequestMapping(value = { "/comments" }, method = RequestMethod.GET)
 	public String listAllComments(@PathVariable Long book_id, @PathVariable Long author_id, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
-
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
@@ -61,6 +60,7 @@ public class CommentController {
 		Author author = authorService.findById(author_id);
 		Book book = bookService.findById(book_id);
 		List<Comment> comments = book.getComments();
+		
 		model.addAttribute("isEmpty", false);
 
 		if (comments.isEmpty()) {
@@ -82,13 +82,13 @@ public class CommentController {
 	@RequestMapping(value = { "/comments/new" }, method = RequestMethod.GET)
 	public String addNewComment(ModelMap model, @PathVariable Long book_id,
 			@AuthenticationPrincipal UserDetails userDetails) {
-
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
 
 		Comment comment = new Comment();
 		Book book = bookService.findById(book_id);
+		
 		model.addAttribute("comment", comment);
 		model.addAttribute("book", book.getTitle());
 		model.addAttribute("unread", unread);
@@ -103,14 +103,12 @@ public class CommentController {
 	@RequestMapping(value = { "/comments/new" }, method = RequestMethod.POST)
 	public String saveComment(@Valid Comment comment, BindingResult result, ModelMap model,
 			@PathVariable Long book_id) {
-
 		if (result.hasErrors()) {
 			return "comments/addNewComment";
 		}
 
 		Book book = bookService.findById(book_id);
 		User user = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-
 		user.getComments().add(comment);
 		book.getComments().add(comment);
 		comment.setUser(user);
@@ -127,11 +125,9 @@ public class CommentController {
 	public String deleteComment(@PathVariable Long book_id, @PathVariable Integer comment_id) {
 		Comment comment = commentService.findById(comment_id);
 		Book book = bookService.findById(book_id);
-
 		book.getComments().remove(comment);
 		commentService.deleteCommentById(comment_id);
 
 		return "redirect:/authors/{author_id}/books/{book_id}/comments";
 	}
-
 }

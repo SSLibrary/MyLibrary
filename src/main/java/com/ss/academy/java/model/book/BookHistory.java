@@ -41,7 +41,7 @@ public class BookHistory {
 	private Date returnDate;
 	
 	@Column(name = "is_returned", nullable = false)
-	private int isReturned = 0;
+	private byte isReturned = 0;
 
 	public Long getId() {
 		return id;
@@ -83,11 +83,11 @@ public class BookHistory {
 		this.user = user;
 	}
 
-	public int getIsReturned() {
+	public byte getIsReturned() {
 		return isReturned;
 	}
 
-	public void setIsReturned(int isReturned) {
+	public void setIsReturned(byte isReturned) {
 		this.isReturned = isReturned;
 	}
 }

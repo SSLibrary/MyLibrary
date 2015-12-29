@@ -61,6 +61,7 @@ public class RatingsController {
 
 		Book book = bookService.findById(book_id);
 		Rating rating = new Rating();
+		
 		model.addAttribute("rating", rating);
 		model.addAttribute("book", book);
 		model.addAttribute("unread", unread);

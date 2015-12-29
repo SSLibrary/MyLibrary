@@ -94,7 +94,6 @@ public class UsersController {
 	@RequestMapping(value = { "/users/{user_id}" }, method = RequestMethod.PUT)
 	public String updateUserStatus(ModelMap model, @PathVariable String user_id) {
 		User user = userService.findById(user_id);
-
 		userService.updateUserStatus(user);
 
 		return "redirect:/users/";
@@ -171,7 +170,6 @@ public class UsersController {
 	@RequestMapping(value = "users/{user_id}/profile", method = RequestMethod.POST)
 	public String editMyProfile(@ModelAttribute @Valid User user, BindingResult result, 
 			@AuthenticationPrincipal UserDetails userDetails, @PathVariable String user_id, ModelMap model) {
-		
 		if (result.hasErrors()) {
 			return "users/profile";
 		}

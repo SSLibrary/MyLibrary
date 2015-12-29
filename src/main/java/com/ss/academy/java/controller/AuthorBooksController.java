@@ -62,7 +62,6 @@ public class AuthorBooksController {
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String listAllBooks(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long author_id, 
 			ModelMap model, Integer offset, Integer maxResults) {
-
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
@@ -71,7 +70,7 @@ public class AuthorBooksController {
 		List<Book> books = bookService.listAllBooks(offset, maxResults, author_id);
 		Long count = bookService.countAllBooks(author_id);
 
-		if (books.size() == 0) {
+		if (books.isEmpty()) {
 			model.addAttribute("emptyList", true);
 		} else {
 			for (Book book : books) {
@@ -96,7 +95,7 @@ public class AuthorBooksController {
 
 	@RequestMapping(value = { "/{book_id}/preview" }, method = RequestMethod.GET)
 	public String previewBook(@PathVariable Long book_id, ModelMap model, 
-			@AuthenticationPrincipal UserDetails userDetails){	
+			@AuthenticationPrincipal UserDetails userDetails) {	
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
@@ -130,8 +129,8 @@ public class AuthorBooksController {
 	 * This method provides the ability to search for books by their titles.
 	 */
 	@RequestMapping(value = { "/search" }, method = RequestMethod.GET)
-	public String searchBookByName(@PathVariable Long author_id, @RequestParam("bookTitle") String bookTitle, ModelMap model,
-			@AuthenticationPrincipal UserDetails userDetails) {
+	public String searchBookByName(@PathVariable Long author_id, @RequestParam("bookTitle") String bookTitle,
+			ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
