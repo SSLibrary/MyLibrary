@@ -40,7 +40,8 @@
 		<sec:authorize access="hasAuthority('ADMIN')">
 			  <div class="btn-group">
 					<a href="/MyLibrary/authors/${book.author.id}/books/${book.id}/ratingCheck" 
-						class="btn btn-info" role="button">Check Rating</a>
+						class="btn btn-info" role="button">
+						<span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Check Rating</a>
 			  </div>
 		</sec:authorize>
 		<sec:authorize access="hasAuthority('USER')">
@@ -48,7 +49,8 @@
 				<c:when test="${book.isRated}">
 						<div class="btn-group">
 							<a href="/MyLibrary/authors/${book.author.id}/books/${book.id}/ratingCheck" 
-									class="btn btn-info" role="button">Check Rating</a>
+									class="btn btn-info" role="button">
+									<span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Check Rating</a>
 						</div>
 				    </c:when>						  
 				   <c:otherwise>

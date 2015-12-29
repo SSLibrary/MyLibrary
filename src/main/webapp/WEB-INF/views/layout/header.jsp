@@ -25,7 +25,8 @@
 			<li><a href="/MyLibrary/${currUser}/messages/outbox">Outbox</a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
-			<li><a href="/MyLibrary/${currUser}/books/">Books History</a></li>
+			<li><a href="/MyLibrary/${currUser}/books/">
+			<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Books History</a></li>
 		</sec:authorize>
 		<sec:authorize access="!isAuthenticated()">	
 			<li class="${current == 'login' ? 'active' : '' }"><a href="/MyLibrary/login/">Login</a></li>
