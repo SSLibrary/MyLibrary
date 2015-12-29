@@ -81,7 +81,7 @@ public class BookHistoryController {
 		bookHistoryService.saveBookHistory(bookHistory);
 		}
 		
-		return "redirect:/{user_id}/books/";
+		return "redirect:/books/{user_id}";
 	}
 	
 	@RequestMapping(value = "/{user_id}/{history_id}/return", method = RequestMethod.GET)
