@@ -25,15 +25,14 @@ public class SpringMvcInitializer extends AbstractAnnotationConfigDispatcherServ
 		return new String[] { "/" };
 	}
 
-	@Override
 	protected Filter[] getServletFilters() {
 
 		CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
 		characterEncodingFilter.setEncoding("UTF-8");
 		characterEncodingFilter.setForceEncoding(true);
+		
 
 		HiddenHttpMethodFilter hiddenHttpMethodFilter = new HiddenHttpMethodFilter();
-
 		return new Filter[] { hiddenHttpMethodFilter, characterEncodingFilter };
 	}
 
