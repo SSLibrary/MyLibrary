@@ -31,7 +31,8 @@
 			<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Books History</a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAuthority('ADMIN')">
-			<li><a href="/MyLibrary/books/loaned">Loaned Books</a></li>
+			<li><a href="/MyLibrary/books/loaned">
+			<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Loaned Books</a></li>
 		</sec:authorize>
 		<sec:authorize access="!isAuthenticated()">	
 			<li class="${current == 'login' ? 'active' : '' }"><a href="/MyLibrary/login/">
