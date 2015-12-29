@@ -43,7 +43,7 @@ public class BookHistoryDaoImpl extends AbstractDao<Long, BookHistory> implement
 	public List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults) {
 		return getSession()
 				.createCriteria(BookHistory.class)
-//				.addOrder( Order.desc("date"))
+				.addOrder( Order.desc("getDate"))
 				.setFirstResult(offset!=null?offset:0)
 				.setMaxResults(maxResults!=null?maxResults:5)
 				.list();		
@@ -62,8 +62,8 @@ public class BookHistoryDaoImpl extends AbstractDao<Long, BookHistory> implement
 	public List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults, Integer isReturned) {
 		return getSession()
 				.createCriteria(BookHistory.class)
+				.addOrder( Order.desc("getDate"))
 				.add(Restrictions.eq("isReturned", isReturned))
-//				.addOrder( Order.desc("date"))
 				.setFirstResult(offset!=null?offset:0)
 				.setMaxResults(maxResults!=null?maxResults:5)
 				.list();		
