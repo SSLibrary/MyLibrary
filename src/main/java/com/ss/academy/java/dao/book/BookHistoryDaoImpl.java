@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.ss.academy.java.dao.AbstractDao;
@@ -48,9 +49,30 @@ public class BookHistoryDaoImpl extends AbstractDao<Long, BookHistory> implement
 				.list();		
 	}
 	
+
+	
 	public Long countAllBooksHistory(){
 		return (Long)getSession()
 				.createCriteria(BookHistory.class)
+				.setProjection(Projections.rowCount())
+				.uniqueResult();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults, Integer isReturned) {
+		return getSession()
+				.createCriteria(BookHistory.class)
+				.add(Restrictions.eq("isReturned", isReturned))
+//				.addOrder( Order.desc("date"))
+				.setFirstResult(offset!=null?offset:0)
+				.setMaxResults(maxResults!=null?maxResults:5)
+				.list();		
+	}
+	
+	public Long countAllBooksHistory(Integer isReturned){
+		return (Long)getSession()
+				.createCriteria(BookHistory.class)
+				.add(Restrictions.eq("isReturned", isReturned))				
 				.setProjection(Projections.rowCount())
 				.uniqueResult();
 	}

@@ -105,28 +105,29 @@ public class BookHistoryController {
 	
 	@RequestMapping(value = "/loaned", method = RequestMethod.GET)
 	public String showAllLoanedBooks(@AuthenticationPrincipal UserDetails userDetails, ModelMap model,
-			Integer offset, Integer maxResults) {	
+			Integer offset, Integer maxResults, BookHistory bookHistories) {	
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
 		Date currDate = new Date(System.currentTimeMillis());		
 		
-		List<BookHistory> bookHistory = bookHistoryService.findAllBooksHistory(offset, maxResults);
-		Long countAllBookHistory = bookHistoryService.countAllBooksHistory();
-		List<BookHistory> loanedBooks = new ArrayList<BookHistory>();
 		
-		for (BookHistory book : bookHistory) {
-		 
-			if (book.getIsReturned() == 0) {
-				loanedBooks.add(book);
-			}
-		}
+		List<BookHistory> bookHistory = bookHistoryService.findAllBooksHistory(offset, maxResults, 0);
+		Long countAllBookHistory = bookHistoryService.countAllBooksHistory(0);
+//		List<BookHistory> loanedBooks = new ArrayList<BookHistory>();
 		
-		if (loanedBooks.isEmpty()) {
+//		for (BookHistory book : bookHistory) {
+//		 
+//			if (book.getIsReturned() == 0) {
+//				loanedBooks.add(book);
+//			}
+//		}
+		
+		if (bookHistory.isEmpty()) {
 			model.addAttribute("isEmpty", true);
 		} else {
 			model.addAttribute("isEmpty", false);
-			model.addAttribute("loanedBooks", loanedBooks);
+			model.addAttribute("loanedBooks", bookHistory);
 			model.addAttribute("count", countAllBookHistory);
 			model.addAttribute("offset", offset);
 			model.addAttribute("currDate", currDate);

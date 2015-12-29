@@ -83,7 +83,7 @@ public class BookDaoImpl extends AbstractDao<Long, Book> implements BookDao {
 				.setMaxResults(maxResults!=null?maxResults:5)
 				.list();
 	}
-	
+		
 	public Long countAllBooks(){
 		return (Long)getSession()
 				.createCriteria(Book.class)
