@@ -34,7 +34,8 @@
 	
 	   <div class="btn-group">
 			<a href="/MyLibrary/authors/${book.author.id}/books/${book.id}/comments" 
-				class="btn btn-info" role="button">Show Comments</a>
+				class="btn btn-info" role="button">
+				<span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Show Comments</a>
 			</div>	
 		<sec:authorize access="hasAuthority('ADMIN')">
 			  <div class="btn-group">

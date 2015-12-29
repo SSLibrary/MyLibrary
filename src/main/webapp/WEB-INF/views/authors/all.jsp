@@ -38,7 +38,8 @@
 				<sec:authorize access="hasAuthority('ADMIN')">
 					<div class="btn-group">
 						<form:form action="${author.id}" method="GET">
-							<button type="submit" class="btn btn-default">Edit</button>
+							<button type="submit" class="btn btn-default">
+							<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</button>
 						</form:form>
 					</div>
 				</sec:authorize>
@@ -48,13 +49,15 @@
 							<button
 							onclick="if (confirm('Are you sure you want to delete this author?'))
 							{ form.action='${author.id}'; } else { return false; }"
-							type="submit" class="btn btn-default">Delete</button>
+							type="submit" class="btn btn-default">
+							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</button>
 						</form:form>
 					</div>							
 				</sec:authorize>
 				<div class="btn-group">
 					<form:form action="${author.id}/books/" method="GET">
-						<button type="submit" class="btn btn-info">Books</button>
+						<button type="submit" class="btn btn-info">
+						<span class="glyphicon glyphicon-book" aria-hidden="true"></span> Books</button>
 					</form:form>
 				</div>
 			</div>
