@@ -12,7 +12,8 @@
 			<span class="glyphicon glyphicon-book" aria-hidden="true"></span> Books</a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
-			<li><a href="/MyLibrary/authors/">Authors</a></li>
+			<li><a href="/MyLibrary/authors/">
+			<span class="glyphicon glyphicon-star" aria-hidden="true"></span> Authors</a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
 			<li><a href="/MyLibrary/users/">
@@ -22,7 +23,8 @@
 			<li><a href="/MyLibrary/${currUser}/messages/inbox">Inbox <span class="badge">${unread}</span></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
-			<li><a href="/MyLibrary/${currUser}/messages/outbox">Outbox</a></li>
+			<li><a href="/MyLibrary/${currUser}/messages/outbox">
+			<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Outbox</a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAuthority('USER')">
 			<li><a href="/MyLibrary/books/${currUser}">

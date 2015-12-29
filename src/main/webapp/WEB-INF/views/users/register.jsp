@@ -3,8 +3,10 @@
 <div class="navbar navbar-default">
 	<div class="navbar-header">
 		<ul class="nav navbar-nav">
-			<li><a href="/MyLibrary/"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
-			<li><a href="/MyLibrary/login/">Login</a></li>
+			<li><a href="/MyLibrary/">
+			<span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+			<li><a href="/MyLibrary/login/">
+			<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Login</a></li>
 		</ul>
 	</div>
 </div>
