@@ -50,6 +50,6 @@
 				<span class="glyphicon glyphicon-log-out"></span>Log out 
 			</button>
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-		</form>
+		</form> 
 	</sec:authorize>
 </div>
