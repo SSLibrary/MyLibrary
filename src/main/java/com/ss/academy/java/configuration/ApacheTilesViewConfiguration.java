@@ -7,17 +7,22 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
 @Configuration
 public class ApacheTilesViewConfiguration {
+	
 	@Bean
 	public TilesConfigurer tilesConfigurer() {
-		new TilesConfigurer().setCompleteAutoload(true);
-		new TilesConfigurer().setDefinitions("/WEB-INF/tiles.xml");
-		return new TilesConfigurer();
+		TilesConfigurer tilesConfigurer= new TilesConfigurer();
+		tilesConfigurer.setCompleteAutoload(true);
+		tilesConfigurer.setDefinitions(new String[]{"/WEB-INF/tiles.xml"});
+		return tilesConfigurer;
 	}
 
 	@Bean
 	public TilesViewResolver tilesViewResolver() {
 		TilesViewResolver tilesViewResolver = new TilesViewResolver();
+		tilesViewResolver.setContentType("text/html; charset=UTF-8");
 		tilesViewResolver.setOrder(1);
 		return tilesViewResolver;
 	}
+	
+	
 }
