@@ -1,5 +1,6 @@
 package com.ss.academy.java.controller;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +25,7 @@ import com.ss.academy.java.service.user.UserService;
 import com.ss.academy.java.util.UnreadMessagesCounter;
 
 @Controller
-@RequestMapping(value = "/{user_id}/books")
+@RequestMapping(value = "/books")
 public class BookHistoryController {
 
 	@Autowired
@@ -36,7 +37,7 @@ public class BookHistoryController {
 	@Autowired
 	BookService bookService;
 	
-	@RequestMapping(value = {"/"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/{user_id}"}, method = RequestMethod.GET)
 	public String listBooksHistory(ModelMap model, @AuthenticationPrincipal UserDetails userDetails){
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<BookHistory> booksHistory = currentUser.getBooksHistory();
@@ -57,10 +58,9 @@ public class BookHistoryController {
 		return "users/booksHistory";
 	}
 	
-	@RequestMapping(value = { "/{book_id}/addToHistory" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/{book_id}/{user_id}/addToHistory" }, method = RequestMethod.GET)
 	public String addNewBookHistory(@PathVariable Long book_id,
 			@AuthenticationPrincipal UserDetails userDetails) {
-
 		BookHistory bookHistory = new BookHistory();
 		Book book = bookService.findById(book_id);
 		User user = userService.findByUsername(userDetails.getUsername());
@@ -81,10 +81,10 @@ public class BookHistoryController {
 		bookHistoryService.saveBookHistory(bookHistory);
 		}
 		
-		return "redirect:/{user_id}/books/";
+		return "redirect:/books/{user_id}";
 	}
 	
-	@RequestMapping(value = "/{history_id}/return", method = RequestMethod.GET)
+	@RequestMapping(value = "/{user_id}/{history_id}/return", method = RequestMethod.GET)
 	public String returnBook(@PathVariable Long history_id, @AuthenticationPrincipal UserDetails userDetails) {	
 		BookHistory bookHistory = bookHistoryService.findById(history_id);
 		
@@ -95,6 +95,35 @@ public class BookHistoryController {
 		bookService.changeBookStatus(bookHistory.getBook());
 		}
 		
-		return "redirect:/{user_id}/books/";
+		return "redirect:/books/{user_id}";
+	}
+	
+	@RequestMapping(value = "/loaned", method = RequestMethod.GET)
+	public String showAllLoanedBooks(@AuthenticationPrincipal UserDetails userDetails, ModelMap model) {	
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = currentUser.getReceivedMessage();
+		int unread = UnreadMessagesCounter.counter(messages);
+		
+		List<BookHistory> bookHistory = bookHistoryService.findAllBooksHistory();
+		List<BookHistory> loanedBooks = new ArrayList<BookHistory>();
+		
+		for (BookHistory book : bookHistory) {
+		 
+			if (book.getIsReturned() == 0) {
+				loanedBooks.add(book);
+			}
+		}
+		
+		if (loanedBooks.isEmpty()) {
+			model.addAttribute("isEmpty", true);
+		} else {
+			model.addAttribute("isEmpty", false);
+			model.addAttribute("loanedBooks", loanedBooks);
+		}
+			
+		model.addAttribute("unread", unread);
+		model.addAttribute("currUser", currentUser.getId());
+		
+		return "users/loanedBooks";
 	}
 }

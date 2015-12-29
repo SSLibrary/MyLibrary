@@ -1,5 +1,9 @@
 package com.ss.academy.java.service.book;
 
+import java.util.List;
+
+import org.springframework.security.access.prepost.PreAuthorize;
+
 import com.ss.academy.java.model.book.BookHistory;
 
 public interface BookHistoryService {
@@ -9,4 +13,7 @@ public interface BookHistoryService {
 	void saveBookHistory(BookHistory bookHistory);
 	
 	void updateBookHistory(BookHistory bookHistory);
+	
+	@PreAuthorize("hasAuthority('ADMIN')")
+	List<BookHistory> findAllBooksHistory();
 }
