@@ -25,7 +25,8 @@
 					<c:choose>
 				<c:when test="${bookHistory.isReturned=='0'}">
 				<td>
-				<a href="/MyLibrary/books/${currUser}/${bookHistory.id}/return" class="btn btn-default" role="button">Return</a>
+				<a href="/MyLibrary/books/${currUser}/${bookHistory.id}/return" class="btn btn-default" role="button">
+			<span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Return</a>
 				</td>
 				</c:when>
 					<c:otherwise>
