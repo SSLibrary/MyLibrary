@@ -23,7 +23,7 @@ public class BookHistoryDaoImpl extends AbstractDao<Long, BookHistory> implement
 	}
 
 	/*
-	 * Save Books History
+	 * Save Book History
 	 */
 	public void saveBookHistory(BookHistory bookHistory) {
 		save(bookHistory);
@@ -39,16 +39,19 @@ public class BookHistoryDaoImpl extends AbstractDao<Long, BookHistory> implement
 		return booksHistory;
 	}
 	
+	// List of all book history for admin in books history menu
 	@SuppressWarnings("unchecked")
 	public List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults) {
 		return getSession()
 				.createCriteria(BookHistory.class)
-//				.addOrder( Order.desc("date"))
+				.addOrder( Order.desc("returnDate"))
 				.setFirstResult(offset!=null?offset:0)
 				.setMaxResults(maxResults!=null?maxResults:5)
 				.list();		
-	}
-	
+	}	
+
+	//Count all books history for admin in books history menu
+
 	public Long countAllBooksHistory(){
 		return (Long)getSession()
 				.createCriteria(BookHistory.class)
@@ -56,17 +59,19 @@ public class BookHistoryDaoImpl extends AbstractDao<Long, BookHistory> implement
 				.uniqueResult();
 	}
 	
+	// List of all book history for user in lianed books menu
 	@SuppressWarnings("unchecked")
 	public List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults, Integer isReturned) {
 		return getSession()
 				.createCriteria(BookHistory.class)
+				.addOrder( Order.desc("returnDate"))
 				.add(Restrictions.eq("isReturned", isReturned))
-//				.addOrder( Order.desc("date"))
 				.setFirstResult(offset!=null?offset:0)
 				.setMaxResults(maxResults!=null?maxResults:5)
 				.list();		
 	}
 	
+	//Count all books history for user in lianed books menu
 	public Long countAllBooksHistory(Integer isReturned){
 		return (Long)getSession()
 				.createCriteria(BookHistory.class)
