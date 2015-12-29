@@ -53,7 +53,7 @@
 						<div class="col-sm-3">
 							<form:input path="newPassword" id="newPassword" class="form-control"
 								autocomplete="off" type="password" />
-							<form:errors path="password" cssClass="error" />
+							<form:errors path="newPassword" cssClass="error" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -61,12 +61,12 @@
 						<div class="col-sm-3">
 							<form:input path="newPassword2" id="repeatNewPassword" class="form-control"
 								autocomplete="off" type="password" />
-							<form:errors path="password" cssClass="error" />
+							<form:errors path="newPassword2" cssClass="error" />
 						</div>
 					</div>
 					<br /> <input type="hidden" name="${_csrf.parameterName}"
 						value="${_csrf.token}" />
-					<form:form action="/profile" method="POST">
+					<form:form action="/profile/" method="POST">
 						<button type="submit" class="btn btn-primary">Edit</button>
 					</form:form>
 				</form>

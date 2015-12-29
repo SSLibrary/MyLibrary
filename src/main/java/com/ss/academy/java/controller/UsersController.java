@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -47,6 +47,9 @@ public class UsersController {
 	@Autowired
 	MessageService messageService;
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 	/*
 	 * This method will list all existing users.
 	 */
@@ -60,14 +63,13 @@ public class UsersController {
 		// Removing the current user from the list of users
 		List<User> allUsers = userService.list(offset, maxResults);
 		List<User> filteredList = new ArrayList<User>();
-		
+
 		for (User user : allUsers) {
 			if (!user.getUsername().equals(currentUser.getUsername())) {
 				filteredList.add(user);
 			}
 		}
-		
-		
+
 		model.addAttribute("allUsers", filteredList);
 		model.addAttribute("count", userService.count());
 		model.addAttribute("offset", offset);
@@ -145,69 +147,81 @@ public class UsersController {
 
 		return "users/registrationSuccess";
 	}
-	
+
 	/*
-	 * This method will provide the medium to update current user profile details.
+	 * This method will provide the medium to update current user profile
+	 * details.
 	 */
 	@RequestMapping(value = "users/{id}/profile", method = RequestMethod.GET)
-	public String showMyProfile(@AuthenticationPrincipal UserDetails userDetails, @PathVariable String id, ModelMap model) {
+	public String showMyProfile(@AuthenticationPrincipal UserDetails userDetails, @PathVariable String id,
+			ModelMap model) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		currentUser.setPassword("");
+		currentUser.setNewPassword("");
+		currentUser.setNewPassword2("");
+
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
 
 		model.addAttribute("unread", unread);
 		model.addAttribute("currUser", currentUser.getId());
 		model.addAttribute("user", currentUser);
-		
+
 		return "users/profile";
 	}
-	
+
 	/*
 	 * This method will be called on form submission, handling PUT request for
-	 * editing user profile in database. It also validates the user input and check
-	 * whether the entered password match with the one stored in the DB.
+	 * editing user profile in database. It also validates the user input and
+	 * check whether the entered password match with the one stored in the DB.
 	 */
 	@RequestMapping(value = "users/{id}/profile", method = RequestMethod.POST)
-	public String editMyProfile(@ModelAttribute @Valid User user, BindingResult result, 
+	public String editMyProfile(@ModelAttribute @Valid User user, BindingResult result,
 			@AuthenticationPrincipal UserDetails userDetails, @PathVariable String id, ModelMap model) {
-		
-		if (result.hasErrors()) {
-			return "users/profile";
-		}
-		
+
 		User currentUser = userService.findByUsername(userDetails.getUsername());
-		
-		if (!user.getFirstName().equals(currentUser.getFirstName())) {
-			currentUser.setFirstName(user.getFirstName());
-		}
-		
-		if (!user.getLastName().equals(currentUser.getLastName())) {
-			currentUser.setLastName(user.getLastName());
-		}
-		
-		if (!user.getEmail().equals(currentUser.getEmail())) {
-			currentUser.setEmail(user.getEmail());
-		}
-		
-		if (!user.getPassword().isEmpty()) {
-			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-			
-			String userPassword = encoder.encode(user.getPassword());
-			
-			if (currentUser.getPassword().equals(userPassword)) {
-				if (user.getNewPassword().equals(user.getNewPassword2())) {
-					user.setPassword(user.getNewPassword());
-				}
-				
+		user.setId(id);
+
+		if (user.getPassword() != "") {
+			if (!passwordEncoder.matches(user.getPassword(), currentUser.getPassword())) {
+				FieldError passwordDoNotMatch = new FieldError("password", "password", messageSource
+						.getMessage("non.matching.password", new String[] { user.getUsername() }, Locale.getDefault()));
+				result.addError(passwordDoNotMatch);
+
+				user.setPassword("");
+
 				return "users/profile";
+			} else {
+				if (!user.getNewPassword().equals(user.getNewPassword2())) {
+					FieldError passwordDoNotMatch = new FieldError("newPassword", "newPassword",
+							messageSource.getMessage("non.matching.passwords", new String[] { user.getUsername() },
+									Locale.getDefault()));
+					FieldError passwordDoNotMatch2 = new FieldError("newPassword2", "newPassword2",
+							messageSource.getMessage("non.matching.passwords", new String[] { user.getUsername() },
+									Locale.getDefault()));
+
+					result.addError(passwordDoNotMatch);
+					result.addError(passwordDoNotMatch2);
+
+					user.setNewPassword("");
+					user.setNewPassword2("");
+
+					return "users/profile";
+				}
 			}
-			
+		} else {
+			user.setPassword("");
+			user.setNewPassword("");
+			user.setNewPassword2("");
+
 			return "users/profile";
 		}
-		
-		userService.saveUser(user);
-		
+
+		userService.updateUser(user);
+
+		user.setPassword("");
+		user.setNewPassword("");
+		user.setNewPassword2("");
 
 		return "users/profile";
 	}

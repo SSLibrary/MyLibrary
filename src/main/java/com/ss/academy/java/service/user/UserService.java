@@ -13,6 +13,8 @@ public interface UserService {
 	List<User> findUsersByUserName(String userName);
 
 	void saveUser(User user);
+	
+	void updateUser(User candidateDbUser);
 
 	User findById(String id);
 

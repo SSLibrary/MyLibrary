@@ -30,8 +30,21 @@ public class UserServiceImpl implements UserService {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		user.setUserRole(UserRole.USER);
 		user.setUserStatus(UserStatus.ACTIVE);
-		
+
 		dao.saveUser(user);
+	}
+
+	public void updateUser(User candidateDbUser) {
+		User dbUser = dao.findById(candidateDbUser.getId());
+		
+		if (dbUser != null) {
+			dbUser.setFirstName(candidateDbUser.getFirstName());
+			dbUser.setLastName(candidateDbUser.getLastName());
+			dbUser.setEmail(candidateDbUser.getEmail());
+			dbUser.setPassword(passwordEncoder.encode(candidateDbUser.getNewPassword()));
+		}
+		
+		dao.updateUser(dbUser);
 	}
 
 	public User findById(String id) {
@@ -60,14 +73,14 @@ public class UserServiceImpl implements UserService {
 
 	public boolean isUsernameUnique(String username) {
 		User user = findByUsername(username);
-	   
+
 		if (user == null) {
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	public List<User> list(Integer offset, Integer maxResults) {
 		return dao.list(offset, maxResults);
 	}

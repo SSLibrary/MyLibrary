@@ -27,6 +27,10 @@ public class UserDaoImpl extends AbstractDao<String, User> implements UserDao {
 	public void saveUser(User user) {
 		save(user);
 	}
+	
+	public void updateUser(User user) {
+		save(user);
+	}
 
 	public User findById(String id) {
 		return getByKey(id);

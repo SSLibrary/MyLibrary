@@ -31,8 +31,8 @@ public class SpringMvcInitializer extends AbstractAnnotationConfigDispatcherServ
 		characterEncodingFilter.setEncoding("UTF-8");
 		characterEncodingFilter.setForceEncoding(true);
 		
-
 		HiddenHttpMethodFilter hiddenHttpMethodFilter = new HiddenHttpMethodFilter();
+		
 		return new Filter[] { hiddenHttpMethodFilter, characterEncodingFilter };
 	}
 
