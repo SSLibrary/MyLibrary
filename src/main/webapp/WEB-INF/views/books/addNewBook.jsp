@@ -24,10 +24,11 @@
 			<form:errors path="bookDescription" cssClass="error" />
 		</div>
 	</div>
-	<div class="form-group">
-		<label for="fileUpload" class="control-label col-sm-2">Pic:</label>
-		<div class="col-sm-3">					
-			<input type="file"  id="fileUpload" name="fileUpload" class="form-control"/>
+	<div class="form-group">	
+			
+		<label for="fileUpload" class="control-label col-sm-2">Pic:</label>	
+		<div class="col-sm-3">								
+			<input type="file"  id="fileUpload" name="fileUpload"></input>
 			<form:errors path="image" cssClass="error" />				
 		</div>
 	</div>		
@@ -37,7 +38,8 @@
 				<div class="col-sm-2"></div>
 				<div class="col-sm-5">
 					<form:form action="${book.id}" method="POST" >
-						<button type="submit" class="btn btn-primary">Edit</button>
+						<button type="submit" class="btn btn-primary">
+						<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</button>
 					</form:form>
 				</div>
 			</div>
@@ -47,7 +49,8 @@
 				<div class="col-sm-2"></div>
 				<div class="col-sm-5">
 					<form:form action="new" method="POST" >									  	
-						<button type="submit" class="btn btn-primary">Add</button>
+						<button type="submit" class="btn btn-primary">
+						<span class="glyphicon glyphicon-book" aria-hidden="true"></span> Add</button>
 					</form:form>
 				</div>
 			</div>				

@@ -70,7 +70,8 @@
 	<div class="row">
 		<div class="col-md-4">
 			<form:form action="new" method="GET">
-				<button type="submit" class="btn btn-primary">Add New Book</button>
+				<button type="submit" class="btn btn-primary">
+				<span class="glyphicon glyphicon-book" aria-hidden="true"></span> Add New Book</button>
 			</form:form>
 		</div>
 	</div>
