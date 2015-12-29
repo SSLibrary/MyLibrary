@@ -1,5 +1,6 @@
 <%@ include file="../layout/taglib.jsp" %>
 
+<sec:authorize access="hasAuthority('USER')">
 		<div class="jumbotron">
 			<h1 class="text-center">Books History</h1>
 		</div>
@@ -25,7 +26,7 @@
 					<c:choose>
 				<c:when test="${bookHistory.isReturned=='0'}">
 				<td>
-				<a href="/MyLibrary/${currUser}/books/${bookHistory.id}/return" class="btn btn-default" role="button">Return</a>
+				<a href="/MyLibrary/books/${currUser}/${bookHistory.id}/return" class="btn btn-default" role="button">Return</a>
 				</td>
 				</c:when>
 					<c:otherwise>
@@ -39,3 +40,4 @@
 			</table>
 			</c:otherwise>
 		</c:choose>
+	</sec:authorize>

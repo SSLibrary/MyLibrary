@@ -60,7 +60,7 @@
 				<c:choose>
 				    <c:when test="${book.status =='Available'}">
 						<div class="btn-group">
-							<a href="/MyLibrary/${currUser}/books/${book.id}/addToHistory" 
+							<a href="/MyLibrary/books/${book.id}/${currUser}/addToHistory" 
 									class="btn btn-success" role="button">Get Book</a>
 						</div>
 				    </c:when>
