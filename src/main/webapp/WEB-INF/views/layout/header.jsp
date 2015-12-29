@@ -24,8 +24,8 @@
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
 			<li><a href="/MyLibrary/${currUser}/messages/outbox">Outbox</a></li>
 		</sec:authorize>
-		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
-			<li><a href="/MyLibrary/books//${currUser}">
+		<sec:authorize access="hasAuthority('USER')">
+			<li><a href="/MyLibrary/books/${currUser}">
 			<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Books History</a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAuthority('ADMIN')">
