@@ -4,7 +4,7 @@
 	<c:when test="${emptyList}">			
 		<div class="col-md-2 ">	
 			<img class="img-responsive"	src="<c:url value='/resources/images/noCoverImage.gif' />"
-			alt="SoftServe Logo"  width="300" height="300" alt="book cover">											
+			alt="no cover"  width="300" height="300" alt="book cover">											
 		</div>						
 	</c:when>
 	<c:otherwise>		
