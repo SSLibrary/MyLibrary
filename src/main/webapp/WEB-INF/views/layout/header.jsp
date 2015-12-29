@@ -13,7 +13,8 @@
 			<li><a href="/MyLibrary/authors/">Authors</a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
-			<li><a href="/MyLibrary/users/">Users</a></li>
+			<li><a href="/MyLibrary/users/">
+			<span class="glyphicon glyphicon-user" aria-hidden="true"></span> Users</a></li>
 		</sec:authorize>	
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
 			<li><a href="/MyLibrary/${currUser}/messages/inbox">Inbox <span class="badge">${unread}</span></a></li>
