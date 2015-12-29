@@ -176,7 +176,7 @@ public class AuthorBooksController {
 	 */
 	@RequestMapping(value = { "/new" }, method = RequestMethod.POST)
 	public String saveBook(@Valid Book book, BindingResult result, @RequestParam CommonsMultipartFile[] fileUpload,
-			@PathVariable Long id) {
+			@PathVariable Long author_id) {
 		if (result.hasErrors()) {
 			return "books/addNewBook";
 		}
@@ -190,7 +190,7 @@ public class AuthorBooksController {
 					}else if(aFile.toString().startsWith("89 50 4E 47 0D 0A 1A 0A")){
 						//check if format of file is PNG			
 					}
-				Author author = authorService.findById(id);
+				Author author = authorService.findById(author_id);
 				author.getBooks().add(book);
 				book.setAuthor(author);
 				book.setImage(aFile.getBytes());
