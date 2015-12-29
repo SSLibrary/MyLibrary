@@ -49,7 +49,7 @@ public class MessageServiceImpl implements MessageService {
 		Message entity = dao.findById(message.getMessage_id());
 
 		if (entity != null) {
-			entity.setIsNew(0);
+			entity.setIsNew(message.getIsNew());
 		}
 	}
 

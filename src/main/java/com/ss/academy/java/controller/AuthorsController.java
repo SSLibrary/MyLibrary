@@ -21,7 +21,6 @@ import com.ss.academy.java.model.author.AuthorCountry;
 import com.ss.academy.java.model.message.Message;
 import com.ss.academy.java.model.user.User;
 import com.ss.academy.java.service.author.AuthorService;
-import com.ss.academy.java.service.message.MessageService;
 import com.ss.academy.java.service.user.UserService;
 import com.ss.academy.java.util.UnreadMessagesCounter;
 
@@ -37,10 +36,6 @@ public class AuthorsController {
 
 	@Autowired
 	UserService userService;
-
-	@Autowired
-	MessageService messageService;
-
 
 	/*
 	 * This method will list all existing authors.

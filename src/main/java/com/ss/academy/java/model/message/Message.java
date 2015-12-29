@@ -30,6 +30,7 @@ public class Message {
 	@Column(name = "header", nullable = false)
 	private String header;
 
+	@Size(min = 1)
 	@Column(name = "body", nullable = false)
 	private String body;
 
@@ -38,7 +39,7 @@ public class Message {
 	private Date date = new Date();
 
 	@Column(name = "is_new", nullable = false)
-	private int isNew = 1;
+	private byte isNew = 1;
 
 	@Column(name = "in_reply_to", nullable = false)
 	private Integer in_reply_to = 0;
@@ -85,11 +86,11 @@ public class Message {
 		this.date = date;
 	}
 
-	public int getIsNew() {
+	public byte getIsNew() {
 		return isNew;
 	}
 
-	public void setIsNew(int isNew) {
+	public void setIsNew(byte isNew) {
 		this.isNew = isNew;
 	}
 

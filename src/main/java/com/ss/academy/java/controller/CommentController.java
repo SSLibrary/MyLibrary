@@ -24,7 +24,6 @@ import com.ss.academy.java.model.user.User;
 import com.ss.academy.java.service.author.AuthorService;
 import com.ss.academy.java.service.book.BookService;
 import com.ss.academy.java.service.comment.CommentService;
-import com.ss.academy.java.service.message.MessageService;
 import com.ss.academy.java.service.user.UserService;
 import com.ss.academy.java.util.UnreadMessagesCounter;
 
@@ -43,9 +42,6 @@ public class CommentController {
 
 	@Autowired
 	UserService userService;
-
-	@Autowired
-	MessageService messageService;
 
 	/*
 	 * Show all comments by book

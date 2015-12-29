@@ -27,6 +27,10 @@ import com.ss.academy.java.util.UnreadMessagesCounter;
 @RequestMapping(value = "/books")
 public class BookHistoryController {
 
+	private final byte NOT_RETURNED = 0;
+	private final byte RETURNED = 1;
+	private final int LOAN_PERIOD = 90;
+	
 	@Autowired
 	UserService userService;
 	
@@ -73,12 +77,11 @@ public class BookHistoryController {
 		book.getBooksHistory().add(bookHistory);
 		bookService.changeBookStatus(book);
 		bookHistory.setBook(book);
-		bookHistory.setUser(user);
-		
-		int loanPeriod = 90;
+		bookHistory.setUser(user);	
+
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(bookHistory.getGetDate());
-		calendar.add(Calendar.DAY_OF_MONTH, loanPeriod);
+		calendar.add(Calendar.DAY_OF_MONTH, LOAN_PERIOD);
 		bookHistory.setReturnDate(calendar.getTime());
 		
 		bookHistoryService.saveBookHistory(bookHistory);
@@ -89,16 +92,13 @@ public class BookHistoryController {
 	
 	@RequestMapping(value = "/{user_id}/{history_id}/return", method = RequestMethod.GET)
 	public String returnBook(@PathVariable Long history_id, @AuthenticationPrincipal UserDetails userDetails) {	
-		byte notReturned = 0;
-		byte returned = 1;
-		
 		BookHistory bookHistory = bookHistoryService.findById(history_id);
 		
-		if (bookHistory.getIsReturned() == notReturned 
+		if (bookHistory.getIsReturned() == NOT_RETURNED 
 				&& bookHistory.getBook().getStatus().equals(BookStatus.Loaned)) {
 		Date currDate = new Date(System.currentTimeMillis());
 		bookHistory.setReturnDate(currDate);
-		bookHistory.setIsReturned(returned);
+		bookHistory.setIsReturned(RETURNED);
 		bookHistoryService.updateBookHistory(bookHistory);
 		bookService.changeBookStatus(bookHistory.getBook());
 		}
@@ -109,15 +109,13 @@ public class BookHistoryController {
 	@RequestMapping(value = "/loaned", method = RequestMethod.GET)
 	public String showAllLoanedBooks(@AuthenticationPrincipal UserDetails userDetails, ModelMap model,
 			Integer offset, Integer maxResults, BookHistory bookHistories) {	
-		byte notReturned = 0;
-		
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
 		
 		Date currDate = new Date(System.currentTimeMillis());		
-		List<BookHistory> bookHistory = bookHistoryService.findAllBooksHistory(offset, maxResults, notReturned);
-		Long countAllBookHistory = bookHistoryService.countAllBooksHistory(notReturned);
+		List<BookHistory> bookHistory = bookHistoryService.findAllBooksHistory(offset, maxResults, NOT_RETURNED);
+		Long countAllBookHistory = bookHistoryService.countAllBooksHistory(NOT_RETURNED);
 		
 		if (bookHistory.isEmpty()) {
 			model.addAttribute("isEmpty", true);

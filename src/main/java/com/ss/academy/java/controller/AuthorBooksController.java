@@ -25,7 +25,6 @@ import com.ss.academy.java.model.rating.Rating;
 import com.ss.academy.java.model.user.User;
 import com.ss.academy.java.service.author.AuthorService;
 import com.ss.academy.java.service.book.BookService;
-import com.ss.academy.java.service.message.MessageService;
 import com.ss.academy.java.service.rating.RatingService;
 import com.ss.academy.java.service.user.UserService;
 import com.ss.academy.java.util.UnreadMessagesCounter;
@@ -51,9 +50,6 @@ public class AuthorBooksController {
 
 	@Autowired
 	UserService userService;
-
-	@Autowired
-	MessageService messageService;
 
 	/*
 	 * This method will list all existing books and will check whether they have

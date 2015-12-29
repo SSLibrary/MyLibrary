@@ -19,9 +19,7 @@ import com.ss.academy.java.model.book.Book;
 import com.ss.academy.java.model.message.Message;
 import com.ss.academy.java.model.rating.Rating;
 import com.ss.academy.java.model.user.User;
-import com.ss.academy.java.service.author.AuthorService;
 import com.ss.academy.java.service.book.BookService;
-import com.ss.academy.java.service.message.MessageService;
 import com.ss.academy.java.service.rating.RatingService;
 import com.ss.academy.java.service.user.UserService;
 import com.ss.academy.java.util.RatingCalculator;
@@ -38,16 +36,11 @@ public class RatingsController {
 	BookService bookService;
 
 	@Autowired
-	AuthorService authorService;
-
-	@Autowired
 	RatingService ratingService;
 
 	@Autowired
 	UserService userService;
 
-	@Autowired
-	MessageService messageService;
 
 	/*
 	 * This method will provide the medium to add a new rating.

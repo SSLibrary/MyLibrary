@@ -55,8 +55,7 @@ public class HomeController {
 
 		model.addAttribute("authorsCount", authorsCount);
 		model.addAttribute("booksCount", booksCount);
-		model.addAttribute("usersCount", usersCount);
-		
+		model.addAttribute("usersCount", usersCount);		
 
 		return "home";
 	}

@@ -29,12 +29,16 @@ import com.ss.academy.java.util.UnreadMessagesCounter;
 @RequestMapping(value = { "{user_id}/messages" })
 public class MessageController {
 
+	private final byte UNREAD_MESSAGE = 1;
+	private final byte READ_MESSAGE = 0;
+	private final byte NOT_REPLIED = 0;
+	
 	@Autowired
 	MessageService messageService;
 
 	@Autowired
 	UserService userService;
-
+	
 	/*
 	 * This method will list all messages which the Authenticated user has received
 	 */
@@ -138,9 +142,7 @@ public class MessageController {
 	 */
 	@RequestMapping(value = { "/{message_id}/reply" }, method = RequestMethod.GET)
 	public String replyToMessage(ModelMap model, @PathVariable Integer message_id,
-			@AuthenticationPrincipal UserDetails userDetails) {
-		byte newMessage = 1;
-		byte notRepliedTo = 0;
+			@AuthenticationPrincipal UserDetails userDetails) {	
 		Message parent = messageService.findById(message_id);
 		if (parent == null) {
 			return "redirect:/{user_id}/messages/inbox";
@@ -151,7 +153,8 @@ public class MessageController {
 			return "redirect:/{user_id}/messages/inbox";
 		}
 		
-		if (parent.getIsNew() == newMessage) {
+		if (parent.getIsNew() == UNREAD_MESSAGE) {
+			parent.setIsNew(READ_MESSAGE);
 			messageService.updateMessageStatus(parent);
 		}
 	
@@ -162,7 +165,7 @@ public class MessageController {
 		List<Message> previousMessages = new ArrayList<Message>();
 		previousMessages.add(parent);
 
-		while (parent.getIn_reply_to() != notRepliedTo) {
+		while (parent.getIn_reply_to() != NOT_REPLIED) {
 			parent = messageService.findById(parent.getIn_reply_to());
 			previousMessages.add(parent);
 		}
@@ -207,8 +210,6 @@ public class MessageController {
 	@RequestMapping(value = { "/{message_id}/display" }, method = RequestMethod.GET)
 	public String displayMessage(ModelMap model, @PathVariable Integer message_id,
 			@AuthenticationPrincipal UserDetails userDetails) {
-		byte notRepliedTo = 0;
-
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> allMessages = currentUser.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(allMessages);
@@ -228,7 +229,7 @@ public class MessageController {
 		List<Message> previousMessages = new ArrayList<Message>();
 		previousMessages.add(parent);
 
-		while (parent.getIn_reply_to() != notRepliedTo) {
+		while (parent.getIn_reply_to() != NOT_REPLIED) {
 			parent = messageService.findById(parent.getIn_reply_to());
 			previousMessages.add(parent);
 		}
