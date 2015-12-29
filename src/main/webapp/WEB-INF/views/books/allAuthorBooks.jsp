@@ -45,7 +45,8 @@
 						<sec:authorize access="hasAuthority('ADMIN')">
 							<div class="btn-group">
 								<form:form action="${book.id}" method="GET">
-									<button type="submit" class="btn btn-default">Edit</button>
+									<button type="submit" class="btn btn-default">
+									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</button>
 								</form:form>
 							</div>
 							<div class="btn-group">
