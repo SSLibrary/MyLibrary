@@ -49,8 +49,6 @@ public class BookHistoryDaoImpl extends AbstractDao<Long, BookHistory> implement
 				.list();		
 	}
 	
-
-	
 	public Long countAllBooksHistory(){
 		return (Long)getSession()
 				.createCriteria(BookHistory.class)

@@ -68,11 +68,11 @@ public class UserServiceImpl implements UserService {
 		return true;
 	}
 	
-	public List<User> list(Integer offset, Integer maxResults) {
-		return dao.list(offset, maxResults);
+	public List<User> listAllUsers(Integer offset, Integer maxResults) {
+		return dao.listAllUsers(offset, maxResults);
 	}
 
-	public Long count() {
-		return dao.count();
+	public Long countAllUsers() {
+		return dao.countAllUsers();
 	}
 }

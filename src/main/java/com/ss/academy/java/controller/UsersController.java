@@ -51,14 +51,14 @@ public class UsersController {
 	 * This method will list all existing users.
 	 */
 	@RequestMapping(value = { "/users" }, method = RequestMethod.GET)
-	public String listAllUsers(@AuthenticationPrincipal UserDetails userDetails, ModelMap model, Integer offset,
-			Integer maxResults) {
+	public String listAllUsers(@AuthenticationPrincipal UserDetails userDetails, ModelMap model, 
+			Integer offset, Integer maxResults) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
 
 		// Removing the current user from the list of users
-		List<User> allUsers = userService.list(offset, maxResults);
+		List<User> allUsers = userService.listAllUsers(offset, maxResults);
 		List<User> filteredList = new ArrayList<User>();
 		
 		for (User user : allUsers) {
@@ -67,9 +67,8 @@ public class UsersController {
 			}
 		}
 		
-		
 		model.addAttribute("allUsers", filteredList);
-		model.addAttribute("count", userService.count());
+		model.addAttribute("count", userService.countAllUsers());
 		model.addAttribute("offset", offset);
 		model.addAttribute("unread", unread);
 		model.addAttribute("currUser", currentUser.getId());
@@ -92,9 +91,9 @@ public class UsersController {
 	 * This method provides the ability the admin to be able to update the
 	 * users' status.
 	 */
-	@RequestMapping(value = { "/users/{id}" }, method = RequestMethod.PUT)
-	public String updateUserStatus(ModelMap model, @PathVariable String id) {
-		User user = userService.findById(id);
+	@RequestMapping(value = { "/users/{user_id}" }, method = RequestMethod.PUT)
+	public String updateUserStatus(ModelMap model, @PathVariable String user_id) {
+		User user = userService.findById(user_id);
 
 		userService.updateUserStatus(user);
 
@@ -149,8 +148,9 @@ public class UsersController {
 	/*
 	 * This method will provide the medium to update current user profile details.
 	 */
-	@RequestMapping(value = "users/{id}/profile", method = RequestMethod.GET)
-	public String showMyProfile(@AuthenticationPrincipal UserDetails userDetails, @PathVariable String id, ModelMap model) {
+	@RequestMapping(value = "users/{user_id}/profile", method = RequestMethod.GET)
+	public String showMyProfile(@AuthenticationPrincipal UserDetails userDetails, 
+			@PathVariable String user_id, ModelMap model) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		currentUser.setPassword("");
 		List<Message> messages = currentUser.getReceivedMessage();
@@ -168,9 +168,9 @@ public class UsersController {
 	 * editing user profile in database. It also validates the user input and check
 	 * whether the entered password match with the one stored in the DB.
 	 */
-	@RequestMapping(value = "users/{id}/profile", method = RequestMethod.POST)
+	@RequestMapping(value = "users/{user_id}/profile", method = RequestMethod.POST)
 	public String editMyProfile(@ModelAttribute @Valid User user, BindingResult result, 
-			@AuthenticationPrincipal UserDetails userDetails, @PathVariable String id, ModelMap model) {
+			@AuthenticationPrincipal UserDetails userDetails, @PathVariable String user_id, ModelMap model) {
 		
 		if (result.hasErrors()) {
 			return "users/profile";

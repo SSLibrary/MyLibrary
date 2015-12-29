@@ -25,5 +25,5 @@ public interface AuthorService {
 	
 	List<Author> listAllAuthors(Integer offset, Integer maxResults);	
 	
-	Long rowCount();
+	Long countAllAuthors();
 }

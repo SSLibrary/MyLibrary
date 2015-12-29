@@ -96,6 +96,7 @@ public class BookHistoryController {
 		if (bookHistory.getIsReturned() == 0 && bookHistory.getBook().getStatus().equals(BookStatus.Loaned)) {
 		Date currDate = new Date(System.currentTimeMillis());
 		bookHistory.setReturnDate(currDate);
+		bookHistory.setIsReturned(1);
 		bookHistoryService.updateBookHistory(bookHistory);
 		bookService.changeBookStatus(bookHistory.getBook());
 		}

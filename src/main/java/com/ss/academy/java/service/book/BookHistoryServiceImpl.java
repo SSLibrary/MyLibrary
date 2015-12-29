@@ -28,7 +28,7 @@ public class BookHistoryServiceImpl implements BookHistoryService {
 		BookHistory entity = dao.findById(bookHistory.getId());
 
 		if (entity != null) {
-			entity.setIsReturned(1);
+			entity.setIsReturned(bookHistory.getIsReturned());
 			entity.setReturnDate(bookHistory.getReturnDate());
 		}
 	}

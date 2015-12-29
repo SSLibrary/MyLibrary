@@ -31,7 +31,7 @@ import com.ss.academy.java.util.UnreadMessagesCounter;
  * Handles requests for the application books's rating page.
  */
 @Controller
-@RequestMapping(value = "/authors/{id}/books/{book_id}")
+@RequestMapping(value = "/authors/{author_id}/books/{book_id}")
 public class RatingsController {
 
 	@Autowired
@@ -75,7 +75,7 @@ public class RatingsController {
 	 */
 	@RequestMapping(value = { "/rating" }, method = RequestMethod.POST)
 	public String saveRating(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long book_id,
-			@Valid Rating rating, BindingResult result, ModelMap model, @PathVariable Long id) {
+			@Valid Rating rating, BindingResult result, ModelMap model) {
 		User user = userService.findByUsername(userDetails.getUsername());
 		Rating ratingToSave = new Rating();
 
@@ -86,7 +86,7 @@ public class RatingsController {
 
 		ratingService.saveRating(ratingToSave);
 
-		return "redirect:/authors/{id}/books/{book_id}/preview";
+		return "redirect:/authors/{author_id}/books/{book_id}/preview";
 	}
 
 	/*

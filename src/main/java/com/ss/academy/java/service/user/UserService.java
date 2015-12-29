@@ -23,8 +23,8 @@ public interface UserService {
 
 	boolean isUsernameUnique(String username);
 	
-	List<User> list(Integer offset, Integer maxResults);
+	List<User> listAllUsers(Integer offset, Integer maxResults);
     
-	Long count();
+	Long countAllUsers();
 
 }
