@@ -66,7 +66,6 @@ public class BookHistoryController {
 		User user = userService.findByUsername(userDetails.getUsername());
 		
 		if (book.getStatus().equals(BookStatus.Available)) {
-		
 		user.getBooksHistory().add(bookHistory);
 		book.getBooksHistory().add(bookHistory);
 		bookService.changeBookStatus(book);
@@ -75,7 +74,7 @@ public class BookHistoryController {
 		
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(bookHistory.getGetDate());
-		cal.add(Calendar.DAY_OF_MONTH, 30);
+		cal.add(Calendar.DAY_OF_MONTH, 90);
 		bookHistory.setReturnDate(cal.getTime());
 		
 		bookHistoryService.saveBookHistory(bookHistory);
@@ -103,6 +102,7 @@ public class BookHistoryController {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unread = UnreadMessagesCounter.counter(messages);
+		Date currDate = new Date(System.currentTimeMillis());		
 		
 		List<BookHistory> bookHistory = bookHistoryService.findAllBooksHistory();
 		List<BookHistory> loanedBooks = new ArrayList<BookHistory>();
@@ -119,6 +119,7 @@ public class BookHistoryController {
 		} else {
 			model.addAttribute("isEmpty", false);
 			model.addAttribute("loanedBooks", loanedBooks);
+			model.addAttribute("currDate", currDate);
 		}
 			
 		model.addAttribute("unread", unread);

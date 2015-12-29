@@ -54,7 +54,7 @@ public class WebAppConfiguration extends WebMvcConfigurerAdapter {
 	public CommonsMultipartResolver createMultipartResolver() {
 	    CommonsMultipartResolver resolver=new CommonsMultipartResolver();
 	    resolver.setMaxUploadSize(20971520);   // 20MB
-	    resolver.setMaxInMemorySize(1048576);  // 1MB
+	    resolver.setMaxInMemorySize(20971520);  
 	    resolver.setDefaultEncoding("utf-8");
 	    return resolver;
 	}

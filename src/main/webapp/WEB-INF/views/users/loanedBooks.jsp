@@ -15,13 +15,22 @@
 			 <th>Author</th>
 			 <th>Get Date</th>
 			 <th>Return Date</th>
+			 <th>Due</th>
 			 <th>Loaned By</th>
 				<c:forEach items="${loanedBooks}" var="loanedBook">
 				<tr>
 					<td>${loanedBook.book.title}</td>
 					<td>${loanedBook.book.author.name}</td>
 					<td><fmt:formatDate pattern="yyyy-MM-dd, hh:mm a" value="${loanedBook.getDate}" /></td>			
-					<td><fmt:formatDate pattern="yyyy-MM-dd, hh:mm a" value="${loanedBook.returnDate}" /></td>	
+					<td><fmt:formatDate pattern="yyyy-MM-dd, hh:mm a" value="${loanedBook.returnDate}" /></td>
+					<c:choose>
+						<c:when test="${loanedBook.returnDate < currDate}">
+							<td>Yes</td>		
+						</c:when>
+						<c:otherwise>
+							<td>No</td>		
+						</c:otherwise>
+					</c:choose>
 					<td><a href="/MyLibrary/users/${loanedBook.user.id}/profile" >${loanedBook.user.username}</a></td>
 					</tr>
 					<br />	
