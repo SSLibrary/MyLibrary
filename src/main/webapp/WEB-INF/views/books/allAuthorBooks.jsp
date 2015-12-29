@@ -52,7 +52,8 @@
 								<form:form action="${book.id}" method="DELETE" >
 									<button
 									onclick="if (confirm('Are you sure you want to delete this book?')) { form.action='${book.id}'; } else { return false; }"
-									id="deleteForm" type="submit" class="btn btn-default">Delete</button>
+									id="deleteForm" type="submit" class="btn btn-default">
+									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</button>
 								</form:form>
 							</div>
 							</sec:authorize>					

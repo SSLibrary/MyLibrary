@@ -48,7 +48,8 @@
 							<button
 							onclick="if (confirm('Are you sure you want to delete this author?'))
 							{ form.action='${author.id}'; } else { return false; }"
-							type="submit" class="btn btn-default">Delete</button>
+							type="submit" class="btn btn-default">
+							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</button>
 						</form:form>
 					</div>							
 				</sec:authorize>
