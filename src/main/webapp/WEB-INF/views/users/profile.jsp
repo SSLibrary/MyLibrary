@@ -5,7 +5,7 @@
 		<div
 			style="background-color: rgba(192, 192, 192, 0.3); padding: 1px 10px 415px 10px;">
 			<div class="register-form">
-				<form action="/register" method="post" class="form-horizontal">
+				<form action="/profile" method="post" class="form-horizontal">
 					<form:input type="hidden" path="id" id="id" />
 					<h2>
 						<b>${user.username}' Profile</b>
