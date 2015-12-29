@@ -35,6 +35,7 @@ import sun.misc.BASE64Encoder;
 /**
  * Handles requests for the application authors' books page.
  */
+@SuppressWarnings("restriction")
 @Controller
 @RequestMapping(value = "/authors/{id}/books")
 public class AuthorBooksController {
