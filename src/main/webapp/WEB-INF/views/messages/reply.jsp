@@ -15,7 +15,8 @@
 						<div class="col-sm-1"></div>
 						<div class="col-sm-2">
 							<form:form action="/${currUser}/messages/${message_id}/reply" method="POST">
-								<button type="submit" class="btn btn-primary form-control">Reply</button>
+								<button type="submit" class="btn btn-primary form-control">
+								<span class="glyphicon glyphicon-retweet" aria-hidden="true"></span> Reply</button>
 							</form:form>
 						</div>
 					</div>
