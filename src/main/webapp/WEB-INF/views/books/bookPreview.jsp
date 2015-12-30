@@ -33,7 +33,14 @@
 		<dt>Description:</dt>
 		<dd style="width: 500px">${book.bookDescription}</dd>
 		<dt>Status:</dt>
+		<c:choose>
+			<c:when test="${isBookLoaned}">
+			<dd>${book.status} by <a href="<c:url value='/users/${currentBookLoaner.id}/showProfile' />">${currentBookLoaner.username}</a></dd>
+		</c:when>
+		<c:otherwise>
 		<dd>${book.status}</dd>
+		</c:otherwise>
+		</c:choose>
 	</dl>
 </div>
 <div style="float: left; margin-left: 130px;">

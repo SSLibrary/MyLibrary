@@ -8,11 +8,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ss.academy.java.dao.book.BookHistoryDao;
 import com.ss.academy.java.model.book.BookHistory;
+import com.ss.academy.java.model.user.User;
 
 @Service("bookHistoryService")
 @Transactional
 public class BookHistoryServiceImpl implements BookHistoryService {
-
+	private final byte LOANED_BOOK = 0;
+	
 	@Autowired
 	private BookHistoryDao dao;
 
@@ -55,4 +57,16 @@ public class BookHistoryServiceImpl implements BookHistoryService {
 	public Long countAllBooksHistory(byte isReturned) {
 		return dao.countAllBooksHistory(isReturned);
 	}	
+	
+	public User getCurrentBookLoaner() {
+		User currentBookLoaner = null;
+		List<BookHistory> booksHistory = dao.findAllBooksHistory();
+		for (BookHistory bookHistory : booksHistory) {
+			if (bookHistory.getIsReturned() == LOANED_BOOK) {
+			currentBookLoaner = bookHistory.getUser();
+			break;
+			}			
+		}
+		return currentBookLoaner;
+	}
 }
