@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,15 +31,16 @@ public class MessageController {
 	private final byte UNREAD_MESSAGE = 1;
 	private final byte READ_MESSAGE = 0;
 	private final byte NOT_REPLIED = 0;
-	
+
 	@Autowired
 	MessageService messageService;
 
 	@Autowired
 	UserService userService;
-	
+
 	/*
-	 * This method will list all messages which the Authenticated user has received
+	 * This method will list all messages which the Authenticated user has
+	 * received
 	 */
 	@RequestMapping(value = { "/inbox" }, method = RequestMethod.GET)
 	public String listAllReceivedMessages(ModelMap model, @AuthenticationPrincipal UserDetails userDetails,
@@ -57,7 +57,7 @@ public class MessageController {
 		model.addAttribute("count", count);
 		model.addAttribute("offset", offset);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currUser", user.getId());
+		model.addAttribute("user_id", user.getId());
 
 		return "messages/inbox";
 	}
@@ -80,7 +80,7 @@ public class MessageController {
 		model.addAttribute("count", count);
 		model.addAttribute("offset", offset);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currUser", user.getId());
+		model.addAttribute("user_id", user.getId());
 
 		return "messages/outbox";
 
@@ -93,20 +93,20 @@ public class MessageController {
 	public String sendNewMessage(ModelMap model, @PathVariable String user_id,
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findById(user_id);
-		
+
 		if (user == null) {
 			return "redirect:/messages/{user_id}/inbox";
 		}
-		
+
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> allMessages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(allMessages);
-	
+
 		Message message = new Message();
 		model.addAttribute("message", message);
 		model.addAttribute("receiver", user.getUsername());
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currUser", currentUser.getId());
+		model.addAttribute("user_id", currentUser.getId());
 
 		return "messages/new";
 	}
@@ -123,11 +123,11 @@ public class MessageController {
 
 		User receiver = userService.findById(user_id);
 		User sender = userService.findByUsername(userDetails.getUsername());
-		
+
 		if (receiver.getUsername().equals(sender.getUsername())) {
 			return "redirect:/messages/{user_id}/inbox";
 		}
-		
+
 		sender.getSentMessage().add(message);
 		receiver.getReceivedMessage().add(message);
 		message.setReceiver(receiver);
@@ -142,22 +142,22 @@ public class MessageController {
 	 */
 	@RequestMapping(value = { "/{message_id}/reply" }, method = RequestMethod.GET)
 	public String replyToMessage(ModelMap model, @PathVariable Integer message_id,
-			@AuthenticationPrincipal UserDetails userDetails) {	
+			@AuthenticationPrincipal UserDetails userDetails) {
 		Message parent = messageService.findById(message_id);
 		if (parent == null) {
 			return "redirect:/messages/{user_id}/inbox";
 		}
-		
-		if (!parent.getReceiver().getUsername().equals(userDetails.getUsername()) &&
-				!parent.getSender().getUsername().equals(userDetails.getUsername())) {
+
+		if (!parent.getReceiver().getUsername().equals(userDetails.getUsername())
+				&& !parent.getSender().getUsername().equals(userDetails.getUsername())) {
 			return "redirect:/messages/{user_id}/inbox";
 		}
-		
+
 		if (parent.getIsNew() == UNREAD_MESSAGE) {
 			parent.setIsNew(READ_MESSAGE);
 			messageService.updateMessageStatus(parent);
 		}
-	
+
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> allMessages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(allMessages);
@@ -175,7 +175,7 @@ public class MessageController {
 		model.addAttribute("parents", previousMessages);
 		model.addAttribute("receiver", parent.getSender().getUsername());
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currUser", currentUser.getId());
+		model.addAttribute("user_id", currentUser.getId());
 
 		return "messages/reply";
 	}
@@ -215,16 +215,16 @@ public class MessageController {
 		int unreadMessages = UnreadMessagesCounter.count(allMessages);
 
 		Message parent = messageService.findById(message_id);
-		
+
 		if (parent == null) {
 			return "redirect:/messages/{user_id}/outbox";
 		}
-		
-		if (!parent.getReceiver().getUsername().equals(userDetails.getUsername()) &&
-				!parent.getSender().getUsername().equals(userDetails.getUsername())) {
+
+		if (!parent.getReceiver().getUsername().equals(userDetails.getUsername())
+				&& !parent.getSender().getUsername().equals(userDetails.getUsername())) {
 			return "redirect:/messages/{user_id}/outbox";
 		}
-		
+
 		List<Message> previousMessages = new ArrayList<Message>();
 		previousMessages.add(parent);
 
@@ -235,7 +235,7 @@ public class MessageController {
 
 		model.addAttribute("parents", previousMessages);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currUser", currentUser.getId());
+		model.addAttribute("user_id", currentUser.getId());
 
 		return "messages/display";
 	}

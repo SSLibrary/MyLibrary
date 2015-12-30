@@ -20,14 +20,14 @@
 			<span class="glyphicon glyphicon-user" aria-hidden="true"></span> Users</a></li>
 		</sec:authorize>	
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
-			<li><a href="/MyLibrary/messages/${currUser}/inbox"><span class="badge">${unreadMessages}</span> Inbox</a></li>
+			<li><a href="/MyLibrary/messages/${user_id}/inbox"><span class="badge">${unreadMessages}</span> Inbox</a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
-			<li><a href="/MyLibrary/messages/${currUser}/outbox">
+			<li><a href="/MyLibrary/messages/${user_id}/outbox">
 			<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Outbox</a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAuthority('USER')">
-			<li><a href="/MyLibrary/books/${currUser}">
+			<li><a href="/MyLibrary/books/${user_id}">
 			<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Books History</a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAuthority('ADMIN')">
@@ -43,7 +43,7 @@
 	</ul>
 	<sec:authorize access="isAuthenticated()">
 		<p class="text-right" style="margin-right:10px">
-			 Hello, <a href="/MyLibrary/users/${currUser}/profile/"><strong><sec:authentication property="principal.username" /></strong></a>
+			 Hello, <a href="/MyLibrary/users/${user_id}/profile/"><strong><sec:authentication property="principal.username" /></strong></a>
 		</p>
 		<form action="/MyLibrary/logout" method="post" class="navbar-form navbar-right">
 			<button type="submit" class="btn btn-default btn-sm" style="margin-right:10px">

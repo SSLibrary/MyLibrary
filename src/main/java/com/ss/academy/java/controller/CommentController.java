@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -57,7 +56,7 @@ public class CommentController {
 		Author author = authorService.findById(author_id);
 		Book book = bookService.findById(book_id);
 		List<Comment> comments = book.getComments();
-		
+
 		model.addAttribute("isEmpty", false);
 
 		if (comments.isEmpty()) {
@@ -68,7 +67,7 @@ public class CommentController {
 		model.addAttribute("author", author.getName());
 		model.addAttribute("book", book.getTitle());
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currUser", user.getId());
+		model.addAttribute("user_id", user.getId());
 
 		return "comments/allComments";
 	}
@@ -85,11 +84,11 @@ public class CommentController {
 
 		Comment comment = new Comment();
 		Book book = bookService.findById(book_id);
-		
+
 		model.addAttribute("comment", comment);
 		model.addAttribute("book", book.getTitle());
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currUser", user.getId());
+		model.addAttribute("user_id", user.getId());
 
 		return "comments/addNewComment";
 	}

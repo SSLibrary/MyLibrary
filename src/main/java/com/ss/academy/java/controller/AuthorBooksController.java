@@ -1,6 +1,5 @@
 package com.ss.academy.java.controller;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +56,7 @@ public class AuthorBooksController {
 	 * been rated so far by the current user.
 	 */
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
-	public String listAllBooks(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long author_id, 
+	public String listAllBooks(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long author_id,
 			ModelMap model, Integer offset, Integer maxResults) {
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
@@ -85,22 +84,22 @@ public class AuthorBooksController {
 		model.addAttribute("offset", offset);
 		model.addAttribute("author", author);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currUser", user.getId());
-		
+		model.addAttribute("user_id", user.getId());
+
 		return "books/allAuthorBooks";
 	}
 
 	@RequestMapping(value = { "/{book_id}/preview" }, method = RequestMethod.GET)
-	public String previewBook(@PathVariable Long book_id, ModelMap model, 
-			@AuthenticationPrincipal UserDetails userDetails) {	
+	public String previewBook(@PathVariable Long book_id, ModelMap model,
+			@AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
-		
+
 		Book book = bookService.findById(book_id);
-		
+
 		try {
-			byte[] bytes = book.getImage();					
+			byte[] bytes = book.getImage();
 			if (bytes.length == 0) {
 				model.addAttribute("emptyList", true);
 			}
@@ -108,17 +107,17 @@ public class AuthorBooksController {
 			StringBuilder imageString = new StringBuilder();
 			imageString.append("data:image/png;base64,");
 			imageString.append(base64Encoder.encode(bytes));
-			
-			String image = imageString.toString();	
+
+			String image = imageString.toString();
 			model.addAttribute("image", image);
 		} catch (NullPointerException e) {
 			model.addAttribute("emptyList", true);
-		}			
-		
-		model.addAttribute("currUser", user.getId());
+		}
+
+		model.addAttribute("user_id", user.getId());
 		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("book", book);
-		
+
 		return "books/bookPreview";
 	}
 
@@ -143,7 +142,7 @@ public class AuthorBooksController {
 
 		model.addAttribute("books", authorBooks);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currUser", user.getId());
+		model.addAttribute("user_id", user.getId());
 
 		return "books/allAuthorBooks";
 	}
@@ -163,7 +162,7 @@ public class AuthorBooksController {
 		model.addAttribute("book", book);
 		model.addAttribute("edit", false);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currUser", user.getId());
+		model.addAttribute("user_id", user.getId());
 
 		return "books/addNewBook";
 	}
@@ -181,14 +180,15 @@ public class AuthorBooksController {
 		}
 
 		if (fileUpload != null && fileUpload.length > 0) {
-			for (CommonsMultipartFile aFile : fileUpload) {				
-				if(aFile.toString().startsWith("FF D8 FF")){ 
-						//check if format of file is JPG
-					}else if(aFile.toString().startsWith("47 49 46 38 37 61") || aFile.toString().startsWith("47 49 46 38 39 61")){
-						//check if format of file is GIF
-					}else if(aFile.toString().startsWith("89 50 4E 47 0D 0A 1A 0A")){
-						//check if format of file is PNG			
-					}
+			for (CommonsMultipartFile aFile : fileUpload) {
+				if (aFile.toString().startsWith("FF D8 FF")) {
+					// check if format of file is JPG
+				} else if (aFile.toString().startsWith("47 49 46 38 37 61")
+						|| aFile.toString().startsWith("47 49 46 38 39 61")) {
+					// check if format of file is GIF
+				} else if (aFile.toString().startsWith("89 50 4E 47 0D 0A 1A 0A")) {
+					// check if format of file is PNG
+				}
 				Author author = authorService.findById(author_id);
 				author.getBooks().add(book);
 				book.setAuthor(author);
@@ -218,7 +218,7 @@ public class AuthorBooksController {
 		model.addAttribute("author", author);
 		model.addAttribute("edit", true);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currUser", user.getId());
+		model.addAttribute("user_id", user.getId());
 
 		return "books/addNewBook";
 	}
@@ -229,8 +229,8 @@ public class AuthorBooksController {
 	 */
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/{book_id}" }, method = RequestMethod.POST)
-	public String updateBook(@Valid Book formBook, BindingResult result,@RequestParam CommonsMultipartFile[] fileUpload,
-			@PathVariable Long book_id, @PathVariable Long author_id) {
+	public String updateBook(@Valid Book formBook, BindingResult result,
+			@RequestParam CommonsMultipartFile[] fileUpload, @PathVariable Long book_id, @PathVariable Long author_id) {
 		Author author = new Author();
 		Book dbBook = new Book();
 		if (result.hasErrors()) {
@@ -238,20 +238,21 @@ public class AuthorBooksController {
 		}
 
 		if (fileUpload != null && fileUpload.length > 0) {
-			for (CommonsMultipartFile aFile : fileUpload) {				
-				if(aFile.toString().startsWith("FF D8 FF")){ 
+			for (CommonsMultipartFile aFile : fileUpload) {
+				if (aFile.toString().startsWith("FF D8 FF")) {
 					// check if format of file is JPG
-				}else if(aFile.toString().startsWith("47 49 46 38 37 61") || aFile.toString().startsWith("47 49 46 38 39 61")){
+				} else if (aFile.toString().startsWith("47 49 46 38 37 61")
+						|| aFile.toString().startsWith("47 49 46 38 39 61")) {
 					// check if format of file is GIF
-				}else if(aFile.toString().startsWith("89 50 4E 47 0D 0A 1A 0A")){
-					// check if format of file is PNG			
+				} else if (aFile.toString().startsWith("89 50 4E 47 0D 0A 1A 0A")) {
+					// check if format of file is PNG
 				}
 				author = authorService.findById(author_id);
 				dbBook = bookService.findById(book_id);
 				formBook.setImage(aFile.getBytes());
 				dbBook = formBook;
 				author.getBooks().add(dbBook);
-				
+
 				bookService.updateBook(dbBook);
 			}
 		}

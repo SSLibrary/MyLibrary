@@ -32,7 +32,6 @@ public class HomeController {
 	@Autowired
 	UserService userService;
 
-
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -46,7 +45,7 @@ public class HomeController {
 			int unreadMessages = UnreadMessagesCounter.count(messages);
 			model.addAttribute("logged", true);
 			model.addAttribute("unreadMessages", unreadMessages);
-			model.addAttribute("currUser", currentUser.getId());
+			model.addAttribute("user_id", currentUser.getId());
 		}
 
 		int authorsCount = authorService.findAllAuthors().size();
@@ -55,10 +54,9 @@ public class HomeController {
 
 		model.addAttribute("authorsCount", authorsCount);
 		model.addAttribute("booksCount", booksCount);
-		model.addAttribute("usersCount", usersCount);		
+		model.addAttribute("usersCount", usersCount);
 
 		return "home";
 	}
-	
-}
 
+}

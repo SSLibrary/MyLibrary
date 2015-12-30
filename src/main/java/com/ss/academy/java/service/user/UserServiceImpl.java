@@ -41,7 +41,6 @@ public class UserServiceImpl implements UserService {
 			dbUser.setFirstName(candidateDbUser.getFirstName());
 			dbUser.setLastName(candidateDbUser.getLastName());
 			dbUser.setEmail(candidateDbUser.getEmail());
-			dbUser.setPassword(passwordEncoder.encode(candidateDbUser.getNewPassword()));
 		}
 		
 		dao.updateUser(dbUser);

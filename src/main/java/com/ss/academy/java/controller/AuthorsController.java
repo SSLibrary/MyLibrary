@@ -57,7 +57,7 @@ public class AuthorsController {
 		model.addAttribute("count", authorService.countAllAuthors());
 		model.addAttribute("offset", offset);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currUser", user.getId());
+		model.addAttribute("user_id", user.getId());
 
 		return "authors/all";
 	}
@@ -66,20 +66,19 @@ public class AuthorsController {
 	 * This method provides the ability to search for authors by their names.
 	 */
 	@RequestMapping(value = { "/search" }, method = RequestMethod.GET)
-	public String searchAuthorByName(@RequestParam("author_name") String author_name, 
-			ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
+	public String searchAuthorByName(@RequestParam("author_name") String author_name, ModelMap model,
+			@AuthenticationPrincipal UserDetails userDetails) {
 		List<Author> authors = authorService.findAuthorsByName(author_name);
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
-		
+
 		model.addAttribute("authors", authors);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currUser", user.getId());
-		
+		model.addAttribute("user_id", user.getId());
+
 		return "authors/all";
 	}
-	
 
 	/*
 	 * This method will provide the medium to add a new author.
@@ -96,7 +95,7 @@ public class AuthorsController {
 		model.addAttribute("edit", false);
 		model.addAttribute("countries", AuthorCountry.values());
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currUser", user.getId());
+		model.addAttribute("user_id", user.getId());
 
 		return "authors/addNewAuthor";
 	}
@@ -122,7 +121,7 @@ public class AuthorsController {
 	 */
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/{author_id}" }, method = RequestMethod.GET)
-	public String editAuthor(@PathVariable Long author_id, ModelMap model, 
+	public String editAuthor(@PathVariable Long author_id, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
@@ -132,7 +131,7 @@ public class AuthorsController {
 		model.addAttribute("author", author);
 		model.addAttribute("edit", true);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currUser", user.getId());
+		model.addAttribute("user_id", user.getId());
 
 		return "authors/addNewAuthor";
 	}
@@ -143,7 +142,7 @@ public class AuthorsController {
 	 */
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/{author_id}" }, method = RequestMethod.PUT)
-	public String updateAuthor(@Valid Author author, BindingResult result, ModelMap model, 
+	public String updateAuthor(@Valid Author author, BindingResult result, ModelMap model,
 			@PathVariable Long author_id) {
 		if (result.hasErrors()) {
 			return "authors/addNewAuthor";

@@ -20,7 +20,7 @@
 					<div class="form-group">
 					<div class="col-sm-1"></div>
 						<div class="col-sm-2">
-							<form:form action="/${currUser}/messages/new" method="POST">
+							<form:form action="/${user_id}/messages/new" method="POST">
 								<button type="submit" class="btn btn-primary form-control">Send</button>
 							</form:form>
 						</div>

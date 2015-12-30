@@ -31,27 +31,27 @@ public class BookHistoryController {
 	private final byte NOT_RETURNED = 0;
 	private final byte RETURNED = 1;
 	private final int LOAN_PERIOD = 90;
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	BookHistoryService bookHistoryService;
-	
+
 	@Autowired
 	BookService bookService;
-	
+
 	@PreAuthorize("hasAuthority('USER')")
-	@RequestMapping(value = {"/{user_id}"}, method = RequestMethod.GET)
-	public String listBooksHistory(ModelMap model, @AuthenticationPrincipal UserDetails userDetails, 
-			Integer offset, Integer maxResults) {
+	@RequestMapping(value = { "/{user_id}" }, method = RequestMethod.GET)
+	public String listBooksHistory(ModelMap model, @AuthenticationPrincipal UserDetails userDetails, Integer offset,
+			Integer maxResults) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
-		
+
 		List<BookHistory> booksHistory = bookHistoryService.findAllBooksHistory(offset, maxResults);
 		Long countAllBookHistory = bookHistoryService.countAllBooksHistory();
-		
+
 		if (booksHistory.isEmpty()) {
 			model.addAttribute("isEmpty", true);
 		} else {
@@ -60,68 +60,67 @@ public class BookHistoryController {
 			model.addAttribute("count", countAllBookHistory);
 			model.addAttribute("offset", offset);
 		}
-		
+
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currUser", currentUser.getId());
-		
+		model.addAttribute("user_id", currentUser.getId());
+
 		return "users/booksHistory";
 	}
-	
+
 	@PreAuthorize("hasAuthority('USER')")
 	@RequestMapping(value = { "/{book_id}/{user_id}/addToHistory" }, method = RequestMethod.GET)
-	public String addNewBookHistory(@PathVariable Long book_id,
-			@AuthenticationPrincipal UserDetails userDetails) {
+	public String addNewBookHistory(@PathVariable Long book_id, @AuthenticationPrincipal UserDetails userDetails) {
 		BookHistory bookHistory = new BookHistory();
 		Book book = bookService.findById(book_id);
 		User user = userService.findByUsername(userDetails.getUsername());
-		
-		if (book.getStatus().equals(BookStatus.Available)) {
-		user.getBooksHistory().add(bookHistory);
-		book.getBooksHistory().add(bookHistory);
-		bookService.changeBookStatus(book);
-		bookHistory.setBook(book);
-		bookHistory.setUser(user);	
 
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(bookHistory.getGetDate());
-		calendar.add(Calendar.DAY_OF_MONTH, LOAN_PERIOD);
-		bookHistory.setReturnDate(calendar.getTime());
-		
-		bookHistoryService.saveBookHistory(bookHistory);
+		if (book.getStatus().equals(BookStatus.Available)) {
+			user.getBooksHistory().add(bookHistory);
+			book.getBooksHistory().add(bookHistory);
+			bookService.changeBookStatus(book);
+			bookHistory.setBook(book);
+			bookHistory.setUser(user);
+
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(bookHistory.getGetDate());
+			calendar.add(Calendar.DAY_OF_MONTH, LOAN_PERIOD);
+			bookHistory.setReturnDate(calendar.getTime());
+
+			bookHistoryService.saveBookHistory(bookHistory);
 		}
-		
+
 		return "redirect:/books/{user_id}";
 	}
-	
+
 	@PreAuthorize("hasAuthority('USER')")
 	@RequestMapping(value = "/{user_id}/{history_id}/return", method = RequestMethod.GET)
-	public String returnBook(@PathVariable Long history_id, @AuthenticationPrincipal UserDetails userDetails) {	
+	public String returnBook(@PathVariable Long history_id, @AuthenticationPrincipal UserDetails userDetails) {
 		BookHistory bookHistory = bookHistoryService.findById(history_id);
-		
-		if (bookHistory.getIsReturned() == NOT_RETURNED 
+
+		if (bookHistory.getIsReturned() == NOT_RETURNED
 				&& bookHistory.getBook().getStatus().equals(BookStatus.Loaned)) {
-		Date currDate = new Date(System.currentTimeMillis());
-		bookHistory.setReturnDate(currDate);
-		bookHistory.setIsReturned(RETURNED);
-		bookHistoryService.updateBookHistory(bookHistory);
-		bookService.changeBookStatus(bookHistory.getBook());
+			Date currDate = new Date(System.currentTimeMillis());
+			bookHistory.setReturnDate(currDate);
+			bookHistory.setIsReturned(RETURNED);
+			bookHistoryService.updateBookHistory(bookHistory);
+			bookService.changeBookStatus(bookHistory.getBook());
 		}
-		
+
 		return "redirect:/books/{user_id}";
 	}
-	
+
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/loaned", method = RequestMethod.GET)
-	public String showAllLoanedBooks(@AuthenticationPrincipal UserDetails userDetails, ModelMap model,
-			Integer offset, Integer maxResults, BookHistory bookHistories) {	
+	public String showAllLoanedBooks(@AuthenticationPrincipal UserDetails userDetails, ModelMap model, Integer offset,
+			Integer maxResults, BookHistory bookHistories) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
-		
-		Date currDate = new Date(System.currentTimeMillis());		
+
+		Date currDate = new Date(System.currentTimeMillis());
 		List<BookHistory> bookHistory = bookHistoryService.findAllBooksHistory(offset, maxResults, NOT_RETURNED);
 		Long countAllBookHistory = bookHistoryService.countAllBooksHistory(NOT_RETURNED);
-		
+
 		if (bookHistory.isEmpty()) {
 			model.addAttribute("isEmpty", true);
 		} else {
@@ -131,10 +130,10 @@ public class BookHistoryController {
 			model.addAttribute("offset", offset);
 			model.addAttribute("currDate", currDate);
 		}
-			
+
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currUser", currentUser.getId());
-		
+		model.addAttribute("user_id", currentUser.getId());
+
 		return "users/loanedBooks";
 	}
 }

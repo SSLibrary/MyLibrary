@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -42,7 +41,6 @@ public class RatingsController {
 	@Autowired
 	UserService userService;
 
-
 	/*
 	 * This method will provide the medium to add a new rating.
 	 */
@@ -56,11 +54,11 @@ public class RatingsController {
 
 		Book book = bookService.findById(book_id);
 		Rating rating = new Rating();
-		
+
 		model.addAttribute("rating", rating);
 		model.addAttribute("book", book);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currUser", user.getId());
+		model.addAttribute("user_id", user.getId());
 
 		return "books/rating";
 	}
@@ -103,7 +101,7 @@ public class RatingsController {
 
 		model.addAttribute("book", book);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currUser", user.getId());
+		model.addAttribute("user_id", user.getId());
 
 		return "books/ratingCheck";
 	}

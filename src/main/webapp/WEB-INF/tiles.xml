@@ -50,10 +50,16 @@ Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 		<put-attribute name="current" value="/accessDenied"></put-attribute>
 	</definition>
 
-	<definition name="users/profile" extends="baseLayout">
+	<definition name="users/editProfile" extends="baseLayout">
 		<put-attribute name="title" value="User Profile" />
-		<put-attribute name="body" value="/WEB-INF/views/users/profile.jsp" />
-		<put-attribute name="current" value="profile"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/users/editProfile.jsp" />
+		<put-attribute name="current" value="editProfile"></put-attribute>
+	</definition>
+	
+		<definition name="users/editProfileSuccess" extends="baseLayout">
+		<put-attribute name="title" value="Profile update successful" />
+		<put-attribute name="body" value="/WEB-INF/views/users/editProfileSuccess.jsp" />
+		<put-attribute name="current" value="editProfileSuccess"></put-attribute>
 	</definition>
 	<!--end of users -->
 

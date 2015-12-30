@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,8 +55,8 @@ public class UsersController {
 	 * This method will list all existing users.
 	 */
 	@RequestMapping(value = { "/users" }, method = RequestMethod.GET)
-	public String listAllUsers(@AuthenticationPrincipal UserDetails userDetails, ModelMap model, 
-			Integer offset, Integer maxResults) {
+	public String listAllUsers(@AuthenticationPrincipal UserDetails userDetails, ModelMap model, Integer offset,
+			Integer maxResults) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
@@ -74,7 +75,7 @@ public class UsersController {
 		model.addAttribute("count", userService.countAllUsers());
 		model.addAttribute("offset", offset);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currUser", currentUser.getId());
+		model.addAttribute("used_id", currentUser.getId());
 
 		return "users/all";
 	}
@@ -88,11 +89,11 @@ public class UsersController {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
-		
+
 		List<User> users = userService.findUsersByUserName(username);
 		model.addAttribute("allUsers", users);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currUser", currentUser.getId());
+		model.addAttribute("used_id", currentUser.getId());
 
 		return "users/all";
 	}
@@ -117,17 +118,17 @@ public class UsersController {
 	public String loginPage() {
 		return "users/login";
 	}
-	
+
 	@RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
 	public String accessDeniedPage(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
-		
+
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currUser", currentUser.getId());
+		model.addAttribute("used_id", currentUser.getId());
 		model.addAttribute("username", currentUser.getUsername());
-		
+
 		return "users/accessDenied";
 	}
 
@@ -172,21 +173,18 @@ public class UsersController {
 	 * details.
 	 */
 	@RequestMapping(value = "users/{user_id}/profile", method = RequestMethod.GET)
-	public String showMyProfile(@AuthenticationPrincipal UserDetails userDetails, 
-			@PathVariable String user_id, ModelMap model) {
+	public String showMyProfile(@AuthenticationPrincipal UserDetails userDetails, @PathVariable String user_id,
+			ModelMap model) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
-		currentUser.setPassword("");
-		currentUser.setNewPassword("");
-		currentUser.setNewPassword2("");
 
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currUser", currentUser.getId());
+		model.addAttribute("used_id", currentUser.getId());
 		model.addAttribute("user", currentUser);
 
-		return "users/profile";
+		return "users/editProfile";
 	}
 
 	/*
@@ -196,52 +194,22 @@ public class UsersController {
 	 */
 	@RequestMapping(value = "users/{user_id}/profile", method = RequestMethod.POST)
 	public String editMyProfile(@ModelAttribute @Valid User user, BindingResult result,
-			@AuthenticationPrincipal UserDetails userDetails, @PathVariable String user_id, ModelMap model) {
-
+			@AuthenticationPrincipal UserDetails userDetails, ModelMap model) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
-		user.setId(user_id);
+		
+		List<Message> messages = currentUser.getReceivedMessage();
+		int unreadMessages = UnreadMessagesCounter.count(messages);
 
-		if (user.getPassword() != "") {
-			if (!passwordEncoder.matches(user.getPassword(), currentUser.getPassword())) {
-				FieldError passwordDoNotMatch = new FieldError("password", "password", messageSource
-						.getMessage("non.matching.password", new String[] { user.getUsername() }, Locale.getDefault()));
-				result.addError(passwordDoNotMatch);
+		model.addAttribute("unreadMessages", unreadMessages);
+		model.addAttribute("used_id", currentUser.getId());
+		model.addAttribute("user", currentUser);
 
-				user.setPassword("");
-
-				return "users/profile";
-			} else {
-				if (!user.getNewPassword().equals(user.getNewPassword2())) {
-					FieldError passwordDoNotMatch = new FieldError("newPassword", "newPassword",
-							messageSource.getMessage("non.matching.passwords", new String[] { user.getUsername() },
-									Locale.getDefault()));
-					FieldError passwordDoNotMatch2 = new FieldError("newPassword2", "newPassword2",
-							messageSource.getMessage("non.matching.passwords", new String[] { user.getUsername() },
-									Locale.getDefault()));
-
-					result.addError(passwordDoNotMatch);
-					result.addError(passwordDoNotMatch2);
-
-					user.setNewPassword("");
-					user.setNewPassword2("");
-
-					return "users/profile";
-				}
-			}
-		} else {
-			user.setPassword("");
-			user.setNewPassword("");
-			user.setNewPassword2("");
-
-			return "users/profile";
+		if (result.hasFieldErrors("firstName") || result.hasFieldErrors("lastName") || result.hasFieldErrors("email")) {
+			return "users/editProfile";
 		}
-
+		
 		userService.updateUser(user);
 
-		user.setPassword("");
-		user.setNewPassword("");
-		user.setNewPassword2("");
-
-		return "users/profile";
+		return "users/editProfileSuccess";
 	}
 }

@@ -28,48 +28,47 @@ public class BooksController {
 	@Autowired
 	UserService userService;
 
-
 	/*
 	 * This method will show the list of all books.
 	 */
 	@RequestMapping(value = { "/books" })
-	public String showAllBooks(@AuthenticationPrincipal UserDetails user, ModelMap model,
-			Integer offset, Integer maxResults) {
-			User currentUser = userService.findByUsername(user.getUsername());
-			List<Message> messages = currentUser.getReceivedMessage();
-			int unreadMessages = UnreadMessagesCounter.count(messages);
-			List<Book> books = bookService.listAllBooks(offset, maxResults);
-			
-			model.addAttribute("books", books);
-			model.addAttribute("count", bookService.countAllBooks());
-			model.addAttribute("offset", offset);
-			model.addAttribute("unreadMessages", unreadMessages);
-			model.addAttribute("currUser", currentUser.getId());
-		
+	public String showAllBooks(@AuthenticationPrincipal UserDetails user, ModelMap model, Integer offset,
+			Integer maxResults) {
+		User currentUser = userService.findByUsername(user.getUsername());
+		List<Message> messages = currentUser.getReceivedMessage();
+		int unreadMessages = UnreadMessagesCounter.count(messages);
+		List<Book> books = bookService.listAllBooks(offset, maxResults);
+
+		model.addAttribute("books", books);
+		model.addAttribute("count", bookService.countAllBooks());
+		model.addAttribute("offset", offset);
+		model.addAttribute("unreadMessages", unreadMessages);
+		model.addAttribute("user_id", currentUser.getId());
+
 		return "books/allBooks";
 	}
-		/*
-		 * This method provides the ability to search for books by their titles.
-		 */
+
+	/*
+	 * This method provides the ability to search for books by their titles.
+	 */
 	@RequestMapping(value = { "/books/search" }, method = RequestMethod.GET)
-	public String searchBookByTitle(@RequestParam("bookTitle") String bookTitle, 
-			ModelMap model, @AuthenticationPrincipal UserDetails user) {
-			User currentUser = userService.findByUsername(user.getUsername());
-			List<Message> messages = currentUser.getReceivedMessage();
-			int unreadMessages = UnreadMessagesCounter.count(messages);	
-			List<Book> books = bookService.findBooksByTitle(bookTitle);
+	public String searchBookByTitle(@RequestParam("bookTitle") String bookTitle, ModelMap model,
+			@AuthenticationPrincipal UserDetails user) {
+		User currentUser = userService.findByUsername(user.getUsername());
+		List<Message> messages = currentUser.getReceivedMessage();
+		int unreadMessages = UnreadMessagesCounter.count(messages);
+		List<Book> books = bookService.findBooksByTitle(bookTitle);
 
-			if (books.isEmpty()) {
-				model.addAttribute("isEmpty", true);
-			} else {
-				model.addAttribute("isEmpty", false);
-				model.addAttribute("books", books);
-			}
-			
-			model.addAttribute("unreadMessages", unreadMessages);
-			model.addAttribute("currUser", currentUser.getId());
-
-			return "books/allBooks";
+		if (books.isEmpty()) {
+			model.addAttribute("isEmpty", true);
+		} else {
+			model.addAttribute("isEmpty", false);
+			model.addAttribute("books", books);
 		}
-	}
 
+		model.addAttribute("unreadMessages", unreadMessages);
+		model.addAttribute("user_id", currentUser.getId());
+
+		return "books/allBooks";
+	}
+}
