@@ -8,7 +8,7 @@
 				<form action="/profile" method="post" class="form-horizontal">
 					<form:input type="hidden" path="id" id="id" />
 					<h2>
-						<b>${username}' Profile</b>
+						<b>${username}'s Profile</b>
 					</h2>
 					<br />
 					<div class="form-group">
@@ -44,7 +44,7 @@
 						<div class="col-sm-5">
 							<form:form action="/profile/" method="POST">
 								<button type="submit" class="btn btn-primary">
-									<span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 									Edit Profile
 								</button>
 							</form:form>
@@ -55,7 +55,7 @@
 						<div class="col-sm-5">
 							<form:form action="/profile/changePassword" method="GET">
 								<button type="submit" class="btn btn-primary">
-									<span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 									Change Password
 								</button>
 							</form:form>
