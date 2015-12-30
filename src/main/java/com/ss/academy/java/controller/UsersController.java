@@ -183,6 +183,7 @@ public class UsersController {
 		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("currentUserID", currentUser.getId());
 		model.addAttribute("user", currentUser);
+		model.addAttribute("username", currentUser.getUsername());
 
 		return "users/editProfile";
 	}
@@ -196,18 +197,18 @@ public class UsersController {
 	public String editMyProfile(@ModelAttribute @Valid User user, BindingResult result,
 			@AuthenticationPrincipal UserDetails userDetails, ModelMap model) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
-		
+
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("currentUserID", currentUser.getId());
-		model.addAttribute("user", currentUser);
+		model.addAttribute("username", currentUser.getUsername());
 
 		if (result.hasFieldErrors("firstName") || result.hasFieldErrors("lastName") || result.hasFieldErrors("email")) {
 			return "users/editProfile";
 		}
-		
+
 		userService.updateUser(user);
 
 		return "users/editProfileSuccess";

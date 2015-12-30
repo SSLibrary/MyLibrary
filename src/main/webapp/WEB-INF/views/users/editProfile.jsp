@@ -8,7 +8,7 @@
 				<form action="/profile" method="post" class="form-horizontal">
 					<form:input type="hidden" path="id" id="id" />
 					<h2>
-						<b>${user.username}' Profile</b>
+						<b>${username}' Profile</b>
 					</h2>
 					<br />
 					<div class="form-group">
