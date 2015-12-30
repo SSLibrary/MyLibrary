@@ -23,5 +23,5 @@ public interface BookHistoryService {
 	
 	Long countAllBooksHistory(byte isReturned);
 	
-	User getCurrentBookLoaner();
+	User getCurrentBookLoaner(Long book_id);
 }

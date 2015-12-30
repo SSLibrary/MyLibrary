@@ -121,7 +121,7 @@ public class AuthorBooksController {
 			model.addAttribute("emptyList", true);
 		}
 		
-		User currentBookLoaner = bookHistoryService.getCurrentBookLoaner();
+		User currentBookLoaner = bookHistoryService.getCurrentBookLoaner(book_id);
 		
 		if (currentBookLoaner != null) {
 			model.addAttribute("currentBookLoaner", currentBookLoaner);

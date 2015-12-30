@@ -58,11 +58,13 @@ public class BookHistoryServiceImpl implements BookHistoryService {
 		return dao.countAllBooksHistory(isReturned);
 	}	
 	
-	public User getCurrentBookLoaner() {
+	public User getCurrentBookLoaner(Long book_id) {
 		User currentBookLoaner = null;
 		List<BookHistory> booksHistory = dao.findAllBooksHistory();
 		for (BookHistory bookHistory : booksHistory) {
-			if (bookHistory.getIsReturned() == LOANED_BOOK) {
+			if (bookHistory.getBook().getId() == book_id 
+					&& bookHistory.getIsReturned() == LOANED_BOOK
+					) {
 			currentBookLoaner = bookHistory.getUser();
 			break;
 			}			
