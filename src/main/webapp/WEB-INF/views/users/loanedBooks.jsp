@@ -32,7 +32,7 @@
 						<td>No</td>		
 					</c:otherwise>
 				</c:choose>
-				<td><a href="/MyLibrary/users/${loanedBook.user.id}/profile" >${loanedBook.user.username}</a></td>
+				<td><a href="/MyLibrary/users/${loanedBook.user.id}/showProfile" >${loanedBook.user.username}</a></td>
 				</tr>
 				<br />	
 			</c:forEach>
