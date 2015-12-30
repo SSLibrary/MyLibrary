@@ -49,7 +49,7 @@ REFERENCES `authors`(`author_id`) ON DELETE CASCADE
 INSERT INTO `author_books` (`book_id`, `author_id`, `title`, `status`, `pages`, `book_description`) VALUES
 (1, 1, 'Pod Igoto', 'Available', 528, 'There is no description for this book yet'),
 (2, 3, 'The Godfather','Available', 448, 'The story of Don Vito Corleone, the head of a New York Mafia family, inspired some of the most successful movies ever. It is in The Godfather of Mario Puzo  that Corleone first appears. As Corleone`s desperate struggle to control the Mafia underworld unfolds, so does the story of his family. The novel is full of exquisitely detailed characters who, despite leading unconventional lifestyles within a notorious crime family, experience the triumphs and failures of the human condition. Filled with the requisite valor, love, and rancor of a great epic, The Godfather is the definitive gangster novel.' ),
-(3, 4, 'Introduction to programming with Java', 'Available', 909, 'There is no description for this book yet' ),
+(3, 4, 'Introduction to programming with Java', 'Available', 909, 'The book “Introduction to Programming with Java” focuses on the fundamentals of computer programming, logical, algorithmical thinking, problem solving, data structures and algorithms. It uses a contemporary object-oriented approach and language but is valuable for any non-Java programmer in the begginning of his career. ' ),
 (5, 3, 'The Sicilian', 'Available', 416 ,'There is no description for this book yet');
 
 --
@@ -71,7 +71,7 @@ create table `users` (
 -- Populate one Admin User: user/pass - admin/admin
 --
 INSERT INTO `users`(`user_id`, `username`, `password`, `first_name`, `last_name`, `email`, `role`, `status`)
-VALUES (uuid(), 'admin','$2a$10$oMBvbuqBRgsamQYLVvXgsempbOV8d879sc.HyKYquJTxeGY1qNpCS', 'Adminec','Adminov','admin@softserveinc.com', 'ADMIN', 'ACTIVE');
+VALUES (uuid(), 'admin','$2a$10$oMBvbuqBRgsamQYLVvXgsempbOV8d879sc.HyKYquJTxeGY1qNpCS', 'Adminec','Adminov','admin@abv.com', 'ADMIN', 'ACTIVE');
 
 --
 -- Table structure for table `book_ratings`

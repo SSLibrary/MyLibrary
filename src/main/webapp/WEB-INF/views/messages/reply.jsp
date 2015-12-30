@@ -15,7 +15,7 @@
 		<div class="col-sm-2">
 			<form:form action="/messages/${currentUserID}/${message_id}/reply" method="POST">
 				<button type="submit" class="btn btn-primary form-control">
-				<span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> Reply</button>
+				<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Reply</button>
 			</form:form>
 		</div>
 	</div>
