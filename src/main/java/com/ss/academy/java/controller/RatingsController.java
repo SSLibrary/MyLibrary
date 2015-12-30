@@ -77,7 +77,6 @@ public class RatingsController {
 		ratingToSave.setBook(bookService.findById(book_id));
 		ratingToSave.setRatingValue(rating.getRatingValue());
 		ratingToSave.setUser(currentUser);
-		System.out.println();
 
 		ratingService.saveRating(ratingToSave);
 
@@ -97,7 +96,6 @@ public class RatingsController {
 
 		Book book = bookService.findById(book_id);
 		book.setAverageRating(RatingCalculator.calculate(book.getRatings()));
-		System.out.println(book.getAverageRating());
 
 		model.addAttribute("book", book);
 		model.addAttribute("unreadMessages", unreadMessages);

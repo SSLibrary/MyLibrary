@@ -34,7 +34,10 @@
 		<c:forEach items="${allUsers}" var="user">
 			<div class="row">
 				<div class="col-md-2 col-xs-4 text-center">
-				<h5>${user.username}</h5>
+				<h5>
+					<a href="<c:url value='/users/${user.id}/showProfile' />">${user.username}</a>
+				</h5>
+				
 				</div>
 				<div class="col-md-2 col-xs-1 text-center">
 				<a href="/MyLibrary/messages/${currentUserID}/new/${user.id}" 

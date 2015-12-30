@@ -43,7 +43,7 @@
 	</ul>
 	<sec:authorize access="isAuthenticated()">
 		<p class="text-right" style="margin-right:10px">
-			 Hello, <a href="/MyLibrary/users/${currentUserID}/profile/"><strong><sec:authentication property="principal.username" /></strong></a>
+			 Hello, <a href="/MyLibrary/users/${currentUserID}/editProfile/"><strong><sec:authentication property="principal.username" /></strong></a>
 		</p>
 		<form action="/MyLibrary/logout" method="post" class="navbar-form navbar-right">
 			<button type="submit" class="btn btn-default btn-sm" style="margin-right:10px">

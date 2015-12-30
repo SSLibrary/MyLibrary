@@ -172,7 +172,7 @@ public class UsersController {
 	 * This method will provide the medium to update current user profile
 	 * details.
 	 */
-	@RequestMapping(value = "users/{user_id}/profile", method = RequestMethod.GET)
+	@RequestMapping(value = "users/{user_id}/editProfile", method = RequestMethod.GET)
 	public String showMyProfile(@AuthenticationPrincipal UserDetails userDetails, @PathVariable String user_id,
 			ModelMap model) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
@@ -193,7 +193,7 @@ public class UsersController {
 	 * editing user profile in database. It also validates the user input and
 	 * check whether the entered password match with the one stored in the DB.
 	 */
-	@RequestMapping(value = "users/{user_id}/profile", method = RequestMethod.POST)
+	@RequestMapping(value = "users/{user_id}/editProfile", method = RequestMethod.POST)
 	public String editMyProfile(@ModelAttribute @Valid User user, BindingResult result,
 			@AuthenticationPrincipal UserDetails userDetails, ModelMap model) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
@@ -212,5 +212,25 @@ public class UsersController {
 		userService.updateUser(user);
 
 		return "users/editProfileSuccess";
+	}
+	
+	/*
+	 * This method will provide the medium to update current user profile
+	 * details.
+	 */
+	@RequestMapping(value = "users/{user_id}/showProfile", method = RequestMethod.GET)
+	public String showUserProfile(@AuthenticationPrincipal UserDetails userDetails, @PathVariable String user_id,
+			ModelMap model) {
+		User currentUser = userService.findById(user_id);
+
+		List<Message> messages = currentUser.getReceivedMessage();
+		int unreadMessages = UnreadMessagesCounter.count(messages);
+
+		model.addAttribute("unreadMessages", unreadMessages);
+		model.addAttribute("currentUserID", currentUser.getId());
+		model.addAttribute("user", currentUser);
+		model.addAttribute("username", currentUser.getUsername());
+
+		return "users/showProfile";
 	}
 }
