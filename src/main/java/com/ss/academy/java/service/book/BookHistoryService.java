@@ -17,7 +17,7 @@ public interface BookHistoryService {
 	@PreAuthorize("hasAuthority('ADMIN')")
 	List<BookHistory> findAllBooksHistory();
 	
-	List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults);
+	List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults, String user_id);
 	
 	List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults, byte isReturned);
 	

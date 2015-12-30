@@ -49,7 +49,7 @@ public class BookHistoryController {
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
 
-		List<BookHistory> booksHistory = bookHistoryService.findAllBooksHistory(offset, maxResults);
+		List<BookHistory> booksHistory = bookHistoryService.findAllBooksHistory(offset, maxResults, currentUser.getUsername());
 		Long countAllBookHistory = bookHistoryService.countAllBooksHistory();
 
 		if (booksHistory.isEmpty()) {

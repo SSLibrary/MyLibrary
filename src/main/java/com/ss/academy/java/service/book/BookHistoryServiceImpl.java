@@ -38,8 +38,8 @@ public class BookHistoryServiceImpl implements BookHistoryService {
 		return booksHistory;
 	}
 	
-	public List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults) {
-		List<BookHistory> booksHistory = dao.findAllBooksHistory(offset, maxResults);
+	public List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults, String user_id) {
+		List<BookHistory> booksHistory = dao.findAllBooksHistory(offset, maxResults, user_id);
 		return booksHistory;
 	}
 	
@@ -54,5 +54,6 @@ public class BookHistoryServiceImpl implements BookHistoryService {
 	
 	public Long countAllBooksHistory(byte isReturned) {
 		return dao.countAllBooksHistory(isReturned);
-	}	
+	}
+
 }

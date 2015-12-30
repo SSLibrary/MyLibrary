@@ -41,9 +41,11 @@ public class BookHistoryDaoImpl extends AbstractDao<Long, BookHistory> implement
 	
 	// List of all book history for admin in books history menu
 	@SuppressWarnings("unchecked")
-	public List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults) {
+	public List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults, String user_id) {
 		return getSession()
-				.createCriteria(BookHistory.class)
+				.createCriteria(BookHistory.class, "bookHistory")
+				.createAlias("bookHistory.user", "bu") // inner join by default				
+				.add(Restrictions.eq("bu.username", user_id))	
 				.addOrder( Order.desc("returnDate"))
 				.setFirstResult(offset!=null?offset:0)
 				.setMaxResults(maxResults!=null?maxResults:5)
