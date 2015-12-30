@@ -2,7 +2,7 @@
 <%@ taglib prefix="tag" uri="/WEB-INF/taglibs/customTaglib.tld"%>			
 		
 <div class="jumbotron">
-	<h1 class="text-center">${author.name}</h1>
+	<h1 class="text-center">${author.name}'s Books</h1>
 </div>
 <c:choose>
 	<c:when test="${emptyList}">
