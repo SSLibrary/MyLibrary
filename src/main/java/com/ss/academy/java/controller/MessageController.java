@@ -143,7 +143,12 @@ public class MessageController {
 	@RequestMapping(value = { "/{message_id}/reply" }, method = RequestMethod.GET)
 	public String replyToMessage(ModelMap model, @PathVariable Integer message_id,
 			@AuthenticationPrincipal UserDetails userDetails) {
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		List<Message> allMessages = currentUser.getReceivedMessage();
+		int unreadMessages = UnreadMessagesCounter.count(allMessages);
+		
 		Message parent = messageService.findById(message_id);
+		
 		if (parent == null) {
 			return "redirect:/messages/{user_id}/inbox";
 		}
@@ -157,10 +162,6 @@ public class MessageController {
 			parent.setIsNew(READ_MESSAGE);
 			messageService.updateMessageStatus(parent);
 		}
-
-		User currentUser = userService.findByUsername(userDetails.getUsername());
-		List<Message> allMessages = currentUser.getReceivedMessage();
-		int unreadMessages = UnreadMessagesCounter.count(allMessages);
 
 		List<Message> previousMessages = new ArrayList<Message>();
 		previousMessages.add(parent);

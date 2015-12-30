@@ -15,7 +15,7 @@ public interface BookHistoryService {
 	
 	List<BookHistory> findAllBooksHistory();
 	
-	List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults, String user_id);
+	List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults, String username);
 	
 	List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults, byte isReturned);
 	

@@ -43,13 +43,14 @@ public class BookHistoryController {
 
 	@PreAuthorize("hasAuthority('USER')")
 	@RequestMapping(value = { "/{user_id}" }, method = RequestMethod.GET)
-	public String listBooksHistory(ModelMap model, @AuthenticationPrincipal UserDetails userDetails, Integer offset,
-			Integer maxResults) {
+	public String listBooksHistory(ModelMap model, @AuthenticationPrincipal UserDetails userDetails, 
+			Integer offset, Integer maxResults) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
 
-		List<BookHistory> booksHistory = bookHistoryService.findAllBooksHistory(offset, maxResults, currentUser.getUsername());
+		List<BookHistory> booksHistory = bookHistoryService.findAllBooksHistory(
+				offset, maxResults, currentUser.getUsername());
 		Long countAllBookHistory = bookHistoryService.countAllBooksHistory();
 
 		if (booksHistory.isEmpty()) {
@@ -111,8 +112,8 @@ public class BookHistoryController {
 
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/loaned", method = RequestMethod.GET)
-	public String showAllLoanedBooks(@AuthenticationPrincipal UserDetails userDetails, ModelMap model, Integer offset,
-			Integer maxResults, BookHistory bookHistories) {
+	public String showAllLoanedBooks(@AuthenticationPrincipal UserDetails userDetails, ModelMap model, 
+			Integer offset, Integer maxResults, BookHistory bookHistories) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
