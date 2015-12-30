@@ -22,7 +22,6 @@ import com.ss.academy.java.model.user.User;
 import com.ss.academy.java.service.book.BookService;
 import com.ss.academy.java.service.rating.RatingService;
 import com.ss.academy.java.service.user.UserService;
-import com.ss.academy.java.util.RatingCalculator;
 import com.ss.academy.java.util.UnreadMessagesCounter;
 
 /**
@@ -81,26 +80,5 @@ public class RatingsController {
 		ratingService.saveRating(ratingToSave);
 
 		return "redirect:/authors/{author_id}/books/{book_id}/preview";
-	}
-
-	/*
-	 * This method provides the ability the average rating to be calculated and
-	 * displayed.
-	 */
-	@RequestMapping(value = { "/ratingCheck" }, method = RequestMethod.GET)
-	public String checkRating(@PathVariable Long book_id, ModelMap model,
-			@AuthenticationPrincipal UserDetails userDetails) {
-		User currentUser = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = currentUser.getReceivedMessage();
-		int unreadMessages = UnreadMessagesCounter.count(messages);
-
-		Book book = bookService.findById(book_id);
-		book.setAverageRating(RatingCalculator.calculate(book.getRatings()));
-
-		model.addAttribute("book", book);
-		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currentUserID", currentUser.getId());
-
-		return "books/ratingCheck";
 	}
 }

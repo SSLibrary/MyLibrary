@@ -27,6 +27,7 @@ import com.ss.academy.java.service.author.AuthorService;
 import com.ss.academy.java.service.book.BookService;
 import com.ss.academy.java.service.rating.RatingService;
 import com.ss.academy.java.service.user.UserService;
+import com.ss.academy.java.util.RatingCalculator;
 import com.ss.academy.java.util.UnreadMessagesCounter;
 
 import sun.misc.BASE64Encoder;
@@ -69,7 +70,7 @@ public class AuthorBooksController {
 		if (books.isEmpty()) {
 			model.addAttribute("emptyList", true);
 		}
-		
+
 		model.addAttribute("books", books);
 		model.addAttribute("count", count);
 		model.addAttribute("offset", offset);
@@ -81,21 +82,23 @@ public class AuthorBooksController {
 	}
 
 	@RequestMapping(value = { "/{book_id}/preview" }, method = RequestMethod.GET)
-	public String previewBook(@PathVariable Long book_id, ModelMap model, 
+	public String previewBook(@PathVariable Long book_id, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
-		
+
 		Book book = bookService.findById(book_id);
+		book.setAverageRating(RatingCalculator.calculate(book.getRatings()));
+
 		List<Rating> bookRatings = book.getRatings();
-			
+
 		for (Rating rating : bookRatings) {
-				if (rating.getUser().getUsername().equals(userDetails.getUsername())) {
+			if (rating.getUser().getUsername().equals(userDetails.getUsername())) {
 				book.setIsRated(true);
 				break;
-				}
 			}
+		}
 
 		try {
 			byte[] bytes = book.getImage();
@@ -112,11 +115,12 @@ public class AuthorBooksController {
 		} catch (NullPointerException e) {
 			model.addAttribute("emptyList", true);
 		}
-		
+
 		model.addAttribute("currentUserID", currentUser.getId());
 		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("book", book);
 		
+		System.out.println(book.getIsRated());
 
 		return "books/bookPreview";
 	}
