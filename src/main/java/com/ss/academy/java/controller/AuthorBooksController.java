@@ -68,17 +68,8 @@ public class AuthorBooksController {
 
 		if (books.isEmpty()) {
 			model.addAttribute("emptyList", true);
-		} else {
-			for (Book book : books) {
-				List<Rating> bookRatings = book.getRatings();
-				for (Rating rating : bookRatings) {
-					if (rating.getUser().getUsername().equals(userDetails.getUsername())) {
-						book.setIsRated(true);
-						break;
-					}
-				}
-			}
 		}
+		
 		model.addAttribute("books", books);
 		model.addAttribute("count", count);
 		model.addAttribute("offset", offset);
@@ -97,6 +88,14 @@ public class AuthorBooksController {
 		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		Book book = bookService.findById(book_id);
+		List<Rating> bookRatings = book.getRatings();
+			
+		for (Rating rating : bookRatings) {
+				if (rating.getUser().getUsername().equals(userDetails.getUsername())) {
+				book.setIsRated(true);
+				break;
+				}
+			}
 
 		try {
 			byte[] bytes = book.getImage();
