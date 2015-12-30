@@ -120,8 +120,6 @@ public class AuthorBooksController {
 		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("book", book);
 		
-		System.out.println(book.getIsRated());
-
 		return "books/bookPreview";
 	}
 

@@ -27,30 +27,16 @@
 			Message
 		</a>
 	</div>
-	<c:choose>
-		<c:when test="${ user.userRole == 'ADMIN'}">
-			<div class="col-md-2">
-				<div class="btn-group btn-group-justified">
-					<div class="btn-group">
-						<button type="submit" class="btn btn-primary disabled">Change
+	<div class="col-md-2">
+		<div class="btn-group btn-group-justified">
+			<sec:authorize access="hasAuthority('ADMIN')">
+				<div class="btn-group">
+					<form:form action="/MyLibrary/users/${user.id}" method="PUT">
+						<button type="submit" class="btn btn-primary">Change
 							Status</button>
-					</div>
+					</form:form>
 				</div>
-			</div>
-		</c:when>
-		<c:otherwise>
-			<div class="col-md-2">
-				<div class="btn-group btn-group-justified">
-					<sec:authorize access="hasAuthority('ADMIN')">
-						<div class="btn-group">
-							<form:form action="/MyLibrary/users/${user.id}" method="PUT">
-								<button type="submit" class="btn btn-primary">Change
-									Status</button>
-							</form:form>
-						</div>
-					</sec:authorize>
-				</div>
-			</div>
-		</c:otherwise>
-	</c:choose>
+			</sec:authorize>
+		</div>
+	</div>
 </div>
