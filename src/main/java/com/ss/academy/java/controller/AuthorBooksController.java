@@ -81,12 +81,12 @@ public class AuthorBooksController {
 	}
 
 	@RequestMapping(value = { "/{book_id}/preview" }, method = RequestMethod.GET)
-	public String previewBook(@PathVariable Long book_id, ModelMap model,
+	public String previewBook(@PathVariable Long book_id, ModelMap model, 
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
-
+		
 		Book book = bookService.findById(book_id);
 		List<Rating> bookRatings = book.getRatings();
 			
@@ -112,10 +112,11 @@ public class AuthorBooksController {
 		} catch (NullPointerException e) {
 			model.addAttribute("emptyList", true);
 		}
-
+		
 		model.addAttribute("currentUserID", currentUser.getId());
 		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("book", book);
+		
 
 		return "books/bookPreview";
 	}
@@ -130,6 +131,7 @@ public class AuthorBooksController {
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
 
+		Author author = authorService.findById(author_id);
 		List<Book> books = bookService.findBooksByTitle(bookTitle);
 		List<Book> authorBooks = new ArrayList<Book>();
 
@@ -139,6 +141,7 @@ public class AuthorBooksController {
 			}
 		}
 
+		model.addAttribute("author", author);
 		model.addAttribute("books", authorBooks);
 		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("currentUserID", currentUser.getId());
