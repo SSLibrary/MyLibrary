@@ -58,7 +58,7 @@ public class BooksController {
 			List<Message> messages = currentUser.getReceivedMessage();
 			int unread = UnreadMessagesCounter.counter(messages);	
 			List<Book> books = bookService.findBooksByTitle(bookTitle);
-			
+
 			model.addAttribute("books", books);
 			model.addAttribute("unread", unread);
 			model.addAttribute("currUser", currentUser.getId());

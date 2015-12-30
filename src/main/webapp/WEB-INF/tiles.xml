@@ -43,6 +43,12 @@ Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 		<put-attribute name="body" value="/WEB-INF/views/users/registrationSuccess.jsp" />
 		<put-attribute name="current" value="registrationSuccess"></put-attribute>
 	</definition>
+	
+	<definition name="users/accessDenied" extends="baseLayout">
+		<put-attribute name="title" value="Access Denied page" />
+		<put-attribute name="body" value="/WEB-INF/views/users/accessDenied.jsp" />
+		<put-attribute name="current" value="/accessDenied"></put-attribute>
+	</definition>
 
 	<definition name="users/profile" extends="baseLayout">
 		<put-attribute name="title" value="User Profile" />

@@ -83,9 +83,16 @@ public class UsersController {
 	 * This method provides the ability to search for user by its username.
 	 */
 	@RequestMapping(value = { "/users/search" }, method = RequestMethod.GET)
-	public String searchUserByUsername(@RequestParam("username") String username, ModelMap model) {
+	public String searchUserByUsername(@RequestParam("username") String username, ModelMap model,
+			@AuthenticationPrincipal UserDetails userDetails) {
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = currentUser.getReceivedMessage();
+		int unread = UnreadMessagesCounter.counter(messages);
+		
 		List<User> users = userService.findUsersByUserName(username);
 		model.addAttribute("allUsers", users);
+		model.addAttribute("unread", unread);
+		model.addAttribute("currUser", currentUser.getId());
 
 		return "users/all";
 	}
@@ -109,6 +116,19 @@ public class UsersController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginPage() {
 		return "users/login";
+	}
+	
+	@RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
+	public String accessDeniedPage(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = currentUser.getReceivedMessage();
+		int unread = UnreadMessagesCounter.counter(messages);
+		
+		model.addAttribute("unread", unread);
+		model.addAttribute("currUser", currentUser.getId());
+		model.addAttribute("username", currentUser.getUsername());
+		
+		return "users/accessDenied";
 	}
 
 	/*
