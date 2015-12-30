@@ -22,7 +22,7 @@
 <div style="float: left; margin-left: 50px; padding: 0px">
 	<div>
 		<h3>
-			<strong>Title: ${book.title}</strong>
+			<strong>Book Title: ${book.title}</strong>
 		</h3>
 	</div>
 	<dl class="dl-horizontal" style="margin-left: -80px;">
