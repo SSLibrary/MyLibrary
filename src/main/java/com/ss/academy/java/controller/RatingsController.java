@@ -52,14 +52,14 @@ public class RatingsController {
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
-		int unread = UnreadMessagesCounter.counter(messages);
+		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		Book book = bookService.findById(book_id);
 		Rating rating = new Rating();
 		
 		model.addAttribute("rating", rating);
 		model.addAttribute("book", book);
-		model.addAttribute("unread", unread);
+		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("currUser", user.getId());
 
 		return "books/rating";
@@ -95,14 +95,14 @@ public class RatingsController {
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
-		int unread = UnreadMessagesCounter.counter(messages);
+		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		Book book = bookService.findById(book_id);
 		book.setAverageRating(RatingCalculator.calculate(book.getRatings()));
 		System.out.println(book.getAverageRating());
 
 		model.addAttribute("book", book);
-		model.addAttribute("unread", unread);
+		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("currUser", user.getId());
 
 		return "books/ratingCheck";

@@ -43,9 +43,9 @@ public class HomeController {
 		if (user != null) {
 			User currentUser = userService.findByUsername(user.getUsername());
 			List<Message> messages = currentUser.getReceivedMessage();
-			int unread = UnreadMessagesCounter.counter(messages);
+			int unreadMessages = UnreadMessagesCounter.count(messages);
 			model.addAttribute("logged", true);
-			model.addAttribute("unread", unread);
+			model.addAttribute("unreadMessages", unreadMessages);
 			model.addAttribute("currUser", currentUser.getId());
 		}
 

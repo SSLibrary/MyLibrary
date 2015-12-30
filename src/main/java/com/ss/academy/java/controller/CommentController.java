@@ -52,7 +52,7 @@ public class CommentController {
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
-		int unread = UnreadMessagesCounter.counter(messages);
+		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		Author author = authorService.findById(author_id);
 		Book book = bookService.findById(book_id);
@@ -67,7 +67,7 @@ public class CommentController {
 		model.addAttribute("comments", comments);
 		model.addAttribute("author", author.getName());
 		model.addAttribute("book", book.getTitle());
-		model.addAttribute("unread", unread);
+		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("currUser", user.getId());
 
 		return "comments/allComments";
@@ -81,14 +81,14 @@ public class CommentController {
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
-		int unread = UnreadMessagesCounter.counter(messages);
+		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		Comment comment = new Comment();
 		Book book = bookService.findById(book_id);
 		
 		model.addAttribute("comment", comment);
 		model.addAttribute("book", book.getTitle());
-		model.addAttribute("unread", unread);
+		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("currUser", user.getId());
 
 		return "comments/addNewComment";

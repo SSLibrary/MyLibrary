@@ -46,7 +46,7 @@ public class AuthorsController {
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
-		int unread = UnreadMessagesCounter.counter(messages);
+		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		List<Author> authors = authorService.listAllAuthors(offset, maxResults);
 
@@ -56,7 +56,7 @@ public class AuthorsController {
 		model.addAttribute("authors", authors);
 		model.addAttribute("count", authorService.countAllAuthors());
 		model.addAttribute("offset", offset);
-		model.addAttribute("unread", unread);
+		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("currUser", user.getId());
 
 		return "authors/all";
@@ -71,10 +71,10 @@ public class AuthorsController {
 		List<Author> authors = authorService.findAuthorsByName(author_name);
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
-		int unread = UnreadMessagesCounter.counter(messages);
+		int unreadMessages = UnreadMessagesCounter.count(messages);
 		
 		model.addAttribute("authors", authors);
-		model.addAttribute("unread", unread);
+		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("currUser", user.getId());
 		
 		return "authors/all";
@@ -89,13 +89,13 @@ public class AuthorsController {
 	public String addNewAuthor(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
-		int unread = UnreadMessagesCounter.counter(messages);
+		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		Author author = new Author();
 		model.addAttribute("author", author);
 		model.addAttribute("edit", false);
 		model.addAttribute("countries", AuthorCountry.values());
-		model.addAttribute("unread", unread);
+		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("currUser", user.getId());
 
 		return "authors/addNewAuthor";
@@ -126,12 +126,12 @@ public class AuthorsController {
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
-		int unread = UnreadMessagesCounter.counter(messages);
+		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		Author author = authorService.findById(author_id);
 		model.addAttribute("author", author);
 		model.addAttribute("edit", true);
-		model.addAttribute("unread", unread);
+		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("currUser", user.getId());
 
 		return "authors/addNewAuthor";

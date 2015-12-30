@@ -47,7 +47,7 @@ public class MessageController {
 			Integer offset, Integer maxResults, String username) {
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> allMessages = user.getReceivedMessage();
-		int unread = UnreadMessagesCounter.counter(allMessages);
+		int unreadMessages = UnreadMessagesCounter.count(allMessages);
 
 		List<Message> messages = messageService.listAllReceivedMessages(offset, maxResults, userDetails.getUsername());
 		Long count = messageService.countReceivedMessages(userDetails.getUsername());
@@ -56,7 +56,7 @@ public class MessageController {
 		model.addAttribute("messages", messages);
 		model.addAttribute("count", count);
 		model.addAttribute("offset", offset);
-		model.addAttribute("unread", unread);
+		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("currUser", user.getId());
 
 		return "messages/inbox";
@@ -70,7 +70,7 @@ public class MessageController {
 			Integer maxResults, String username) {
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> allMessages = user.getReceivedMessage();
-		int unread = UnreadMessagesCounter.counter(allMessages);
+		int unreadMessages = UnreadMessagesCounter.count(allMessages);
 
 		List<Message> messages = messageService.listAllSentMessages(offset, maxResults, userDetails.getUsername());
 		Long count = messageService.countSentMessages(userDetails.getUsername());
@@ -79,7 +79,7 @@ public class MessageController {
 		model.addAttribute("messages", messages);
 		model.addAttribute("count", count);
 		model.addAttribute("offset", offset);
-		model.addAttribute("unread", unread);
+		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("currUser", user.getId());
 
 		return "messages/outbox";
@@ -100,12 +100,12 @@ public class MessageController {
 		
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> allMessages = currentUser.getReceivedMessage();
-		int unread = UnreadMessagesCounter.counter(allMessages);
+		int unreadMessages = UnreadMessagesCounter.count(allMessages);
 	
 		Message message = new Message();
 		model.addAttribute("message", message);
 		model.addAttribute("receiver", user.getUsername());
-		model.addAttribute("unread", unread);
+		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("currUser", currentUser.getId());
 
 		return "messages/new";
@@ -160,7 +160,7 @@ public class MessageController {
 	
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> allMessages = currentUser.getReceivedMessage();
-		int unread = UnreadMessagesCounter.counter(allMessages);
+		int unreadMessages = UnreadMessagesCounter.count(allMessages);
 
 		List<Message> previousMessages = new ArrayList<Message>();
 		previousMessages.add(parent);
@@ -174,7 +174,7 @@ public class MessageController {
 		model.addAttribute("message", message);
 		model.addAttribute("parents", previousMessages);
 		model.addAttribute("receiver", parent.getSender().getUsername());
-		model.addAttribute("unread", unread);
+		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("currUser", currentUser.getId());
 
 		return "messages/reply";
@@ -212,7 +212,7 @@ public class MessageController {
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> allMessages = currentUser.getReceivedMessage();
-		int unread = UnreadMessagesCounter.counter(allMessages);
+		int unreadMessages = UnreadMessagesCounter.count(allMessages);
 
 		Message parent = messageService.findById(message_id);
 		
@@ -234,7 +234,7 @@ public class MessageController {
 		}
 
 		model.addAttribute("parents", previousMessages);
-		model.addAttribute("unread", unread);
+		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("currUser", currentUser.getId());
 
 		return "messages/display";

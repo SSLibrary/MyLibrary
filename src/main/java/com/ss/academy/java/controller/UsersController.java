@@ -58,7 +58,7 @@ public class UsersController {
 			Integer offset, Integer maxResults) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = currentUser.getReceivedMessage();
-		int unread = UnreadMessagesCounter.counter(messages);
+		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		// Removing the current user from the list of users
 		List<User> allUsers = userService.listAllUsers(offset, maxResults);
@@ -73,7 +73,7 @@ public class UsersController {
 		model.addAttribute("allUsers", filteredList);
 		model.addAttribute("count", userService.countAllUsers());
 		model.addAttribute("offset", offset);
-		model.addAttribute("unread", unread);
+		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("currUser", currentUser.getId());
 
 		return "users/all";
@@ -87,11 +87,11 @@ public class UsersController {
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = currentUser.getReceivedMessage();
-		int unread = UnreadMessagesCounter.counter(messages);
+		int unreadMessages = UnreadMessagesCounter.count(messages);
 		
 		List<User> users = userService.findUsersByUserName(username);
 		model.addAttribute("allUsers", users);
-		model.addAttribute("unread", unread);
+		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("currUser", currentUser.getId());
 
 		return "users/all";
@@ -122,9 +122,9 @@ public class UsersController {
 	public String accessDeniedPage(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = currentUser.getReceivedMessage();
-		int unread = UnreadMessagesCounter.counter(messages);
+		int unreadMessages = UnreadMessagesCounter.count(messages);
 		
-		model.addAttribute("unread", unread);
+		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("currUser", currentUser.getId());
 		model.addAttribute("username", currentUser.getUsername());
 		
@@ -180,9 +180,9 @@ public class UsersController {
 		currentUser.setNewPassword2("");
 
 		List<Message> messages = currentUser.getReceivedMessage();
-		int unread = UnreadMessagesCounter.counter(messages);
+		int unreadMessages = UnreadMessagesCounter.count(messages);
 
-		model.addAttribute("unread", unread);
+		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("currUser", currentUser.getId());
 		model.addAttribute("user", currentUser);
 

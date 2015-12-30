@@ -61,7 +61,7 @@ public class AuthorBooksController {
 			ModelMap model, Integer offset, Integer maxResults) {
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
-		int unread = UnreadMessagesCounter.counter(messages);
+		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		Author author = authorService.findById(author_id);
 		List<Book> books = bookService.listAllBooks(offset, maxResults, author_id);
@@ -84,7 +84,7 @@ public class AuthorBooksController {
 		model.addAttribute("count", count);
 		model.addAttribute("offset", offset);
 		model.addAttribute("author", author);
-		model.addAttribute("unread", unread);
+		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("currUser", user.getId());
 		
 		return "books/allAuthorBooks";
@@ -95,7 +95,7 @@ public class AuthorBooksController {
 			@AuthenticationPrincipal UserDetails userDetails) {	
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
-		int unread = UnreadMessagesCounter.counter(messages);
+		int unreadMessages = UnreadMessagesCounter.count(messages);
 		
 		Book book = bookService.findById(book_id);
 		
@@ -116,7 +116,7 @@ public class AuthorBooksController {
 		}			
 		
 		model.addAttribute("currUser", user.getId());
-		model.addAttribute("unread", unread);
+		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("book", book);
 		
 		return "books/bookPreview";
@@ -130,7 +130,7 @@ public class AuthorBooksController {
 			ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
-		int unread = UnreadMessagesCounter.counter(messages);
+		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		List<Book> books = bookService.findBooksByTitle(bookTitle);
 		List<Book> authorBooks = new ArrayList<Book>();
@@ -142,7 +142,7 @@ public class AuthorBooksController {
 		}
 
 		model.addAttribute("books", authorBooks);
-		model.addAttribute("unread", unread);
+		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("currUser", user.getId());
 
 		return "books/allAuthorBooks";
@@ -157,12 +157,12 @@ public class AuthorBooksController {
 
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
-		int unread = UnreadMessagesCounter.counter(messages);
+		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		Book book = new Book();
 		model.addAttribute("book", book);
 		model.addAttribute("edit", false);
-		model.addAttribute("unread", unread);
+		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("currUser", user.getId());
 
 		return "books/addNewBook";
@@ -209,7 +209,7 @@ public class AuthorBooksController {
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = user.getReceivedMessage();
-		int unread = UnreadMessagesCounter.counter(messages);
+		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		Book book = bookService.findById(book_id);
 		Author author = book.getAuthor();
@@ -217,7 +217,7 @@ public class AuthorBooksController {
 		model.addAttribute("book", book);
 		model.addAttribute("author", author);
 		model.addAttribute("edit", true);
-		model.addAttribute("unread", unread);
+		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("currUser", user.getId());
 
 		return "books/addNewBook";

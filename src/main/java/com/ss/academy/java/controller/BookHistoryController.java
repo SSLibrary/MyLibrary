@@ -47,7 +47,7 @@ public class BookHistoryController {
 			Integer offset, Integer maxResults) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = currentUser.getReceivedMessage();
-		int unread = UnreadMessagesCounter.counter(messages);
+		int unreadMessages = UnreadMessagesCounter.count(messages);
 		
 		List<BookHistory> booksHistory = bookHistoryService.findAllBooksHistory(offset, maxResults);
 		Long countAllBookHistory = bookHistoryService.countAllBooksHistory();
@@ -61,7 +61,7 @@ public class BookHistoryController {
 			model.addAttribute("offset", offset);
 		}
 		
-		model.addAttribute("unread", unread);
+		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("currUser", currentUser.getId());
 		
 		return "users/booksHistory";
@@ -116,7 +116,7 @@ public class BookHistoryController {
 			Integer offset, Integer maxResults, BookHistory bookHistories) {	
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = currentUser.getReceivedMessage();
-		int unread = UnreadMessagesCounter.counter(messages);
+		int unreadMessages = UnreadMessagesCounter.count(messages);
 		
 		Date currDate = new Date(System.currentTimeMillis());		
 		List<BookHistory> bookHistory = bookHistoryService.findAllBooksHistory(offset, maxResults, NOT_RETURNED);
@@ -132,7 +132,7 @@ public class BookHistoryController {
 			model.addAttribute("currDate", currDate);
 		}
 			
-		model.addAttribute("unread", unread);
+		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("currUser", currentUser.getId());
 		
 		return "users/loanedBooks";

@@ -37,13 +37,13 @@ public class BooksController {
 			Integer offset, Integer maxResults) {
 			User currentUser = userService.findByUsername(user.getUsername());
 			List<Message> messages = currentUser.getReceivedMessage();
-			int unread = UnreadMessagesCounter.counter(messages);
+			int unreadMessages = UnreadMessagesCounter.count(messages);
 			List<Book> books = bookService.listAllBooks(offset, maxResults);
 			
 			model.addAttribute("books", books);
 			model.addAttribute("count", bookService.countAllBooks());
 			model.addAttribute("offset", offset);
-			model.addAttribute("unread", unread);
+			model.addAttribute("unreadMessages", unreadMessages);
 			model.addAttribute("currUser", currentUser.getId());
 		
 		return "books/allBooks";
@@ -52,15 +52,21 @@ public class BooksController {
 		 * This method provides the ability to search for books by their titles.
 		 */
 	@RequestMapping(value = { "/books/search" }, method = RequestMethod.GET)
-	public String searchBookByTitle(@RequestParam("title") String bookTitle, 
+	public String searchBookByTitle(@RequestParam("bookTitle") String bookTitle, 
 			ModelMap model, @AuthenticationPrincipal UserDetails user) {
 			User currentUser = userService.findByUsername(user.getUsername());
 			List<Message> messages = currentUser.getReceivedMessage();
-			int unread = UnreadMessagesCounter.counter(messages);	
+			int unreadMessages = UnreadMessagesCounter.count(messages);	
 			List<Book> books = bookService.findBooksByTitle(bookTitle);
 
-			model.addAttribute("books", books);
-			model.addAttribute("unread", unread);
+			if (books.isEmpty()) {
+				model.addAttribute("isEmpty", true);
+			} else {
+				model.addAttribute("isEmpty", false);
+				model.addAttribute("books", books);
+			}
+			
+			model.addAttribute("unreadMessages", unreadMessages);
 			model.addAttribute("currUser", currentUser.getId());
 
 			return "books/allBooks";

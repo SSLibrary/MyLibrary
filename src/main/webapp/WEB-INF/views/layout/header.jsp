@@ -20,7 +20,7 @@
 			<span class="glyphicon glyphicon-user" aria-hidden="true"></span> Users</a></li>
 		</sec:authorize>	
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
-			<li><a href="/MyLibrary/messages/${currUser}/inbox"><span class="badge">${unread}</span> Inbox</a></li>
+			<li><a href="/MyLibrary/messages/${currUser}/inbox"><span class="badge">${unreadMessages}</span> Inbox</a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAuthority('USER') OR hasAuthority('ADMIN')">
 			<li><a href="/MyLibrary/messages/${currUser}/outbox">

@@ -4,13 +4,18 @@
 <div class="jumbotron">
 	<h1 class="text-center">Books</h1>
 </div>
+<c:choose>
+	<c:when test="${emptyList}">
+		<h2 class="text-center">The list is empty!</h2>
+	</c:when>
+	<c:otherwise>
 <form:form action="search" method="GET">
 	<div class="row">
 		<div class="col-md-12">
 			<div class="input-group">
 				<span class="input-group-btn">
 					<button class="btn btn-default" type="submit">Go!</button>
-				</span> <input type="text" class="form-control" name="title"
+				</span> <input type="text" class="form-control" name="bookTitle"
 					placeholder="Search for Book by Title">
 			</div>
 		</div>
@@ -45,7 +50,8 @@
 	</div>
 	<br />
 </c:forEach>
-
+</c:otherwise>
+</c:choose>
 <!-- pagination -->				
 <c:choose>
 	<c:when test="${count > 4}">
