@@ -22,7 +22,7 @@
 <div style="float: left; margin-left: 50px; padding: 0px">
 	<div>
 		<h3>
-			<strong>Title: ${book.title}</strong>
+			<strong>Book Title: ${book.title}</strong>
 		</h3>
 	</div>
 	<dl class="dl-horizontal" style="margin-left: -80px;">
@@ -33,7 +33,14 @@
 		<dt>Description:</dt>
 		<dd style="width: 500px">${book.bookDescription}</dd>
 		<dt>Status:</dt>
+		<c:choose>
+			<c:when test="${isBookLoaned}">
+			<dd>${book.status} by <a href="<c:url value='/users/${currentBookLoaner.id}/showProfile' />">${currentBookLoaner.username}</a></dd>
+		</c:when>
+		<c:otherwise>
 		<dd>${book.status}</dd>
+		</c:otherwise>
+		</c:choose>
 	</dl>
 </div>
 <div style="float: left; margin-left: 130px;">

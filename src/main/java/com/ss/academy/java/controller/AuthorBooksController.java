@@ -20,10 +20,12 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.ss.academy.java.model.author.Author;
 import com.ss.academy.java.model.book.Book;
+import com.ss.academy.java.model.book.BookHistory;
 import com.ss.academy.java.model.message.Message;
 import com.ss.academy.java.model.rating.Rating;
 import com.ss.academy.java.model.user.User;
 import com.ss.academy.java.service.author.AuthorService;
+import com.ss.academy.java.service.book.BookHistoryService;
 import com.ss.academy.java.service.book.BookService;
 import com.ss.academy.java.service.rating.RatingService;
 import com.ss.academy.java.service.user.UserService;
@@ -45,6 +47,9 @@ public class AuthorBooksController {
 
 	@Autowired
 	AuthorService authorService;
+	
+	@Autowired
+	BookHistoryService bookHistoryService;
 
 	@Autowired
 	RatingService ratingService;
@@ -87,7 +92,7 @@ public class AuthorBooksController {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
-
+		
 		Book book = bookService.findById(book_id);
 		book.setAverageRating(RatingCalculator.calculate(book.getRatings()));
 
@@ -114,6 +119,13 @@ public class AuthorBooksController {
 			model.addAttribute("image", image);
 		} catch (NullPointerException e) {
 			model.addAttribute("emptyList", true);
+		}
+		
+		User currentBookLoaner = bookHistoryService.getCurrentBookLoaner(book_id);
+		
+		if (currentBookLoaner != null) {
+			model.addAttribute("currentBookLoaner", currentBookLoaner);
+			model.addAttribute("isBookLoaned", true);
 		}
 
 		model.addAttribute("currentUserID", currentUser.getId());
@@ -260,7 +272,7 @@ public class AuthorBooksController {
 				bookService.updateBook(dbBook);
 			}
 		}
-		return "redirect:/authors/{author_id}/books/";
+		return "redirect:/authors/{author_id}/books/{book_id}/preview";
 	}
 
 	/*

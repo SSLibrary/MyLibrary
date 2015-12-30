@@ -2,9 +2,8 @@ package com.ss.academy.java.service.book;
 
 import java.util.List;
 
-import org.springframework.security.access.prepost.PreAuthorize;
-
 import com.ss.academy.java.model.book.BookHistory;
+import com.ss.academy.java.model.user.User;
 
 public interface BookHistoryService {
 
@@ -14,7 +13,6 @@ public interface BookHistoryService {
 	
 	void updateBookHistory(BookHistory bookHistory);
 	
-	@PreAuthorize("hasAuthority('ADMIN')")
 	List<BookHistory> findAllBooksHistory();
 	
 	List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults, String user_id);
@@ -24,4 +22,6 @@ public interface BookHistoryService {
 	Long countAllBooksHistory();
 	
 	Long countAllBooksHistory(byte isReturned);
+	
+	User getCurrentBookLoaner(Long book_id);
 }

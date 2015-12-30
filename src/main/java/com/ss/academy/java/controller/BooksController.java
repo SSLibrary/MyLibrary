@@ -38,10 +38,15 @@ public class BooksController {
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
 		List<Book> books = bookService.listAllBooks(offset, maxResults);
-
-		model.addAttribute("books", books);
-		model.addAttribute("count", bookService.countAllBooks());
-		model.addAttribute("offset", offset);
+		
+		if (books.isEmpty()) {
+			model.addAttribute("emptyList", true);
+		} else {
+			model.addAttribute("books", books);
+			model.addAttribute("count", bookService.countAllBooks());
+			model.addAttribute("offset", offset);
+		}
+				
 		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("currentUserID", currentUser.getId());
 

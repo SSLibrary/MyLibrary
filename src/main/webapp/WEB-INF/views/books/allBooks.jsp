@@ -50,8 +50,6 @@
 	</div>
 	<br />
 </c:forEach>
-</c:otherwise>
-</c:choose>
 <!-- pagination -->				
 <c:choose>
 	<c:when test="${count > 4}">
@@ -61,4 +59,6 @@
 		</div>
 	</c:when>
 </c:choose>	
-<!-- end of pagination -->		
+<!-- end of pagination -->	
+</c:otherwise>
+</c:choose>	
