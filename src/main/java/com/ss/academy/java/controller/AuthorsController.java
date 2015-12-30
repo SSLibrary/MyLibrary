@@ -44,8 +44,8 @@ public class AuthorsController {
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String listAuthors(HttpServletRequest request, ModelMap model, Integer offset, Integer maxResults,
 			@AuthenticationPrincipal UserDetails userDetails) {
-		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getReceivedMessage();
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		List<Author> authors = authorService.listAllAuthors(offset, maxResults);
@@ -57,7 +57,7 @@ public class AuthorsController {
 		model.addAttribute("count", authorService.countAllAuthors());
 		model.addAttribute("offset", offset);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("user_id", user.getId());
+		model.addAttribute("currentUserID", currentUser.getId());
 
 		return "authors/all";
 	}
@@ -69,13 +69,13 @@ public class AuthorsController {
 	public String searchAuthorByName(@RequestParam("author_name") String author_name, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
 		List<Author> authors = authorService.findAuthorsByName(author_name);
-		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getReceivedMessage();
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		model.addAttribute("authors", authors);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("user_id", user.getId());
+		model.addAttribute("currentUserID", currentUser.getId());
 
 		return "authors/all";
 	}
@@ -86,8 +86,8 @@ public class AuthorsController {
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/new" }, method = RequestMethod.GET)
 	public String addNewAuthor(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
-		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getReceivedMessage();
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		Author author = new Author();
@@ -95,7 +95,7 @@ public class AuthorsController {
 		model.addAttribute("edit", false);
 		model.addAttribute("countries", AuthorCountry.values());
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("user_id", user.getId());
+		model.addAttribute("currentUserID", currentUser.getId());
 
 		return "authors/addNewAuthor";
 	}
@@ -123,15 +123,15 @@ public class AuthorsController {
 	@RequestMapping(value = { "/{author_id}" }, method = RequestMethod.GET)
 	public String editAuthor(@PathVariable Long author_id, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
-		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getReceivedMessage();
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		Author author = authorService.findById(author_id);
 		model.addAttribute("author", author);
 		model.addAttribute("edit", true);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("user_id", user.getId());
+		model.addAttribute("currentUserID", currentUser.getId());
 
 		return "authors/addNewAuthor";
 	}

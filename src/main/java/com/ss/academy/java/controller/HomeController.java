@@ -45,7 +45,7 @@ public class HomeController {
 			int unreadMessages = UnreadMessagesCounter.count(messages);
 			model.addAttribute("logged", true);
 			model.addAttribute("unreadMessages", unreadMessages);
-			model.addAttribute("user_id", currentUser.getId());
+			model.addAttribute("currentUserID", currentUser.getId());
 		}
 
 		int authorsCount = authorService.findAllAuthors().size();

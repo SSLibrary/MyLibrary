@@ -62,7 +62,7 @@ public class BookHistoryController {
 		}
 
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("user_id", currentUser.getId());
+		model.addAttribute("currentUserID", currentUser.getId());
 
 		return "users/booksHistory";
 	}
@@ -72,14 +72,14 @@ public class BookHistoryController {
 	public String addNewBookHistory(@PathVariable Long book_id, @AuthenticationPrincipal UserDetails userDetails) {
 		BookHistory bookHistory = new BookHistory();
 		Book book = bookService.findById(book_id);
-		User user = userService.findByUsername(userDetails.getUsername());
+		User currentUser = userService.findByUsername(userDetails.getUsername());
 
 		if (book.getStatus().equals(BookStatus.Available)) {
-			user.getBooksHistory().add(bookHistory);
+			currentUser.getBooksHistory().add(bookHistory);
 			book.getBooksHistory().add(bookHistory);
 			bookService.changeBookStatus(book);
 			bookHistory.setBook(book);
-			bookHistory.setUser(user);
+			bookHistory.setUser(currentUser);
 
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(bookHistory.getGetDate());
@@ -99,8 +99,8 @@ public class BookHistoryController {
 
 		if (bookHistory.getIsReturned() == NOT_RETURNED
 				&& bookHistory.getBook().getStatus().equals(BookStatus.Loaned)) {
-			Date currDate = new Date(System.currentTimeMillis());
-			bookHistory.setReturnDate(currDate);
+			Date currentDate = new Date(System.currentTimeMillis());
+			bookHistory.setReturnDate(currentDate);
 			bookHistory.setIsReturned(RETURNED);
 			bookHistoryService.updateBookHistory(bookHistory);
 			bookService.changeBookStatus(bookHistory.getBook());
@@ -117,7 +117,7 @@ public class BookHistoryController {
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
 
-		Date currDate = new Date(System.currentTimeMillis());
+		Date currentDate = new Date(System.currentTimeMillis());
 		List<BookHistory> bookHistory = bookHistoryService.findAllBooksHistory(offset, maxResults, NOT_RETURNED);
 		Long countAllBookHistory = bookHistoryService.countAllBooksHistory(NOT_RETURNED);
 
@@ -128,11 +128,11 @@ public class BookHistoryController {
 			model.addAttribute("loanedBooks", bookHistory);
 			model.addAttribute("count", countAllBookHistory);
 			model.addAttribute("offset", offset);
-			model.addAttribute("currDate", currDate);
+			model.addAttribute("currDate", currentDate);
 		}
 
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("user_id", currentUser.getId());
+		model.addAttribute("currentUserID", currentUser.getId());
 
 		return "users/loanedBooks";
 	}

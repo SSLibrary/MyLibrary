@@ -45,8 +45,8 @@ public class MessageController {
 	@RequestMapping(value = { "/inbox" }, method = RequestMethod.GET)
 	public String listAllReceivedMessages(ModelMap model, @AuthenticationPrincipal UserDetails userDetails,
 			Integer offset, Integer maxResults, String username) {
-		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> allMessages = user.getReceivedMessage();
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		List<Message> allMessages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(allMessages);
 
 		List<Message> messages = messageService.listAllReceivedMessages(offset, maxResults, userDetails.getUsername());
@@ -57,7 +57,7 @@ public class MessageController {
 		model.addAttribute("count", count);
 		model.addAttribute("offset", offset);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("user_id", user.getId());
+		model.addAttribute("currentUserID", currentUser.getId());
 
 		return "messages/inbox";
 	}
@@ -68,8 +68,8 @@ public class MessageController {
 	@RequestMapping(value = { "/outbox" }, method = RequestMethod.GET)
 	public String listAllSentMessages(ModelMap model, @AuthenticationPrincipal UserDetails userDetails, Integer offset,
 			Integer maxResults, String username) {
-		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> allMessages = user.getReceivedMessage();
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		List<Message> allMessages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(allMessages);
 
 		List<Message> messages = messageService.listAllSentMessages(offset, maxResults, userDetails.getUsername());
@@ -80,7 +80,7 @@ public class MessageController {
 		model.addAttribute("count", count);
 		model.addAttribute("offset", offset);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("user_id", user.getId());
+		model.addAttribute("currentUserID", currentUser.getId());
 
 		return "messages/outbox";
 
@@ -89,10 +89,10 @@ public class MessageController {
 	/*
 	 * This method will create new message
 	 */
-	@RequestMapping(value = { "/new/{user_id}" }, method = RequestMethod.GET)
-	public String sendNewMessage(ModelMap model, @PathVariable String user_id,
+	@RequestMapping(value = { "/new/{receiver_id}" }, method = RequestMethod.GET)
+	public String sendNewMessage(ModelMap model, @PathVariable String receiver_id,
 			@AuthenticationPrincipal UserDetails userDetails) {
-		User user = userService.findById(user_id);
+		User user = userService.findById(receiver_id);
 
 		if (user == null) {
 			return "redirect:/messages/{user_id}/inbox";
@@ -104,9 +104,9 @@ public class MessageController {
 
 		Message message = new Message();
 		model.addAttribute("message", message);
-		model.addAttribute("receiver", user.getUsername());
+		model.addAttribute("receiver", user);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("user_id", currentUser.getId());
+		model.addAttribute("currentUserID", currentUser.getId());
 
 		return "messages/new";
 	}
@@ -114,14 +114,14 @@ public class MessageController {
 	/*
 	 * This method will save and send the newly created message.
 	 */
-	@RequestMapping(value = { "/new/{user_id}" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/new/{receiver_id}" }, method = RequestMethod.POST)
 	public String saveMessage(@Valid Message message, BindingResult result, ModelMap model,
-			@AuthenticationPrincipal UserDetails userDetails, @PathVariable String user_id) {
+			@AuthenticationPrincipal UserDetails userDetails, @PathVariable String receiver_id) {
 		if (result.hasErrors()) {
-			return "redirect:/messages/{user_id}/new/{user_id}";
+			return "redirect:/messages/{user_id}/new/{receiver_id}";
 		}
 
-		User receiver = userService.findById(user_id);
+		User receiver = userService.findById(receiver_id);
 		User sender = userService.findByUsername(userDetails.getUsername());
 
 		if (receiver.getUsername().equals(sender.getUsername())) {
@@ -175,7 +175,7 @@ public class MessageController {
 		model.addAttribute("parents", previousMessages);
 		model.addAttribute("receiver", parent.getSender().getUsername());
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("user_id", currentUser.getId());
+		model.addAttribute("currentUserID", currentUser.getId());
 
 		return "messages/reply";
 	}
@@ -235,7 +235,7 @@ public class MessageController {
 
 		model.addAttribute("parents", previousMessages);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("user_id", currentUser.getId());
+		model.addAttribute("currentUserID", currentUser.getId());
 
 		return "messages/display";
 	}

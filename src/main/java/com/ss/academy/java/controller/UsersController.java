@@ -75,7 +75,7 @@ public class UsersController {
 		model.addAttribute("count", userService.countAllUsers());
 		model.addAttribute("offset", offset);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("used_id", currentUser.getId());
+		model.addAttribute("currentUserID", currentUser.getId());
 
 		return "users/all";
 	}
@@ -93,7 +93,7 @@ public class UsersController {
 		List<User> users = userService.findUsersByUserName(username);
 		model.addAttribute("allUsers", users);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("used_id", currentUser.getId());
+		model.addAttribute("currentUserID", currentUser.getId());
 
 		return "users/all";
 	}
@@ -126,7 +126,7 @@ public class UsersController {
 		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("used_id", currentUser.getId());
+		model.addAttribute("currentUserID", currentUser.getId());
 		model.addAttribute("username", currentUser.getUsername());
 
 		return "users/accessDenied";
@@ -181,7 +181,7 @@ public class UsersController {
 		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("used_id", currentUser.getId());
+		model.addAttribute("currentUserID", currentUser.getId());
 		model.addAttribute("user", currentUser);
 
 		return "users/editProfile";
@@ -201,7 +201,7 @@ public class UsersController {
 		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("used_id", currentUser.getId());
+		model.addAttribute("currentUserID", currentUser.getId());
 		model.addAttribute("user", currentUser);
 
 		if (result.hasFieldErrors("firstName") || result.hasFieldErrors("lastName") || result.hasFieldErrors("email")) {

@@ -58,8 +58,8 @@ public class AuthorBooksController {
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String listAllBooks(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long author_id,
 			ModelMap model, Integer offset, Integer maxResults) {
-		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getReceivedMessage();
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		Author author = authorService.findById(author_id);
@@ -84,7 +84,7 @@ public class AuthorBooksController {
 		model.addAttribute("offset", offset);
 		model.addAttribute("author", author);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("user_id", user.getId());
+		model.addAttribute("currentUserID", currentUser.getId());
 
 		return "books/allAuthorBooks";
 	}
@@ -92,8 +92,8 @@ public class AuthorBooksController {
 	@RequestMapping(value = { "/{book_id}/preview" }, method = RequestMethod.GET)
 	public String previewBook(@PathVariable Long book_id, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
-		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getReceivedMessage();
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		Book book = bookService.findById(book_id);
@@ -114,7 +114,7 @@ public class AuthorBooksController {
 			model.addAttribute("emptyList", true);
 		}
 
-		model.addAttribute("user_id", user.getId());
+		model.addAttribute("currentUserID", currentUser.getId());
 		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("book", book);
 
@@ -127,8 +127,8 @@ public class AuthorBooksController {
 	@RequestMapping(value = { "/search" }, method = RequestMethod.GET)
 	public String searchBookByName(@PathVariable Long author_id, @RequestParam("bookTitle") String bookTitle,
 			ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
-		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getReceivedMessage();
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		List<Book> books = bookService.findBooksByTitle(bookTitle);
@@ -142,7 +142,7 @@ public class AuthorBooksController {
 
 		model.addAttribute("books", authorBooks);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("user_id", user.getId());
+		model.addAttribute("currentUserID", currentUser.getId());
 
 		return "books/allAuthorBooks";
 	}
@@ -154,15 +154,15 @@ public class AuthorBooksController {
 	@RequestMapping(value = { "/new" }, method = RequestMethod.GET)
 	public String addNewBook(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
 
-		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getReceivedMessage();
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		Book book = new Book();
 		model.addAttribute("book", book);
 		model.addAttribute("edit", false);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("user_id", user.getId());
+		model.addAttribute("currentUserID", currentUser.getId());
 
 		return "books/addNewBook";
 	}
@@ -207,8 +207,8 @@ public class AuthorBooksController {
 	@RequestMapping(value = { "/{book_id}" }, method = RequestMethod.GET)
 	public String editBook(@PathVariable Long book_id, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
-		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getReceivedMessage();
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		Book book = bookService.findById(book_id);
@@ -218,7 +218,7 @@ public class AuthorBooksController {
 		model.addAttribute("author", author);
 		model.addAttribute("edit", true);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("user_id", user.getId());
+		model.addAttribute("currentUserID", currentUser.getId());
 
 		return "books/addNewBook";
 	}

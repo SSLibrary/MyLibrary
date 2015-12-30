@@ -48,8 +48,8 @@ public class RatingsController {
 	@RequestMapping(value = { "/rating" }, method = RequestMethod.GET)
 	public String addNewRating(@PathVariable Long book_id, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
-		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getReceivedMessage();
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		Book book = bookService.findById(book_id);
@@ -58,7 +58,7 @@ public class RatingsController {
 		model.addAttribute("rating", rating);
 		model.addAttribute("book", book);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("user_id", user.getId());
+		model.addAttribute("currentUserID", currentUser.getId());
 
 		return "books/rating";
 	}
@@ -71,12 +71,12 @@ public class RatingsController {
 	@RequestMapping(value = { "/rating" }, method = RequestMethod.POST)
 	public String saveRating(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long book_id,
 			@Valid Rating rating, BindingResult result, ModelMap model) {
-		User user = userService.findByUsername(userDetails.getUsername());
+		User currentUser = userService.findByUsername(userDetails.getUsername());
 		Rating ratingToSave = new Rating();
 
 		ratingToSave.setBook(bookService.findById(book_id));
 		ratingToSave.setRatingValue(rating.getRatingValue());
-		ratingToSave.setUser(user);
+		ratingToSave.setUser(currentUser);
 		System.out.println();
 
 		ratingService.saveRating(ratingToSave);
@@ -91,8 +91,8 @@ public class RatingsController {
 	@RequestMapping(value = { "/ratingCheck" }, method = RequestMethod.GET)
 	public String checkRating(@PathVariable Long book_id, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
-		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getReceivedMessage();
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		Book book = bookService.findById(book_id);
@@ -101,7 +101,7 @@ public class RatingsController {
 
 		model.addAttribute("book", book);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("user_id", user.getId());
+		model.addAttribute("currentUserID", currentUser.getId());
 
 		return "books/ratingCheck";
 	}

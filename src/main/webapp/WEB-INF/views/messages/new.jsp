@@ -1,7 +1,7 @@
 <%@ include file="../layout/taglib.jsp" %>
 
 		<form:form modelAttribute="message" class="form-horizontal" role="form">
-			<legend>Send new Message to <b>${receiver}</b> </legend>
+			<legend>Send new Message to <b>${receiver.username}</b> </legend>
 			<form:input type="hidden" path="message_id" id="message_id" />
 			<div class="form-group">
 				<label for="header" class="control-label col-sm-1">Subject:</label>
@@ -20,7 +20,7 @@
 					<div class="form-group">
 					<div class="col-sm-1"></div>
 						<div class="col-sm-2">
-							<form:form action="/${user_id}/messages/new" method="POST">
+							<form:form action="/messages/${currentUserID}/new/${receiver.id}" method="POST">
 								<button type="submit" class="btn btn-primary form-control">Send</button>
 							</form:form>
 						</div>

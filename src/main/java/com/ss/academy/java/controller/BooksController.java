@@ -19,7 +19,7 @@ import com.ss.academy.java.service.user.UserService;
 import com.ss.academy.java.util.UnreadMessagesCounter;
 
 @Controller
-@RequestMapping(value = { "/" })
+@RequestMapping(value = { "/books" })
 public class BooksController {
 
 	@Autowired
@@ -31,7 +31,7 @@ public class BooksController {
 	/*
 	 * This method will show the list of all books.
 	 */
-	@RequestMapping(value = { "/books" })
+	@RequestMapping(value = { "/" })
 	public String showAllBooks(@AuthenticationPrincipal UserDetails user, ModelMap model, Integer offset,
 			Integer maxResults) {
 		User currentUser = userService.findByUsername(user.getUsername());
@@ -43,7 +43,7 @@ public class BooksController {
 		model.addAttribute("count", bookService.countAllBooks());
 		model.addAttribute("offset", offset);
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("user_id", currentUser.getId());
+		model.addAttribute("currentUserID", currentUser.getId());
 
 		return "books/allBooks";
 	}
@@ -51,7 +51,7 @@ public class BooksController {
 	/*
 	 * This method provides the ability to search for books by their titles.
 	 */
-	@RequestMapping(value = { "/books/search" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/search" }, method = RequestMethod.GET)
 	public String searchBookByTitle(@RequestParam("bookTitle") String bookTitle, ModelMap model,
 			@AuthenticationPrincipal UserDetails user) {
 		User currentUser = userService.findByUsername(user.getUsername());
@@ -67,7 +67,7 @@ public class BooksController {
 		}
 
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("user_id", currentUser.getId());
+		model.addAttribute("currentUserID", currentUser.getId());
 
 		return "books/allBooks";
 	}

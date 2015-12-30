@@ -49,8 +49,8 @@ public class CommentController {
 	@RequestMapping(value = { "/comments" }, method = RequestMethod.GET)
 	public String listAllComments(@PathVariable Long book_id, @PathVariable Long author_id, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
-		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getReceivedMessage();
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		Author author = authorService.findById(author_id);
@@ -67,7 +67,7 @@ public class CommentController {
 		model.addAttribute("author", author.getName());
 		model.addAttribute("book", book.getTitle());
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("user_id", user.getId());
+		model.addAttribute("currentUserID", currentUser.getId());
 
 		return "comments/allComments";
 	}
@@ -78,8 +78,8 @@ public class CommentController {
 	@RequestMapping(value = { "/comments/new" }, method = RequestMethod.GET)
 	public String addNewComment(ModelMap model, @PathVariable Long book_id,
 			@AuthenticationPrincipal UserDetails userDetails) {
-		User user = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = user.getReceivedMessage();
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		Comment comment = new Comment();
@@ -88,7 +88,7 @@ public class CommentController {
 		model.addAttribute("comment", comment);
 		model.addAttribute("book", book.getTitle());
 		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("user_id", user.getId());
+		model.addAttribute("currentUserID", currentUser.getId());
 
 		return "comments/addNewComment";
 	}
