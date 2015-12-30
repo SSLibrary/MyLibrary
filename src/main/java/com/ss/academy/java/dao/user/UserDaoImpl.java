@@ -57,7 +57,9 @@ public class UserDaoImpl extends AbstractDao<String, User> implements UserDao {
 	@SuppressWarnings("unchecked")
 	@Transactional
 	public List<User> listAllUsers(Integer offset, Integer maxResults) {
-		return getSession().createCriteria(User.class).setFirstResult(offset != null ? offset : 0)
+		return getSession().createCriteria(User.class)
+				.addOrder( Order.asc("username"))
+				.setFirstResult(offset != null ? offset : 0)
 				.setMaxResults(maxResults != null ? maxResults : 5).list();
 	}
 
