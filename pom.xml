@@ -218,6 +218,13 @@
 			<artifactId>spring-hateoas</artifactId>
 			<version>0.19.0.RELEASE</version>
 		</dependency>
+		
+		<!-- Google App Engine -->
+		<dependency>
+	        <groupId>com.google.appengine</groupId>
+	        <artifactId>appengine-api-1.0-sdk</artifactId>
+	        <version>1.9.14</version>
+	 	</dependency>
 
 	</dependencies>
 
@@ -234,6 +241,11 @@
 						<failOnMissingWebXml>false</failOnMissingWebXml>
 					</configuration>
 				</plugin>
+				<plugin>
+				    <groupId>com.google.appengine</groupId>
+				    <artifactId>appengine-maven-plugin</artifactId>
+				    <version>1.9.28</version>
+			  	</plugin>
 			</plugins>
 		</pluginManagement>
 		<finalName>MyLibrary</finalName>
