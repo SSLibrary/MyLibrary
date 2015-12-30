@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -45,6 +46,7 @@ public class RatingsController {
 	/*
 	 * This method will provide the medium to add a new rating.
 	 */
+	@PreAuthorize("hasAuthority('USER')")
 	@RequestMapping(value = { "/rating" }, method = RequestMethod.GET)
 	public String addNewRating(@PathVariable Long book_id, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
@@ -67,6 +69,7 @@ public class RatingsController {
 	 * This method will be called on form submission, handling POST request for
 	 * saving book's rating in database.
 	 */
+	@PreAuthorize("hasAuthority('USER')")
 	@RequestMapping(value = { "/rating" }, method = RequestMethod.POST)
 	public String saveRating(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long book_id,
 			@Valid Rating rating, BindingResult result, ModelMap model) {

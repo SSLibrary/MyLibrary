@@ -26,7 +26,7 @@ import com.ss.academy.java.util.UnreadMessagesCounter;
  * Handles requests for the application messaging service.
  */
 @Controller
-@RequestMapping(value = { "{user_id}/messages" })
+@RequestMapping(value = { "/messages/{user_id}" })
 public class MessageController {
 
 	private final byte UNREAD_MESSAGE = 1;
@@ -89,13 +89,13 @@ public class MessageController {
 	/*
 	 * This method will create new message
 	 */
-	@RequestMapping(value = { "/{user_id}/new" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/new/{user_id}" }, method = RequestMethod.GET)
 	public String sendNewMessage(ModelMap model, @PathVariable String user_id,
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findById(user_id);
 		
 		if (user == null) {
-			return "redirect:/{user_id}/messages/inbox";
+			return "redirect:/messages/{user_id}/inbox";
 		}
 		
 		User currentUser = userService.findByUsername(userDetails.getUsername());
@@ -114,18 +114,18 @@ public class MessageController {
 	/*
 	 * This method will save and send the newly created message.
 	 */
-	@RequestMapping(value = { "/{user_id}/new" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/new/{user_id}" }, method = RequestMethod.POST)
 	public String saveMessage(@Valid Message message, BindingResult result, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails, @PathVariable String user_id) {
 		if (result.hasErrors()) {
-			return "messages/new";
+			return "redirect:/messages/{user_id}/new/{user_id}";
 		}
 
 		User receiver = userService.findById(user_id);
 		User sender = userService.findByUsername(userDetails.getUsername());
 		
 		if (receiver.getUsername().equals(sender.getUsername())) {
-			return "redirect:/{user_id}/messages/inbox";
+			return "redirect:/messages/{user_id}/inbox";
 		}
 		
 		sender.getSentMessage().add(message);
@@ -134,7 +134,7 @@ public class MessageController {
 		message.setSender(sender);
 		messageService.saveMessage(message);
 
-		return "redirect:/{user_id}/messages/outbox";
+		return "redirect:/messages/{user_id}/outbox";
 	}
 
 	/*
@@ -145,12 +145,12 @@ public class MessageController {
 			@AuthenticationPrincipal UserDetails userDetails) {	
 		Message parent = messageService.findById(message_id);
 		if (parent == null) {
-			return "redirect:/{user_id}/messages/inbox";
+			return "redirect:/messages/{user_id}/inbox";
 		}
 		
 		if (!parent.getReceiver().getUsername().equals(userDetails.getUsername()) &&
 				!parent.getSender().getUsername().equals(userDetails.getUsername())) {
-			return "redirect:/{user_id}/messages/inbox";
+			return "redirect:/messages/{user_id}/inbox";
 		}
 		
 		if (parent.getIsNew() == UNREAD_MESSAGE) {
@@ -187,7 +187,7 @@ public class MessageController {
 	public String replyToMessage(@Valid Message message, BindingResult result, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer message_id) {
 		if (result.hasErrors()) {
-			return "messages/reply";
+			return "redirect:/messages/{user_id}/{message_id}/reply";
 		}
 
 		Message parent = messageService.findById(message_id);
@@ -201,7 +201,7 @@ public class MessageController {
 		message.setHeader("Re: " + parent.getHeader());
 		messageService.saveMessage(message);
 
-		return "redirect:/{user_id}/messages/outbox";
+		return "redirect:/messages/{user_id}/outbox";
 	}
 
 	/*
@@ -217,14 +217,13 @@ public class MessageController {
 		Message parent = messageService.findById(message_id);
 		
 		if (parent == null) {
-			return "redirect:/{user_id}/messages/outbox";
+			return "redirect:/messages/{user_id}/outbox";
 		}
 		
 		if (!parent.getReceiver().getUsername().equals(userDetails.getUsername()) &&
 				!parent.getSender().getUsername().equals(userDetails.getUsername())) {
-			return "redirect:/{user_id}/messages/outbox";
+			return "redirect:/messages/{user_id}/outbox";
 		}
-		
 		
 		List<Message> previousMessages = new ArrayList<Message>();
 		previousMessages.add(parent);

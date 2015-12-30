@@ -7,6 +7,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -150,6 +151,7 @@ public class AuthorBooksController {
 	/*
 	 * This method will provide the medium to add a new book.
 	 */
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/new" }, method = RequestMethod.GET)
 	public String addNewBook(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
 
@@ -170,6 +172,7 @@ public class AuthorBooksController {
 	 * This method will be called on form submission, handling POST request for
 	 * saving book in database. It also validates the user input.
 	 */
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/new" }, method = RequestMethod.POST)
 	public String saveBook(@Valid Book book, BindingResult result, @RequestParam CommonsMultipartFile[] fileUpload,
 			@PathVariable Long author_id) {
@@ -200,6 +203,7 @@ public class AuthorBooksController {
 	/*
 	 * This method will provide the medium to update an existing book.
 	 */
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/{book_id}" }, method = RequestMethod.GET)
 	public String editBook(@PathVariable Long book_id, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
@@ -223,6 +227,7 @@ public class AuthorBooksController {
 	 * This method will be called on form submission, handling POST request for
 	 * updating book in database. It also validates the user input.
 	 */
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/{book_id}" }, method = RequestMethod.POST)
 	public String updateBook(@Valid Book formBook, BindingResult result,@RequestParam CommonsMultipartFile[] fileUpload,
 			@PathVariable Long book_id, @PathVariable Long author_id) {
@@ -256,6 +261,7 @@ public class AuthorBooksController {
 	/*
 	 * This method will delete a book by it's ID value.
 	 */
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/{book_id}" }, method = RequestMethod.DELETE)
 	public String deleteBook(@PathVariable Long author_id, @PathVariable Long book_id) {
 		Book book = bookService.findById(book_id);

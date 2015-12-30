@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -40,6 +41,7 @@ public class BookHistoryController {
 	@Autowired
 	BookService bookService;
 	
+	@PreAuthorize("hasAuthority('USER')")
 	@RequestMapping(value = {"/{user_id}"}, method = RequestMethod.GET)
 	public String listBooksHistory(ModelMap model, @AuthenticationPrincipal UserDetails userDetails, 
 			Integer offset, Integer maxResults) {
@@ -65,6 +67,7 @@ public class BookHistoryController {
 		return "users/booksHistory";
 	}
 	
+	@PreAuthorize("hasAuthority('USER')")
 	@RequestMapping(value = { "/{book_id}/{user_id}/addToHistory" }, method = RequestMethod.GET)
 	public String addNewBookHistory(@PathVariable Long book_id,
 			@AuthenticationPrincipal UserDetails userDetails) {
@@ -90,6 +93,7 @@ public class BookHistoryController {
 		return "redirect:/books/{user_id}";
 	}
 	
+	@PreAuthorize("hasAuthority('USER')")
 	@RequestMapping(value = "/{user_id}/{history_id}/return", method = RequestMethod.GET)
 	public String returnBook(@PathVariable Long history_id, @AuthenticationPrincipal UserDetails userDetails) {	
 		BookHistory bookHistory = bookHistoryService.findById(history_id);
@@ -106,6 +110,7 @@ public class BookHistoryController {
 		return "redirect:/books/{user_id}";
 	}
 	
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/loaned", method = RequestMethod.GET)
 	public String showAllLoanedBooks(@AuthenticationPrincipal UserDetails userDetails, ModelMap model,
 			Integer offset, Integer maxResults, BookHistory bookHistories) {	

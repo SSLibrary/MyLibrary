@@ -30,7 +30,7 @@ public class Message {
 	@Column(name = "header", nullable = false)
 	private String header;
 
-	@Size(min = 1)
+	@Size(min = 1, max = 10000)
 	@Column(name = "body", nullable = false)
 	private String body;
 

@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -117,6 +118,7 @@ public class CommentController {
 	/*
 	 * Delete comment
 	 */
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/comments/{comment_id}" }, method = RequestMethod.DELETE)
 	public String deleteComment(@PathVariable Long book_id, @PathVariable Integer comment_id) {
 		Comment comment = commentService.findById(comment_id);

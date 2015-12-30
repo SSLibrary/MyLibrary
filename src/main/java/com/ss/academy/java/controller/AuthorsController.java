@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -83,6 +84,7 @@ public class AuthorsController {
 	/*
 	 * This method will provide the medium to add a new author.
 	 */
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/new" }, method = RequestMethod.GET)
 	public String addNewAuthor(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
 		User user = userService.findByUsername(userDetails.getUsername());
@@ -103,6 +105,7 @@ public class AuthorsController {
 	 * This method will be called on form submission, handling POST request for
 	 * saving author in the database. It also validates the user input.
 	 */
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/new" }, method = RequestMethod.POST)
 	public String saveAuthor(@Valid Author author, BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
@@ -117,6 +120,7 @@ public class AuthorsController {
 	/*
 	 * This method will provide the medium to update an existing author.
 	 */
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/{author_id}" }, method = RequestMethod.GET)
 	public String editAuthor(@PathVariable Long author_id, ModelMap model, 
 			@AuthenticationPrincipal UserDetails userDetails) {
@@ -137,6 +141,7 @@ public class AuthorsController {
 	 * This method will be called on form submission, handling POST request for
 	 * updating author in database. It also validates the user input.
 	 */
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/{author_id}" }, method = RequestMethod.PUT)
 	public String updateAuthor(@Valid Author author, BindingResult result, ModelMap model, 
 			@PathVariable Long author_id) {
@@ -152,6 +157,7 @@ public class AuthorsController {
 	/*
 	 * This method will delete an author by it's ID value.
 	 */
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/{author_id}" }, method = RequestMethod.DELETE)
 	public String deleteAuthor(@PathVariable Long author_id) {
 		authorService.deleteAuthor(authorService.findById(author_id));
