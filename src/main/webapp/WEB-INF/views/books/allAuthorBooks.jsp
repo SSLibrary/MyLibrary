@@ -79,7 +79,7 @@
 
 <!-- pagination -->				
 <c:choose>
-	<c:when test="${count > 4}">
+	<c:when test="${count > 5}">
 		<div class="text-center" style="top:773px;position:absolute;margin-left:520px;">	
 			<tag:paginate max="15" offset="${offset}" count="${count}"
  						uri="../books/" next="&raquo;" previous="&laquo;" /> 
