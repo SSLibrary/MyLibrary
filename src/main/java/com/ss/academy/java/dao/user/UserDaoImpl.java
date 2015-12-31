@@ -29,7 +29,7 @@ public class UserDaoImpl extends AbstractDao<String, User> implements UserDao {
 	}
 	
 	public void updateUser(User user) {
-		save(user);
+		update(user);
 	}
 
 	public User findById(String id) {

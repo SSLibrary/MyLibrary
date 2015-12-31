@@ -186,6 +186,25 @@ public class UsersController {
 
 		return "users/editProfile";
 	}
+	
+	/*
+	 * This method will provide access to the currently selected user's profile.
+	 */
+	@RequestMapping(value = "users/{user_id}/showProfile", method = RequestMethod.GET)
+	public String showUserProfile(@AuthenticationPrincipal UserDetails userDetails, @PathVariable String user_id,
+			ModelMap model) {
+		User currentUser = userService.findById(user_id);
+
+		List<Message> messages = currentUser.getReceivedMessage();
+		int unreadMessages = UnreadMessagesCounter.count(messages);
+
+		model.addAttribute("unreadMessages", unreadMessages);
+		model.addAttribute("currentUserID", currentUser.getId());
+		model.addAttribute("user", currentUser);
+		model.addAttribute("username", currentUser.getUsername());
+
+		return "users/showProfile";
+	}
 
 	/*
 	 * This method will be called on form submission, handling PUT request for
@@ -212,15 +231,15 @@ public class UsersController {
 
 		return "users/editProfileSuccess";
 	}
-	
+
 	/*
-	 * This method will provide the medium to update current user profile
-	 * details.
+	 * This method will handle user's password change request
 	 */
-	@RequestMapping(value = "users/{user_id}/showProfile", method = RequestMethod.GET)
-	public String showUserProfile(@AuthenticationPrincipal UserDetails userDetails, @PathVariable String user_id,
-			ModelMap model) {
+	@RequestMapping(value = "users/{user_id}/changePassword", method = RequestMethod.GET)
+	public String changePasswordForm(@ModelAttribute @Valid User user, BindingResult result,
+			@AuthenticationPrincipal UserDetails userDetails, @PathVariable String user_id, ModelMap model) {
 		User currentUser = userService.findById(user_id);
+		currentUser.setPassword("");
 
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
@@ -230,6 +249,60 @@ public class UsersController {
 		model.addAttribute("user", currentUser);
 		model.addAttribute("username", currentUser.getUsername());
 
-		return "users/showProfile";
+		return "users/changePassword";
+	}
+
+	/*
+	 * This method will do the validation of the passwords and will update the user's password.
+	 */
+	@RequestMapping(value = "users/{user_id}/changePassword", method = RequestMethod.POST)
+	public String changePassword(@ModelAttribute @Valid User user, BindingResult result,
+			@AuthenticationPrincipal UserDetails userDetails, @PathVariable String user_id, ModelMap model) {
+		User currentUser = userService.findById(user_id);
+
+		List<Message> messages = currentUser.getReceivedMessage();
+		int unreadMessages = UnreadMessagesCounter.count(messages);
+
+		model.addAttribute("unreadMessages", unreadMessages);
+		model.addAttribute("currentUserID", currentUser.getId());
+		model.addAttribute("username", currentUser.getUsername());
+		
+		if (result.hasFieldErrors("password") ||result.hasFieldErrors("newPassword") || result.hasFieldErrors("newPassword2")) {
+			return "users/changePassword";
+		}
+
+		if (!passwordEncoder.matches(user.getPassword(), currentUser.getPassword())) {
+			FieldError passwordDoNotMatch = new FieldError("password", "password", messageSource
+					.getMessage("non.matching.password", new String[] { currentUser.getUsername() }, Locale.getDefault()));
+			result.addError(passwordDoNotMatch);
+			
+			return "users/changePassword";
+		}
+		
+		if (!user.getNewPassword().equals(user.getNewPassword2())) {
+			FieldError passwordDoNotMatch = new FieldError("newPassword", "newPassword",
+					messageSource.getMessage("non.matching.passwords", new String[] { currentUser.getUsername() },
+							Locale.getDefault()));
+			FieldError passwordDoNotMatch2 = new FieldError("newPassword2", "newPassword2",
+					messageSource.getMessage("non.matching.passwords", new String[] { currentUser.getUsername() },
+							Locale.getDefault()));
+
+			result.addError(passwordDoNotMatch);
+			result.addError(passwordDoNotMatch2);
+			
+			return "users/changePassword";
+		}
+		
+		if (user.getPassword().equals(user.getNewPassword())) {
+			FieldError passwordDoMatch = new FieldError("password", "password", messageSource
+					.getMessage("matching.existing.password", new String[] { currentUser.getUsername() }, Locale.getDefault()));
+			result.addError(passwordDoMatch);
+			
+			return "users/changePassword";
+		}
+		
+		userService.changeUserPassword(currentUser, user.getNewPassword());
+		
+		return "users/changePasswordSuccess";
 	}
 }

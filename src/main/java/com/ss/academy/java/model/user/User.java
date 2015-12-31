@@ -86,10 +86,12 @@ public class User implements Identifiable<String> {
 	@OneToMany(mappedBy = "user")
 	private List<BookHistory> booksHistory;
 	
+	@Size(min = 4, max = 60)
 	@Transient
 	@JsonIgnore
 	private String newPassword;
 	
+	@Size(min = 4, max = 60)
 	@Transient
 	@JsonIgnore
 	private String newPassword2;

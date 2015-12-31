@@ -15,6 +15,8 @@ public interface UserService {
 	void saveUser(User user);
 	
 	void updateUser(User candidateDbUser);
+	
+	void changeUserPassword(User user, String password);
 
 	User findById(String id);
 

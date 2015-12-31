@@ -45,6 +45,14 @@ public class UserServiceImpl implements UserService {
 		
 		dao.updateUser(dbUser);
 	}
+	
+	public void changeUserPassword(User user, String password) {
+		if (user != null) {
+			user.setPassword(passwordEncoder.encode(password));
+		}
+		
+		dao.updateUser(user);
+	}
 
 	public User findById(String id) {
 		return dao.findById(id);

@@ -16,7 +16,7 @@
 <form:form modelAttribute="user" class="form-horizontal" role="form">
 	<div class="register-form">
 		<div>
-			<form action="/register" method="post" class="form-horizontal">
+			<form action="/register" method="post">
 				<form:input type="hidden" path="id" id="id" />
 				<h2>
 					<b>Registration Form</b>
