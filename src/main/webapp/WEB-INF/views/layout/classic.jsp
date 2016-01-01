@@ -17,7 +17,7 @@
 } 
 </style>
 <title><tiles:getAsString name="title"></tiles:getAsString></title>
-<link rel="shortcut icon" href="/MyLibrary/favicon.ico" />
+<link rel="shortcut icon" href="/MyLibrary/resources/images/favicon.ico" />
 <link rel="stylesheet"
 	href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"

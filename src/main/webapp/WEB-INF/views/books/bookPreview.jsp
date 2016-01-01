@@ -35,11 +35,14 @@
 		<dt>Status:</dt>
 		<c:choose>
 			<c:when test="${isBookLoaned}">
-			<dd>${book.status} by <a href="<c:url value='/users/${currentBookLoaner.id}/showProfile' />">${currentBookLoaner.username}</a></dd>
-		</c:when>
-		<c:otherwise>
-		<dd>${book.status}</dd>
-		</c:otherwise>
+				<dd>${book.status}
+					by <a
+						href="<c:url value='/users/${currentBookLoaner.id}/showProfile' />">${currentBookLoaner.username}</a>
+				</dd>
+			</c:when>
+			<c:otherwise>
+				<dd>${book.status}</dd>
+			</c:otherwise>
 		</c:choose>
 	</dl>
 </div>
@@ -61,9 +64,10 @@
 			</a>
 		</div>
 		<div class="btn-group">
-			<form:form action="${book.id}" method="DELETE">
+			<form:form method="DELETE"
+				action="/MyLibrary/authors/${book.author.id}/books//${book.id}">
 				<button
-					onclick="if (confirm('Are you sure you want to delete this book?')) { form.action='${book.id}'; } else { return false; }"
+					onclick="if (confirm('Are you sure you want to delete this book?')) { return true; } else { return false; }"
 					id="deleteForm" type="submit" class="btn btn-default">
 					<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 					Delete

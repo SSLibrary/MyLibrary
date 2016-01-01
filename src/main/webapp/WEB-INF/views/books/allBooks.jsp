@@ -22,29 +22,29 @@
 	</div>
 </form:form>
 <div class="row">
-	<div class="col-md-3 col-xs-4 text-center">
+	<div class="col-md-4 col-xs-4 text-center">
 		<h2>Title</h2>
 	</div>
-	<div class="col-md-3 col-xs-4 text-center">
+	<div class="col-md-4 col-xs-4 text-center">
 		<h2>Author</h2>
 	</div>
-	<div class="col-md-3 col-xs-4 text-center">
+	<div class="col-md-4 col-xs-4 text-center">
 		<h2>Status</h2>
 	</div>			
 </div>
 <c:forEach items="${books}" var="book">
 	<div class="row">
-		<div class="col-md-3 col-xs-6 text-center">
+		<div class="col-md-4 col-xs-4 text-center">
 			<h4>
 				<a href="<c:url value='/authors/${book.author.id}/books/${book.id}/preview' />">${book.title}</a>
 			</h4>
 		</div>
-		<div class="col-md-3 col-xs-6 text-center">
+		<div class="col-md-4 col-xs-4 text-center">
 			<h4>
 			<a href="<c:url value='/authors/${book.author.id}/books/' />">${book.author.name}</a>
 			</h4>
 		</div>
-		<div class="col-md-3 col-xs-6 text-center">
+		<div class="col-md-4 col-xs-4 text-center">
 			<h4>${book.status}</h4>
 		</div>
 	</div>
@@ -53,9 +53,9 @@
 <!-- pagination -->				
 <c:choose>
 	<c:when test="${count > 5}">
-		<div class="text-center" style="top:773px;position:absolute;margin-left:520px;">	
+		<div class="text-center">	
 			<tag:paginate max="15" offset="${offset}" count="${count}"
- 						uri="./books" next="&raquo;" previous="&laquo;" /> 
+ 						uri="../books/" next="&raquo;" previous="&laquo;" /> 
 		</div>
 	</c:when>
 </c:choose>	

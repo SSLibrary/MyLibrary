@@ -13,7 +13,7 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="password">Current
 						Password: </label>
-					<div class="col-sm-3">
+					<div class="col-sm-4">
 						<form:input path="password" id="password" class="form-control"
 							autocomplete="off" type="password" />
 						<form:errors path="password" cssClass="error" />
@@ -22,7 +22,7 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="newPassword">New
 						Password:</label>
-					<div class="col-sm-3">
+					<div class="col-sm-4">
 						<form:input path="newPassword" id="newPassword"
 							class="form-control" autocomplete="off" type="password" />
 						<form:errors path="newPassword" cssClass="error" />
@@ -31,15 +31,14 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="newPassword2">Confirm
 						New Password:</label>
-					<div class="col-sm-3">
+					<div class="col-sm-4">
 						<form:input path="newPassword2" id="newPassword2"
 							class="form-control" autocomplete="off" type="password" />
 						<form:errors path="newPassword2" cssClass="error" />
 					</div>
 				</div>
 				<div class="form-group">
-					<div class="col-sm-2"></div>
-					<div class="col-sm-5">
+					<div class="col-sm-offset-2 col-sm-4">
 						<button type="submit" class="btn btn-primary">
 							<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 							Change Password
@@ -49,5 +48,6 @@
 			</form>
 		</div>
 	</div>
-
 </form:form>
+
+

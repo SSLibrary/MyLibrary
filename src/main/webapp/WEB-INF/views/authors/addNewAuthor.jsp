@@ -1,4 +1,4 @@
-<%@ include file="../layout/taglib.jsp" %>
+<%@ include file="../layout/taglib.jsp"%>
 
 <form:form modelAttribute="author" class="form-horizontal" role="form">
 	<legend>Author Details</legend>
@@ -7,7 +7,7 @@
 		<label for="name" class="control-label col-sm-2">Name:</label>
 		<div class="col-sm-3">
 			<form:input path="name" id="name" class="form-control" />
-			<form:errors path="name" /> 
+			<form:errors path="name" />
 		</div>
 	</div>
 	<div class="form-group">
@@ -35,10 +35,9 @@
 				<div class="col-sm-5">
 					<form:form action="/new" method="GET">
 						<button type="submit" class="btn btn-primary">Add</button>
-						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					</form:form>
 				</div>
 			</div>
 		</c:otherwise>
 	</c:choose>
-</form:form>		
+</form:form>
