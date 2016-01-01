@@ -294,9 +294,13 @@ public class UsersController {
 		}
 		
 		if (user.getPassword().equals(user.getNewPassword())) {
-			FieldError passwordDoMatch = new FieldError("password", "password", messageSource
+			FieldError passwordDoMatch = new FieldError("newPassword", "newPassword", messageSource
 					.getMessage("matching.existing.password", new String[] { currentUser.getUsername() }, Locale.getDefault()));
+			FieldError passwordDoMatch2 = new FieldError("newPassword2", "newPassword2", messageSource
+					.getMessage("matching.existing.password", new String[] { currentUser.getUsername() }, Locale.getDefault()));
+			
 			result.addError(passwordDoMatch);
+			result.addError(passwordDoMatch2);
 			
 			return "users/changePassword";
 		}
