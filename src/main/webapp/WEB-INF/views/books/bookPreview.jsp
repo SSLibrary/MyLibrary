@@ -101,7 +101,7 @@
 </div>
 
 
-<!-- raiting script -->
+<!-- rating script -->
 <script src="../../../../resources/rating-plugin/js/star-rating.min.js"
 	type="text/javascript"></script>
 <script type="text/javascript">
@@ -110,4 +110,4 @@
 	});
 	$('#input-21f').rating('update', '${book.averageRating}');
 </script>
-<!--end raiting script -->
+<!--end rating script -->
