@@ -1,7 +1,5 @@
 package com.ss.academy.java.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,12 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ss.academy.java.model.message.Message;
 import com.ss.academy.java.model.user.User;
 import com.ss.academy.java.service.author.AuthorService;
 import com.ss.academy.java.service.book.BookService;
 import com.ss.academy.java.service.user.UserService;
-import com.ss.academy.java.util.UnreadMessagesCounter;
+import com.ss.academy.java.util.CommonAttributesPopulator;
 
 /**
  * Handles requests for the application home page.
@@ -41,11 +38,9 @@ public class HomeController {
 
 		if (user != null) {
 			User currentUser = userService.findByUsername(user.getUsername());
-			List<Message> messages = currentUser.getReceivedMessage();
-			int unreadMessages = UnreadMessagesCounter.count(messages);
+			
 			model.addAttribute("logged", true);
-			model.addAttribute("unreadMessages", unreadMessages);
-			model.addAttribute("currentUserID", currentUser.getId());
+			CommonAttributesPopulator.populate(currentUser, model);
 		}
 
 		int authorsCount = authorService.findAllAuthors().size();
@@ -58,5 +53,4 @@ public class HomeController {
 
 		return "home";
 	}
-
 }

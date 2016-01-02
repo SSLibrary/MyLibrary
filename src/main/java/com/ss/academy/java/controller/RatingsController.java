@@ -22,6 +22,7 @@ import com.ss.academy.java.model.user.User;
 import com.ss.academy.java.service.book.BookService;
 import com.ss.academy.java.service.rating.RatingService;
 import com.ss.academy.java.service.user.UserService;
+import com.ss.academy.java.util.CommonAttributesPopulator;
 import com.ss.academy.java.util.UnreadMessagesCounter;
 
 /**
@@ -48,16 +49,13 @@ public class RatingsController {
 	public String addNewRating(@PathVariable Long book_id, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = currentUser.getReceivedMessage();
-		int unreadMessages = UnreadMessagesCounter.count(messages);
-
 		Book book = bookService.findById(book_id);
 		Rating rating = new Rating();
 
 		model.addAttribute("rating", rating);
 		model.addAttribute("book", book);
-		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currentUserID", currentUser.getId());
+
+		CommonAttributesPopulator.populate(currentUser, model);
 
 		return "books/rating";
 	}

@@ -19,11 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ss.academy.java.model.author.Author;
 import com.ss.academy.java.model.author.AuthorCountry;
-import com.ss.academy.java.model.message.Message;
 import com.ss.academy.java.model.user.User;
 import com.ss.academy.java.service.author.AuthorService;
 import com.ss.academy.java.service.user.UserService;
-import com.ss.academy.java.util.UnreadMessagesCounter;
+import com.ss.academy.java.util.CommonAttributesPopulator;
 
 /**
  * Handles requests for the application authors page.
@@ -45,19 +44,17 @@ public class AuthorsController {
 	public String listAuthors(HttpServletRequest request, ModelMap model, Integer offset, Integer maxResults,
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = currentUser.getReceivedMessage();
-		int unreadMessages = UnreadMessagesCounter.count(messages);
-
 		List<Author> authors = authorService.listAllAuthors(offset, maxResults);
 
 		if (authors.isEmpty()) {
 			model.addAttribute("emptyListOfAuthors", true);
 		}
+
 		model.addAttribute("authors", authors);
 		model.addAttribute("count", authorService.countAllAuthors());
 		model.addAttribute("offset", offset);
-		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currentUserID", currentUser.getId());
+
+		CommonAttributesPopulator.populate(currentUser, model);
 
 		return "authors/all";
 	}
@@ -70,12 +67,10 @@ public class AuthorsController {
 			@AuthenticationPrincipal UserDetails userDetails) {
 		List<Author> authors = authorService.findAuthorsByName(author_name);
 		User currentUser = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = currentUser.getReceivedMessage();
-		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		model.addAttribute("authors", authors);
-		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currentUserID", currentUser.getId());
+
+		CommonAttributesPopulator.populate(currentUser, model);
 
 		return "authors/all";
 	}
@@ -87,15 +82,13 @@ public class AuthorsController {
 	@RequestMapping(value = { "/new" }, method = RequestMethod.GET)
 	public String addNewAuthor(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = currentUser.getReceivedMessage();
-		int unreadMessages = UnreadMessagesCounter.count(messages);
-
 		Author author = new Author();
+
 		model.addAttribute("author", author);
 		model.addAttribute("edit", false);
 		model.addAttribute("countries", AuthorCountry.values());
-		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currentUserID", currentUser.getId());
+
+		CommonAttributesPopulator.populate(currentUser, model);
 
 		return "authors/addNewAuthor";
 	}
@@ -124,14 +117,12 @@ public class AuthorsController {
 	public String editAuthor(@PathVariable Long author_id, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = currentUser.getReceivedMessage();
-		int unreadMessages = UnreadMessagesCounter.count(messages);
-
 		Author author = authorService.findById(author_id);
+
 		model.addAttribute("author", author);
 		model.addAttribute("edit", true);
-		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currentUserID", currentUser.getId());
+
+		CommonAttributesPopulator.populate(currentUser, model);
 
 		return "authors/addNewAuthor";
 	}

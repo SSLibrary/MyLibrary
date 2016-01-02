@@ -20,8 +20,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.ss.academy.java.model.author.Author;
 import com.ss.academy.java.model.book.Book;
-import com.ss.academy.java.model.book.BookHistory;
-import com.ss.academy.java.model.message.Message;
 import com.ss.academy.java.model.rating.Rating;
 import com.ss.academy.java.model.user.User;
 import com.ss.academy.java.service.author.AuthorService;
@@ -29,8 +27,8 @@ import com.ss.academy.java.service.book.BookHistoryService;
 import com.ss.academy.java.service.book.BookService;
 import com.ss.academy.java.service.rating.RatingService;
 import com.ss.academy.java.service.user.UserService;
+import com.ss.academy.java.util.CommonAttributesPopulator;
 import com.ss.academy.java.util.RatingCalculator;
-import com.ss.academy.java.util.UnreadMessagesCounter;
 
 import sun.misc.BASE64Encoder;
 
@@ -47,7 +45,7 @@ public class AuthorBooksController {
 
 	@Autowired
 	AuthorService authorService;
-	
+
 	@Autowired
 	BookHistoryService bookHistoryService;
 
@@ -65,9 +63,6 @@ public class AuthorBooksController {
 	public String listAllBooks(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long author_id,
 			ModelMap model, Integer offset, Integer maxResults) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = currentUser.getReceivedMessage();
-		int unreadMessages = UnreadMessagesCounter.count(messages);
-
 		Author author = authorService.findById(author_id);
 		List<Book> books = bookService.listAllBooks(offset, maxResults, author_id);
 		Long count = bookService.countAllBooks(author_id);
@@ -80,8 +75,8 @@ public class AuthorBooksController {
 		model.addAttribute("count", count);
 		model.addAttribute("offset", offset);
 		model.addAttribute("author", author);
-		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currentUserID", currentUser.getId());
+
+		CommonAttributesPopulator.populate(currentUser, model);
 
 		return "books/allAuthorBooks";
 	}
@@ -90,12 +85,8 @@ public class AuthorBooksController {
 	public String previewBook(@PathVariable Long book_id, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = currentUser.getReceivedMessage();
-		int unreadMessages = UnreadMessagesCounter.count(messages);
-		
 		Book book = bookService.findById(book_id);
 		book.setAverageRating(RatingCalculator.calculate(book.getRatings()));
-
 		List<Rating> bookRatings = book.getRatings();
 
 		for (Rating rating : bookRatings) {
@@ -120,18 +111,18 @@ public class AuthorBooksController {
 		} catch (NullPointerException e) {
 			model.addAttribute("emptyList", true);
 		}
-		
+
 		User currentBookLoaner = bookHistoryService.getCurrentBookLoaner(book_id);
-		
+
 		if (currentBookLoaner != null) {
 			model.addAttribute("currentBookLoaner", currentBookLoaner);
 			model.addAttribute("isBookLoaned", true);
 		}
 
-		model.addAttribute("currentUserID", currentUser.getId());
-		model.addAttribute("unreadMessages", unreadMessages);
 		model.addAttribute("book", book);
-		
+
+		CommonAttributesPopulator.populate(currentUser, model);
+
 		return "books/bookPreview";
 	}
 
@@ -142,10 +133,8 @@ public class AuthorBooksController {
 	public String searchBookByName(@PathVariable Long author_id, @RequestParam("bookTitle") String bookTitle,
 			ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = currentUser.getReceivedMessage();
-		int unreadMessages = UnreadMessagesCounter.count(messages);
-
 		Author author = authorService.findById(author_id);
+
 		List<Book> books = bookService.findBooksByTitle(bookTitle);
 		List<Book> authorBooks = new ArrayList<Book>();
 
@@ -157,8 +146,8 @@ public class AuthorBooksController {
 
 		model.addAttribute("author", author);
 		model.addAttribute("books", authorBooks);
-		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currentUserID", currentUser.getId());
+
+		CommonAttributesPopulator.populate(currentUser, model);
 
 		return "books/allAuthorBooks";
 	}
@@ -169,16 +158,13 @@ public class AuthorBooksController {
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/new" }, method = RequestMethod.GET)
 	public String addNewBook(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
-
 		User currentUser = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = currentUser.getReceivedMessage();
-		int unreadMessages = UnreadMessagesCounter.count(messages);
-
 		Book book = new Book();
+
 		model.addAttribute("book", book);
 		model.addAttribute("edit", false);
-		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currentUserID", currentUser.getId());
+
+		CommonAttributesPopulator.populate(currentUser, model);
 
 		return "books/addNewBook";
 	}
@@ -224,17 +210,14 @@ public class AuthorBooksController {
 	public String editBook(@PathVariable Long book_id, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = currentUser.getReceivedMessage();
-		int unreadMessages = UnreadMessagesCounter.count(messages);
-
 		Book book = bookService.findById(book_id);
 		Author author = book.getAuthor();
 
 		model.addAttribute("book", book);
 		model.addAttribute("author", author);
 		model.addAttribute("edit", true);
-		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currentUserID", currentUser.getId());
+
+		CommonAttributesPopulator.populate(currentUser, model);
 
 		return "books/addNewBook";
 	}
@@ -249,6 +232,7 @@ public class AuthorBooksController {
 			@RequestParam CommonsMultipartFile[] fileUpload, @PathVariable Long book_id, @PathVariable Long author_id) {
 		Author author = new Author();
 		Book dbBook = new Book();
+
 		if (result.hasErrors()) {
 			return "books/addNewBook";
 		}

@@ -21,12 +21,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ss.academy.java.model.message.Message;
 import com.ss.academy.java.model.user.User;
 import com.ss.academy.java.service.book.BookService;
 import com.ss.academy.java.service.message.MessageService;
 import com.ss.academy.java.service.user.UserService;
-import com.ss.academy.java.util.UnreadMessagesCounter;
+import com.ss.academy.java.util.CommonAttributesPopulator;
 
 /**
  * Handles requests for the application users page plus user login/registration.
@@ -57,8 +56,6 @@ public class UsersController {
 	public String listAllUsers(@AuthenticationPrincipal UserDetails userDetails, ModelMap model, Integer offset,
 			Integer maxResults) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = currentUser.getReceivedMessage();
-		int unreadMessages = UnreadMessagesCounter.count(messages);
 
 		// Removing the current user from the list of users
 		List<User> allUsers = userService.listAllUsers(offset, maxResults);
@@ -71,10 +68,10 @@ public class UsersController {
 		}
 
 		model.addAttribute("allUsers", filteredList);
-		model.addAttribute("count", userService.countAllUsers());
+		model.addAttribute("count", filteredList.size());
 		model.addAttribute("offset", offset);
-		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currentUserID", currentUser.getId());
+
+		CommonAttributesPopulator.populate(currentUser, model);
 
 		return "users/all";
 	}
@@ -86,13 +83,11 @@ public class UsersController {
 	public String searchUserByUsername(@RequestParam("username") String username, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = currentUser.getReceivedMessage();
-		int unreadMessages = UnreadMessagesCounter.count(messages);
-
 		List<User> users = userService.findUsersByUserName(username);
+
 		model.addAttribute("allUsers", users);
-		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currentUserID", currentUser.getId());
+
+		CommonAttributesPopulator.populate(currentUser, model);
 
 		return "users/all";
 	}
@@ -121,12 +116,10 @@ public class UsersController {
 	@RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
 	public String accessDeniedPage(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = currentUser.getReceivedMessage();
-		int unreadMessages = UnreadMessagesCounter.count(messages);
 
-		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currentUserID", currentUser.getId());
 		model.addAttribute("username", currentUser.getUsername());
+
+		CommonAttributesPopulator.populate(currentUser, model);
 
 		return "users/accessDenied";
 	}
@@ -176,17 +169,14 @@ public class UsersController {
 			ModelMap model) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 
-		List<Message> messages = currentUser.getReceivedMessage();
-		int unreadMessages = UnreadMessagesCounter.count(messages);
-
-		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currentUserID", currentUser.getId());
 		model.addAttribute("user", currentUser);
 		model.addAttribute("username", currentUser.getUsername());
 
+		CommonAttributesPopulator.populate(currentUser, model);
+
 		return "users/editProfile";
 	}
-	
+
 	/*
 	 * This method will provide access to the currently selected user's profile.
 	 */
@@ -195,13 +185,10 @@ public class UsersController {
 			ModelMap model) {
 		User currentUser = userService.findById(user_id);
 
-		List<Message> messages = currentUser.getReceivedMessage();
-		int unreadMessages = UnreadMessagesCounter.count(messages);
-
-		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currentUserID", currentUser.getId());
 		model.addAttribute("user", currentUser);
 		model.addAttribute("username", currentUser.getUsername());
+
+		CommonAttributesPopulator.populate(currentUser, model);
 
 		return "users/showProfile";
 	}
@@ -216,12 +203,9 @@ public class UsersController {
 			@AuthenticationPrincipal UserDetails userDetails, ModelMap model) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 
-		List<Message> messages = currentUser.getReceivedMessage();
-		int unreadMessages = UnreadMessagesCounter.count(messages);
-
-		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currentUserID", currentUser.getId());
 		model.addAttribute("username", currentUser.getUsername());
+
+		CommonAttributesPopulator.populate(currentUser, model);
 
 		if (result.hasFieldErrors("firstName") || result.hasFieldErrors("lastName") || result.hasFieldErrors("email")) {
 			return "users/editProfile";
@@ -241,72 +225,66 @@ public class UsersController {
 		User currentUser = userService.findById(user_id);
 		currentUser.setPassword("");
 
-		List<Message> messages = currentUser.getReceivedMessage();
-		int unreadMessages = UnreadMessagesCounter.count(messages);
-
-		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currentUserID", currentUser.getId());
 		model.addAttribute("user", currentUser);
 		model.addAttribute("username", currentUser.getUsername());
+
+		CommonAttributesPopulator.populate(currentUser, model);
 
 		return "users/changePassword";
 	}
 
 	/*
-	 * This method will do the validation of the passwords and will update the user's password.
+	 * This method will do the validation of the passwords and will update the
+	 * user's password.
 	 */
 	@RequestMapping(value = "users/{user_id}/changePassword", method = RequestMethod.POST)
 	public String changePassword(@ModelAttribute @Valid User user, BindingResult result,
 			@AuthenticationPrincipal UserDetails userDetails, @PathVariable String user_id, ModelMap model) {
 		User currentUser = userService.findById(user_id);
 
-		List<Message> messages = currentUser.getReceivedMessage();
-		int unreadMessages = UnreadMessagesCounter.count(messages);
-
-		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currentUserID", currentUser.getId());
 		model.addAttribute("username", currentUser.getUsername());
-		
-		if (result.hasFieldErrors("password") ||result.hasFieldErrors("newPassword") || result.hasFieldErrors("newPassword2")) {
+
+		CommonAttributesPopulator.populate(currentUser, model);
+
+		if (result.hasFieldErrors("password") || result.hasFieldErrors("newPassword")
+				|| result.hasFieldErrors("newPassword2")) {
 			return "users/changePassword";
 		}
 
 		if (!passwordEncoder.matches(user.getPassword(), currentUser.getPassword())) {
-			FieldError passwordDoNotMatch = new FieldError("password", "password", messageSource
-					.getMessage("non.matching.password", new String[] { currentUser.getUsername() }, Locale.getDefault()));
+			FieldError passwordDoNotMatch = new FieldError("password", "password", messageSource.getMessage(
+					"non.matching.password", new String[] { currentUser.getUsername() }, Locale.getDefault()));
 			result.addError(passwordDoNotMatch);
-			
+
 			return "users/changePassword";
 		}
-		
+
 		if (!user.getNewPassword().equals(user.getNewPassword2())) {
-			FieldError passwordDoNotMatch = new FieldError("newPassword", "newPassword",
-					messageSource.getMessage("non.matching.passwords", new String[] { currentUser.getUsername() },
-							Locale.getDefault()));
-			FieldError passwordDoNotMatch2 = new FieldError("newPassword2", "newPassword2",
-					messageSource.getMessage("non.matching.passwords", new String[] { currentUser.getUsername() },
-							Locale.getDefault()));
+			FieldError passwordDoNotMatch = new FieldError("newPassword", "newPassword", messageSource.getMessage(
+					"non.matching.passwords", new String[] { currentUser.getUsername() }, Locale.getDefault()));
+			FieldError passwordDoNotMatch2 = new FieldError("newPassword2", "newPassword2", messageSource.getMessage(
+					"non.matching.passwords", new String[] { currentUser.getUsername() }, Locale.getDefault()));
 
 			result.addError(passwordDoNotMatch);
 			result.addError(passwordDoNotMatch2);
-			
+
 			return "users/changePassword";
 		}
-		
+
 		if (user.getPassword().equals(user.getNewPassword())) {
-			FieldError passwordDoMatch = new FieldError("newPassword", "newPassword", messageSource
-					.getMessage("matching.existing.password", new String[] { currentUser.getUsername() }, Locale.getDefault()));
-			FieldError passwordDoMatch2 = new FieldError("newPassword2", "newPassword2", messageSource
-					.getMessage("matching.existing.password", new String[] { currentUser.getUsername() }, Locale.getDefault()));
-			
+			FieldError passwordDoMatch = new FieldError("newPassword", "newPassword", messageSource.getMessage(
+					"matching.existing.password", new String[] { currentUser.getUsername() }, Locale.getDefault()));
+			FieldError passwordDoMatch2 = new FieldError("newPassword2", "newPassword2", messageSource.getMessage(
+					"matching.existing.password", new String[] { currentUser.getUsername() }, Locale.getDefault()));
+
 			result.addError(passwordDoMatch);
 			result.addError(passwordDoMatch2);
-			
+
 			return "users/changePassword";
 		}
-		
+
 		userService.changeUserPassword(currentUser, user.getNewPassword());
-		
+
 		return "users/changePasswordSuccess";
 	}
 }

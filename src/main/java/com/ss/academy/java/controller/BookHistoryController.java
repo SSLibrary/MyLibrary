@@ -17,12 +17,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.ss.academy.java.model.book.Book;
 import com.ss.academy.java.model.book.BookHistory;
 import com.ss.academy.java.model.book.BookStatus;
-import com.ss.academy.java.model.message.Message;
 import com.ss.academy.java.model.user.User;
 import com.ss.academy.java.service.book.BookHistoryService;
 import com.ss.academy.java.service.book.BookService;
 import com.ss.academy.java.service.user.UserService;
-import com.ss.academy.java.util.UnreadMessagesCounter;
+import com.ss.academy.java.util.CommonAttributesPopulator;
 
 @Controller
 @RequestMapping(value = "/books")
@@ -43,14 +42,11 @@ public class BookHistoryController {
 
 	@PreAuthorize("hasAuthority('USER')")
 	@RequestMapping(value = { "/{user_id}" }, method = RequestMethod.GET)
-	public String listBooksHistory(ModelMap model, @AuthenticationPrincipal UserDetails userDetails, 
-			Integer offset, Integer maxResults) {
+	public String listBooksHistory(ModelMap model, @AuthenticationPrincipal UserDetails userDetails, Integer offset,
+			Integer maxResults) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = currentUser.getReceivedMessage();
-		int unreadMessages = UnreadMessagesCounter.count(messages);
-
-		List<BookHistory> booksHistory = bookHistoryService.findAllBooksHistory(
-				offset, maxResults, currentUser.getUsername());
+		List<BookHistory> booksHistory = bookHistoryService.findAllBooksHistory(offset, maxResults,
+				currentUser.getUsername());
 		Long countAllBookHistory = bookHistoryService.countAllBooksHistory();
 
 		if (booksHistory.isEmpty()) {
@@ -62,8 +58,7 @@ public class BookHistoryController {
 			model.addAttribute("offset", offset);
 		}
 
-		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currentUserID", currentUser.getId());
+		CommonAttributesPopulator.populate(currentUser, model);
 
 		return "users/booksHistory";
 	}
@@ -112,12 +107,9 @@ public class BookHistoryController {
 
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/loaned", method = RequestMethod.GET)
-	public String showAllLoanedBooks(@AuthenticationPrincipal UserDetails userDetails, ModelMap model, 
-			Integer offset, Integer maxResults, BookHistory bookHistories) {
+	public String showAllLoanedBooks(@AuthenticationPrincipal UserDetails userDetails, ModelMap model, Integer offset,
+			Integer maxResults, BookHistory bookHistories) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
-		List<Message> messages = currentUser.getReceivedMessage();
-		int unreadMessages = UnreadMessagesCounter.count(messages);
-
 		Date currentDate = new Date(System.currentTimeMillis());
 		List<BookHistory> bookHistory = bookHistoryService.findAllBooksHistory(offset, maxResults, NOT_RETURNED);
 		Long countAllBookHistory = bookHistoryService.countAllBooksHistory(NOT_RETURNED);
@@ -132,8 +124,7 @@ public class BookHistoryController {
 			model.addAttribute("currDate", currentDate);
 		}
 
-		model.addAttribute("unreadMessages", unreadMessages);
-		model.addAttribute("currentUserID", currentUser.getId());
+		CommonAttributesPopulator.populate(currentUser, model);
 
 		return "users/loanedBooks";
 	}

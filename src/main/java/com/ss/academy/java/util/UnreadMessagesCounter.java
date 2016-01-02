@@ -7,6 +7,7 @@ import com.ss.academy.java.model.message.Message;
 public class UnreadMessagesCounter {
 
 	private static UnreadMessagesCounter instance;
+
 	/*
 	 * A private Constructor prevents any other class from instantiating.
 	 */
@@ -15,10 +16,11 @@ public class UnreadMessagesCounter {
 
 	/* Static 'instance' method */
 	public static UnreadMessagesCounter getInstance() {
-		 if(instance  == null) {
-			 instance  = new UnreadMessagesCounter();
-	      }
-	      return instance ;
+		if (instance == null) {
+			instance = new UnreadMessagesCounter();
+		}
+		
+		return instance;
 	}
 
 	/* Other methods protected by singleton-ness */
@@ -29,6 +31,7 @@ public class UnreadMessagesCounter {
 				counter++;
 			}
 		}
+		
 		return counter;
 	}
 }
