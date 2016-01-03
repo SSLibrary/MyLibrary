@@ -7,7 +7,7 @@
 	</div>
 	<c:choose>
 		<c:when test="${isEmpty}">
-			<h2 class="text-center">No Books Were Loaned yet!</h2>
+			<h3 class="text-center">No books were loaned yet!</h3>
 		</c:when>
 		<c:otherwise>
 			<table class="table">
