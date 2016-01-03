@@ -19,6 +19,15 @@
 		</form:form>
 	</div>
 </div>
+<br/>
+<div class="btn-toolbar">
+        	<div class="btn-group">
+        	<a href="/MyLibrary/authors/${book.author.id}/books/${book.id}/preview"
+						class="btn btn-primary" role="button"> <span
+						class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back
+					</a>
+				</div>
+		</div >
 <br />
 
 <!-- rating script -->

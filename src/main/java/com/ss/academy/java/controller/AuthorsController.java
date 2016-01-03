@@ -56,7 +56,7 @@ public class AuthorsController {
 
 		CommonAttributesPopulator.populate(currentUser, model);
 
-		return "authors/all";
+		return "authors/allAuthors";
 	}
 
 	/*
@@ -72,7 +72,7 @@ public class AuthorsController {
 
 		CommonAttributesPopulator.populate(currentUser, model);
 
-		return "authors/all";
+		return "authors/allAuthors";
 	}
 
 	/*

@@ -27,7 +27,8 @@
 	</div>
 	<dl class="dl-horizontal" style="margin-left: -80px;">
 		<dt>Author:</dt>
-		<dd>${book.author.name}</dd>
+		<dd> <a href="<c:url value='/authors/${book.author.id}/books/' />">
+				${book.author.name}</a></dd>
 		<dt>Pages:</dt>
 		<dd>${book.pages}</dd>
 		<dt>Description:</dt>
@@ -37,7 +38,8 @@
 			<c:when test="${isBookLoaned}">
 				<dd>${book.status}
 					by <a
-						href="<c:url value='/users/${currentBookLoaner.id}/showProfile' />">${currentBookLoaner.username}</a>
+						href="<c:url value='/users/${currentBookLoaner.id}/showProfile' />">
+						${currentBookLoaner.username}</a>
 				</dd>
 			</c:when>
 			<c:otherwise>
@@ -65,7 +67,7 @@
 		</div>
 		<div class="btn-group">
 			<form:form method="DELETE"
-				action="/MyLibrary/authors/${book.author.id}/books//${book.id}">
+				action="/MyLibrary/authors/${book.author.id}/books/${book.id}">
 				<button
 					onclick="if (confirm('Are you sure you want to delete this book?')) { return true; } else { return false; }"
 					id="deleteForm" type="submit" class="btn btn-default">

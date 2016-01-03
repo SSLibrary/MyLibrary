@@ -60,8 +60,8 @@ public class CommentController {
 		}
 
 		model.addAttribute("comments", comments);
-		model.addAttribute("author", author.getName());
-		model.addAttribute("book", book.getTitle());
+		model.addAttribute("author", author);
+		model.addAttribute("book", book);
 
 		CommonAttributesPopulator.populate(currentUser, model);
 

@@ -1,7 +1,7 @@
 <%@ include file="../layout/taglib.jsp" %>
 <%@ taglib prefix="tag" uri="/WEB-INF/taglibs/customTaglib.tld"%>
 		<div class="jumbotron">
-			<h2 class="text-center"><b>${author}/${book}/List of Comments</b></h2>
+			<h2 class="text-center"><b>${author.name}/${book.title}/List of Comments</b></h2>
 		</div>	
 		<table class="table table-striped">
         	   <tr>
@@ -38,5 +38,14 @@
 						<button type="submit" class="btn btn-primary btn-block">Add New Comment</button>
 					</form:form>
 				</div>
-			</div>
+				</div>
+			<div>
+			<br/>
+				<div class="btn-group">
+					<a href="/MyLibrary/authors/${author.id}/books/${book.id}/preview"
+						class="btn btn-primary" role="button"> <span
+						class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back
+					</a>
+				</div>
+			</div >
 		

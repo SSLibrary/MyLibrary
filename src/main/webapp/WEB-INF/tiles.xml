@@ -33,9 +33,9 @@ Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 		<put-attribute name="current" value="login"></put-attribute>
 	</definition>
 
-	<definition name="users/all" extends="baseLayout">
-		<put-attribute name="title" value="Users List" />
-		<put-attribute name="body" value="/WEB-INF/views/users/all.jsp" />
+	<definition name="users/allUsers" extends="baseLayout">
+		<put-attribute name="title" value="List of Users" />
+		<put-attribute name="body" value="/WEB-INF/views/users/allUsers.jsp" />
 		<put-attribute name="current" value="all"></put-attribute>
 	</definition>
 
@@ -97,9 +97,9 @@ Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 		<put-attribute name="current" value="addNewAuthor"></put-attribute>
 	</definition>
 
-	<definition name="authors/all" extends="baseLayout">
-		<put-attribute name="title" value="List of All Authors" />
-		<put-attribute name="body" value="/WEB-INF/views/authors/all.jsp" />
+	<definition name="authors/allAuthors" extends="baseLayout">
+		<put-attribute name="title" value="List of Authors" />
+		<put-attribute name="body" value="/WEB-INF/views/authors/allAuthors.jsp" />
 		<put-attribute name="current" value="all"></put-attribute>
 	</definition>
 	<!--end of authors -->
@@ -113,14 +113,14 @@ Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 	</definition>
 
 	<definition name="books/allAuthorBooks" extends="baseLayout">
-		<put-attribute name="title" value="List of All Author's Books" />
+		<put-attribute name="title" value="List of Author's Books" />
 		<put-attribute name="body"
 			value="/WEB-INF/views/books/allAuthorBooks.jsp" />
 		<put-attribute name="current" value="allAuthorBooks"></put-attribute>
 	</definition>
 
 	<definition name="books/allBooks" extends="baseLayout">
-		<put-attribute name="title" value="List of All Books" />
+		<put-attribute name="title" value="List of Books" />
 		<put-attribute name="body" value="/WEB-INF/views/books/allBooks.jsp" />
 		<put-attribute name="current" value="allBooks"></put-attribute>
 	</definition>
@@ -198,14 +198,14 @@ Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 	<!-- books history -->
 	<definition name="users/booksHistory" extends="baseLayout">
-		<put-attribute name="title" value="Show user's books history" />
+		<put-attribute name="title" value="Books history" />
 		<put-attribute name="body"
 			value="/WEB-INF/views/users/booksHistory.jsp" />
 		<put-attribute name="current" value="booksHistory"></put-attribute>
 	</definition>
 
 	<definition name="users/loanedBooks" extends="baseLayout">
-		<put-attribute name="title" value="Show all loaned Books" />
+		<put-attribute name="title" value="Loaned Books" />
 		<put-attribute name="body"
 			value="/WEB-INF/views/users/loanedBooks.jsp" />
 		<put-attribute name="current" value="loanedBooks"></put-attribute>

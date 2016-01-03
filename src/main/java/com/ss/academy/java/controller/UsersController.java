@@ -73,7 +73,7 @@ public class UsersController {
 
 		CommonAttributesPopulator.populate(currentUser, model);
 
-		return "users/all";
+		return "users/allUsers";
 	}
 
 	/*
@@ -89,7 +89,7 @@ public class UsersController {
 
 		CommonAttributesPopulator.populate(currentUser, model);
 
-		return "users/all";
+		return "users/allUsers";
 	}
 
 	/*

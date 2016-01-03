@@ -23,7 +23,7 @@
 	<div class="btn-group">
 		<a href="/MyLibrary/messages/${currentUserID}/new/${user.id}"
 			class="btn btn-info" role="button"> <span
-			class="glyphicon glyphicon-comment" aria-hidden="true"></span> Send
+			class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Send
 			Message
 		</a>
 	</div>
@@ -39,4 +39,12 @@
 			</sec:authorize>
 		</div>
 	</div>
-</div>
+</div >
+<div style="float: left; margin-bottom: 130px;">
+<div class="btn-group">
+		<a href="/MyLibrary/users"
+			class="btn btn-primary" role="button"> <span
+			class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back
+		</a>
+	</div>
+</div >
