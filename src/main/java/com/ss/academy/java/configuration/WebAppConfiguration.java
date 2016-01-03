@@ -26,7 +26,6 @@ import org.springframework.web.servlet.view.JstlView;
 @ComponentScan(basePackages = "com.ss.academy.java")
 public class WebAppConfiguration extends WebMvcConfigurerAdapter {
 
-	
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -49,17 +48,16 @@ public class WebAppConfiguration extends WebMvcConfigurerAdapter {
 		messageSource.setDefaultEncoding("UTF-8");
 		return messageSource;
 	}
-	
+
 	@Bean(name = "multipartResolver")
 	public CommonsMultipartResolver createMultipartResolver() {
-	    CommonsMultipartResolver resolver=new CommonsMultipartResolver();
-	    resolver.setMaxUploadSize(20971520);   // 20MB
-	    resolver.setMaxInMemorySize(20971520);  
-	    resolver.setDefaultEncoding("utf-8");
-	    return resolver;
+		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+		resolver.setMaxUploadSize(20971520); // 20MB
+		resolver.setMaxInMemorySize(20971520);
+		resolver.setDefaultEncoding("utf-8");
+		return resolver;
 	}
-	
-	
+
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer c) {
 		c.defaultContentType(MediaTypes.HAL_JSON);
