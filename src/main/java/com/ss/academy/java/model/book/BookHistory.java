@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Type;
 
@@ -20,33 +21,36 @@ import com.ss.academy.java.model.user.User;
 public class BookHistory {
 
 	@Id
-	@Column(name = "id", nullable = false)
+	@Column(name = "book_history_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@ManyToOne
 	@JoinColumn(name = "book_id")
 	private Book book;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-	
+
 	@Type(type = "timestamp")
-	@Column(name = "get_date", nullable = false)
+	@Column(name = "get_date")
+	@NotNull
 	private Date getDate = new Date();
-	
+
 	@Type(type = "timestamp")
-	@Column(name = "return_date", nullable = false)
+	@Column(name = "return_date")
+	@NotNull
 	private Date returnDate;
-	
-	@Column(name = "is_returned", nullable = false)
+
+	@Column(name = "is_returned")
+	@NotNull
 	private byte isReturned = 0;
 
 	public Long getId() {
 		return id;
 	}
-	
+
 	public void setId(Long id) {
 		this.id = id;
 	}

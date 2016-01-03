@@ -1,7 +1,5 @@
 package com.ss.academy.java.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ss.academy.java.model.book.Book;
-import com.ss.academy.java.model.message.Message;
 import com.ss.academy.java.model.rating.Rating;
 import com.ss.academy.java.model.user.User;
 import com.ss.academy.java.service.book.BookService;
 import com.ss.academy.java.service.rating.RatingService;
 import com.ss.academy.java.service.user.UserService;
 import com.ss.academy.java.util.CommonAttributesPopulator;
-import com.ss.academy.java.util.UnreadMessagesCounter;
 
 /**
  * Handles requests for the application books's rating page.

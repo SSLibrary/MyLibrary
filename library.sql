@@ -114,14 +114,16 @@ CREATE TABLE `comments` (
 	CONSTRAINT `fk_comments_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE
 ) ENGINE = InnoDB CHARACTER SET=utf8;
 
-
+--
+-- Table structure for table `books_history`
+--
 CREATE table `books_history`(
-	id int (6) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	book_id BIGINT UNSIGNED NOT NULL,
-	user_id varbinary(36) NOT NULL,
-	get_date DATETIME NOT NULL DEFAULT NOW(),
-	return_date DATETIME NOT NULL,
-	is_returned TINYINT(1) NOT NULL,
-	CONSTRAINT fk_book_id FOREIGN KEY (book_id) REFERENCES author_books(book_id) ON DELETE CASCADE,
-	CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
-) ENGINE = InnoDB CHARSET=utf8;
+	`book_history_id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`book_id` BIGINT UNSIGNED NOT NULL,
+	`user_id` varbinary(36) NOT NULL,
+	`get_date` DATETIME NOT NULL DEFAULT NOW(),
+	`return_date` DATETIME NOT NULL,
+	`is_returned` TINYINT(1) NOT NULL,
+	CONSTRAINT `fk_book_id` FOREIGN KEY (`book_id`) REFERENCES `author_books`(`book_id`) ON DELETE CASCADE,
+	CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `users`(`user_id`) ON DELETE CASCADE
+) ENGINE = InnoDB CHARACTER SET=utf8;
