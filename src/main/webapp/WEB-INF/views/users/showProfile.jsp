@@ -40,11 +40,3 @@
 		</div>
 	</div>
 </div >
-<div style="float: left; margin-bottom: 130px;">
-<div class="btn-group">
-		<a href="/MyLibrary/users"
-			class="btn btn-primary" role="button"> <span
-			class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back
-		</a>
-	</div>
-</div >
