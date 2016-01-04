@@ -49,10 +49,12 @@ public class AuthorServiceImpl implements AuthorService {
 		return dao.findAuthorsByName(authorName);
 	}
 
+	// List portion of all authors per page
 	public List<Author> listAllAuthors(Integer offset, Integer maxResults) {
 		return dao.listAllAuthors(offset, maxResults);
 	}
 
+	// Returns the number of all authors
 	public Long countAllAuthors() {
 		return dao.countAllAuthors();
 	}
