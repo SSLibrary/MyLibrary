@@ -4,11 +4,6 @@
 <div class="jumbotron">
 	<h1 class="text-center">Users</h1>
 </div>
-<c:choose>
-	<c:when test="${emptyListOfUsers}">
-		<h2 class="text-center">No Users Found!</h2>
-	</c:when>
-	<c:otherwise>
 		<form:form action="search" method="GET">
 			<div class="row">
 				<div class="col-md-12">
@@ -21,6 +16,11 @@
 				</div>
 			</div>
 		</form:form>
+		<c:choose>
+			<c:when test="${emptyListOfUsers}">
+				<h3 class="text-center">No such user was found!</h3>
+			</c:when>
+			<c:otherwise>
 		<div class="row">
 			<div class="col-md-2 col-xs-4 text-center">
 				<h3>Name</h3>

@@ -4,11 +4,7 @@
 <div class="jumbotron">
 	<h1 class="text-center">Books</h1>
 </div>
-<c:choose>
-	<c:when test="${emptyListOfBooks}">
-		<h2 class="text-center">No Books Found!</h2>
-	</c:when>
-	<c:otherwise>
+
 		<form:form action="search" method="GET">
 			<div class="row">
 				<div class="col-md-12">
@@ -21,6 +17,11 @@
 				</div>
 			</div>
 		</form:form>
+		<c:choose>
+			<c:when test="${emptyListOfBooks}">
+				<h3 class="text-center">No such book was found!</h3>
+			</c:when>
+			<c:otherwise>
 		<div class="row">
 			<div class="col-md-4 col-xs-4 text-center">
 				<h2>Title</h2>

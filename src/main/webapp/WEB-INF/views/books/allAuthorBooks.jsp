@@ -4,11 +4,6 @@
 <div class="jumbotron">
 	<h1 class="text-center">${author.name}'s Books</h1>
 </div>
-<c:choose>
-	<c:when test="${emptyListOfAuthorBooks}">
-		<h2 class="text-center">No Books For This Author Found!</h2>
-	</c:when>
-	<c:otherwise>
 		<form:form action="search" method="GET">
 			<div class="row">
 				<div class="col-md-12">
@@ -22,6 +17,11 @@
 				</div>
 			</div>
 		</form:form>
+		<c:choose>
+			<c:when test="${emptyListOfAuthorBooks}">
+				<h3 class="text-center">No such book from ${author.name} was found!</h3>
+			</c:when>
+		<c:otherwise>
 		<div class="row">						
 			<div class="col-md-3 col-xs-6 text-center">
 				<h2>Title</h2>
