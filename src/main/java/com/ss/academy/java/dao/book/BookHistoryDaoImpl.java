@@ -56,7 +56,7 @@ public class BookHistoryDaoImpl extends AbstractDao<Long, BookHistory> implement
 		return numberOfBooksHistory;
 	}
 	
-	// List portion of all books history per page
+	// List portion of all returned/not returned books per page
 	@SuppressWarnings("unchecked")
 	public List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults, byte isReturned) {
 		List<BookHistory> booksHistory = getSession()

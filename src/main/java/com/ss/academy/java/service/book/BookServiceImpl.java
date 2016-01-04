@@ -48,16 +48,27 @@ public class BookServiceImpl implements BookService {
 		return dao.findBooksByTitle(bookTitle);
 	}
 	
-	public List<Book> listAllBooks(Integer offset, Integer maxResults, Long id) {
-		return dao.listAllBooks(offset, maxResults, id);
+	// List portion of all author's books per page
+	public List<Book> listAllBooks(Integer offset, Integer maxResults, Long author_id) {
+		return dao.listAllBooks(offset, maxResults, author_id);
 	}
 
+	// Returns the number of all author's books
 	public Long countAllBooks(Long author_id) {
 		return dao.countAllBooks(author_id);
 	}
 
+	// List portion of all books per page
+	public List<Book> listAllBooks(Integer offset, Integer maxResults) {
+		return dao.listAllBooks(offset, maxResults);
+	}
+	
+	// Returns the number of all books
+	public Long countAllBooks() {
+		return dao.countAllBooks();
+	}	
+	
 	public void changeBookStatus(Book book) {
-		
 		Book entity = dao.findById(book.getId());
 
 		if (entity != null && entity.getStatus().equals(BookStatus.Available)) {
@@ -66,12 +77,4 @@ public class BookServiceImpl implements BookService {
 			entity.setStatus(BookStatus.Available);
 		}
 	}
-	
-	public List<Book> listAllBooks(Integer offset, Integer maxResults) {
-		return dao.listAllBooks(offset, maxResults);
-	}
-	
-	public Long countAllBooks() {
-		return dao.countAllBooks();
-	}	
 }

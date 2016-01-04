@@ -40,21 +40,24 @@ public class BookHistoryServiceImpl implements BookHistoryService {
 		return booksHistory;
 	}
 	
-	
+	// List portion of all books history per page for the authenticated user
 	public List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults, String username) {
 		List<BookHistory> booksHistory = dao.findAllBooksHistory(offset, maxResults, username);
 		return booksHistory;
 	}
 	
+	// List portion of all returned/not returned books per page
 	public List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults,byte isReturned) {
 		List<BookHistory> booksHistory = dao.findAllBooksHistory(offset, maxResults, isReturned);
 		return booksHistory;
 	}
 	
+	// Returns the number of all books history
 	public Long countAllBooksHistory() {
 		return dao.countAllBooksHistory();
 	}	
 	
+	// Returns the number of all returned/not returned Books
 	public Long countAllBooksHistory(byte isReturned) {
 		return dao.countAllBooksHistory(isReturned);
 	}
@@ -65,8 +68,8 @@ public class BookHistoryServiceImpl implements BookHistoryService {
 		List<BookHistory> booksHistory = dao.findAllBooksHistory();
 		for (BookHistory bookHistory : booksHistory) {
 			if (bookHistory.getBook().getId() == book_id 
-					&& bookHistory.getIsReturned() == LOANED_BOOK
-					) {
+					&& bookHistory.getIsReturned() == LOANED_BOOK)
+					{
 			currentBookLoaner = bookHistory.getUser();
 			break;
 			}			

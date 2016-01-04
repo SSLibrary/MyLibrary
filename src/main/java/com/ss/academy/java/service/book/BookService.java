@@ -25,7 +25,7 @@ public interface BookService {
 	
     void changeBookStatus(Book book);
 	
-	List<Book> listAllBooks(Integer offset, Integer maxResults, Long id);
+	List<Book> listAllBooks(Integer offset, Integer maxResults, Long author_id);
  
     List<Book> listAllBooks(Integer offset, Integer maxResults);
     
