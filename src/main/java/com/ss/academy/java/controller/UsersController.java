@@ -85,6 +85,10 @@ public class UsersController {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<User> users = userService.findUsersByUserName(username);
 
+		if (users.isEmpty()) {
+			model.addAttribute("emptyListOfUsers", true);
+		}
+
 		model.addAttribute("allUsers", users);
 
 		CommonAttributesPopulator.populate(currentUser, model);

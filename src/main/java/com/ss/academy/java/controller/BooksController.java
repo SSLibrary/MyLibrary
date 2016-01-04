@@ -37,7 +37,7 @@ public class BooksController {
 		List<Book> books = bookService.listAllBooks(offset, maxResults);
 
 		if (books.isEmpty()) {
-			model.addAttribute("emptyList", true);
+			model.addAttribute("emptyListOfBooks", true);
 		} else {
 			model.addAttribute("books", books);
 			model.addAttribute("count", bookService.countAllBooks());
@@ -59,9 +59,9 @@ public class BooksController {
 		List<Book> books = bookService.findBooksByTitle(bookTitle);
 
 		if (books.isEmpty()) {
-			model.addAttribute("isEmpty", true);
+			model.addAttribute("emptyListOfBooks", true);
 		} else {
-			model.addAttribute("isEmpty", false);
+			model.addAttribute("emptyListOfBooks", false);
 			model.addAttribute("books", books);
 		}
 

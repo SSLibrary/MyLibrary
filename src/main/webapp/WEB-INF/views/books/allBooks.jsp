@@ -5,8 +5,8 @@
 	<h1 class="text-center">Books</h1>
 </div>
 <c:choose>
-	<c:when test="${emptyList}">
-		<h2 class="text-center">The list is empty!</h2>
+	<c:when test="${emptyListOfBooks}">
+		<h2 class="text-center">No Books Found!</h2>
 	</c:when>
 	<c:otherwise>
 		<form:form action="search" method="GET">

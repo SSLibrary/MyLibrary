@@ -8,7 +8,7 @@
 		<c:when test="${emptyList}">
 			<div class="col-sm-6 col-md-3">
 				<div class="thumbnail">
-					<img src="<c:url value='/resources/images/noCoverImage.gif' />"
+					<img src="<c:url value='/resources/images/noCoverImage.jpg' />"
 						alt="no cover" alt="book cover">
 				</div>
 			</div>
