@@ -80,18 +80,19 @@ public class UserServiceImpl implements UserService {
 
 	public boolean isUsernameUnique(String username) {
 		User user = findByUsername(username);
-
+		
 		if (user == null) {
 			return false;
 		}
-
 		return true;
 	}
 
+	// List portion of all users per page
 	public List<User> listAllUsers(Integer offset, Integer maxResults) {
 		return dao.listAllUsers(offset, maxResults);
 	}
 
+	// Returns the number of all users
 	public Long countAllUsers() {
 		return dao.countAllUsers();
 	}

@@ -23,6 +23,9 @@ import com.ss.academy.java.service.book.BookService;
 import com.ss.academy.java.service.user.UserService;
 import com.ss.academy.java.util.CommonAttributesPopulator;
 
+/**
+ * Handles requests for the application books history page.
+ */
 @Controller
 @RequestMapping(value = "/books")
 public class BookHistoryController {
@@ -40,10 +43,11 @@ public class BookHistoryController {
 	@Autowired
 	BookService bookService;
 
+	// This method will list user's Books History 
 	@PreAuthorize("hasAuthority('USER')")
 	@RequestMapping(value = { "/{user_id}" }, method = RequestMethod.GET)
-	public String listBooksHistory(ModelMap model, @AuthenticationPrincipal UserDetails userDetails, Integer offset,
-			Integer maxResults) {
+	public String listBooksHistory(ModelMap model, @AuthenticationPrincipal UserDetails userDetails, 
+			Integer offset, Integer maxResults) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<BookHistory> booksHistory = bookHistoryService.findAllBooksHistory(offset, maxResults,
 				currentUser.getUsername());
@@ -63,6 +67,7 @@ public class BookHistoryController {
 		return "users/booksHistory";
 	}
 
+	// This method will add the loaned book in user's book history
 	@PreAuthorize("hasAuthority('USER')")
 	@RequestMapping(value = { "/{book_id}/{user_id}/addToHistory" }, method = RequestMethod.GET)
 	public String addNewBookHistory(@PathVariable Long book_id, @AuthenticationPrincipal UserDetails userDetails) {
@@ -88,6 +93,10 @@ public class BookHistoryController {
 		return "redirect:/books/{user_id}";
 	}
 
+	/*
+	 * This method will change book history status to returned and
+	 * also change the book status from loaned to available and book
+	 */
 	@PreAuthorize("hasAuthority('USER')")
 	@RequestMapping(value = "/{user_id}/{history_id}/return", method = RequestMethod.GET)
 	public String returnBook(@PathVariable Long history_id, @AuthenticationPrincipal UserDetails userDetails) {
@@ -105,10 +114,11 @@ public class BookHistoryController {
 		return "redirect:/books/{user_id}";
 	}
 
+	// This method will list all loaned books
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/loaned", method = RequestMethod.GET)
-	public String showAllLoanedBooks(@AuthenticationPrincipal UserDetails userDetails, ModelMap model, Integer offset,
-			Integer maxResults, BookHistory bookHistories) {
+	public String showAllLoanedBooks(@AuthenticationPrincipal UserDetails userDetails, ModelMap model, 
+			Integer offset, Integer maxResults, BookHistory bookHistories) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		Date currentDate = new Date(System.currentTimeMillis());
 		List<BookHistory> bookHistory = bookHistoryService.findAllBooksHistory(offset, maxResults, NOT_RETURNED);

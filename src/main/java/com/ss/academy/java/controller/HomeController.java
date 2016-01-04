@@ -29,9 +29,7 @@ public class HomeController {
 	@Autowired
 	UserService userService;
 
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
+	// Simply selects the home view to render by returning its name.
 	@RequestMapping(value = { "/" })
 	public String home(@AuthenticationPrincipal UserDetails user, ModelMap model) {
 		model.addAttribute("logged", false);

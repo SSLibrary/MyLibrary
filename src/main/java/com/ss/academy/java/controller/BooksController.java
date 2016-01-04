@@ -17,6 +17,9 @@ import com.ss.academy.java.service.book.BookService;
 import com.ss.academy.java.service.user.UserService;
 import com.ss.academy.java.util.CommonAttributesPopulator;
 
+/**
+ * Handles requests for the application books page.
+ */
 @Controller
 @RequestMapping(value = { "/books" })
 public class BooksController {
@@ -27,9 +30,7 @@ public class BooksController {
 	@Autowired
 	UserService userService;
 
-	/*
-	 * This method will show the list of all books.
-	 */
+	// This method will show the list of all books.
 	@RequestMapping(value = { "/" })
 	public String showAllBooks(@AuthenticationPrincipal UserDetails user, ModelMap model, Integer offset,
 			Integer maxResults) {
@@ -49,9 +50,7 @@ public class BooksController {
 		return "books/allBooks";
 	}
 
-	/*
-	 * This method provides the ability to search for books by their titles.
-	 */
+	// This method provides the ability to search for books by their titles.
 	@RequestMapping(value = { "/search" }, method = RequestMethod.GET)
 	public String searchBookByTitle(@RequestParam("bookTitle") String bookTitle, ModelMap model,
 			@AuthenticationPrincipal UserDetails user) {

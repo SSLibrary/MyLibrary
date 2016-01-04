@@ -37,9 +37,7 @@ public class AuthorsController {
 	@Autowired
 	UserService userService;
 
-	/*
-	 * This method will list all existing authors.
-	 */
+	// This method will list all existing authors.
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String listAuthors(HttpServletRequest request, ModelMap model, Integer offset, Integer maxResults,
 			@AuthenticationPrincipal UserDetails userDetails) {
@@ -59,9 +57,7 @@ public class AuthorsController {
 		return "authors/allAuthors";
 	}
 
-	/*
-	 * This method provides the ability to search for authors by their names.
-	 */
+	// This method provides the ability to search for authors by their names.
 	@RequestMapping(value = { "/search" }, method = RequestMethod.GET)
 	public String searchAuthorByName(@RequestParam("author_name") String author_name, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
@@ -75,9 +71,7 @@ public class AuthorsController {
 		return "authors/allAuthors";
 	}
 
-	/*
-	 * This method will provide the medium to add a new author.
-	 */
+	// This method will provide the medium to add a new author.
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/new" }, method = RequestMethod.GET)
 	public String addNewAuthor(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
@@ -109,9 +103,7 @@ public class AuthorsController {
 		return "redirect:/authors/";
 	}
 
-	/*
-	 * This method will provide the medium to update an existing author.
-	 */
+	// This method will provide the medium to update an existing author.
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/{author_id}" }, method = RequestMethod.GET)
 	public String editAuthor(@PathVariable Long author_id, ModelMap model,
@@ -144,9 +136,7 @@ public class AuthorsController {
 		return "redirect:/authors/";
 	}
 
-	/*
-	 * This method will delete an author by it's ID value.
-	 */
+	// This method will delete an author by it's ID value.
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/{author_id}" }, method = RequestMethod.DELETE)
 	public String deleteAuthor(@PathVariable Long author_id) {

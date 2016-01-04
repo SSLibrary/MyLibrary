@@ -38,10 +38,7 @@ public class MessageController {
 	@Autowired
 	UserService userService;
 
-	/*
-	 * This method will list all messages which the Authenticated user has
-	 * received
-	 */
+	// This method will list all received messages of the Authenticated user
 	@RequestMapping(value = { "/inbox" }, method = RequestMethod.GET)
 	public String listAllReceivedMessages(ModelMap model, @AuthenticationPrincipal UserDetails userDetails,
 			Integer offset, Integer maxResults, String username) {
@@ -59,9 +56,7 @@ public class MessageController {
 		return "messages/inbox";
 	}
 
-	/*
-	 * This method will list all messages which the Authenticated user has sent
-	 */
+	// This method will list all sent messages of the Authenticated user
 	@RequestMapping(value = { "/outbox" }, method = RequestMethod.GET)
 	public String listAllSentMessages(ModelMap model, @AuthenticationPrincipal UserDetails userDetails, Integer offset,
 			Integer maxResults, String username) {
@@ -80,9 +75,7 @@ public class MessageController {
 
 	}
 
-	/*
-	 * This method will create new message
-	 */
+	// This method will create new message
 	@RequestMapping(value = { "/new/{receiver_id}" }, method = RequestMethod.GET)
 	public String sendNewMessage(ModelMap model, @PathVariable String receiver_id,
 			@AuthenticationPrincipal UserDetails userDetails) {
@@ -102,9 +95,7 @@ public class MessageController {
 		return "messages/new";
 	}
 
-	/*
-	 * This method will save and send the newly created message.
-	 */
+	// This method will save and send the newly created message.
 	@RequestMapping(value = { "/new/{receiver_id}" }, method = RequestMethod.POST)
 	public String saveMessage(@Valid Message message, BindingResult result, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails, @PathVariable String receiver_id) {
@@ -128,9 +119,7 @@ public class MessageController {
 		return "redirect:/messages/{user_id}/outbox";
 	}
 
-	/*
-	 * This method will create new message.
-	 */
+	// This method will create new message and make relation with previous message
 	@RequestMapping(value = { "/{message_id}/reply" }, method = RequestMethod.GET)
 	public String replyToMessage(ModelMap model, @PathVariable Integer message_id,
 			@AuthenticationPrincipal UserDetails userDetails) {
@@ -194,9 +183,7 @@ public class MessageController {
 		return "redirect:/messages/{user_id}/outbox";
 	}
 
-	/*
-	 * This method will display all message in the message thread.
-	 */
+	// This method will display all messages in the message thread.
 	@RequestMapping(value = { "/{message_id}/display" }, method = RequestMethod.GET)
 	public String displayMessage(ModelMap model, @PathVariable Integer message_id,
 			@AuthenticationPrincipal UserDetails userDetails) {
