@@ -15,70 +15,69 @@ import com.ss.academy.java.model.book.BookHistory;
 @Repository("bookHistoryDao")
 public class BookHistoryDaoImpl extends AbstractDao<Long, BookHistory> implements BookHistoryDao {
 
-	/*
-	 * Find Book History by id
-	 */
 	public BookHistory findById(Long id) {
 		return getByKey(id);
 	}
 
-	/*
-	 * Save Book History
-	 */
 	public void saveBookHistory(BookHistory bookHistory) {
 		save(bookHistory);
 	}
 	
-	/*
-	 * Show all Books History
-	 */
 	@SuppressWarnings("unchecked")
 	public List<BookHistory> findAllBooksHistory() {
 		Criteria criteria = createEntityCriteria();
 		List<BookHistory> booksHistory = (List<BookHistory>) criteria.list();
+		
 		return booksHistory;
 	}
 	
-	// List of all book history for admin in books history menu
+	// List portion of all books history per page for the authenticated user
 	@SuppressWarnings("unchecked")
 	public List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults, String username) {
-		return getSession()
+		List<BookHistory> booksHistory = getSession()
 				.createCriteria(BookHistory.class, "bookHistory")
 				.createAlias("bookHistory.user", "bu") // inner join by default				
 				.add(Restrictions.eq("bu.username", username))	
 				.addOrder( Order.desc("returnDate"))
-				.setFirstResult(offset!=null?offset:0)
-				.setMaxResults(maxResults!=null?maxResults:5)
-				.list();		
+				.setFirstResult(offset != null ? offset : 0)
+				.setMaxResults(maxResults != null ? maxResults : 5)
+				.list();	
+		
+		return booksHistory;
 	}	
 
-	//Count all books history for admin in books history menu
-
-	public Long countAllBooksHistory(){
-		return (Long)getSession()
+	// Returns the number of all books history
+	public Long countAllBooksHistory() {
+		Long numberOfBooksHistory = (Long)getSession()
 				.createCriteria(BookHistory.class)
 				.setProjection(Projections.rowCount())
 				.uniqueResult();
+		
+		return numberOfBooksHistory;
 	}
 	
-	// List of all book history for user in lianed books menu
+	// List portion of all books history per page
 	@SuppressWarnings("unchecked")
 	public List<BookHistory> findAllBooksHistory(Integer offset, Integer maxResults, byte isReturned) {
-		return getSession()
+		List<BookHistory> booksHistory = getSession()
 				.createCriteria(BookHistory.class)
 				.addOrder( Order.desc("returnDate"))
 				.add(Restrictions.eq("isReturned", isReturned))
-				.setFirstResult(offset!=null?offset:0)
-				.setMaxResults(maxResults!=null?maxResults:5)
-				.list();		
+				.setFirstResult(offset != null ? offset : 0)
+				.setMaxResults(maxResults != null ? maxResults : 5)
+				.list();	
+		
+		return booksHistory;
 	}
 	
-	//Count all books history for user in lianed books menu
-	public Long countAllBooksHistory(byte isReturned){
-		return (Long)getSession()
+	// Returns the number of all returned/not returned Books
+	public Long countAllBooksHistory(byte isReturned) {
+		Long numberOfBooksHistory = (Long)getSession()
 				.createCriteria(BookHistory.class)
 				.add(Restrictions.eq("isReturned", isReturned))				
 				.setProjection(Projections.rowCount())
 				.uniqueResult();
+		
+		return numberOfBooksHistory;
 	}
 }
