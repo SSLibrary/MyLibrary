@@ -58,7 +58,7 @@
 					</div>
 				</sec:authorize>
 				<div class="btn-group">
-					<form:form action="${author.id}/books/" method="GET">
+					<form:form action="${author.username}/books/" method="GET">
 						<button type="submit" class="btn btn-info">
 							<span class="glyphicon glyphicon-book" aria-hidden="true"></span>
 							Books
