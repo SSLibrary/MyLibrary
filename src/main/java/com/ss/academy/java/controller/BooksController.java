@@ -36,12 +36,13 @@ public class BooksController {
 			Integer maxResults) {
 		User currentUser = userService.findByUsername(user.getUsername());
 		List<Book> books = bookService.listAllBooks(offset, maxResults);
+		Long numberOfBooks = bookService.countAllBooks();
 
 		if (books.isEmpty()) {
 			model.addAttribute("emptyListOfBooks", true);
 		} else {
 			model.addAttribute("books", books);
-			model.addAttribute("count", bookService.countAllBooks());
+			model.addAttribute("numberOfBooks", numberOfBooks );
 			model.addAttribute("offset", offset);
 		}
 
@@ -58,9 +59,8 @@ public class BooksController {
 		List<Book> books = bookService.findBooksByTitle(bookTitle);
 
 		if (books.isEmpty()) {
-			model.addAttribute("emptyListOfBooks", true);
+			model.addAttribute("noSuchBookFound", true);
 		} else {
-			model.addAttribute("emptyListOfBooks", false);
 			model.addAttribute("books", books);
 		}
 

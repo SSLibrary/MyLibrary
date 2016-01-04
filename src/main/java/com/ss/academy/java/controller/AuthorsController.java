@@ -43,13 +43,14 @@ public class AuthorsController {
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Author> authors = authorService.listAllAuthors(offset, maxResults);
+		Long numberOfAuthors = authorService.countAllAuthors();
 
 		if (authors.isEmpty()) {
 			model.addAttribute("emptyListOfAuthors", true);
 		}
 
 		model.addAttribute("authors", authors);
-		model.addAttribute("count", authorService.countAllAuthors());
+		model.addAttribute("numberOfAuthors", numberOfAuthors);
 		model.addAttribute("offset", offset);
 
 		CommonAttributesPopulator.populate(currentUser, model);
@@ -65,7 +66,7 @@ public class AuthorsController {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 
 		if (authors.isEmpty()) {
-			model.addAttribute("emptyListOfAuthors", true);
+			model.addAttribute("noSuchAuthorFound", true);
 		}
 
 		model.addAttribute("authors", authors);

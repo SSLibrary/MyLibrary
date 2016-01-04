@@ -54,12 +54,7 @@ public class CommentController {
 		Book book = bookService.findById(book_id);
 		List<Comment> comments = book.getComments();
 
-		model.addAttribute("isEmpty", false);
-
-		if (comments.isEmpty()) {
-			model.addAttribute("isEmpty", true);
-		}
-
+		model.addAttribute("isEmpty", comments.isEmpty());
 		model.addAttribute("comments", comments);
 		model.addAttribute("author", author);
 		model.addAttribute("book", book);

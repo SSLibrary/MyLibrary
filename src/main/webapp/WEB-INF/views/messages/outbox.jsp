@@ -25,9 +25,9 @@
 </c:choose>
 <!-- pagination -->
 <c:choose>
-	<c:when test="${count > 5}">
+	<c:when test="${numberOfSentMessages > 5}">
 		<div class="text-center">
-			<tag:paginate max="15" offset="${offset}" count="${count}"
+			<tag:paginate max="15" offset="${offset}" count="${numberOfSentMessages}"
 				uri="../messages/outbox" next="&raquo;" previous="&laquo;" />
 		</div>
 	</c:when>

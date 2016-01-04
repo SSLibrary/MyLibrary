@@ -51,14 +51,14 @@ public class BookHistoryController {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<BookHistory> booksHistory = bookHistoryService.findAllBooksHistory(offset, maxResults,
 				currentUser.getUsername());
-		Long countAllBookHistory = bookHistoryService.countAllBooksHistory();
+		Long numberOfBooksHistory = bookHistoryService.countAllBooksHistory();
 
 		if (booksHistory.isEmpty()) {
 			model.addAttribute("isEmpty", true);
 		} else {
 			model.addAttribute("isEmpty", false);
 			model.addAttribute("booksHistory", booksHistory);
-			model.addAttribute("count", countAllBookHistory);
+			model.addAttribute("numberOfBooksHistory", numberOfBooksHistory);
 			model.addAttribute("offset", offset);
 		}
 
@@ -121,15 +121,15 @@ public class BookHistoryController {
 			Integer offset, Integer maxResults, BookHistory bookHistories) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		Date currentDate = new Date(System.currentTimeMillis());
-		List<BookHistory> bookHistory = bookHistoryService.findAllBooksHistory(offset, maxResults, NOT_RETURNED);
-		Long countAllBookHistory = bookHistoryService.countAllBooksHistory(NOT_RETURNED);
+		List<BookHistory> loanedBooks = bookHistoryService.findAllBooksHistory(offset, maxResults, NOT_RETURNED);
+		Long numberOfLoanedBooks = bookHistoryService.countAllBooksHistory(NOT_RETURNED);
 
-		if (bookHistory.isEmpty()) {
+		if (loanedBooks.isEmpty()) {
 			model.addAttribute("isEmpty", true);
 		} else {
 			model.addAttribute("isEmpty", false);
-			model.addAttribute("loanedBooks", bookHistory);
-			model.addAttribute("count", countAllBookHistory);
+			model.addAttribute("loanedBooks", loanedBooks);
+			model.addAttribute("numberOfLoanedBooks", numberOfLoanedBooks);
 			model.addAttribute("offset", offset);
 			model.addAttribute("currDate", currentDate);
 		}

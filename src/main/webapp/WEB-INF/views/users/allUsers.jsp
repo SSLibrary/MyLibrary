@@ -17,7 +17,10 @@
 			</div>
 		</form:form>
 		<c:choose>
-			<c:when test="${emptyListOfUsers}">
+		<c:when test="${emptyListOfUsers}">
+				<h3 class="text-center">The list is empty!</h3>
+			</c:when>
+			<c:when test="${noSuchUserFound}">
 				<h3 class="text-center">No such user was found!</h3>
 			</c:when>
 			<c:otherwise>
@@ -89,9 +92,9 @@
 		</c:forEach>
 		<!-- pagination -->
 		<c:choose>
-			<c:when test="${count > 5}">
+			<c:when test="${numberOfUsers > 5}">
 				<div class="text-center">
-					<tag:paginate max="15" offset="${offset}" count="${count}"
+					<tag:paginate max="15" offset="${offset}" count="${numberOfUsers}"
 						uri="../users/" next="&raquo;" previous="&laquo;" />
 				</div>
 			</c:when>

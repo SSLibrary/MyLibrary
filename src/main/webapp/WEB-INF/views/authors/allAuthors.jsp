@@ -19,6 +19,9 @@
 		</form:form>
 		<c:choose>
 			<c:when test="${emptyListOfAuthors}">
+				<h3 class="text-center">The list is empty!</h3>
+			</c:when>
+			<c:when test="${noSuchAuthorFound}">
 				<h3 class="text-center">No such author was found!</h3>
 			</c:when>
 			<c:otherwise>
@@ -90,9 +93,9 @@
 
 		<!-- pagination -->
 		<c:choose>
-			<c:when test="${count > 5}">
+			<c:when test="${numberOfAuthors > 5}">
 				<div class="text-center">
-					<tag:paginate max="15" offset="${offset}" count="${count}"
+					<tag:paginate max="15" offset="${offset}" count="${numberOfAuthors}"
 						uri="../authors/" next="&raquo;" previous="&laquo;" />
 				</div>
 			</c:when>

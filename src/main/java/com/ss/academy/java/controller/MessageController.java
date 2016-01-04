@@ -44,11 +44,11 @@ public class MessageController {
 			Integer offset, Integer maxResults, String username) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = messageService.listAllReceivedMessages(offset, maxResults, userDetails.getUsername());
-		Long count = messageService.countReceivedMessages(userDetails.getUsername());
+		Long numberOfReceivedMessages = messageService.countReceivedMessages(userDetails.getUsername());
 
 		model.addAttribute("isEmpty", messages.isEmpty());
 		model.addAttribute("messages", messages);
-		model.addAttribute("count", count);
+		model.addAttribute("numberOfReceivedMessages", numberOfReceivedMessages);
 		model.addAttribute("offset", offset);
 
 		CommonAttributesPopulator.populate(currentUser, model);
@@ -62,11 +62,11 @@ public class MessageController {
 			Integer maxResults, String username) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<Message> messages = messageService.listAllSentMessages(offset, maxResults, userDetails.getUsername());
-		Long count = messageService.countSentMessages(userDetails.getUsername());
+		Long numberOfSentMessages = messageService.countSentMessages(userDetails.getUsername());
 
 		model.addAttribute("isEmpty", messages.isEmpty());
 		model.addAttribute("messages", messages);
-		model.addAttribute("count", count);
+		model.addAttribute("numberOfSentMessages", numberOfSentMessages);
 		model.addAttribute("offset", offset);
 
 		CommonAttributesPopulator.populate(currentUser, model);

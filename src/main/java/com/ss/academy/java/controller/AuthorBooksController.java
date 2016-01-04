@@ -63,14 +63,14 @@ public class AuthorBooksController {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		Author author = authorService.findById(author_id);
 		List<Book> books = bookService.listAllBooks(offset, maxResults, author_id);
-		Long count = bookService.countAllBooks(author_id);
+		Long numberOfBooks = bookService.countAllBooks(author_id);
 
 		if (books.isEmpty()) {
-			model.addAttribute("emptyList", true);
+			model.addAttribute("emptyListOfAuthorBooks", true);
 		}
 
 		model.addAttribute("books", books);
-		model.addAttribute("count", count);
+		model.addAttribute("numberOfBooks", numberOfBooks);
 		model.addAttribute("offset", offset);
 		model.addAttribute("author", author);
 
@@ -150,7 +150,7 @@ public class AuthorBooksController {
 		}
 
 		if (authorBooks.isEmpty()) {
-			model.addAttribute("emptyListOfAuthorBooks", true);
+			model.addAttribute("noSuchBookFound", true);
 		}
 
 		model.addAttribute("author", author);
