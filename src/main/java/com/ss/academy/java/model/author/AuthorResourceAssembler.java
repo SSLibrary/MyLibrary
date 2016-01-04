@@ -13,5 +13,4 @@ public class AuthorResourceAssembler extends IdentifiableResourceAssemblerSuppor
 
 		return resource;
 	}
-
 }

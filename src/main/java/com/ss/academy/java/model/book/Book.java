@@ -178,5 +178,4 @@ public class Book implements Identifiable<Long> {
 	public void setBookDescription(String bookDescription) {
 		this.bookDescription = bookDescription;
 	}
-
 }
