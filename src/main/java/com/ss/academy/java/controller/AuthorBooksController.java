@@ -101,7 +101,7 @@ public class AuthorBooksController {
 		try {
 			byte[] bytes = book.getImage();
 			if (bytes.length == 0) {
-				model.addAttribute("emptyList", true);
+				model.addAttribute("emptyListOfAuthorBooks", true);
 			}
 			BASE64Encoder base64Encoder = new BASE64Encoder();
 			StringBuilder imageString = new StringBuilder();
@@ -111,7 +111,7 @@ public class AuthorBooksController {
 			String image = imageString.toString();
 			model.addAttribute("image", image);
 		} catch (NullPointerException e) {
-			model.addAttribute("emptyList", true);
+			model.addAttribute("emptyListOfAuthorBooks", true);
 		}
 
 		User currentBookLoaner = bookHistoryService.getCurrentBookLoaner(book_id);

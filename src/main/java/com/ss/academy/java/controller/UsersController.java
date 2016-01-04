@@ -69,7 +69,7 @@ public class UsersController {
 
 		model.addAttribute("emptyListOfUsers", allUsers.isEmpty());
 		model.addAttribute("allUsers", filteredList);
-		model.addAttribute("count", filteredList.size());
+		model.addAttribute("numberOfUsers", filteredList.size());
 		model.addAttribute("offset", offset);
 
 		CommonAttributesPopulator.populate(currentUser, model);
