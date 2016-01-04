@@ -64,6 +64,10 @@ public class AuthorsController {
 		List<Author> authors = authorService.findAuthorsByName(author_name);
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 
+		if (authors.isEmpty()) {
+			model.addAttribute("emptyListOfAuthors", true);
+		}
+
 		model.addAttribute("authors", authors);
 
 		CommonAttributesPopulator.populate(currentUser, model);

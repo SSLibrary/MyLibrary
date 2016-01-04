@@ -5,8 +5,8 @@
 	<h1 class="text-center">${author.name}'s Books</h1>
 </div>
 <c:choose>
-	<c:when test="${emptyList}">
-		<h2 class="text-center">No Books For This Author Added Yet</h2>
+	<c:when test="${emptyListOfAuthorBooks}">
+		<h2 class="text-center">No Books For This Author Found!</h2>
 	</c:when>
 	<c:otherwise>
 		<form:form action="search" method="GET">

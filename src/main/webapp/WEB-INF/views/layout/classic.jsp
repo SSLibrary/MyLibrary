@@ -11,7 +11,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 <title><tiles:getAsString name="title"></tiles:getAsString></title>
-<link rel="shortcut icon" href="/MyLibrary/resources/images/book.ico" />
+<link rel="shortcut icon" href="/MyLibrary/resources/book.ico" />
 <link rel="stylesheet"
 	href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
