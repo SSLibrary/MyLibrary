@@ -51,7 +51,7 @@ public class BookHistoryController {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<BookHistory> booksHistory = bookHistoryService.findAllBooksHistory(offset, maxResults,
 				currentUser.getUsername());
-		Long numberOfBooksHistory = bookHistoryService.countAllBooksHistory();
+		Long numberOfBooksHistory = bookHistoryService.countAllBooksHistory(currentUser.getUsername());
 
 		if (booksHistory.isEmpty()) {
 			model.addAttribute("isEmpty", true);

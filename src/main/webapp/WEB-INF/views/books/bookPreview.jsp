@@ -4,16 +4,16 @@
 <%@ include file="../layout/taglib.jsp"%>
 
 <div class="row">
+<c:if test="${largeSizeOfImage eq true}">
+	<p class="btn btn-danger">Large SIZE</p>
+</c:if>	
 	<c:choose>
 		<c:when test="${emptyListOfAuthorBooks}">
 			<div class="col-sm-6 col-md-3">
 				<div class="thumbnail">
 					<img src="<c:url value='/resources/images/noCoverImage.jpg' />"
 						alt="no cover" alt="book cover">
-				</div>
-				<c:if test="${largeSizeOfImage}">
-				<p>large size3</p>
-				</c:if>				
+				</div>							
 			</div>
 		</c:when>		
 		<c:otherwise>

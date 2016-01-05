@@ -26,8 +26,7 @@ public class BookHistoryDaoImpl extends AbstractDao<Long, BookHistory> implement
 	@SuppressWarnings("unchecked")
 	public List<BookHistory> findAllBooksHistory() {
 		Criteria criteria = createEntityCriteria();
-		List<BookHistory> booksHistory = (List<BookHistory>) criteria.list();
-		
+		List<BookHistory> booksHistory = (List<BookHistory>) criteria.list();		
 		return booksHistory;
 	}
 	
@@ -41,18 +40,18 @@ public class BookHistoryDaoImpl extends AbstractDao<Long, BookHistory> implement
 				.addOrder( Order.desc("returnDate"))
 				.setFirstResult(offset != null ? offset : 0)
 				.setMaxResults(maxResults != null ? maxResults : 5)
-				.list();	
-		
+				.list();			
 		return booksHistory;
 	}	
 
 	// Returns the number of all books history
-	public Long countAllBooksHistory() {
+	public Long countAllBooksHistory(String username) {
 		Long numberOfBooksHistory = (Long)getSession()
-				.createCriteria(BookHistory.class)
+				.createCriteria(BookHistory.class, "bookHistory")
+				.createAlias("bookHistory.user", "bu") // inner join by default				
+				.add(Restrictions.eq("bu.username", username))
 				.setProjection(Projections.rowCount())
-				.uniqueResult();
-		
+				.uniqueResult();		
 		return numberOfBooksHistory;
 	}
 	
@@ -65,8 +64,7 @@ public class BookHistoryDaoImpl extends AbstractDao<Long, BookHistory> implement
 				.add(Restrictions.eq("isReturned", isReturned))
 				.setFirstResult(offset != null ? offset : 0)
 				.setMaxResults(maxResults != null ? maxResults : 5)
-				.list();	
-		
+				.list();		
 		return booksHistory;
 	}
 	
@@ -76,8 +74,7 @@ public class BookHistoryDaoImpl extends AbstractDao<Long, BookHistory> implement
 				.createCriteria(BookHistory.class)
 				.add(Restrictions.eq("isReturned", isReturned))				
 				.setProjection(Projections.rowCount())
-				.uniqueResult();
-		
+				.uniqueResult();		
 		return numberOfBooksHistory;
 	}
 }

@@ -53,8 +53,8 @@ public class BookHistoryServiceImpl implements BookHistoryService {
 	}
 	
 	// Returns the number of all books history
-	public Long countAllBooksHistory() {
-		return dao.countAllBooksHistory();
+	public Long countAllBooksHistory(String username) {
+		return dao.countAllBooksHistory(username);
 	}	
 	
 	// Returns the number of all returned/not returned Books
