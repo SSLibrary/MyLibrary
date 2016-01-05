@@ -41,6 +41,7 @@ public class BookDaoImpl extends AbstractDao<Long, Book> implements BookDao {
 																		// avoid
 																		// duplicates.
 		List<Book> books = (List<Book>) criteria.list();
+		
 		return books;
 	}
 
@@ -54,40 +55,52 @@ public class BookDaoImpl extends AbstractDao<Long, Book> implements BookDao {
 		return books;
 	}
 	
+	// List portion of all author's books per page
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public List<Book> listAllBooks(Integer offset, Integer maxResults, Long author_id){
+	public List<Book> listAllBooks(Integer offset, Integer maxResults, Long author_id) {
 		
-		List<Book> list= (List<Book>) getSession()
+		List<Book> books = (List<Book>) getSession()
 				.createCriteria(Book.class)
 				.add(Restrictions.eq("author.id", author_id))
-				.setFirstResult(offset!=null?offset:0)
-				.setMaxResults(maxResults!=null?maxResults:5)
-				.list();		
-		return list;
-	}
-	
-	public Long countAllBooks(Long author_id){
-		return (Long)getSession()
-				.createCriteria(Book.class)
-				.add(Restrictions.eq("author.id", author_id))
-				.setProjection(Projections.rowCount())
-				.uniqueResult();
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Book> listAllBooks(Integer offset, Integer maxResults){
-		return getSession()
-				.createCriteria(Book.class)
-				.setFirstResult(offset!=null?offset:0)
-				.setMaxResults(maxResults!=null?maxResults:5)
+				.setFirstResult(offset != null ? offset : 0)
+				.setMaxResults(maxResults != null ? maxResults : 5)
 				.list();
+		
+		return books;
+	}
+	
+	// Returns the number of all author's books
+	public Long countAllBooks(Long author_id) {
+		Long numberOfBooks = (Long)getSession()
+				.createCriteria(Book.class)
+				.add(Restrictions.eq("author.id", author_id))
+				.setProjection(Projections.rowCount())
+				.uniqueResult();
+		
+		return numberOfBooks;
+				
+	}
+	
+	// List portion of all books per page
+	@SuppressWarnings("unchecked")
+	public List<Book> listAllBooks(Integer offset, Integer maxResults) {
+		List<Book> books = getSession()
+				.createCriteria(Book.class)
+				.setFirstResult(offset != null ? offset : 0)
+				.setMaxResults(maxResults != null ? maxResults : 5)
+				.list();
+		
+		return books;
 	}
 		
-	public Long countAllBooks(){
-		return (Long)getSession()
+	// Returns the number of all books
+	public Long countAllBooks() {
+		Long numberOfBooks = (Long)getSession()
 				.createCriteria(Book.class)
 				.setProjection(Projections.rowCount())
 				.uniqueResult();
+		
+		return numberOfBooks;
 	}
 }

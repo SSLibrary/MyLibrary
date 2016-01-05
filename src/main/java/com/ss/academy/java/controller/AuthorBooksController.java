@@ -56,25 +56,20 @@ public class AuthorBooksController {
 	@Autowired
 	UserService userService;
 
-	
-	/*
-	 * This method will list all existing books and will check whether they have
-	 * been rated so far by the current user.
-	 */
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String listAllBooks(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long author_id,
 			ModelMap model, Integer offset, Integer maxResults) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		Author author = authorService.findById(author_id);
 		List<Book> books = bookService.listAllBooks(offset, maxResults, author_id);
-		Long count = bookService.countAllBooks(author_id);
+		Long numberOfBooks = bookService.countAllBooks(author_id);
 
 		if (books.isEmpty()) {
-			model.addAttribute("emptyList", true);
+			model.addAttribute("emptyListOfAuthorBooks", true);
 		}
 
 		model.addAttribute("books", books);
-		model.addAttribute("count", count);
+		model.addAttribute("numberOfBooks", numberOfBooks);
 		model.addAttribute("offset", offset);
 		model.addAttribute("author", author);
 
@@ -83,6 +78,10 @@ public class AuthorBooksController {
 		return "books/allAuthorBooks";
 	}
 
+	/*
+	 * This method will display book's details and will check whether it has
+	 * been rated so far by the current user.
+	 */
 	@RequestMapping(value = { "/{book_id}/preview" }, method = RequestMethod.GET)
 	public String previewBook(@PathVariable Long book_id, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
@@ -101,7 +100,7 @@ public class AuthorBooksController {
 		try {
 			byte[] bytes = book.getImage();
 			if (bytes.length == 0) {
-				model.addAttribute("emptyList", true);
+				model.addAttribute("emptyListOfAuthorBooks", true);
 			}
 			BASE64Encoder base64Encoder = new BASE64Encoder();
 			StringBuilder imageString = new StringBuilder();
@@ -111,7 +110,7 @@ public class AuthorBooksController {
 			String image = imageString.toString();
 			model.addAttribute("image", image);
 		} catch (NullPointerException e) {
-			model.addAttribute("emptyList", true);
+			model.addAttribute("emptyListOfAuthorBooks", true);
 		}
 
 		User currentBookLoaner = bookHistoryService.getCurrentBookLoaner(book_id);
@@ -128,9 +127,7 @@ public class AuthorBooksController {
 		return "books/bookPreview";
 	}
 
-	/*
-	 * This method provides the ability to search for books by their titles.
-	 */
+	// This method provides the ability to search for books by their titles.
 	@RequestMapping(value = { "/search" }, method = RequestMethod.GET)
 	public String searchBookByName(@PathVariable Long author_id, @RequestParam("bookTitle") String bookTitle,
 			ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
@@ -138,12 +135,21 @@ public class AuthorBooksController {
 		Author author = authorService.findById(author_id);
 
 		List<Book> books = bookService.findBooksByTitle(bookTitle);
+
+		if (books.isEmpty()) {
+			model.addAttribute("emptyListOfAuthorBooks", true);
+		}
+
 		List<Book> authorBooks = new ArrayList<Book>();
 
 		for (Book book : books) {
 			if (book.getAuthor().getId() == author_id) {
 				authorBooks.add(book);
 			}
+		}
+
+		if (authorBooks.isEmpty()) {
+			model.addAttribute("noSuchBookFound", true);
 		}
 
 		model.addAttribute("author", author);
@@ -154,9 +160,7 @@ public class AuthorBooksController {
 		return "books/allAuthorBooks";
 	}
 
-	/*
-	 * This method will provide the medium to add a new book.
-	 */
+	// This method will provide the medium to add a new book.
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/new" }, method = RequestMethod.GET)
 	public String addNewBook(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
@@ -205,9 +209,7 @@ public class AuthorBooksController {
 			
 	}
 
-	/*
-	 * This method will provide the medium to update an existing book.
-	 */
+	// This method will provide the medium to update an existing book.
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/{book_id}" }, method = RequestMethod.GET)
 	public String editBook(@PathVariable Long book_id, ModelMap model,
@@ -259,12 +261,11 @@ public class AuthorBooksController {
 				bookService.updateBook(dbBook);
 			}
 		}
+		
 		return "redirect:/authors/{author_id}/books/{book_id}/preview";
 	}
 
-	/*
-	 * This method will delete a book by it's ID value.
-	 */
+	// This method will delete a book by it's ID value.
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/{book_id}" }, method = RequestMethod.DELETE)
 	public String deleteBook(@PathVariable Long author_id, @PathVariable Long book_id) {

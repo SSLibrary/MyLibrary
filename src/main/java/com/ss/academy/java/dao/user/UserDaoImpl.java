@@ -54,16 +54,24 @@ public class UserDaoImpl extends AbstractDao<String, User> implements UserDao {
 		return users;
 	}
 
+	// List portion of all users per page
 	@SuppressWarnings("unchecked")
 	@Transactional
 	public List<User> listAllUsers(Integer offset, Integer maxResults) {
-		return getSession().createCriteria(User.class)
+		List<User> users = getSession().createCriteria(User.class)
 				.addOrder( Order.asc("username"))
 				.setFirstResult(offset != null ? offset : 0)
 				.setMaxResults(maxResults != null ? maxResults : 5).list();
+		
+		return users;
 	}
 
+	// Returns the number of all users
 	public Long countAllUsers() {
-		return (Long) getSession().createCriteria(User.class).setProjection(Projections.rowCount()).uniqueResult();
+		Long numberOfUsers = (Long) getSession()
+				.createCriteria(User.class)
+				.setProjection(Projections.rowCount()).uniqueResult();
+		
+		return numberOfUsers;
 	}
 }

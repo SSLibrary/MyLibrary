@@ -67,8 +67,9 @@ public class UsersController {
 			}
 		}
 
+		model.addAttribute("emptyListOfUsers", allUsers.isEmpty());
 		model.addAttribute("allUsers", filteredList);
-		model.addAttribute("count", filteredList.size());
+		model.addAttribute("numberOfUsers", filteredList.size());
 		model.addAttribute("offset", offset);
 
 		CommonAttributesPopulator.populate(currentUser, model);
@@ -85,6 +86,7 @@ public class UsersController {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		List<User> users = userService.findUsersByUserName(username);
 
+		model.addAttribute("noSuchUserFound", users.isEmpty());
 		model.addAttribute("allUsers", users);
 
 		CommonAttributesPopulator.populate(currentUser, model);

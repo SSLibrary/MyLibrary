@@ -37,7 +37,10 @@ public class WebAppConfiguration extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+		registry
+			.addResourceHandler("/resources/**")
+			.addResourceLocations("/resources/")
+			.setCachePeriod(86400);
 	}
 
 	@Bean(name = "messageSource")
@@ -50,11 +53,6 @@ public class WebAppConfiguration extends WebMvcConfigurerAdapter {
 	}
 
 	@Bean(name = "multipartResolver")
-	public static CommonsMultipartResolver createMultipartResolver() {
-		CommonsMultipartResolver resolver = new CommonsMultipartResolver();		
-//		resolver.setMaxUploadSize(1024*1024*2); // 2MB
-		resolver.setMaxUploadSizePerFile(1024*1024*2);
-		resolver.setMaxInMemorySize(1024*1024*2);
 		resolver.setDefaultEncoding("utf-8");
 			
 		return resolver;

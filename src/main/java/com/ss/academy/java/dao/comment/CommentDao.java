@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.ss.academy.java.model.comment.Comment;
 
-
 public interface CommentDao {
 	
 	Comment findById(Integer comment_id);
@@ -14,5 +13,4 @@ public interface CommentDao {
 	void deleteCommentById(Integer comment_id);
 	
 	List<Comment> findAllComments();
-
 }

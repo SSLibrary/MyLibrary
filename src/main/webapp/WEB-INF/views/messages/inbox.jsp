@@ -42,10 +42,10 @@
 </c:choose>
 <!-- pagination -->
 <c:choose>
-	<c:when test="${count > 5}">
+	<c:when test="${numberOfReceivedMessages > 5}">
 		<div class="text-center"
 			style="top: 773px; position: absolute; margin-left: 520px;">
-			<tag:paginate max="15" offset="${offset}" count="${count}"
+			<tag:paginate max="15" offset="${offset}" count="${numberOfReceivedMessages}"
 				uri="../messages/inbox" next="&raquo;" previous="&laquo;" />
 		</div>
 	</c:when>

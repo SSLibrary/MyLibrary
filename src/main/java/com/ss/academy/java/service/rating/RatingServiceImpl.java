@@ -33,5 +33,4 @@ public class RatingServiceImpl implements RatingService {
 	public List<Rating> findAllRatingsByUser(Long userId) {
 		return findAllRatingsByUser(userId);
 	}
-
 }

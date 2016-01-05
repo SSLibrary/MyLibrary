@@ -48,9 +48,9 @@
 </sec:authorize>
 <!-- pagination -->
 <c:choose>
-	<c:when test="${count > 5}">
+	<c:when test="${numberOfBooksHistory > 5}">
 		<div class="text-center">
-			<tag:paginate max="15" offset="${offset}" count="${count}"
+			<tag:paginate max="15" offset="${offset}" count="${numberOfBooksHistory}"
 				uri="../books/books" next="&raquo;" previous="&laquo;" />
 		</div>
 	</c:when>

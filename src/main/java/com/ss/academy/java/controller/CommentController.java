@@ -26,6 +26,9 @@ import com.ss.academy.java.service.comment.CommentService;
 import com.ss.academy.java.service.user.UserService;
 import com.ss.academy.java.util.CommonAttributesPopulator;
 
+/**
+ * Handles requests for the application comments page.
+ */
 @Controller
 @RequestMapping(value = { "/authors/{author_id}/books/{book_id}" })
 public class CommentController {
@@ -42,9 +45,7 @@ public class CommentController {
 	@Autowired
 	UserService userService;
 
-	/*
-	 * Show all comments by book
-	 */
+	// This method will show book's comments
 	@RequestMapping(value = { "/comments" }, method = RequestMethod.GET)
 	public String listAllComments(@PathVariable Long book_id, @PathVariable Long author_id, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
@@ -53,12 +54,7 @@ public class CommentController {
 		Book book = bookService.findById(book_id);
 		List<Comment> comments = book.getComments();
 
-		model.addAttribute("isEmpty", false);
-
-		if (comments.isEmpty()) {
-			model.addAttribute("isEmpty", true);
-		}
-
+		model.addAttribute("isEmpty", comments.isEmpty());
 		model.addAttribute("comments", comments);
 		model.addAttribute("author", author);
 		model.addAttribute("book", book);
@@ -68,9 +64,7 @@ public class CommentController {
 		return "comments/allComments";
 	}
 
-	/*
-	 * Add new comment
-	 */
+	// This method will provide the medium to add a new comment.
 	@RequestMapping(value = { "/comments/new" }, method = RequestMethod.GET)
 	public String addNewComment(ModelMap model, @PathVariable Long book_id,
 			@AuthenticationPrincipal UserDetails userDetails) {
@@ -87,7 +81,8 @@ public class CommentController {
 	}
 
 	/*
-	 * Save comment
+	 * This method will be called on form submission, handling POST request for
+	 * saving comment in the database.
 	 */
 	@RequestMapping(value = { "/comments/new" }, method = RequestMethod.POST)
 	public String saveComment(@Valid Comment comment, BindingResult result, ModelMap model,
@@ -109,9 +104,7 @@ public class CommentController {
 		return "redirect:/authors/{author_id}/books/{book_id}/comments";
 	}
 
-	/*
-	 * Delete comment
-	 */
+	// This method will delete a comment by it's ID value.
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/comments/{comment_id}" }, method = RequestMethod.DELETE)
 	public String deleteComment(@PathVariable Long book_id, @PathVariable Integer comment_id) {

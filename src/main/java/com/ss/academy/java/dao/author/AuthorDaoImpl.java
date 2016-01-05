@@ -55,20 +55,27 @@ public class AuthorDaoImpl extends AbstractDao<Long, Author> implements AuthorDa
 		return authors;
 	}
 	
+	// List portion of all authors per page
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public List<Author> listAllAuthors(Integer offset, Integer maxResults){
-		return getSession()
+	public List<Author> listAllAuthors(Integer offset, Integer maxResults) {
+		List<Author> authors = getSession()
 				.createCriteria(Author.class)
-				.setFirstResult(offset!=null?offset:0)
-				.setMaxResults(maxResults!=null?maxResults:5)
+				.setFirstResult(offset != null ? offset : 0)
+				.setMaxResults(maxResults != null ? maxResults : 5)
 				.list();
+		
+		return authors;
+				
 	}
 	
-	public Long countAllAuthors(){
-		return (Long)getSession()
+	// Returns the number of all authors
+	public Long countAllAuthors() {
+		Long numberOfAuthors = (Long)getSession()
 				.createCriteria(Author.class)
 				.setProjection(Projections.rowCount())
 				.uniqueResult();
+		
+		return numberOfAuthors;
 	}
 }

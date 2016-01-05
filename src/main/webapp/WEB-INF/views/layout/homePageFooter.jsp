@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <br />
 <img class="img-responsive"
-	src="<c:url value='/resources/images/books_footer.png' />" alt=" Logo">
+	src="<c:url value='/resources/images/booksFooter.jpg' />" alt=" Logo">
 

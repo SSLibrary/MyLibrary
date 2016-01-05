@@ -44,5 +44,4 @@ public class RatingDaoImpl extends AbstractDao<Long, Rating> implements RatingDa
 
 		return authors;
 	}
-
 }

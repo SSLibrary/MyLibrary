@@ -16,79 +16,75 @@ import com.ss.academy.java.model.message.Message;
 @Repository("messageDao")
 public class MessageDaoImpl extends AbstractDao<Integer, Message> implements MessageDao  {
 
-	/*
-	 * Find message by message_id
-	 */
 	public Message findById(Integer message_id) {
 		return getByKey(message_id);
 	}
 
-	/*
-	 * Save message
-	 */
 	public void saveMessage(Message message) {
 		save(message);
 	}
 	
-	/*
-	 * Find all messages
-	 */
 	@SuppressWarnings("unchecked")
 	public List<Message> findAllMessages() {
 		Criteria criteria = createEntityCriteria().addOrder(Order.desc("date"));
-        List<Message> messages = (List<Message>) criteria.list();     
+        List<Message> messages = (List<Message>) criteria.list(); 
+        
         return messages;
 	}
 	
-	/*
-	 * Find all sent messages of the authenticated user
-	 */
+	// List portion of all sent messages of the authenticated user per page
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public List<Message> listAllSentMessages(Integer offset, Integer maxResults, String username){
-		List<Message> list= (List<Message>)getSession()
+	public List<Message> listAllSentMessages(Integer offset, Integer maxResults, String username) {
+		List<Message> sentMessages = (List<Message>)getSession()
 				.createCriteria(Message.class, "message")
 				.createAlias("message.sender", "sm") // inner join by default				
 				.add(Restrictions.eq("sm.username", username))
 				.addOrder( Order.desc("date"))
-				.setFirstResult(offset!=null?offset:0)
-				.setMaxResults(maxResults!=null?maxResults:5)
-				.list();		
-		return list;
+				.setFirstResult(offset != null ? offset : 0)
+				.setMaxResults(maxResults != null ? maxResults : 5)
+				.list();
+		
+		return sentMessages;
 	}
 	
-	public Long countSentMessages(String username){
-		return (Long)getSession()
+	// Returns the number of all sent messages of the authenticated user
+	public Long countSentMessages(String username) {
+		Long numberOfSentMessages = (Long)getSession()
 				.createCriteria(Message.class, "message")
 				.createAlias("message.sender", "sm") // inner join by default
 				.add(Restrictions.eq("sm.username", username))
 				.setProjection(Projections.rowCount())
 				.uniqueResult();
+		
+		return numberOfSentMessages;
 	}
 	
-	/*
-	 * Find all received messages of the authenticated user
-	 */
+	// List portion of all received messages of the authenticated user per page
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public List<Message> listAllReceivedMessages(Integer offset, Integer maxResults, String username){		
-		List<Message> list= (List<Message>) getSession()
+	public List<Message> listAllReceivedMessages(Integer offset, Integer maxResults, String username) {		
+		List<Message> receivedMessages = (List<Message>) getSession()
 				.createCriteria(Message.class, "message")
 				.createAlias("message.receiver", "rm") // inner join by default
 				.add(Restrictions.eq("rm.username", username))
 				.addOrder( Order.desc("date"))
-				.setFirstResult(offset!=null?offset:0)
-				.setMaxResults(maxResults!=null?maxResults:5)
-				.list();		
-		return list;
+				.setFirstResult(offset != null ? offset : 0)
+				.setMaxResults(maxResults != null ? maxResults : 5)
+				.list();
+		
+		return receivedMessages;
 	}
 	
-	public Long countReceivedMessages(String username){
-		return (Long)getSession()
+	// Returns the number of all received messages of the authenticated user
+	public Long countReceivedMessages(String username) {
+		Long numberOfReceivedMessages = (Long)getSession()
 				.createCriteria(Message.class, "message")
 				.createAlias("message.receiver", "rm") // inner join by default
 				.add(Restrictions.eq("rm.username", username))
 				.setProjection(Projections.rowCount())
 				.uniqueResult();
+		
+		return numberOfReceivedMessages;
 	}
 }
