@@ -113,7 +113,7 @@ public class AuthorBooksController {
 			model.addAttribute("image", image);
 		} catch (NullPointerException e) {
 			model.addAttribute("emptyListOfAuthorBooks", true);
-		}
+		} 
 
 		User currentBookLoaner = bookHistoryService.getCurrentBookLoaner(book_id);
 
@@ -184,7 +184,7 @@ public class AuthorBooksController {
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/new" }, method = RequestMethod.POST)
 	public String saveBook(@Valid Book book, BindingResult result, @RequestParam CommonsMultipartFile[] fileUpload,
-			@PathVariable Long author_id) {
+			@PathVariable Long author_id, ModelMap model) {
 		if (result.hasErrors()) {
 			return "books/addNewBook";
 		}
@@ -209,7 +209,7 @@ public class AuthorBooksController {
 				}
 			}
 		} catch (Exception e) {
-			System.out.println(e.getClass().getName());
+			model.addAttribute("largeSizeOfImage", true);
 		}
 
 		return "redirect:/authors/{author_id}/books/";
@@ -239,7 +239,7 @@ public class AuthorBooksController {
 	 */
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/{book_id}" }, method = RequestMethod.POST)
-	public String updateBook(@Valid Book formBook, BindingResult result,
+	public String updateBook(@Valid Book formBook, BindingResult result, ModelMap model,
 			@RequestParam CommonsMultipartFile[] fileUpload, @PathVariable Long book_id, @PathVariable Long author_id) {
 		Author author = new Author();
 		Book dbBook = new Book();
@@ -247,7 +247,7 @@ public class AuthorBooksController {
 		if (result.hasErrors()) {
 			return "books/addNewBook";
 		}
-
+		try {
 		if (fileUpload != null && fileUpload.length > 0) {
 			for (CommonsMultipartFile aFile : fileUpload) {
 				if (aFile.toString().startsWith("FF D8 FF")) {
@@ -267,7 +267,9 @@ public class AuthorBooksController {
 				bookService.updateBook(dbBook);
 			}
 		}
-		
+		} catch (Exception e) {
+			model.addAttribute("largeSizeOfImage", true);
+		}
 		return "redirect:/authors/{author_id}/books/{book_id}/preview";
 	}
 
