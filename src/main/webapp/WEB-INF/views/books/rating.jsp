@@ -12,7 +12,7 @@
 			<form:input type="hidden" path="ratingValue" id="ratingValue" />
 			<form:errors path="ratingValue" cssClass="error" />
 			
-			<input id="input-6c" class="rating" data-min="0" data-max="5" data-step="1" data-size="md">
+			<input id="input-6c" class="rating" data-min="0" data-max="5" data-step="1" data-size="sm">
 			<button type="submit" class="btn btn-primary">Add Rating</button>
 		</form:form>
 	</div>

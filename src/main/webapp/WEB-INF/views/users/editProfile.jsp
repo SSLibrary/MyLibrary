@@ -34,6 +34,10 @@
 					<form:errors path="email" cssClass="error" />
 				</div>
 			</div>
+		</div>
+	</div>
+</form:form>
+<div class="row">
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-4">
 					<form:form action="/editProfile" method="POST">
@@ -44,8 +48,10 @@
 					</form:form>
 				</div>
 			</div>
+			</div>
+			<div class="row">
 			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-4">
+				<div class="col-sm-offset-2 col-sm-6">
 					<form:form
 						action="/MyLibrary/users/${currentUserID}/changePassword"
 						method="GET">
@@ -56,8 +62,6 @@
 					</form:form>
 				</div>
 			</div>
-		</div>
-	</div>
-</form:form>
+				</div>
 
 

@@ -3,7 +3,7 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles-extras"
 	prefix="tilesx"%>
 
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default">
 	<div class="navbar-header">
 		<button type="button" class="navbar-toggle collapsed"
 			data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">

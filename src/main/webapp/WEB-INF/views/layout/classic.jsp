@@ -9,7 +9,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
 <title><tiles:getAsString name="title"></tiles:getAsString></title>
 <link rel="shortcut icon" href="/MyLibrary/resources/book.ico" />
 <link rel="stylesheet"
@@ -20,7 +19,7 @@
 	href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 <link rel="stylesheet"
 	href="../../../../resources/rating-plugin/css/star-rating.min.css"
-	media="all" rel="stylesheet" type="text/css" />
+	media="all" />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script
 	src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
