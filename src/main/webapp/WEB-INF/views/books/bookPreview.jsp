@@ -5,7 +5,7 @@
 
 <div class="row">
 	<c:choose>
-		<c:when test="${emptyList}">
+		<c:when test="${emptyListOfAuthorBooks}">
 			<div class="col-sm-6 col-md-3">
 				<div class="thumbnail">
 					<img src="<c:url value='/resources/images/noCoverImage.jpg' />"

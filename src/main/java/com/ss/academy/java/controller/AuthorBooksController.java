@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.mysql.jdbc.PacketTooBigException;
 import com.ss.academy.java.model.author.Author;
 import com.ss.academy.java.model.book.Book;
 import com.ss.academy.java.model.rating.Rating;
@@ -187,25 +188,30 @@ public class AuthorBooksController {
 		if (result.hasErrors()) {
 			return "books/addNewBook";
 		}
+		
+		try {
+			if (fileUpload != null && fileUpload.length > 0) {
+				for (CommonsMultipartFile aFile : fileUpload) {
+					if (aFile.toString().startsWith("FF D8 FF")) {
+						// check if format of file is JPG
+					} else if (aFile.toString().startsWith("47 49 46 38 37 61")
+							|| aFile.toString().startsWith("47 49 46 38 39 61")) {
+						// check if format of file is GIF
+					} else if (aFile.toString().startsWith("89 50 4E 47 0D 0A 1A 0A")) {
+						// check if format of file is PNG
+					}
+					Author author = authorService.findById(author_id);
+					author.getBooks().add(book);
+					book.setAuthor(author);
+					book.setImage(aFile.getBytes());
 
-		if (fileUpload != null && fileUpload.length > 0) {
-			for (CommonsMultipartFile aFile : fileUpload) {
-				if (aFile.toString().startsWith("FF D8 FF")) {
-					// check if format of file is JPG
-				} else if (aFile.toString().startsWith("47 49 46 38 37 61")
-						|| aFile.toString().startsWith("47 49 46 38 39 61")) {
-					// check if format of file is GIF
-				} else if (aFile.toString().startsWith("89 50 4E 47 0D 0A 1A 0A")) {
-					// check if format of file is PNG
+					bookService.saveBook(book);
 				}
-				Author author = authorService.findById(author_id);
-				author.getBooks().add(book);
-				book.setAuthor(author);
-				book.setImage(aFile.getBytes());
-
-				bookService.saveBook(book);
 			}
+		} catch (Exception e) {
+			System.out.println(e.getClass().getName());
 		}
+
 		return "redirect:/authors/{author_id}/books/";
 	}
 
