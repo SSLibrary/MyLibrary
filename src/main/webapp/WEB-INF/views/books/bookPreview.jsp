@@ -1,6 +1,3 @@
-<link rel="stylesheet"
-	href="../../../../resources/rating-plugin/css/star-rating.min.css"
-	media="all" rel="stylesheet" type="text/css" />
 <%@ include file="../layout/taglib.jsp"%>
 
 <div class="row">
@@ -107,8 +104,7 @@
 </div>
 <br />
 <div class="row">
-	<input id="input-21" class="form-control rating" min='1' max='5'
-		step='0.1' type="number" />
+	<input id="input-6c" class="rating form-control hide" value="3" data-min="0" data-max="5" data-step="0.1" data-size="md">
 </div>
 
 
@@ -116,9 +112,9 @@
 <script src="../../../../resources/rating-plugin/js/star-rating.min.js"
 	type="text/javascript"></script>
 <script type="text/javascript">
-	$('#input-21').rating('create', {
+	$('#input-6c').rating('create', {
 		disabled : true
 	});
-	$('#input-21').rating('update', '${book.averageRating}');
+	$('#input-6c').rating('update', '${book.averageRating}');
 </script>
 <!--end rating script -->
