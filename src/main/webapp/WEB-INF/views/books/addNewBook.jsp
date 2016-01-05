@@ -1,5 +1,6 @@
 <%@ include file="../layout/taglib.jsp" %>
 
+
 <form:form class="form-horizontal" role="form" modelAttribute="book" enctype="multipart/form-data">
 	<legend>Book Details</legend>
 	<form:input type="hidden" path="id" id="id" />
@@ -28,7 +29,7 @@
 			
 		<label for="fileUpload" class="control-label col-sm-2">Pic:</label>	
 		<div class="col-sm-3">								
-			<input type="file"  id="fileUpload" name="fileUpload"></input>
+			<input id="input-1" type="file" name="fileUpload" class="file"></input>
 			<form:errors path="image" cssClass="error" />				
 		</div>
 	</div>		

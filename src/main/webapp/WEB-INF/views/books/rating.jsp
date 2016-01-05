@@ -29,7 +29,6 @@
 <br />
 
 <!-- rating script -->
-<script src="../../../../resources/rating-plugin/js/star-rating.min.js"	type="text/javascript"></script>
 <script type="text/javascript">
 	$('#input-6c').on('rating.change', function(event, value) {
 		document.getElementById("ratingValue").value = value;
