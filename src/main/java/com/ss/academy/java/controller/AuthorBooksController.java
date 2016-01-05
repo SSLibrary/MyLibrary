@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.commons.fileupload.FileUploadBase.SizeLimitExceededException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -55,6 +56,7 @@ public class AuthorBooksController {
 	@Autowired
 	UserService userService;
 
+	
 	/*
 	 * This method will list all existing books and will check whether they have
 	 * been rated so far by the current user.
@@ -176,11 +178,11 @@ public class AuthorBooksController {
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/new" }, method = RequestMethod.POST)
 	public String saveBook(@Valid Book book, BindingResult result, @RequestParam CommonsMultipartFile[] fileUpload,
-			@PathVariable Long author_id) {
+			@PathVariable Long author_id )throws SizeLimitExceededException{
 		if (result.hasErrors()) {
 			return "books/addNewBook";
 		}
-
+		
 		if (fileUpload != null && fileUpload.length > 0) {
 			for (CommonsMultipartFile aFile : fileUpload) {
 				if (aFile.toString().startsWith("FF D8 FF")) {
@@ -197,9 +199,10 @@ public class AuthorBooksController {
 				book.setImage(aFile.getBytes());
 
 				bookService.saveBook(book);
-			}
+			}			
 		}
-		return "redirect:/authors/{author_id}/books/";
+			return "redirect:/authors/{author_id}/books/";
+			
 	}
 
 	/*
@@ -236,8 +239,8 @@ public class AuthorBooksController {
 		if (result.hasErrors()) {
 			return "books/addNewBook";
 		}
-
-		if (fileUpload != null && fileUpload.length > 0) {
+		
+		if (fileUpload != null && fileUpload.length >= 0 ) {
 			for (CommonsMultipartFile aFile : fileUpload) {
 				if (aFile.toString().startsWith("FF D8 FF")) {
 					// check if format of file is JPG

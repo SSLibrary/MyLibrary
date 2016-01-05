@@ -47,7 +47,7 @@ public class Book implements Identifiable<Long> {
 	private BookStatus status = BookStatus.Available;
 
 	@Lob
-	@Column(name="image")
+	@Column(name="image", length = Integer.MAX_VALUE - 1)
 	private byte[] image;
 
 	@Column(name = "pages")

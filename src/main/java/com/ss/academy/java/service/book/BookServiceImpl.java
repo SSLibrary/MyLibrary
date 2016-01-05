@@ -21,8 +21,9 @@ public class BookServiceImpl implements BookService {
 		return dao.findById(id);
 	}
 
-	public void saveBook(Book book) {
+	public void saveBook(Book book)  {
 		dao.saveBook(book);
+		
 	}
 
 	public void updateBook(Book book) {
