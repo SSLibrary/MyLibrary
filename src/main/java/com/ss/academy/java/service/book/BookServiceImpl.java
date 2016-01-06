@@ -21,9 +21,8 @@ public class BookServiceImpl implements BookService {
 		return dao.findById(id);
 	}
 
-	public void saveBook(Book book)  {
+	public void saveBook(Book book) {
 		dao.saveBook(book);
-		
 	}
 
 	public void updateBook(Book book) {
@@ -39,7 +38,7 @@ public class BookServiceImpl implements BookService {
 
 	public List<Book> findAllBooks() {
 		return dao.findAllBooks();
-	};
+	}
 
 	public void deleteBook(Book book) {
 		dao.deleteBookById(book.getId());

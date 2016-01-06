@@ -7,7 +7,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -73,7 +72,7 @@ public class CommentController {
 		Book book = bookService.findById(book_id);
 
 		model.addAttribute("comment", comment);
-		model.addAttribute("book", book.getTitle());
+		model.addAttribute("book", book);
 
 		CommonAttributesPopulator.populate(currentUser, model);
 
@@ -86,17 +85,19 @@ public class CommentController {
 	 */
 	@RequestMapping(value = { "/comments/new" }, method = RequestMethod.POST)
 	public String saveComment(@Valid Comment comment, BindingResult result, ModelMap model,
-			@PathVariable Long book_id) {
+			@PathVariable Long book_id, @AuthenticationPrincipal UserDetails userDetails) {
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		Book book = bookService.findById(book_id);
+		
 		if (result.hasErrors()) {
+			model.addAttribute("book", book);
+			CommonAttributesPopulator.populate(currentUser, model);
 			return "comments/addNewComment";
 		}
 
-		Book book = bookService.findById(book_id);
-		User user = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-
-		user.getComments().add(comment);
+		currentUser.getComments().add(comment);
 		book.getComments().add(comment);
-		comment.setUser(user);
+		comment.setUser(currentUser);
 		comment.setBook(book);
 
 		commentService.saveComment(comment);

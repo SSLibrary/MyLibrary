@@ -13,7 +13,7 @@
 		        <c:forEach items="${comments}" var="comment">
 		           <tr>
 					<td>"${comment.comment}"</td>
-					<td>posted by <a href="<c:url value='/messages/${currentUserID}/new/${comment.user.id}' />"><b>${comment.user.username}</b></a></td>
+					<td>posted by <a href="<c:url value='/users/${comment.user.id}/showProfile' />"><b>${comment.user.username}</b></a></td>
 						<sec:authorize access="hasAuthority('ADMIN')">
 						<td>
 							<form:form action="comments/${comment.comment_id}" method="DELETE">

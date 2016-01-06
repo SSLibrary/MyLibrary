@@ -40,7 +40,7 @@
 <div class="row">
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-4">
-					<form:form action="/editProfile" method="POST">
+					<form:form action="/MyLibrary/users/${currentUserID}/editProfile" method="POST">
 						<button type="submit" class="btn btn-primary">
 							<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 							Edit Profile

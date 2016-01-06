@@ -21,4 +21,6 @@ public interface MessageService {
 	List<Message> listAllReceivedMessages(Integer offset, Integer maxResults, String username);
 
 	Long countReceivedMessages(String username);
+	
+	List<Message> generateMessageThread(Message parent);
 }

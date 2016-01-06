@@ -27,7 +27,7 @@
 							<td><fmt:formatDate pattern="yyyy-MM-dd, hh:mm a"
 									value="${loanedBook.returnDate}" /></td>
 							<c:choose>
-								<c:when test="${loanedBook.returnDate < currDate}">
+								<c:when test="${loanedBook.returnDate < currentDate}">
 									<td>Yes</td>
 								</c:when>
 								<c:otherwise>

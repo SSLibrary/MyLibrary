@@ -1,6 +1,5 @@
 package com.ss.academy.java.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -30,7 +29,6 @@ public class MessageController {
 
 	private final byte UNREAD_MESSAGE = 1;
 	private final byte READ_MESSAGE = 0;
-	private final byte NOT_REPLIED = 0;
 
 	@Autowired
 	MessageService messageService;
@@ -79,16 +77,16 @@ public class MessageController {
 	@RequestMapping(value = { "/new/{receiver_id}" }, method = RequestMethod.GET)
 	public String sendNewMessage(ModelMap model, @PathVariable String receiver_id,
 			@AuthenticationPrincipal UserDetails userDetails) {
-		User user = userService.findById(receiver_id);
+		User receiver = userService.findById(receiver_id);
 
-		if (user == null) {
+		if (receiver == null) {
 			return "redirect:/messages/{user_id}/inbox";
 		}
 
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		Message message = new Message();
 		model.addAttribute("message", message);
-		model.addAttribute("receiver", user);
+		model.addAttribute("receiver", receiver);
 
 		CommonAttributesPopulator.populate(currentUser, model);
 
@@ -99,12 +97,14 @@ public class MessageController {
 	@RequestMapping(value = { "/new/{receiver_id}" }, method = RequestMethod.POST)
 	public String saveMessage(@Valid Message message, BindingResult result, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails, @PathVariable String receiver_id) {
-		if (result.hasErrors()) {
-			return "redirect:/messages/{user_id}/new/{receiver_id}";
-		}
-
-		User receiver = userService.findById(receiver_id);
 		User sender = userService.findByUsername(userDetails.getUsername());
+		User receiver = userService.findById(receiver_id);
+		
+		if (result.hasErrors()) {
+			model.addAttribute("receiver", receiver);
+			CommonAttributesPopulator.populate(sender, model);
+			return "messages/new";
+		}
 
 		if (receiver.getUsername().equals(sender.getUsername())) {
 			return "redirect:/messages/{user_id}/inbox";
@@ -140,13 +140,7 @@ public class MessageController {
 			messageService.updateMessageStatus(parent);
 		}
 
-		List<Message> previousMessages = new ArrayList<Message>();
-		previousMessages.add(parent);
-
-		while (parent.getIn_reply_to() != NOT_REPLIED) {
-			parent = messageService.findById(parent.getIn_reply_to());
-			previousMessages.add(parent);
-		}
+		List<Message> previousMessages = messageService.generateMessageThread(parent);
 
 		Message message = new Message();
 
@@ -165,13 +159,19 @@ public class MessageController {
 	@RequestMapping(value = { "/{message_id}/reply" }, method = RequestMethod.POST)
 	public String replyToMessage(@Valid Message message, BindingResult result, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails, @PathVariable Integer message_id) {
-		if (result.hasErrors()) {
-			return "redirect:/messages/{user_id}/{message_id}/reply";
-		}
-
-		Message parent = messageService.findById(message_id);
-		User receiver = userService.findByUsername(parent.getSender().getUsername());
 		User sender = userService.findByUsername(userDetails.getUsername());
+		Message parent = messageService.findById(message_id);
+		
+		if (result.hasErrors()) {
+			List<Message> previousMessages = messageService.generateMessageThread(parent);
+			model.addAttribute("parents", previousMessages);
+			model.addAttribute("receiver", parent.getSender().getUsername());
+			CommonAttributesPopulator.populate(sender, model);
+			return "messages/reply";
+		}
+		
+		User receiver = userService.findByUsername(parent.getSender().getUsername());
+		
 		sender.getSentMessage().add(message);
 		receiver.getReceivedMessage().add(message);
 		message.setReceiver(receiver);
@@ -199,14 +199,7 @@ public class MessageController {
 			return "redirect:/messages/{user_id}/outbox";
 		}
 
-		List<Message> previousMessages = new ArrayList<Message>();
-		previousMessages.add(parent);
-
-		while (parent.getIn_reply_to() != NOT_REPLIED) {
-			parent = messageService.findById(parent.getIn_reply_to());
-			previousMessages.add(parent);
-		}
-
+		List<Message> previousMessages = messageService.generateMessageThread(parent);
 		model.addAttribute("parents", previousMessages);
 
 		CommonAttributesPopulator.populate(currentUser, model);

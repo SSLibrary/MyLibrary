@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -20,14 +19,12 @@ import com.ss.academy.java.model.user.User;
 public class Comment {
 
 	@Id
-	@Column(name = "comment_id")
-	@NotNull
+	@Column(name = "comment_id", nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer comment_id;
 
-	@Size(min = 1, max = 200)
-	@Column(name = "comment")
-	@NotNull
+	@Size(min = 2, max = 200)
+	@Column(name = "comment", nullable = false)
 	private String comment;
 
 	@ManyToOne

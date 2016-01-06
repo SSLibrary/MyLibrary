@@ -1,5 +1,6 @@
 package com.ss.academy.java.service.message;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -14,6 +15,8 @@ import com.ss.academy.java.model.message.Message;
 @Transactional
 public class MessageServiceImpl implements MessageService {
 
+	private final byte NOT_REPLIED = 0;
+	
 	@Autowired
 	private MessageDao dao;
 
@@ -59,4 +62,19 @@ public class MessageServiceImpl implements MessageService {
 	public Long countReceivedMessages(String username) {
 		return dao.countReceivedMessages(username);
 	}
+
+	// Generate the message thread when reply to an existing message
+	public List<Message> generateMessageThread(Message parent) {
+		List<Message> previousMessages = new ArrayList<Message>();
+		previousMessages.add(parent);
+
+		while (parent.getIn_reply_to() != NOT_REPLIED) {
+			parent = dao.findById(parent.getIn_reply_to());
+			previousMessages.add(parent);
+		}
+
+		return previousMessages;
+	}
+	
+	
 }

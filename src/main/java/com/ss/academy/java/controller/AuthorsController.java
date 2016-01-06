@@ -98,8 +98,12 @@ public class AuthorsController {
 	 */
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/new" }, method = RequestMethod.POST)
-	public String saveAuthor(@Valid Author author, BindingResult result, ModelMap model) {
+	public String saveAuthor(@Valid Author author, BindingResult result, ModelMap model,
+			@AuthenticationPrincipal UserDetails userDetails) {
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		
 		if (result.hasErrors()) {
+			CommonAttributesPopulator.populate(currentUser, model);
 			return "authors/addNewAuthor";
 		}
 
@@ -131,8 +135,11 @@ public class AuthorsController {
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/{author_id}" }, method = RequestMethod.PUT)
 	public String updateAuthor(@Valid Author author, BindingResult result, ModelMap model,
-			@PathVariable Long author_id) {
+			@PathVariable Long author_id, @AuthenticationPrincipal UserDetails userDetails) {
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		
 		if (result.hasErrors()) {
+			CommonAttributesPopulator.populate(currentUser, model);
 			return "authors/addNewAuthor";
 		}
 

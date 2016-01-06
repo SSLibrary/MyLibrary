@@ -131,7 +131,7 @@ public class BookHistoryController {
 			model.addAttribute("loanedBooks", loanedBooks);
 			model.addAttribute("numberOfLoanedBooks", numberOfLoanedBooks);
 			model.addAttribute("offset", offset);
-			model.addAttribute("currDate", currentDate);
+			model.addAttribute("currentDate", currentDate);
 		}
 
 		CommonAttributesPopulator.populate(currentUser, model);

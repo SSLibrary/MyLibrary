@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
@@ -23,32 +22,26 @@ import com.ss.academy.java.model.user.User;
 public class Message {
 
 	@Id
-	@Column(name = "message_id")
-	@NotNull
+	@Column(name = "message_id", nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer message_id;
 
 	@Size(min = 1, max = 60)
-	@Column(name = "header")
-	@NotNull
+	@Column(name = "header", nullable = false)
 	private String header;
 
 	@Size(min = 1, max = 10000)
-	@Column(name = "body")
-	@NotNull
+	@Column(name = "body", nullable = false)
 	private String body;
 
 	@Type(type = "timestamp")
-	@Column(name = "date")
-	@NotNull
+	@Column(name = "date", nullable = false)
 	private Date date = new Date();
 
-	@Column(name = "is_new")
-	@NotNull
+	@Column(name = "is_new", nullable = false)
 	private byte isNew = 1;
 
-	@Column(name = "in_reply_to")
-	@NotNull
+	@Column(name = "in_reply_to", nullable = false)
 	private Integer in_reply_to = 0;
 
 	@ManyToOne

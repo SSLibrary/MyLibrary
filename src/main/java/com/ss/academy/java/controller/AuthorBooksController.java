@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.mysql.jdbc.PacketTooBigException;
 import com.ss.academy.java.model.author.Author;
 import com.ss.academy.java.model.book.Book;
 import com.ss.academy.java.model.rating.Rating;
@@ -171,7 +170,7 @@ public class AuthorBooksController {
 
 		model.addAttribute("book", book);
 		model.addAttribute("edit", false);
-
+		
 		CommonAttributesPopulator.populate(currentUser, model);
 
 		return "books/addNewBook";
@@ -184,8 +183,11 @@ public class AuthorBooksController {
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/new" }, method = RequestMethod.POST)
 	public String saveBook(@Valid Book book, BindingResult result, @RequestParam CommonsMultipartFile[] fileUpload,
-			@PathVariable Long author_id, ModelMap model) {
+			@PathVariable Long author_id, ModelMap model, @AuthenticationPrincipal UserDetails userDetails ) {
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+		
 		if (result.hasErrors()) {
+			CommonAttributesPopulator.populate(currentUser, model);
 			return "books/addNewBook";
 		}
 		
@@ -240,11 +242,14 @@ public class AuthorBooksController {
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/{book_id}" }, method = RequestMethod.POST)
 	public String updateBook(@Valid Book formBook, BindingResult result, ModelMap model,
-			@RequestParam CommonsMultipartFile[] fileUpload, @PathVariable Long book_id, @PathVariable Long author_id) {
+			@RequestParam CommonsMultipartFile[] fileUpload, @PathVariable Long book_id, 
+			@PathVariable Long author_id, @AuthenticationPrincipal UserDetails userDetails ) {
+		User currentUser = userService.findByUsername(userDetails.getUsername());
 		Author author = new Author();
 		Book dbBook = new Book();
-
+		
 		if (result.hasErrors()) {
+			CommonAttributesPopulator.populate(currentUser, model);
 			return "books/addNewBook";
 		}
 		try {
