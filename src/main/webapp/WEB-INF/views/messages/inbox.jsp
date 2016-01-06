@@ -17,7 +17,7 @@
 							<td>From: <i>${message.sender.username}</i></td>
 							<td>Subject: <i><a
 									href="<c:url value="/messages/${currentUserID}/${message.message_id}/reply" />">
-									${message.header}</a></i></td>
+										${message.header}</a></i></td>
 							<td>Date: <i><fmt:formatDate
 										pattern="yyyy-MM-dd, hh:mm a" value="${message.date}" /></i></td>
 							<td>Status: <i>Read</i></td>
@@ -27,7 +27,7 @@
 								<td><b>From: <i>${message.sender.username}</i></b></td>
 								<td><b>Subject: <i><a
 											href="<c:url value="/messages/${currentUserID}/${message.message_id}/reply" />">
-											${message.header}</a></i></b></td>
+												${message.header}</a></i></b></td>
 								<td><b>Date: <i><fmt:formatDate
 												pattern="yyyy-MM-dd, hh:mm a" value="${message.date}" /></i></b></td>
 								<td><b>Status: <i>Unread</i></b></td>
@@ -35,7 +35,6 @@
 						</c:otherwise>
 					</c:choose>
 				</tr>
-				<br />
 			</c:forEach>
 		</table>
 	</c:otherwise>
@@ -45,8 +44,9 @@
 	<c:when test="${numberOfReceivedMessages > 5}">
 		<div class="text-center"
 			style="top: 773px; position: absolute; margin-left: 520px;">
-			<tag:paginate max="15" offset="${offset}" count="${numberOfReceivedMessages}"
-				uri="../messages/inbox" next="&raquo;" previous="&laquo;" />
+			<tag:paginate max="15" offset="${offset}"
+				count="${numberOfReceivedMessages}" uri="../messages/inbox"
+				next="&raquo;" previous="&laquo;" />
 		</div>
 	</c:when>
 	<c:otherwise>

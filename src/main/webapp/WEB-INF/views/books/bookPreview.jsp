@@ -1,18 +1,18 @@
 <%@ include file="../layout/taglib.jsp"%>
 
 <div class="row">
-<c:if test="${largeSizeOfImage eq true}">
-	<p class="btn btn-danger">Large SIZE</p>
-</c:if>	
+	<c:if test="${largeSizeOfImage eq true}">
+		<p class="btn btn-danger">Large SIZE</p>
+	</c:if>
 	<c:choose>
 		<c:when test="${emptyListOfAuthorBooks}">
 			<div class="col-sm-6 col-md-3">
 				<div class="thumbnail">
 					<img src="<c:url value='/resources/images/noCoverImage.jpg' />"
-						alt="no cover" alt="book cover">
-				</div>							
+						alt="no book cover">
+				</div>
 			</div>
-		</c:when>		
+		</c:when>
 		<c:otherwise>
 			<div class="col-sm-6 col-md-3">
 				<div class="thumbnail">
@@ -20,7 +20,7 @@
 				</div>
 			</div>
 		</c:otherwise>
-	</c:choose>		
+	</c:choose>
 	<div class="col-sm-6 col-md-9">
 		<div>
 			<h3>
@@ -104,7 +104,8 @@
 </div>
 <br />
 <div class="row">
-	<input id="input-6c" class="rating form-control hide" value="3" data-min="0" data-max="5" data-step="0.1" data-size="sm">
+	<input id="input-6c" class="rating form-control hide" value="3"
+		data-min="0" data-max="5" data-step="0.1" data-size="sm">
 </div>
 
 

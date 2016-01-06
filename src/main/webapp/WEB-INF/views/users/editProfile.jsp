@@ -1,6 +1,8 @@
 <%@ include file="../layout/taglib.jsp"%>
 
-<form:form modelAttribute="user" class="form-horizontal" role="form">
+<form:form modelAttribute="user"
+	action="/MyLibrary/users/${currentUserID}/editProfile"
+	class="form-horizontal" method="POST">
 	<div>
 		<div class="edit-profile-form">
 			<form:input type="hidden" path="id" id="id" />
@@ -34,13 +36,9 @@
 					<form:errors path="email" cssClass="error" />
 				</div>
 			</div>
-		</div>
-	</div>
-</form:form>
-<div class="row">
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-4">
-					<form:form action="/MyLibrary/users/${currentUserID}/editProfile" method="POST">
+					<form:form>
 						<button type="submit" class="btn btn-primary">
 							<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 							Edit Profile
@@ -48,20 +46,21 @@
 					</form:form>
 				</div>
 			</div>
-			</div>
-			<div class="row">
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-6">
-					<form:form
-						action="/MyLibrary/users/${currentUserID}/changePassword"
-						method="GET">
-						<button type="submit" class="btn btn-primary">
-							<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-							Change Password
-						</button>
-					</form:form>
-				</div>
-			</div>
-				</div>
+		</div>
+	</div>
+</form:form>
+<div class="row">
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-6">
+			<form:form action="/MyLibrary/users/${currentUserID}/changePassword"
+				method="GET">
+				<button type="submit" class="btn btn-primary">
+					<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+					Change Password
+				</button>
+			</form:form>
+		</div>
+	</div>
+</div>
 
 

@@ -18,7 +18,6 @@
 					<td>Date: <i><fmt:formatDate pattern="yyyy-MM-dd, hh:mm a"
 								value="${message.date}" /></i></td>
 				</tr>
-				<br />
 			</c:forEach>
 		</table>
 	</c:otherwise>
@@ -27,8 +26,9 @@
 <c:choose>
 	<c:when test="${numberOfSentMessages > 5}">
 		<div class="text-center">
-			<tag:paginate max="15" offset="${offset}" count="${numberOfSentMessages}"
-				uri="../messages/outbox" next="&raquo;" previous="&laquo;" />
+			<tag:paginate max="15" offset="${offset}"
+				count="${numberOfSentMessages}" uri="../messages/outbox"
+				next="&raquo;" previous="&laquo;" />
 		</div>
 	</c:when>
 	<c:otherwise>

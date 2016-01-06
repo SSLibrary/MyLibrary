@@ -39,9 +39,7 @@
 								</c:otherwise>
 							</c:choose>
 						</tr>
-						<br />
 					</c:forEach>
-				</tr>
 			</table>
 		</c:otherwise>
 	</c:choose>
@@ -50,8 +48,9 @@
 <c:choose>
 	<c:when test="${numberOfBooksHistory > 5}">
 		<div class="text-center">
-			<tag:paginate max="15" offset="${offset}" count="${numberOfBooksHistory}"
-				uri="../books/books" next="&raquo;" previous="&laquo;" />
+			<tag:paginate max="15" offset="${offset}"
+				count="${numberOfBooksHistory}" uri="../books/books" next="&raquo;"
+				previous="&laquo;" />
 		</div>
 	</c:when>
 </c:choose>
