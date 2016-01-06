@@ -21,7 +21,7 @@
 	<div class="form-group">
 		<label for="bookDescription" class="control-label col-sm-2">Description:</label>
 		<div class="col-sm-3">
-			<form:textarea path="bookDescription" id="bookDescription" rows="8" cols="30" class="form-control"/>
+			<form:textarea path="bookDescription" id="bookDescription" rows="8" cols="30" class="form-control" />
 			<form:errors path="bookDescription" cssClass="error" />
 		</div>
 	</div>

@@ -11,6 +11,8 @@ import org.springframework.hateoas.config.EnableHypermediaSupport;
 import org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType;
 import org.springframework.hateoas.hal.CurieProvider;
 import org.springframework.hateoas.hal.DefaultCurieProvider;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -70,4 +72,12 @@ public class WebAppConfiguration extends WebMvcConfigurerAdapter {
 	public CurieProvider curieProvider() {
 		return new DefaultCurieProvider("ex", new UriTemplate("http://localhost:8080/MyLibrary/restapi/{rel}"));
 	}
+	
+    @Controller
+    static class FaviconController {
+        @RequestMapping("favicon.ico")
+        String favicon() {
+            return "forward:/resources/book.ico";
+        }
+    }
 }

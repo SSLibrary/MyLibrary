@@ -36,7 +36,9 @@
 			<dt>Pages:</dt>
 			<dd>${book.pages}</dd>
 			<dt>Description:</dt>
-			<dd>${book.bookDescription}</dd>
+			<dd>
+				<c:out value="${book.bookDescription}" />
+			</dd>
 			<dt>Status:</dt>
 			<c:choose>
 				<c:when test="${isBookLoaned}">
