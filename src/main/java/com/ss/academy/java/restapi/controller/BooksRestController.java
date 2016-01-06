@@ -26,8 +26,8 @@ import com.ss.academy.java.service.author.AuthorService;
 import com.ss.academy.java.service.book.BookService;
 
 /**
- * Handles requests for the RESTful API authors' books end-point. 
- * Each response is in JSON format.
+ * Handles requests for the RESTful API authors' books end-point. Each response
+ * is in JSON format.
  */
 @RestController
 @ExposesResourceFor(Book.class)
@@ -45,13 +45,13 @@ public class BooksRestController {
 	 */
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public ResponseEntity<Resources<BookResource>> listAllBooks(@PathVariable Long id) {
-		Author author = authorService.findById(id);
-		
-		if (author == null) {
-			return new ResponseEntity<Resources<BookResource>>(HttpStatus.NO_CONTENT);
+		Author currentAuthor = authorService.findById(id);
+
+		if (currentAuthor == null) {
+			return new ResponseEntity<Resources<BookResource>>(HttpStatus.NOT_FOUND);
 		}
-		
-		List<Book> books = author.getBooks();
+
+		List<Book> books = currentAuthor.getBooks();
 
 		BookResourceAssembler assembler = new BookResourceAssembler();
 		List<BookResource> listOfBookResources = new ArrayList<BookResource>();
@@ -59,106 +59,125 @@ public class BooksRestController {
 		for (Book book : books) {
 			BookResource bookResource = assembler.toResource(book);
 			bookResource.add(linkTo(AuthorsRestController.class)
-					.slash(author)
-					.slash("/books")
-					.slash(book)
-					.withSelfRel());
-			
-			bookResource.add(linkTo(AuthorsRestController.class)
-					.slash(author)
-					.slash("/books")
-					.slash(book)
-					.slash("/ratings")
-					.withRel("ratings"));
+				.slash(currentAuthor)
+				.slash("/books")
+				.slash(book)
+				.withSelfRel());
 
 			bookResource.add(linkTo(AuthorsRestController.class)
-					.slash(author)
-					.slash("/books")
-					.slash(book)
-					.slash("/comments")
-					.withRel("comments"));
-			
+				.slash(currentAuthor)
+				.slash("/books")
+				.slash(book)
+				.slash("/ratings")
+				.withRel("ratings"));
+
+			bookResource.add(linkTo(AuthorsRestController.class)
+				.slash(currentAuthor)
+				.slash("/books")
+				.slash(book)
+				.slash("/comments")
+				.withRel("comments"));
+
 			listOfBookResources.add(bookResource);
 		}
-		
+
 		Resources<BookResource> bookResources = new Resources<BookResource>(listOfBookResources);
 
-		bookResources.add(linkTo(methodOn(BooksRestController.class).createBook(id, null)).withRel("newBook"));
-	
+		bookResources.add(linkTo(methodOn(BooksRestController.class)
+			.createBook(id, null))
+			.withRel("newBook"));
+
 		return new ResponseEntity<Resources<BookResource>>(bookResources, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Retrieve All Author's Books
 	 */
 	@RequestMapping(value = { "/{book_id}" }, method = RequestMethod.GET)
 	public ResponseEntity<BookResource> listBookById(@PathVariable Long id, @PathVariable Long book_id) {
-		Author author = authorService.findById(id);
-		List<Book> authorBooks = author.getBooks();
+		Author currentAuthor = authorService.findById(id);
+
+		if (currentAuthor == null) {
+			return new ResponseEntity<BookResource>(HttpStatus.NOT_FOUND);
+		}
+
+		List<Book> authorBooks = currentAuthor.getBooks();
 		Book book = null;
-		
+
 		for (Book authorBook : authorBooks) {
 			if (authorBook.getId() == book_id) {
 				book = authorBook;
 			}
 		}
-		
+
 		if (book == null) {
 			return new ResponseEntity<BookResource>(HttpStatus.NOT_FOUND);
 		}
-		
+
 		BookResourceAssembler assembler = new BookResourceAssembler();
 		BookResource bookResource = assembler.toResource(book);
-		
+
 		bookResource.add(linkTo(AuthorsRestController.class)
-				.slash(id.toString())
-				.slash("/books")
-				.slash(book)
-				.withSelfRel());
-		
+			.slash(id.toString())
+			.slash("/books")
+			.slash(book)
+			.withSelfRel());
+
 		return new ResponseEntity<BookResource>(bookResource, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Create new Book for the given Author
 	 */
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
 	public ResponseEntity<Void> createBook(@PathVariable Long id, @RequestBody Book book) {
-		Author author = authorService.findById(id);
-		List<Book> authorBooks = author.getBooks();
-		
+		Author currentAuthor = authorService.findById(id);
+
+		if (currentAuthor == null) {
+			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+		}
+
+		List<Book> authorBooks = currentAuthor.getBooks();
+
 		for (Book authorBook : authorBooks) {
 			if (authorBook.getTitle().equals(book.getTitle())) {
 				return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 			}
 		}
-		
-		book.setAuthor(author);
+
+		book.setAuthor(currentAuthor);
 		bookService.saveBook(book);
-	
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(linkTo(AuthorsRestController.class)
-				.slash(id.toString())
-				.slash("/books")
-				.slash(book).toUri());
+			.slash(id.toString())
+			.slash("/books")
+			.slash(book)
+			.toUri());
 
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
-	
+
 	/**
 	 * Update Author's Book
 	 */
 	@RequestMapping(value = "/{book_id}", method = RequestMethod.PUT)
-	public ResponseEntity<BookResource> updateBook(@PathVariable("id") long id, @PathVariable("book_id") long book_id, @RequestBody Book book) {
+	public ResponseEntity<BookResource> updateBook(@PathVariable("id") long id, @PathVariable("book_id") long book_id,
+			@RequestBody Book book) {
 		Author currentAuthor = authorService.findById(id);
+
+		if (currentAuthor == null) {
+			return new ResponseEntity<BookResource>(HttpStatus.NOT_FOUND);
+		}
+
 		List<Book> authorBooks = currentAuthor.getBooks();
-		
+
 		if (authorBooks == null) {
 			return new ResponseEntity<BookResource>(HttpStatus.NOT_FOUND);
 		}
-		
+
 		boolean found = false;
-		
+
 		for (Book authorBook : authorBooks) {
 			if (authorBook.getId() == book_id) {
 				bookService.updateBook(book);
@@ -166,51 +185,52 @@ public class BooksRestController {
 				break;
 			}
 		}
-		
+
 		if (!found) {
 			return new ResponseEntity<BookResource>(HttpStatus.NOT_FOUND);
 		}
 
 		BookResourceAssembler assembler = new BookResourceAssembler();
 		BookResource bookResource = assembler.toResource(book);
-		
+
 		bookResource.add(linkTo(AuthorsRestController.class)
-				.slash(currentAuthor)
-				.slash("/books")
-				.slash(book)
-				.withSelfRel());
-		
+			.slash(currentAuthor)
+			.slash("/books")
+			.slash(book)
+			.withSelfRel());
+
 		bookResource.add(linkTo(AuthorsRestController.class)
-				.slash(currentAuthor)
-				.slash("/books")
-				.slash(book)
-				.slash("/ratings")
-				.withRel("ratings"));
-		
+			.slash(currentAuthor)
+			.slash("/books")
+			.slash(book)
+			.slash("/ratings")
+			.withRel("ratings"));
+
 		bookResource.add(linkTo(AuthorsRestController.class)
-				.slash(currentAuthor)
-				.slash("/books")
-				.slash(book)
-				.slash("/comments")
-				.withRel("comments"));
-		
-			return new ResponseEntity<BookResource>(bookResource, HttpStatus.OK);
+			.slash(currentAuthor)
+			.slash("/books")
+			.slash(book)
+			.slash("/comments")
+			.withRel("comments"));
+
+		return new ResponseEntity<BookResource>(bookResource, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Delete Author's Book
 	 */
 	@RequestMapping(value = "/{book_id}", method = RequestMethod.DELETE)
-	public ResponseEntity<BookResource> deleteAuthor(@PathVariable("id") long id, @PathVariable("book_id") long book_id) {
+	public ResponseEntity<BookResource> deleteAuthor(@PathVariable("id") long id,
+			@PathVariable("book_id") long book_id) {
 		Author currentAuthor = authorService.findById(id);
 
 		if (currentAuthor == null) {
 			return new ResponseEntity<BookResource>(HttpStatus.NOT_FOUND);
 		}
-		
+
 		List<Book> authorBooks = currentAuthor.getBooks();
 		boolean found = false;
-		
+
 		for (Book book : authorBooks) {
 			if (book.getId() == book_id) {
 				bookService.deleteBook(book);
@@ -218,7 +238,7 @@ public class BooksRestController {
 				break;
 			}
 		}
-		
+
 		if (!found) {
 			return new ResponseEntity<BookResource>(HttpStatus.NOT_FOUND);
 		}

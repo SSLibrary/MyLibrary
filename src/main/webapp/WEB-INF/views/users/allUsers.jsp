@@ -4,26 +4,26 @@
 <div class="jumbotron">
 	<h1 class="text-center">Users</h1>
 </div>
-		<form:form action="search" method="GET">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="input-group">
-						<span class="input-group-btn">
-							<button class="btn btn-default" type="submit">Go!</button>
-						</span> <input type="text" class="form-control" name="username"
-							placeholder="Search for User by Username">
-					</div>
-				</div>
+<form:form action="search" method="GET">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="input-group">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="submit">Go!</button>
+				</span> <input type="text" class="form-control" name="username"
+					placeholder="Search for User by Username">
 			</div>
-		</form:form>
-		<c:choose>
-		<c:when test="${emptyListOfUsers}">
-				<h3 class="text-center">The list is empty!</h3>
-			</c:when>
-			<c:when test="${noSuchUserFound}">
-				<h3 class="text-center">No such user was found!</h3>
-			</c:when>
-			<c:otherwise>
+		</div>
+	</div>
+</form:form>
+<c:choose>
+	<c:when test="${emptyListOfUsers}">
+		<h3 class="text-center">The list is empty!</h3>
+	</c:when>
+	<c:when test="${noSuchUserFound}">
+		<h3 class="text-center">No such user was found!</h3>
+	</c:when>
+	<c:otherwise>
 		<div class="row">
 			<div class="col-md-2 col-xs-4 text-center">
 				<h3>Name</h3>

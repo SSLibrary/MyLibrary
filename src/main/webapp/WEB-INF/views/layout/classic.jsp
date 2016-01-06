@@ -34,6 +34,9 @@
 	src="<spring:url value="/resources/rating-plugin/js/star-rating.min.js"/>"
 	type="text/javascript"></script>
 <script
+	src="<spring:url value="/resources/file-input-plugin/js/plugins/canvas-to-blob.min.js"/>"
+	type="text/javascript"></script>
+<script
 	src="<spring:url value="/resources/file-input-plugin/js/fileinput.min.js"/>"
 	type="text/javascript"></script>
 
