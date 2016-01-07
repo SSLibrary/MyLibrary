@@ -70,7 +70,6 @@ public class MessageController {
 		CommonAttributesPopulator.populate(currentUser, model);
 
 		return "messages/outbox";
-
 	}
 
 	// This method will create new message

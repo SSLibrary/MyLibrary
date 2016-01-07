@@ -39,6 +39,7 @@
 		</table>
 	</c:otherwise>
 </c:choose>
+
 <!-- pagination -->
 <c:choose>
 	<c:when test="${numberOfReceivedMessages > 5}">

@@ -13,7 +13,16 @@
 		        <c:forEach items="${comments}" var="comment">
 		           <tr>
 					<td>"${comment.comment}"</td>
-					<td>posted by <a href="<c:url value='/users/${comment.user.id}/showProfile' />"><b>${comment.user.username}</b></a></td>
+					<c:choose>
+					<c:when test="${currentUserID == comment.user.id}">
+					<td>posted by 
+					<a href="<c:url value='/users/${comment.user.id}/editProfile' />"><b>${comment.user.username}</b></a></td>
+						</c:when>
+        		<c:otherwise>
+        			<td>posted by 
+        			<a href="<c:url value='/users/${comment.user.id}/showProfile' />"><b>${comment.user.username}</b></a></td>
+        		  </c:otherwise>
+        		  </c:choose>
 						<sec:authorize access="hasAuthority('ADMIN')">
 						<td>
 							<form:form action="comments/${comment.comment_id}" method="DELETE">
