@@ -111,7 +111,7 @@
 </div>
 <br />
 <div class="row">
-	<input id="input-6c" class="rating form-control hide" data-min="0" data-max="5" data-step="0.1" data-size="sm">
+	<input id="input-6c" class="rating form-control hide" data-min="0" data-max="5" data-step="0.1" data-size="md">
 </div>
 
 
