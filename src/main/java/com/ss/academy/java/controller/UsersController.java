@@ -1,6 +1,5 @@
 package com.ss.academy.java.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -58,16 +57,15 @@ public class UsersController {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		
 		List<User> allUsers = userService.listAllUsers(offset, maxResults);
+		Long numberOfUsers = userService.countAllUsers();
 		
 		if (allUsers.isEmpty()) {
 			model.addAttribute("emptyListOfUsers", true);
-			
-			return "users/allUsers";
-		}
-		System.out.println(allUsers.size());
+		} else {
 		model.addAttribute("allUsers", allUsers);
-		model.addAttribute("numberOfUsers", allUsers.size());
+		model.addAttribute("numberOfUsers", numberOfUsers);
 		model.addAttribute("offset", offset);
+		}
 
 		CommonAttributesPopulator.populate(currentUser, model);
 
