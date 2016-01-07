@@ -84,6 +84,7 @@ public class User implements Identifiable<String> {
 	private List<Comment> comments;
 
 	@OneToMany(mappedBy = "user")
+	@JsonManagedReference(value = "user-book-history")
 	private List<BookHistory> booksHistory;
 	
 	@Size(min = 4, max = 60)

@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Type;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ss.academy.java.model.user.User;
 
 @Entity
@@ -27,10 +28,12 @@ public class BookHistory {
 
 	@ManyToOne
 	@JoinColumn(name = "book_id")
+	@JsonBackReference(value = "book-history")
 	private Book book;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
+	@JsonBackReference(value = "user-book-history")
 	private User user;
 
 	@Type(type = "timestamp")

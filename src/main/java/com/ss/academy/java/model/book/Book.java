@@ -73,6 +73,7 @@ public class Book implements Identifiable<Long> {
 	private List<Comment> comments;
 	
 	@OneToMany(mappedBy = "book")
+	@JsonManagedReference(value = "book-history")
 	private List<BookHistory> booksHistory;
 	
 	@Transient

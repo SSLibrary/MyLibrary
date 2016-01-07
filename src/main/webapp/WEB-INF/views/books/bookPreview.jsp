@@ -6,7 +6,7 @@
 	</c:if>
 	<c:choose>
 		<c:when test="${emptyListOfAuthorBooks}">
-			<div class="col-sm-6 col-md-3">
+			<div class="col-sm-6 col-md-4">
 				<div class="thumbnail">
 					<img src="<c:url value='/resources/images/noCoverImage.jpg' />"
 						alt="no book cover">
@@ -14,14 +14,14 @@
 			</div>
 		</c:when>
 		<c:otherwise>
-			<div class="col-sm-6 col-md-3">
+			<div class="col-sm-6 col-md-4">
 				<div class="thumbnail">
 					<img src="${image}" alt="book cover" />
 				</div>
 			</div>
 		</c:otherwise>
 	</c:choose>
-	<div class="col-sm-6 col-md-9">
+	<div class="col-sm-6 col-md-8">
 		<div>
 			<h3>
 				<strong>Book Title: ${book.title}</strong>
@@ -61,7 +61,7 @@
 	</div>
 </div>
 <div>
-	<div class="col-md-offset-3">
+	<div class="col-md-offset-4">
 		<div class="btn-group">
 			<a
 				href="/MyLibrary/authors/${book.author.id}/books/${book.id}/comments"
