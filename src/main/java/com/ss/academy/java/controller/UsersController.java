@@ -56,20 +56,17 @@ public class UsersController {
 	public String listAllUsers(@AuthenticationPrincipal UserDetails userDetails, ModelMap model, Integer offset,
 			Integer maxResults) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
-
-		// Removing the current user from the list of users
+		
 		List<User> allUsers = userService.listAllUsers(offset, maxResults);
-		List<User> filteredList = new ArrayList<User>();
-
-		for (User user : allUsers) {
-			if (!user.getUsername().equals(currentUser.getUsername())) {
-				filteredList.add(user);
-			}
+		
+		if (allUsers.isEmpty()) {
+			model.addAttribute("emptyListOfUsers", true);
+			
+			return "users/allUsers";
 		}
-
-		model.addAttribute("emptyListOfUsers", allUsers.isEmpty());
-		model.addAttribute("allUsers", filteredList);
-		model.addAttribute("numberOfUsers", filteredList.size());
+		System.out.println(allUsers.size());
+		model.addAttribute("allUsers", allUsers);
+		model.addAttribute("numberOfUsers", allUsers.size());
 		model.addAttribute("offset", offset);
 
 		CommonAttributesPopulator.populate(currentUser, model);

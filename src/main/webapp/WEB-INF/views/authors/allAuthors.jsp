@@ -5,26 +5,26 @@
 	<h1 class="text-center">Authors</h1>
 </div>
 
-		<form:form action="search" method="GET">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="input-group">
-						<span class="input-group-btn">
-							<button class="btn btn-default" type="submit">Go!</button>
-						</span> <input type="text" class="form-control" name="author_name"
-							placeholder="Search for Author by Author's Name" />
-					</div>
-				</div>
+<form:form action="search" method="GET">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="input-group">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="submit">Go!</button>
+				</span> <input type="text" class="form-control" name="author_name"
+					placeholder="Search for Author by Author's Name" />
 			</div>
-		</form:form>
-		<c:choose>
-			<c:when test="${emptyListOfAuthors}">
-				<h3 class="text-center">The list is empty!</h3>
-			</c:when>
-			<c:when test="${noSuchAuthorFound}">
-				<h3 class="text-center">No such author was found!</h3>
-			</c:when>
-			<c:otherwise>
+		</div>
+	</div>
+</form:form>
+<c:choose>
+	<c:when test="${emptyListOfAuthors}">
+		<h3 class="text-center">The list is empty!</h3>
+	</c:when>
+	<c:when test="${noSuchAuthorFound}">
+		<h3 class="text-center">No such author was found!</h3>
+	</c:when>
+	<c:otherwise>
 		<div class="row">
 			<div class="col-md-4 col-xs-4 text-center">
 				<h2>Name</h2>
@@ -95,8 +95,9 @@
 		<c:choose>
 			<c:when test="${numberOfAuthors > 5}">
 				<div class="text-center">
-					<tag:paginate max="15" offset="${offset}" count="${numberOfAuthors}"
-						uri="../authors/" next="&raquo;" previous="&laquo;" />
+					<tag:paginate max="15" offset="${offset}"
+						count="${numberOfAuthors}" uri="../authors/" next="&raquo;"
+						previous="&laquo;" />
 				</div>
 			</c:when>
 		</c:choose>

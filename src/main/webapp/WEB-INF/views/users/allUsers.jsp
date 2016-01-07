@@ -29,36 +29,56 @@
 				<h3>Name</h3>
 			</div>
 			<div class="col-md-2 col-xs-1 text-center"></div>
-			<sec:authorize access="hasAuthority('ADMIN')">
-				<div class="col-md-2 col-xs-4 text-center">
-					<h3>Status</h3>
-				</div>
-				<div class="col-md-2 col-xs-4 text-center">
-					<h3>Role</h3>
-				</div>
-			</sec:authorize>
+
+			<div class="col-md-2 col-xs-4 text-center">
+				<h3>Status</h3>
+			</div>
+			<div class="col-md-2 col-xs-4 text-center">
+				<h3>Role</h3>
+			</div>
+
 		</div>
 		<c:forEach items="${allUsers}" var="user">
 			<div class="row">
 				<div class="col-md-2 col-xs-4 text-center">
-					<h5>
-						<a href="<c:url value='/users/${user.id}/showProfile' />">${user.username}</a>
-					</h5>
+					<c:choose>
+						<c:when test="${currentUserID == user.id}">
+							<h5>
+								<a href="<c:url value='/users/${user.id}/editProfile' />">${user.username}</a>
+							</h5>
+						</c:when>
+						<c:otherwise>
+							<a href="<c:url value='/users/${user.id}/showProfile' />">${user.username}</a>
+						</c:otherwise>
+					</c:choose>
 
 				</div>
-				<div class="col-md-2 col-xs-1 text-center">
-					<a href="/MyLibrary/messages/${currentUserID}/new/${user.id}"
-						class="btn btn-primary btn-md active" role="button"> <span
-						class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
+
+				<c:choose>
+					<c:when test="${currentUserID == user.id}">
+
+						<div class="col-md-2 col-xs-1 text-center">
+							<a href="#" class="btn btn-primary btn-md disabled" role="button">
+								<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+							</a>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="col-md-2 col-xs-1 text-center">
+							<a href="/MyLibrary/messages/${currentUserID}/new/${user.id}"
+								class="btn btn-primary btn-md active" role="button"> <span
+								class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
+						</div>
+					</c:otherwise>
+				</c:choose>
+
+				<div class="col-md-2 col-xs-4 text-center">
+					<h5>${user.userStatus}</h5>
+				</div>
+				<div class="col-md-2 col-xs-4 text-center">
+					<h5>${user.userRole}</h5>
 				</div>
 				<sec:authorize access="hasAuthority('ADMIN')">
-					<div class="col-md-2 col-xs-4 text-center">
-						<h5>${user.userStatus}</h5>
-					</div>
-					<div class="col-md-2 col-xs-4 text-center">
-						<h5>${user.userRole}</h5>
-					</div>
-
 					<c:choose>
 						<c:when test="${ user.userRole == 'ADMIN'}">
 							<div class="col-md-2">
