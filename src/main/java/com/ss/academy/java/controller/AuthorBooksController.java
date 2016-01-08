@@ -197,7 +197,7 @@ public class AuthorBooksController {
 			CommonAttributesPopulator.populate(currentUser, model);
 			return "books/addNewBook";
 		}
-
+		
 		try {
 			if (fileUpload != null && fileUpload.length > 0) {
 				for (CommonsMultipartFile aFile : fileUpload) {
@@ -220,7 +220,6 @@ public class AuthorBooksController {
 		} catch (Exception e) {
 			model.addAttribute("largeSizeOfImage", true);
 		}
-
 		return "redirect:/authors/{author_id}/books/";
 	}
 
@@ -265,10 +264,8 @@ public class AuthorBooksController {
 			return "books/addNewBook";
 		}
 		try {
-<<<<<<< .mine
 		if (fileUpload != null && fileUpload.length > 0) {			
-			for (CommonsMultipartFile aFile : fileUpload) {	
-				
+			for (CommonsMultipartFile aFile : fileUpload) {					
 				if (aFile.toString().startsWith("FF D8 FF")) {
 					// check if format of file is JPG
 				} else if (aFile.toString().startsWith("47 49 46 38 37 61")
@@ -276,34 +273,6 @@ public class AuthorBooksController {
 					// check if format of file is GIF
 				} else if (aFile.toString().startsWith("89 50 4E 47 0D 0A 1A 0A")) {
 					// check if format of file is PNG
-
-
-
-
-
-
-
-=======
-			if (fileUpload != null && fileUpload.length > 0) {
-				for (CommonsMultipartFile aFile : fileUpload) {
-					if (aFile.toString().startsWith("FF D8 FF")) {
-						// check if format of file is JPG
-					} else if (aFile.toString().startsWith("47 49 46 38 37 61")
-							|| aFile.toString().startsWith("47 49 46 38 39 61")) {
-						// check if format of file is GIF
-					} else if (aFile.toString().startsWith("89 50 4E 47 0D 0A 1A 0A")) {
-						// check if format of file is PNG
-					}
-					author = authorService.findById(author_id);
-					dbBook = bookService.findById(book_id);
-					formBook.setImage(aFile.getBytes());
-					dbBook = formBook;
-					author.getBooks().add(dbBook);
-
-					bookService.updateBook(dbBook);
->>>>>>> .theirs
-				}
-<<<<<<< .mine
 				author = authorService.findById(author_id);
 				dbBook = bookService.findById(book_id);
 				byte[] oldImage = dbBook.getImage();
@@ -315,22 +284,10 @@ public class AuthorBooksController {
 				dbBook = formBook;
 				author.getBooks().add(dbBook);
 				bookService.updateBook(dbBook);
-=======
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> .theirs
+				}
 			}
+		}
 		} catch (Exception e) {
-			System.out.println(e.getClass().getName());
 			model.addAttribute("largeSizeOfImage", true);
 		}
 		return "redirect:/authors/{author_id}/books/{book_id}/preview";
