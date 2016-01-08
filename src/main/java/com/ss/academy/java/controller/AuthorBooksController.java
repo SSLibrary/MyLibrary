@@ -277,7 +277,13 @@ public class AuthorBooksController {
 					}
 					author = authorService.findById(author_id);
 					dbBook = bookService.findById(book_id);
-					formBook.setImage(aFile.getBytes());
+					byte[] currentImage = dbBook.getImage();
+					if (aFile.getSize() != 0) {
+						formBook.setImage(aFile.getBytes());
+					}else{
+						formBook.setImage(currentImage);
+					}
+					
 					dbBook = formBook;
 					author.getBooks().add(dbBook);
 
