@@ -64,7 +64,11 @@ public class AuthorBooksController {
 		Author author = authorService.findById(author_id);
 		List<Book> books = bookService.listAllBooks(offset, maxResults, author_id);
 		Long numberOfBooks = bookService.countAllBooks(author_id);
-
+		
+		if (author == null) {
+			return "redirect:/authors/";
+		}
+		
 		if (books.isEmpty()) {
 			model.addAttribute("emptyListOfAuthorBooks", true);
 		}
@@ -88,6 +92,11 @@ public class AuthorBooksController {
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		Book book = bookService.findById(book_id);
+		
+		if (book == null) {
+			return "redirect:/authors/{author_id}/books/";
+		}
+		
 		book.setAverageRating(RatingCalculator.calculate(book.getRatings()));
 		List<Rating> bookRatings = book.getRatings();
 
@@ -219,8 +228,13 @@ public class AuthorBooksController {
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		Book book = bookService.findById(book_id);
+		
+		if (book == null) {
+			return "redirect:/authors/{author_id}/books/";
+		}	
+		
 		Author author = book.getAuthor();
-
+					
 		model.addAttribute("book", book);
 		model.addAttribute("author", author);
 		model.addAttribute("edit", true);
