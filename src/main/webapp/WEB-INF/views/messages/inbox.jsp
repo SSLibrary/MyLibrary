@@ -43,8 +43,7 @@
 <!-- pagination -->
 <c:choose>
 	<c:when test="${numberOfReceivedMessages > 5}">
-		<div class="text-center"
-			style="top: 773px; position: absolute; margin-left: 520px;">
+		<div class="text-center">
 			<tag:paginate max="15" offset="${offset}"
 				count="${numberOfReceivedMessages}" uri="../messages/inbox"
 				next="&raquo;" previous="&laquo;" />

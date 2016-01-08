@@ -273,8 +273,6 @@ public class AuthorBooksController {
 			}
 		}
 		} catch (Exception e) {
-			System.out.println(e.getClass().getName());
-			System.out.println(e.getMessage());
 			model.addAttribute("largeSizeOfImage", true);
 		}
 		return "redirect:/authors/{author_id}/books/{book_id}/preview";
