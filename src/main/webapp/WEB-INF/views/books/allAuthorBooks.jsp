@@ -26,24 +26,24 @@
 			</c:when>
 		<c:otherwise>
 		<div class="row">						
-			<div class="col-md-3 col-xs-6 text-center">
+			<div class="col-md-4 col-xs-4 text-center">
 				<h2>Title</h2>
 			</div>
-			<div class="col-md-3 col-xs-6 text-center">
+			<div class="col-md-4 col-xs-4 text-center">
 				<h2>Status</h2>
 			</div>
 		</div>
 		<c:forEach items="${books}" var="book">
 			<div class="row">																					
-				<div class="col-md-3 col-xs-6 text-center">							
+				<div class="col-md-4 col-xs-4 text-center">					
 					<h4>
 						<a href="<c:url value='../books/${book.id}/preview' />" >${book.title}</a>
 					</h4>
 				</div>
-				<div class="col-md-3 col-xs-6 text-center">
+				<div class="col-md-4 col-xs-4 text-center">
 					<h4>${book.status}</h4>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-4 col-xs-4">
 					<div class="btn-toolbar">	
 						<sec:authorize access="hasAuthority('ADMIN')">
 							<div class="btn-group">
@@ -71,9 +71,9 @@
 <br />
 <sec:authorize access="hasAuthority('ADMIN')">
 	<div class="row">
-		<div class="col-md-4">
+		<div class="col-md-offset-4 col-md-4">
 			<form:form action="new" method="GET">
-				<button type="submit" class="btn btn-primary">
+				<button type="submit" class="btn btn-primary btn-block">
 				<span class="glyphicon glyphicon-book" aria-hidden="true"></span> Add New Book</button>
 			</form:form>
 		</div>

@@ -82,11 +82,13 @@
 		<br />
 		<sec:authorize access="hasAuthority('ADMIN')">
 			<div class="row">
-				<div class="col-md-4">
+				<div class="col-md-offset-4 col-md-4">
+				
 					<form:form action="/MyLibrary/authors/new/" method="GET">
-						<button type="submit" class="btn btn-primary">Add New
+						<button type="submit" class="btn btn-primary btn-block">Add New
 							Author</button>
 					</form:form>
+		
 				</div>
 			</div>
 		</sec:authorize>

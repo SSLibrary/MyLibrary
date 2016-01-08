@@ -29,7 +29,7 @@
 			
 		<label for="fileUpload" class="control-label col-md-2">Pic:</label>	
 		<div class="col-md-6">								
-			<input id="input-1" type="file" name="fileUpload" class="file"></input>
+			<input id="input-21" type="file" name="fileUpload" class="file-loading" accept="image/*"></input>
 			<form:errors path="image" cssClass="error" />				
 		</div>
 	</div>		
@@ -59,3 +59,20 @@
 	</c:choose>
 </form:form>
 		
+<script>
+$(document).on('ready', function() {
+    $("#input-21").fileinput({
+        maxFileSize: 1024,
+        allowedFileExtensions: ["jpg", "gif", "png"],
+        previewFileType: "image",
+        browseClass: "btn btn-success",
+        browseLabel: "Pick Image",
+        browseIcon: "<i class=\"glyphicon glyphicon-picture\"></i> ",
+        removeClass: "btn btn-danger",
+        removeLabel: "Delete",
+        removeIcon: "<i class=\"glyphicon glyphicon-trash\"></i>",
+        showRemove: false,
+        showUpload: false
+    });
+});
+</script>

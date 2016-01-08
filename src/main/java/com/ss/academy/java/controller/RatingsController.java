@@ -3,15 +3,18 @@ package com.ss.academy.java.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.ss.academy.java.model.book.Book;
 import com.ss.academy.java.model.rating.Rating;
@@ -20,6 +23,7 @@ import com.ss.academy.java.service.book.BookService;
 import com.ss.academy.java.service.rating.RatingService;
 import com.ss.academy.java.service.user.UserService;
 import com.ss.academy.java.util.CommonAttributesPopulator;
+import com.ss.academy.java.util.ResourceNotFoundException;
 
 /**
  * Handles requests for the application books's rating page.
@@ -74,5 +78,11 @@ public class RatingsController {
 		ratingService.saveRating(ratingToSave);
 
 		return "redirect:/authors/{author_id}/books/{book_id}/preview";
+	}
+	
+	@ExceptionHandler(ResourceNotFoundException.class)
+	@ResponseStatus(value = HttpStatus.NOT_FOUND)
+	public String handleResourceNotFoundException() {
+		return "layout/404";
 	}
 }
