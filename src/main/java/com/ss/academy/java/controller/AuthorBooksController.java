@@ -136,11 +136,6 @@ public class AuthorBooksController {
 		Author author = authorService.findById(author_id);
 
 		List<Book> books = bookService.findBooksByTitle(bookTitle);
-
-		if (books.isEmpty()) {
-			model.addAttribute("emptyListOfAuthorBooks", true);
-		}
-
 		List<Book> authorBooks = new ArrayList<Book>();
 
 		for (Book book : books) {
