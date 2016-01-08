@@ -6,6 +6,14 @@ import java.util.List;
 import com.ss.academy.java.model.rating.Rating;
 
 public class RatingCalculator {
+	
+	/*
+	 * A private Constructor prevents any other class from instantiating.
+	 */
+	private RatingCalculator() {
+		
+	}
+	
 	public static double calculate(List<Rating> bookRatings) {
 		double result = 0;
 		int bookRatingsCount = bookRatings.size();

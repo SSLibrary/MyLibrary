@@ -8,6 +8,14 @@ import com.ss.academy.java.model.message.Message;
 import com.ss.academy.java.model.user.User;
 
 public class CommonAttributesPopulator {
+	
+	/*
+	 * A private Constructor prevents any other class from instantiating.
+	 */
+	private CommonAttributesPopulator() {
+		
+	}
+	
 	public static void populate(User currentUser, ModelMap modelMap) {
 		List<Message> messages = currentUser.getReceivedMessage();
 		int unreadMessages = UnreadMessagesCounter.count(messages);
