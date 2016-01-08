@@ -197,7 +197,7 @@ public class AuthorBooksController {
 			CommonAttributesPopulator.populate(currentUser, model);
 			return "books/addNewBook";
 		}
-		
+
 		try {
 			if (fileUpload != null && fileUpload.length > 0) {
 				for (CommonsMultipartFile aFile : fileUpload) {
@@ -220,6 +220,7 @@ public class AuthorBooksController {
 		} catch (Exception e) {
 			model.addAttribute("largeSizeOfImage", true);
 		}
+
 		return "redirect:/authors/{author_id}/books/";
 	}
 
@@ -264,29 +265,25 @@ public class AuthorBooksController {
 			return "books/addNewBook";
 		}
 		try {
-		if (fileUpload != null && fileUpload.length > 0) {			
-			for (CommonsMultipartFile aFile : fileUpload) {					
-				if (aFile.toString().startsWith("FF D8 FF")) {
-					// check if format of file is JPG
-				} else if (aFile.toString().startsWith("47 49 46 38 37 61")
-						|| aFile.toString().startsWith("47 49 46 38 39 61")) {
-					// check if format of file is GIF
-				} else if (aFile.toString().startsWith("89 50 4E 47 0D 0A 1A 0A")) {
-					// check if format of file is PNG
-				author = authorService.findById(author_id);
-				dbBook = bookService.findById(book_id);
-				byte[] oldImage = dbBook.getImage();
-				if (aFile.getSize() != 0) {
-					formBook.setImage(aFile.getBytes());	
-				}else{					
-					formBook.setImage(oldImage);
-				}				
-				dbBook = formBook;
-				author.getBooks().add(dbBook);
-				bookService.updateBook(dbBook);
+			if (fileUpload != null && fileUpload.length > 0) {
+				for (CommonsMultipartFile aFile : fileUpload) {
+					if (aFile.toString().startsWith("FF D8 FF")) {
+						// check if format of file is JPG
+					} else if (aFile.toString().startsWith("47 49 46 38 37 61")
+							|| aFile.toString().startsWith("47 49 46 38 39 61")) {
+						// check if format of file is GIF
+					} else if (aFile.toString().startsWith("89 50 4E 47 0D 0A 1A 0A")) {
+						// check if format of file is PNG
+					}
+					author = authorService.findById(author_id);
+					dbBook = bookService.findById(book_id);
+					formBook.setImage(aFile.getBytes());
+					dbBook = formBook;
+					author.getBooks().add(dbBook);
+
+					bookService.updateBook(dbBook);
 				}
 			}
-		}
 		} catch (Exception e) {
 			model.addAttribute("largeSizeOfImage", true);
 		}
