@@ -262,8 +262,9 @@ public class AuthorBooksController {
 			return "books/addNewBook";
 		}
 		try {
-		if (fileUpload != null && fileUpload.length > 0) {
-			for (CommonsMultipartFile aFile : fileUpload) {
+		if (fileUpload != null && fileUpload.length > 0) {			
+			for (CommonsMultipartFile aFile : fileUpload) {	
+				
 				if (aFile.toString().startsWith("FF D8 FF")) {
 					// check if format of file is JPG
 				} else if (aFile.toString().startsWith("47 49 46 38 37 61")
@@ -274,14 +275,19 @@ public class AuthorBooksController {
 				}
 				author = authorService.findById(author_id);
 				dbBook = bookService.findById(book_id);
-				formBook.setImage(aFile.getBytes());
+				byte[] oldImage = dbBook.getImage();
+				if (aFile.getSize() != 0) {
+					formBook.setImage(aFile.getBytes());	
+				}else{					
+					formBook.setImage(oldImage);
+				}				
 				dbBook = formBook;
 				author.getBooks().add(dbBook);
-
 				bookService.updateBook(dbBook);
 			}
 		}
 		} catch (Exception e) {
+			System.out.println(e.getClass().getName());
 			model.addAttribute("largeSizeOfImage", true);
 		}
 		return "redirect:/authors/{author_id}/books/{book_id}/preview";
