@@ -5,14 +5,17 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.ss.academy.java.model.book.Book;
 import com.ss.academy.java.model.book.BookHistory;
@@ -22,6 +25,7 @@ import com.ss.academy.java.service.book.BookHistoryService;
 import com.ss.academy.java.service.book.BookService;
 import com.ss.academy.java.service.user.UserService;
 import com.ss.academy.java.util.CommonAttributesPopulator;
+import com.ss.academy.java.util.ResourceNotFoundException;
 
 /**
  * Handles requests for the application books history page.
@@ -137,5 +141,11 @@ public class BookHistoryController {
 		CommonAttributesPopulator.populate(currentUser, model);
 
 		return "users/loanedBooks";
+	}
+	
+	@ExceptionHandler(ResourceNotFoundException.class)
+	@ResponseStatus(value = HttpStatus.NOT_FOUND)
+	public String handleResourceNotFoundException() {
+		return "layout/404";
 	}
 }

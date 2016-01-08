@@ -6,16 +6,19 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.ss.academy.java.model.author.Author;
@@ -29,6 +32,7 @@ import com.ss.academy.java.service.rating.RatingService;
 import com.ss.academy.java.service.user.UserService;
 import com.ss.academy.java.util.CommonAttributesPopulator;
 import com.ss.academy.java.util.RatingCalculator;
+import com.ss.academy.java.util.ResourceNotFoundException;
 
 import sun.misc.BASE64Encoder;
 
@@ -55,8 +59,7 @@ public class AuthorBooksController {
 	@Autowired
 	UserService userService;
 
-
-	 // This method will list all existing books
+	// This method will list all existing books
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String listAllBooks(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long author_id,
 			ModelMap model, Integer offset, Integer maxResults) {
@@ -64,11 +67,11 @@ public class AuthorBooksController {
 		Author author = authorService.findById(author_id);
 		List<Book> books = bookService.listAllBooks(offset, maxResults, author_id);
 		Long numberOfBooks = bookService.countAllBooks(author_id);
-		
+
 		if (author == null) {
-			return "redirect:/authors/";
+			throw new ResourceNotFoundException();
 		}
-		
+
 		if (books.isEmpty()) {
 			model.addAttribute("emptyListOfAuthorBooks", true);
 		}
@@ -92,11 +95,11 @@ public class AuthorBooksController {
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		Book book = bookService.findById(book_id);
-		
+
 		if (book == null) {
 			return "redirect:/authors/{author_id}/books/";
 		}
-		
+
 		book.setAverageRating(RatingCalculator.calculate(book.getRatings()));
 		List<Rating> bookRatings = book.getRatings();
 
@@ -121,7 +124,7 @@ public class AuthorBooksController {
 			model.addAttribute("image", image);
 		} catch (NullPointerException e) {
 			model.addAttribute("emptyListOfAuthorBooks", true);
-		} 
+		}
 
 		User currentBookLoaner = bookHistoryService.getCurrentBookLoaner(book_id);
 
@@ -174,7 +177,7 @@ public class AuthorBooksController {
 
 		model.addAttribute("book", book);
 		model.addAttribute("edit", false);
-		
+
 		CommonAttributesPopulator.populate(currentUser, model);
 
 		return "books/addNewBook";
@@ -187,14 +190,14 @@ public class AuthorBooksController {
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/new" }, method = RequestMethod.POST)
 	public String saveBook(@Valid Book book, BindingResult result, @RequestParam CommonsMultipartFile[] fileUpload,
-			@PathVariable Long author_id, ModelMap model, @AuthenticationPrincipal UserDetails userDetails ) {
+			@PathVariable Long author_id, ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
-		
+
 		if (result.hasErrors()) {
 			CommonAttributesPopulator.populate(currentUser, model);
 			return "books/addNewBook";
 		}
-		
+
 		try {
 			if (fileUpload != null && fileUpload.length > 0) {
 				for (CommonsMultipartFile aFile : fileUpload) {
@@ -228,13 +231,13 @@ public class AuthorBooksController {
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		Book book = bookService.findById(book_id);
-		
+
 		if (book == null) {
 			return "redirect:/authors/{author_id}/books/";
-		}	
-		
+		}
+
 		Author author = book.getAuthor();
-					
+
 		model.addAttribute("book", book);
 		model.addAttribute("author", author);
 		model.addAttribute("edit", true);
@@ -251,36 +254,36 @@ public class AuthorBooksController {
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/{book_id}" }, method = RequestMethod.POST)
 	public String updateBook(@Valid Book formBook, BindingResult result, ModelMap model,
-			@RequestParam CommonsMultipartFile[] fileUpload, @PathVariable Long book_id, 
-			@PathVariable Long author_id, @AuthenticationPrincipal UserDetails userDetails ) {
+			@RequestParam CommonsMultipartFile[] fileUpload, @PathVariable Long book_id, @PathVariable Long author_id,
+			@AuthenticationPrincipal UserDetails userDetails) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 		Author author = new Author();
 		Book dbBook = new Book();
-		
+
 		if (result.hasErrors()) {
 			CommonAttributesPopulator.populate(currentUser, model);
 			return "books/addNewBook";
 		}
 		try {
-		if (fileUpload != null && fileUpload.length > 0) {
-			for (CommonsMultipartFile aFile : fileUpload) {
-				if (aFile.toString().startsWith("FF D8 FF")) {
-					// check if format of file is JPG
-				} else if (aFile.toString().startsWith("47 49 46 38 37 61")
-						|| aFile.toString().startsWith("47 49 46 38 39 61")) {
-					// check if format of file is GIF
-				} else if (aFile.toString().startsWith("89 50 4E 47 0D 0A 1A 0A")) {
-					// check if format of file is PNG
-				}
-				author = authorService.findById(author_id);
-				dbBook = bookService.findById(book_id);
-				formBook.setImage(aFile.getBytes());
-				dbBook = formBook;
-				author.getBooks().add(dbBook);
+			if (fileUpload != null && fileUpload.length > 0) {
+				for (CommonsMultipartFile aFile : fileUpload) {
+					if (aFile.toString().startsWith("FF D8 FF")) {
+						// check if format of file is JPG
+					} else if (aFile.toString().startsWith("47 49 46 38 37 61")
+							|| aFile.toString().startsWith("47 49 46 38 39 61")) {
+						// check if format of file is GIF
+					} else if (aFile.toString().startsWith("89 50 4E 47 0D 0A 1A 0A")) {
+						// check if format of file is PNG
+					}
+					author = authorService.findById(author_id);
+					dbBook = bookService.findById(book_id);
+					formBook.setImage(aFile.getBytes());
+					dbBook = formBook;
+					author.getBooks().add(dbBook);
 
-				bookService.updateBook(dbBook);
+					bookService.updateBook(dbBook);
+				}
 			}
-		}
 		} catch (Exception e) {
 			model.addAttribute("largeSizeOfImage", true);
 		}
@@ -298,5 +301,11 @@ public class AuthorBooksController {
 		bookService.deleteBook(book);
 
 		return "redirect:/authors/{author_id}/books/";
+	}
+
+	@ExceptionHandler(ResourceNotFoundException.class)
+	@ResponseStatus(value = HttpStatus.NOT_FOUND)
+	public String handleResourceNotFoundException() {
+		return "layout/404";
 	}
 }
