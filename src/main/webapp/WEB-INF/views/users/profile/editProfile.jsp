@@ -1,4 +1,4 @@
-<%@ include file="../layout/taglib.jsp"%>
+<%@ include file="../../layout/taglib.jsp"%>
 
 <form:form modelAttribute="user"
 	action="/MyLibrary/users/${currentUserID}/editProfile"

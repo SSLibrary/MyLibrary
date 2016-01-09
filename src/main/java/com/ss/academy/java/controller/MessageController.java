@@ -22,7 +22,7 @@ import com.ss.academy.java.model.user.User;
 import com.ss.academy.java.service.message.MessageService;
 import com.ss.academy.java.service.user.UserService;
 import com.ss.academy.java.util.CommonAttributesPopulator;
-import com.ss.academy.java.util.ResourceNotFoundException;
+import com.ss.academy.java.exception.ResourceNotFoundException;
 
 /**
  * Handles requests for the application messaging service.

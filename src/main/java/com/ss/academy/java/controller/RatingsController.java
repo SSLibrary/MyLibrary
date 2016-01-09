@@ -23,7 +23,7 @@ import com.ss.academy.java.service.book.BookService;
 import com.ss.academy.java.service.rating.RatingService;
 import com.ss.academy.java.service.user.UserService;
 import com.ss.academy.java.util.CommonAttributesPopulator;
-import com.ss.academy.java.util.ResourceNotFoundException;
+import com.ss.academy.java.exception.ResourceNotFoundException;
 
 /**
  * Handles requests for the application books's rating page.

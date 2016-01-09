@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.ss.academy.java.model.user.User;
@@ -15,7 +16,7 @@ import com.ss.academy.java.service.author.AuthorService;
 import com.ss.academy.java.service.book.BookService;
 import com.ss.academy.java.service.user.UserService;
 import com.ss.academy.java.util.CommonAttributesPopulator;
-import com.ss.academy.java.util.ResourceNotFoundException;
+import com.ss.academy.java.exception.ResourceNotFoundException;
 
 /**
  * Handles requests for the application home page.
@@ -55,6 +56,18 @@ public class HomeController {
 
 		return "home";
 	}
+	
+	@RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
+	public String accessDeniedPage(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+
+		model.addAttribute("username", currentUser.getUsername());
+
+		CommonAttributesPopulator.populate(currentUser, model);
+
+		return "commons/accessDenied";
+	}
+
 	
 	@ExceptionHandler(ResourceNotFoundException.class)
 	@ResponseStatus(value = HttpStatus.NOT_FOUND)

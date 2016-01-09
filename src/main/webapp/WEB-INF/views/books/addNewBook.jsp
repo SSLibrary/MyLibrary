@@ -1,6 +1,5 @@
 <%@ include file="../layout/taglib.jsp" %>
 
-
 <form:form class="form-horizontal" role="form" modelAttribute="book" enctype="multipart/form-data">
 	<legend>Book Details</legend>
 	<form:input type="hidden" path="id" id="id" />
@@ -59,20 +58,3 @@
 	</c:choose>
 </form:form>
 		
-<script>
-$(document).on('ready', function() {
-    $("#input-21").fileinput({
-        maxFileSize: 1024,
-        allowedFileExtensions: ["jpg", "gif", "png"],
-        previewFileType: "image",
-        browseClass: "btn btn-success",
-        browseLabel: "Pick Image",
-        browseIcon: "<i class=\"glyphicon glyphicon-picture\"></i> ",
-        removeClass: "btn btn-danger",
-        removeLabel: "Delete",
-        removeIcon: "<i class=\"glyphicon glyphicon-trash\"></i>",
-        showRemove: false,
-        showUpload: false
-    });
-});
-</script>

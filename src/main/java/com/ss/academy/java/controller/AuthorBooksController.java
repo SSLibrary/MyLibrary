@@ -32,7 +32,7 @@ import com.ss.academy.java.service.rating.RatingService;
 import com.ss.academy.java.service.user.UserService;
 import com.ss.academy.java.util.CommonAttributesPopulator;
 import com.ss.academy.java.util.RatingCalculator;
-import com.ss.academy.java.util.ResourceNotFoundException;
+import com.ss.academy.java.exception.ResourceNotFoundException;
 
 import sun.misc.BASE64Encoder;
 
@@ -312,6 +312,6 @@ public class AuthorBooksController {
 	@ExceptionHandler(ResourceNotFoundException.class)
 	@ResponseStatus(value = HttpStatus.NOT_FOUND)
 	public String handleResourceNotFoundException() {
-		return "layout/404";
+		return "commons/404";
 	}
 }

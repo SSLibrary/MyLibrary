@@ -1,4 +1,4 @@
-<%@ include file="../layout/taglib.jsp"%>
+<%@ include file="../../layout/taglib.jsp"%>
 
 <h2>Confirmation message:</h2>
 <br />

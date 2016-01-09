@@ -1,4 +1,4 @@
-<%@ include file="../layout/taglib.jsp"%>
+<%@ include file="../../layout/taglib.jsp"%>
 
 <div class="col-md-offset-2 col-xs-offset-4">
 	<div class="row">

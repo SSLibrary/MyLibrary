@@ -41,18 +41,21 @@
 			</dd>
 			<dt>Status:</dt>
 			<c:choose>
-				<c:when test="${isBookLoaned && currentUserID == currentBookLoaner.id}">
-						<dd>${book.status}
-							by <a
+				<c:when
+					test="${isBookLoaned && currentUserID == currentBookLoaner.id}">
+					<dd>${book.status}
+						by <a
 							href="<c:url value='/users/${currentBookLoaner.id}/editProfile' />">
-							${currentBookLoaner.username}</a></dd>
-						</c:when>
-        			<c:when test="${isBookLoaned}">
-        				<dd>${book.status}
-							by <a
+							${currentBookLoaner.username}</a>
+					</dd>
+				</c:when>
+				<c:when test="${isBookLoaned}">
+					<dd>${book.status}
+						by <a
 							href="<c:url value='/users/${currentBookLoaner.id}/showProfile' />">
-							${currentBookLoaner.username}</a></dd>
-        		 	 </c:when>
+							${currentBookLoaner.username}</a>
+					</dd>
+				</c:when>
 				<c:otherwise>
 					<dd>${book.status}</dd>
 				</c:otherwise>
@@ -111,7 +114,8 @@
 </div>
 <br />
 <div class="row">
-	<input id="input-6c" class="rating form-control hide" data-min="0" data-max="5" data-step="0.1" data-size="md">
+	<input id="input-6c" class="rating form-control hide" data-min="0"
+		data-max="5" data-step="0.1" data-size="md">
 </div>
 
 

@@ -46,52 +46,52 @@ Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 		<put-attribute name="current" value="registrationSuccess"></put-attribute>
 	</definition>
 
-	<definition name="users/accessDenied" extends="baseLayout">
+	<definition name="commons/accessDenied" extends="baseLayout">
 		<put-attribute name="title" value="Access Denied page" />
 		<put-attribute name="body"
-			value="/WEB-INF/views/users/accessDenied.jsp" />
+			value="/WEB-INF/views/commons/accessDenied.jsp" />
 		<put-attribute name="current" value="/accessDenied"></put-attribute>
 	</definition>
 
-	<definition name="layout/404" extends="baseLayout">
+	<definition name="commons/404" extends="baseLayout">
 		<put-attribute name="title" value="404 Error Page" />
 		<put-attribute name="body"
-			value="/WEB-INF/views/layout/404.jsp" />
+			value="/WEB-INF/views/commons/404.jsp" />
 		<put-attribute name="current" value="/404"></put-attribute>
 	</definition>
 
-	<definition name="users/showProfile" extends="baseLayout">
+	<definition name="users/profile/showProfile" extends="baseLayout">
 		<put-attribute name="title" value="User Profile" />
 		<put-attribute name="body"
-			value="/WEB-INF/views/users/showProfile.jsp" />
+			value="/WEB-INF/views/users/profile/showProfile.jsp" />
 		<put-attribute name="current" value="showProfile"></put-attribute>
 	</definition>
 
-	<definition name="users/editProfile" extends="baseLayout">
+	<definition name="users/profile/editProfile" extends="baseLayout">
 		<put-attribute name="title" value="User Profile" />
 		<put-attribute name="body"
-			value="/WEB-INF/views/users/editProfile.jsp" />
+			value="/WEB-INF/views/users/profile/editProfile.jsp" />
 		<put-attribute name="current" value="editProfile"></put-attribute>
 	</definition>
 
-	<definition name="users/editProfileSuccess" extends="baseLayout">
+	<definition name="users/profile/editProfileSuccess" extends="baseLayout">
 		<put-attribute name="title" value="Profile update successful" />
 		<put-attribute name="body"
-			value="/WEB-INF/views/users/editProfileSuccess.jsp" />
+			value="/WEB-INF/views/users/profile/editProfileSuccess.jsp" />
 		<put-attribute name="current" value="editProfileSuccess"></put-attribute>
 	</definition>
 	
-	<definition name="users/changePassword" extends="baseLayout">
+	<definition name="users/userPassword/changePassword" extends="baseLayout">
 		<put-attribute name="title" value="User Password" />
 		<put-attribute name="body"
-			value="/WEB-INF/views/users/changePassword.jsp" />
+			value="/WEB-INF/views/users/userPassword/changePassword.jsp" />
 		<put-attribute name="current" value="changePassword"></put-attribute>
 	</definition>
 	
-		<definition name="users/changePasswordSuccess" extends="baseLayout">
+		<definition name="users/userPassword/changePasswordSuccess" extends="baseLayout">
 		<put-attribute name="title" value="Password update successful" />
 		<put-attribute name="body"
-			value="/WEB-INF/views/users/changePasswordSuccess.jsp" />
+			value="/WEB-INF/views/users/userPassword/changePasswordSuccess.jsp" />
 		<put-attribute name="current" value="changePasswordSuccess"></put-attribute>
 	</definition>
 	<!--end of users -->

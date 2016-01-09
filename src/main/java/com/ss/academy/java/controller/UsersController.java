@@ -28,7 +28,7 @@ import com.ss.academy.java.service.book.BookService;
 import com.ss.academy.java.service.message.MessageService;
 import com.ss.academy.java.service.user.UserService;
 import com.ss.academy.java.util.CommonAttributesPopulator;
-import com.ss.academy.java.util.ResourceNotFoundException;
+import com.ss.academy.java.exception.ResourceNotFoundException;
 
 /**
  * Handles requests for the application users page plus user login/registration.
@@ -114,17 +114,6 @@ public class UsersController {
 		return "users/login";
 	}
 
-	@RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
-	public String accessDeniedPage(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
-		User currentUser = userService.findByUsername(userDetails.getUsername());
-
-		model.addAttribute("username", currentUser.getUsername());
-
-		CommonAttributesPopulator.populate(currentUser, model);
-
-		return "users/accessDenied";
-	}
-
 	/*
 	 * This method will provide the medium to register a new user.
 	 */
@@ -175,7 +164,7 @@ public class UsersController {
 
 		CommonAttributesPopulator.populate(currentUser, model);
 
-		return "users/editProfile";
+		return "users/profile/editProfile";
 	}
 
 	/*
@@ -191,7 +180,7 @@ public class UsersController {
 
 		CommonAttributesPopulator.populate(currentUser, model);
 
-		return "users/showProfile";
+		return "users/profile/showProfile";
 	}
 
 	/*
@@ -209,12 +198,12 @@ public class UsersController {
 		CommonAttributesPopulator.populate(currentUser, model);
 
 		if (result.hasFieldErrors("firstName") || result.hasFieldErrors("lastName") || result.hasFieldErrors("email")) {
-			return "users/editProfile";
+			return "users/profile/editProfile";
 		}
 
 		userService.updateUser(user);
 
-		return "users/editProfileSuccess";
+		return "users/profile/editProfileSuccess";
 	}
 
 	/*
@@ -231,7 +220,7 @@ public class UsersController {
 
 		CommonAttributesPopulator.populate(currentUser, model);
 
-		return "users/changePassword";
+		return "users/userPassword/changePassword";
 	}
 
 	/*
@@ -249,7 +238,7 @@ public class UsersController {
 
 		if (result.hasFieldErrors("password") || result.hasFieldErrors("newPassword")
 				|| result.hasFieldErrors("newPassword2")) {
-			return "users/changePassword";
+			return "users/userPassword/changePassword";
 		}
 
 		if (!passwordEncoder.matches(user.getPassword(), currentUser.getPassword())) {
@@ -257,7 +246,7 @@ public class UsersController {
 					"non.matching.password", new String[] { currentUser.getUsername() }, Locale.getDefault()));
 			result.addError(passwordDoNotMatch);
 
-			return "users/changePassword";
+			return "users/userPassword/changePassword";
 		}
 
 		if (!user.getNewPassword().equals(user.getNewPassword2())) {
@@ -269,7 +258,7 @@ public class UsersController {
 			result.addError(passwordDoNotMatch);
 			result.addError(passwordDoNotMatch2);
 
-			return "users/changePassword";
+			return "users/userPassword/changePassword";
 		}
 
 		if (user.getPassword().equals(user.getNewPassword())) {
@@ -281,12 +270,12 @@ public class UsersController {
 			result.addError(passwordDoMatch);
 			result.addError(passwordDoMatch2);
 
-			return "users/changePassword";
+			return "users/userPassword/changePassword";
 		}
 
 		userService.changeUserPassword(currentUser, user.getNewPassword());
 
-		return "users/changePasswordSuccess";
+		return "users/userPassword/changePasswordSuccess";
 	}
 	
 	@ExceptionHandler(ResourceNotFoundException.class)
