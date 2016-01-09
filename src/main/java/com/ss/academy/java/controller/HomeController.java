@@ -1,22 +1,18 @@
 package com.ss.academy.java.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.ss.academy.java.model.user.User;
 import com.ss.academy.java.service.author.AuthorService;
 import com.ss.academy.java.service.book.BookService;
 import com.ss.academy.java.service.user.UserService;
 import com.ss.academy.java.util.CommonAttributesPopulator;
-import com.ss.academy.java.exception.ResourceNotFoundException;
 
 /**
  * Handles requests for the application home page.
@@ -66,12 +62,5 @@ public class HomeController {
 		CommonAttributesPopulator.populate(currentUser, model);
 
 		return "commons/accessDenied";
-	}
-
-	
-	@ExceptionHandler(ResourceNotFoundException.class)
-	@ResponseStatus(value = HttpStatus.NOT_FOUND)
-	public String handleResourceNotFoundException() {
-		return "layout/404";
 	}
 }
