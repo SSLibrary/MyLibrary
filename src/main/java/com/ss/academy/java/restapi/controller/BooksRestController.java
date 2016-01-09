@@ -12,6 +12,7 @@ import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -129,6 +130,7 @@ public class BooksRestController {
 	/**
 	 * Create new Book for the given Author
 	 */
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
 	public ResponseEntity<Void> createBook(@PathVariable Long id, @RequestBody Book book) {
 		Author currentAuthor = authorService.findById(id);
@@ -161,6 +163,7 @@ public class BooksRestController {
 	/**
 	 * Update Author's Book
 	 */
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/{book_id}", method = RequestMethod.PUT)
 	public ResponseEntity<BookResource> updateBook(@PathVariable("id") long id, @PathVariable("book_id") long book_id,
 			@RequestBody Book book) {
@@ -174,6 +177,10 @@ public class BooksRestController {
 
 		if (authorBooks == null) {
 			return new ResponseEntity<BookResource>(HttpStatus.NOT_FOUND);
+		}
+		
+		if (book.getId() != book_id) {
+			return new ResponseEntity<BookResource>(HttpStatus.BAD_REQUEST);
 		}
 
 		boolean found = false;
@@ -219,6 +226,7 @@ public class BooksRestController {
 	/**
 	 * Delete Author's Book
 	 */
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/{book_id}", method = RequestMethod.DELETE)
 	public ResponseEntity<BookResource> deleteAuthor(@PathVariable("id") long id,
 			@PathVariable("book_id") long book_id) {
