@@ -12,6 +12,7 @@ import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -83,6 +84,7 @@ public class AuthorsRestController {
 	/**
 	 * Create Author
 	 */
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
 	public ResponseEntity<Void> createAuthor(@RequestBody Author author) {
 		Author dbAuthor = authorService.findAuthorByName(author.getName());
@@ -102,6 +104,7 @@ public class AuthorsRestController {
 	/**
 	 * Update Author
 	 */
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<AuthorResource> updateAuthor(@PathVariable("id") long id, @RequestBody Author author) {
 		Author urlAuthor = authorService.findById(id);
@@ -120,12 +123,6 @@ public class AuthorsRestController {
 			return new ResponseEntity<AuthorResource>(HttpStatus.BAD_REQUEST);
 		}
 
-		Author dbAuthor = authorService.findAuthorByName(author.getName());
-
-		if (dbAuthor != null) {
-			return new ResponseEntity<AuthorResource>(HttpStatus.CONFLICT);
-		}
-
 		authorService.updateAuthor(author);
 
 		AuthorResourceAssembler assembler = new AuthorResourceAssembler();
@@ -140,6 +137,7 @@ public class AuthorsRestController {
 	/**
 	 * Delete Author
 	 */
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<AuthorResource> deleteAuthor(@PathVariable("id") long id) {
 		Author currentAuthor = authorService.findById(id);
