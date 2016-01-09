@@ -21,8 +21,8 @@
 	<br />
 	<div class="col-md-8 col-xs-12">
 		<img class="img-responsive"
-			src="<c:url value='/resources/images/reader.jpg' />" alt="A guy reading a book">
+			src="<c:url value='/resources/images/reader.jpg' />"
+			alt="A guy reading a book">
 	</div>
 </div>
-		
-	
+

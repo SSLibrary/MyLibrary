@@ -3,5 +3,5 @@
 <h2>Confirmation message:</h2>
 <br />
 <h4>
-	<strong>${username}</strong>'s password has been updated successfully.
+	<strong><c:out value="${username}" /></strong>'s password has been updated successfully.
 </h4>

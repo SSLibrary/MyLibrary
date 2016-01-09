@@ -24,14 +24,14 @@
 	<div class="col-xs-12 col-md-8">
 		<div>
 			<h3>
-				<strong>Book Title: ${book.title}</strong>
+				<strong>Book Title: <c:out value="${book.title}" /></strong>
 			</h3>
 		</div>
 		<dl class="dl-horizontal">
 			<dt>Author:</dt>
 			<dd>
-				<a href="<c:url value='/authors/${book.author.id}/books/' />">
-					${book.author.name}</a>
+				<a href="<c:url value='/authors/${book.author.id}/books/' />"> <c:out
+						value="${book.author.name}" /></a>
 			</dd>
 			<dt>Pages:</dt>
 			<dd>${book.pages}</dd>
@@ -46,14 +46,16 @@
 					<dd>${book.status}
 						by <a
 							href="<c:url value='/users/${currentBookLoaner.id}/editProfile' />">
-							${currentBookLoaner.username}</a>
+							<c:out value="${currentBookLoaner.username}" />
+						</a>
 					</dd>
 				</c:when>
 				<c:when test="${isBookLoaned}">
 					<dd>${book.status}
 						by <a
 							href="<c:url value='/users/${currentBookLoaner.id}/showProfile' />">
-							${currentBookLoaner.username}</a>
+							<c:out value="${currentBookLoaner.username}" />
+						</a>
 					</dd>
 				</c:when>
 				<c:otherwise>
@@ -116,6 +118,15 @@
 <div class="row">
 	<input id="input-6c" class="rating form-control hide" data-min="0"
 		data-max="5" data-step="0.1" data-size="md">
+</div>
+<br />
+<div>
+	<div class="btn-group">
+		<a href="../../books/" class="btn btn-primary" role="button"> <span
+			class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+			Back
+		</a>
+	</div>
 </div>
 
 

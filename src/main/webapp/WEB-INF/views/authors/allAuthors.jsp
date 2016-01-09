@@ -36,7 +36,9 @@
 		<c:forEach items="${authors}" var="author">
 			<div class="row">
 				<div class="col-md-4 col-xs-4 text-center">
-					<h4>${author.name}</h4>
+					<h4>
+						<c:out value="${author.name}" />
+					</h4>
 				</div>
 				<div class="col-md-4 col-xs-4 text-center">
 					<h4>${author.country}</h4>
@@ -83,16 +85,15 @@
 		<sec:authorize access="hasAuthority('ADMIN')">
 			<div class="row">
 				<div class="col-md-offset-4 col-md-4">
-				
+
 					<form:form action="/MyLibrary/authors/new/" method="GET">
-						<button type="submit" class="btn btn-primary btn-block">Add New
-							Author</button>
+						<button type="submit" class="btn btn-primary btn-block">Add
+							New Author</button>
 					</form:form>
-		
+
 				</div>
 			</div>
 		</sec:authorize>
-
 		<!-- pagination -->
 		<c:choose>
 			<c:when test="${numberOfAuthors > 5}">

@@ -27,18 +27,9 @@
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script
-	src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-<script
 	src="//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script
 	src="<spring:url value="/resources/rating-plugin/js/star-rating.min.js"/>"></script>
-<script
-	src="<spring:url value="/resources/file-input-plugin/js/plugins/canvas-to-blob.min.js"/>"
-	type="text/javascript"></script>
-<script
-	src="<spring:url value="/resources/file-input-plugin/js/fileinput.min.js"/>"></script>
-<script
-	src="<spring:url value="/resources/file-input-plugin/js/fileinput-custom.js"/>"></script>
 
 </head>
 <body style="background-color: rgba(245, 245, 245, 0.5);">
@@ -48,6 +39,13 @@
 		<tiles:insertAttribute name="body" />
 		<tiles:insertAttribute name="footer" />
 	</div>
+	<script
+		src="<spring:url value="/resources/file-input-plugin/js/plugins/canvas-to-blob.min.js"/>"
+		type="text/javascript"></script>
+	<script
+		src="<spring:url value="/resources/file-input-plugin/js/fileinput.min.js"/>"></script>
+	<script
+		src="<spring:url value="/resources/file-input-plugin/js/fileinput-custom.js"/>"></script>
 </body>
 </html>
 

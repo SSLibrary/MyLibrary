@@ -14,9 +14,9 @@
 						value="${parent.date}" />
 				</p>
 				<p>
-					<b>Subject: </b>${parent.header}</p>
+					<b>Subject: </b><c:out value="${parent.header}" /></p>
 				<p>
-					<b>Message: </b>${parent.body}</p>
+					<b>Message: </b><c:out value="${parent.body}" /></p>
 			</td>
 		</tr>
 	</c:forEach>

@@ -44,11 +44,13 @@
 					<c:choose>
 						<c:when test="${currentUserID == user.id}">
 							<h5>
-								<a href="<c:url value='/users/${user.id}/editProfile' />">${user.username}</a>
+								<a href="<c:url value='/users/${user.id}/editProfile' />"><c:out
+										value="${user.username}" /></a>
 							</h5>
 						</c:when>
 						<c:otherwise>
-							<a href="<c:url value='/users/${user.id}/showProfile' />">${user.username}</a>
+							<a href="<c:url value='/users/${user.id}/showProfile' />"><c:out
+									value="${user.username}" /></a>
 						</c:otherwise>
 					</c:choose>
 
@@ -73,10 +75,14 @@
 				</c:choose>
 
 				<div class="col-md-2 col-xs-4 text-center">
-					<h5>${user.userStatus}</h5>
+					<h5>
+						<c:out value="${user.userStatus}" />
+					</h5>
 				</div>
 				<div class="col-md-2 col-xs-4 text-center">
-					<h5>${user.userRole}</h5>
+					<h5>
+						<c:out value="${user.userRole}" />
+					</h5>
 				</div>
 				<sec:authorize access="hasAuthority('ADMIN')">
 					<c:choose>

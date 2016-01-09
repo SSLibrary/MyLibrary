@@ -3,7 +3,8 @@
 <h2>Confirmation message:</h2>
 <br />
 <h4>
-	User <strong>${newUser}</strong> has been registered successfully.
+	User <strong><c:out value="${newUser}" /></strong> has been registered
+	successfully.
 </h4>
 <h5>
 	Now you can <a href="<c:url value="/login" />">log in</a> or Go back to

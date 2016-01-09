@@ -19,8 +19,8 @@
 					<th></th>
 					<c:forEach items="${booksHistory}" var="bookHistory">
 						<tr>
-							<td>${bookHistory.book.title}</td>
-							<td>${bookHistory.book.author.name}</td>
+							<td><c:out value="${bookHistory.book.title}" /></td>
+							<td><c:out value="${bookHistory.book.author.name}" /></td>
 							<td><fmt:formatDate pattern="yyyy-MM-dd, hh:mm a"
 									value="${bookHistory.getDate}" /></td>
 							<td><fmt:formatDate pattern="yyyy-MM-dd, hh:mm a"

@@ -30,18 +30,18 @@
 			<tr>
 				<td>
 					<p>
-						<b>From: </b>${parent.sender.username}</p>
+						<b>From: </b><c:out value="${parent.sender.username}" /></p>
 					<p>
-						<b>To: </b>${parent.receiver.username}</p>
+						<b>To: </b><c:out value="${parent.receiver.username}" /></p>
 					<p>
 						<b>Date: </b>
 						<fmt:formatDate pattern="yyyy-MM-dd, hh:mm a"
 							value="${parent.date}" />
 					</p>
 					<p>
-						<b>Subject: </b>${parent.header}</p>
+						<b>Subject: </b><c:out value="${parent.header}" /></p>
 					<p>
-						<b>Message: </b>${parent.body}</p>
+						<b>Message: </b><c:out value="${parent.body}" /></p>
 				</td>
 			</tr>
 		</c:forEach>

@@ -19,10 +19,10 @@
 		</form:form>
 		<c:choose>
 			<c:when test="${emptyListOfAuthorBooks}">
-				<h3 class="text-center">The list of <b>${author.name}</b>'s books is empty!</h3>
+				<h3 class="text-center">The list of <b><c:out value="${author.name}" /></b>'s books is empty!</h3>
 			</c:when>
 			<c:when test="${noSuchBookFound}">
-				<h3 class="text-center">No such book from ${author.name} was found!</h3>
+				<h3 class="text-center">No such book from <c:out value="${author.name}" /> was found!</h3>
 			</c:when>
 		<c:otherwise>
 		<div class="row">						
@@ -37,7 +37,7 @@
 			<div class="row">																					
 				<div class="col-md-4 col-xs-4 text-center">					
 					<h4>
-						<a href="<c:url value='../books/${book.id}/preview' />" >${book.title}</a>
+						<a href="<c:url value='../books/${book.id}/preview' />" ><c:out value="${book.title}" /></a>
 					</h4>
 				</div>
 				<div class="col-md-4 col-xs-4 text-center">

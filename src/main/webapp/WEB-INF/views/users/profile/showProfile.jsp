@@ -8,26 +8,36 @@
 	</div>
 	<div class="row">
 		<div class="col-md-2 col-xs-4">First Name:</div>
-		<div class="col-md-2 col-xs-4">${user.firstName}</div>
+		<div class="col-md-2 col-xs-4">
+			<c:out value="${user.firstName}" />
+		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-2 col-xs-4">Last Name:</div>
-		<div class="col-md-2 col-xs-4">${user.lastName}</div>
+		<div class="col-md-2 col-xs-4">
+			<c:out value="${user.lastName}" />
+		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-2 col-xs-4">Email:</div>
-		<div class="col-md-2 col-xs-4">${user.email}</div>
+		<div class="col-md-2 col-xs-4">
+			<c:out value="${user.email}" />
+		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-2 col-xs-4">Status:</div>
-		<div class="col-md-2 col-xs-4">${user.userStatus}</div>
+		<div class="col-md-2 col-xs-4">
+			<c:out value="${user.userStatus}" />
+		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-2 col-xs-4">Role:</div>
-		<div class="col-md-2 col-xs-4">${user.userRole}</div>
+		<div class="col-md-2 col-xs-4">
+			<c:out value="${user.userRole}" />
+		</div>
 	</div>
 </div>
-<br/>
+<br />
 <div class="row">
 	<div class="col-md-offset-2 col-xs-offset-4">
 		<div class="btn-group">
@@ -47,6 +57,5 @@
 				</div>
 			</sec:authorize>
 		</div>
-
 	</div>
 </div>

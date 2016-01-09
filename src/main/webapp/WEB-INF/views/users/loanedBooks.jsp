@@ -20,8 +20,8 @@
 					<th>Loaned By</th>
 					<c:forEach items="${loanedBooks}" var="loanedBook">
 						<tr>
-							<td>${loanedBook.book.title}</td>
-							<td>${loanedBook.book.author.name}</td>
+							<td><c:out value="${loanedBook.book.title}" /></td>
+							<td><c:out value="${loanedBook.book.author.name}" /></td>
 							<td><fmt:formatDate pattern="yyyy-MM-dd, hh:mm a"
 									value="${loanedBook.getDate}" /></td>
 							<td><fmt:formatDate pattern="yyyy-MM-dd, hh:mm a"
@@ -48,8 +48,9 @@
 <c:choose>
 	<c:when test="${numberOfLoanedBooks > 5}">
 		<div class="text-center">
-			<tag:paginate max="15" offset="${offset}" count="${numberOfLoanedBooks}"
-				uri="../books/loaned" next="&raquo;" previous="&laquo;" />
+			<tag:paginate max="15" offset="${offset}"
+				count="${numberOfLoanedBooks}" uri="../books/loaned" next="&raquo;"
+				previous="&laquo;" />
 		</div>
 	</c:when>
 </c:choose>

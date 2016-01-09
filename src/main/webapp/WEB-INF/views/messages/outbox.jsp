@@ -12,9 +12,10 @@
 		<table class="table">
 			<c:forEach items="${messages}" var="message">
 				<tr>
-					<td>To: <i>${message.receiver.username}</i></td>
+					<td>To: <i><c:out value="${message.receiver.username}" /></i></td>
 					<td>Subject: <i><a
-							href="<c:url value="/messages/${currentUserID}/${message.message_id}/display" />">${message.header}</a></i></td>
+							href="<c:url value="/messages/${currentUserID}/${message.message_id}/display" />"><c:out
+									value="${message.header}" /></a></i></td>
 					<td>Date: <i><fmt:formatDate pattern="yyyy-MM-dd, hh:mm a"
 								value="${message.date}" /></i></td>
 				</tr>
