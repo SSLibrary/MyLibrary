@@ -63,14 +63,16 @@ public class AuthorBooksController {
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String listAllBooks(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long author_id,
 			ModelMap model, Integer offset, Integer maxResults) {
-		User currentUser = userService.findByUsername(userDetails.getUsername());
 		Author author = authorService.findById(author_id);
-		List<Book> books = bookService.listAllBooks(offset, maxResults, author_id);
-		Long numberOfBooks = bookService.countAllBooks(author_id);
 
 		if (author == null) {
 			throw new ResourceNotFoundException();
 		}
+
+		User currentUser = userService.findByUsername(userDetails.getUsername());
+
+		List<Book> books = bookService.listAllBooks(offset, maxResults, author_id);
+		Long numberOfBooks = bookService.countAllBooks(author_id);
 
 		if (books.isEmpty()) {
 			model.addAttribute("emptyListOfAuthorBooks", true);
@@ -91,14 +93,21 @@ public class AuthorBooksController {
 	 * been rated so far by the current user.
 	 */
 	@RequestMapping(value = { "/{book_id}/preview" }, method = RequestMethod.GET)
-	public String previewBook(@PathVariable Long book_id, ModelMap model,
+	public String previewBook(@PathVariable Long author_id, @PathVariable Long book_id, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
-		User currentUser = userService.findByUsername(userDetails.getUsername());
+		Author author = authorService.findById(author_id);
+
+		if (author == null) {
+			throw new ResourceNotFoundException();
+		}
+
 		Book book = bookService.findById(book_id);
 
 		if (book == null) {
-			return "redirect:/authors/{author_id}/books/";
+			throw new ResourceNotFoundException();
 		}
+
+		User currentUser = userService.findByUsername(userDetails.getUsername());
 
 		book.setAverageRating(RatingCalculator.calculate(book.getRatings()));
 		List<Rating> bookRatings = book.getRatings();
@@ -144,8 +153,13 @@ public class AuthorBooksController {
 	@RequestMapping(value = { "/search" }, method = RequestMethod.GET)
 	public String searchBookByName(@PathVariable Long author_id, @RequestParam("bookTitle") String bookTitle,
 			ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
-		User currentUser = userService.findByUsername(userDetails.getUsername());
 		Author author = authorService.findById(author_id);
+
+		if (author == null) {
+			throw new ResourceNotFoundException();
+		}
+
+		User currentUser = userService.findByUsername(userDetails.getUsername());
 
 		List<Book> books = bookService.findBooksByTitle(bookTitle);
 		List<Book> authorBooks = new ArrayList<Book>();
@@ -280,10 +294,10 @@ public class AuthorBooksController {
 					byte[] currentImage = dbBook.getImage();
 					if (aFile.getSize() != 0) {
 						formBook.setImage(aFile.getBytes());
-					}else{
+					} else {
 						formBook.setImage(currentImage);
 					}
-					
+
 					dbBook = formBook;
 					author.getBooks().add(dbBook);
 

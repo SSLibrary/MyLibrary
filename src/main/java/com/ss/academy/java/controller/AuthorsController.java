@@ -105,7 +105,7 @@ public class AuthorsController {
 	public String saveAuthor(@Valid Author author, BindingResult result, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
 		User currentUser = userService.findByUsername(userDetails.getUsername());
-		
+
 		if (result.hasErrors()) {
 			CommonAttributesPopulator.populate(currentUser, model);
 			return "authors/addNewAuthor";
@@ -138,10 +138,16 @@ public class AuthorsController {
 	 */
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/{author_id}" }, method = RequestMethod.PUT)
-	public String updateAuthor(@Valid Author author, BindingResult result, ModelMap model,
-			@PathVariable Long author_id, @AuthenticationPrincipal UserDetails userDetails) {
+	public String updateAuthor(@Valid Author author, BindingResult result, ModelMap model, @PathVariable Long author_id,
+			@AuthenticationPrincipal UserDetails userDetails) {
+		Author urlAuthor = authorService.findById(author_id);
+
+		if (urlAuthor == null) {
+			throw new ResourceNotFoundException();
+		}
+
 		User currentUser = userService.findByUsername(userDetails.getUsername());
-		
+
 		if (result.hasErrors()) {
 			CommonAttributesPopulator.populate(currentUser, model);
 			return "authors/addNewAuthor";
@@ -156,11 +162,17 @@ public class AuthorsController {
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = { "/{author_id}" }, method = RequestMethod.DELETE)
 	public String deleteAuthor(@PathVariable Long author_id) {
+		Author author = authorService.findById(author_id);
+
+		if (author == null) {
+			throw new ResourceNotFoundException();
+		}
+
 		authorService.deleteAuthor(authorService.findById(author_id));
 
 		return "redirect:/authors/";
 	}
-	
+
 	@ExceptionHandler(ResourceNotFoundException.class)
 	@ResponseStatus(value = HttpStatus.NOT_FOUND)
 	public String handleResourceNotFoundException() {
