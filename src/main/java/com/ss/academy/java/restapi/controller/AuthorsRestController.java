@@ -24,8 +24,7 @@ import com.ss.academy.java.model.author.AuthorResourceAssembler;
 import com.ss.academy.java.service.author.AuthorService;
 
 /**
- * Handles requests for the RESTful API authors end-point. 
- * Each response is in JSON format.
+ * Handles requests for the RESTful API authors end-point. Produces JSON.
  */
 @RestController
 @ExposesResourceFor(Author.class)
@@ -50,7 +49,7 @@ public class AuthorsRestController {
 
 			authorResource.add(linkTo(AuthorsRestController.class).slash(author).withSelfRel());
 			authorResource.add(linkTo(AuthorsRestController.class).slash(author).slash("/books").withRel("books"));
-			
+
 			authorsResources.add(authorResource);
 		}
 
@@ -58,7 +57,6 @@ public class AuthorsRestController {
 
 		return new ResponseEntity<Resources<AuthorResource>>(authorResources, HttpStatus.OK);
 
-		
 	}
 
 	/**
@@ -87,8 +85,9 @@ public class AuthorsRestController {
 	 */
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
 	public ResponseEntity<Void> createAuthor(@RequestBody Author author) {
-		
-		if (!authorService.findAuthorsByName(author.getName()).isEmpty()) {
+		Author dbAuthor = authorService.findAuthorByName(author.getName());
+
+		if (dbAuthor != null) {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}
 
@@ -105,10 +104,26 @@ public class AuthorsRestController {
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<AuthorResource> updateAuthor(@PathVariable("id") long id, @RequestBody Author author) {
-		Author currentAuthor = authorService.findById(id);
+		Author urlAuthor = authorService.findById(id);
 
-		if (currentAuthor == null) {
+		if (urlAuthor == null) {
 			return new ResponseEntity<AuthorResource>(HttpStatus.NOT_FOUND);
+		}
+
+		Author requestAuthor = authorService.findById(author.getId());
+
+		if (requestAuthor == null) {
+			return new ResponseEntity<AuthorResource>(HttpStatus.NOT_FOUND);
+		}
+
+		if (urlAuthor.getId() != requestAuthor.getId()) {
+			return new ResponseEntity<AuthorResource>(HttpStatus.BAD_REQUEST);
+		}
+
+		Author dbAuthor = authorService.findAuthorByName(author.getName());
+
+		if (dbAuthor != null) {
+			return new ResponseEntity<AuthorResource>(HttpStatus.CONFLICT);
 		}
 
 		authorService.updateAuthor(author);
