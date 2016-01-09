@@ -21,4 +21,19 @@
 			</form:form>
 		</div>
 	</div>
+	<br />
+<div class="row">
+	<div class="col-md-offset-2 col-md-6 col-xs-12">
+		<div class="btn-toolbar">
+			<div class="btn-group">
+				<a
+					href="/MyLibrary/authors/${book.author.id}/books/${book.id}/comments"
+					class="btn btn-primary" role="button"> <span
+					class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+					Back
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
 </form:form>

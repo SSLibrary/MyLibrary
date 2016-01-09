@@ -87,6 +87,7 @@ public class BookDaoImpl extends AbstractDao<Long, Book> implements BookDao {
 	public List<Book> listAllBooks(Integer offset, Integer maxResults) {
 		List<Book> books = getSession()
 				.createCriteria(Book.class)
+				.addOrder(Order.asc("title"))
 				.setFirstResult(offset != null ? offset : 0)
 				.setMaxResults(maxResults != null ? maxResults : 5)
 				.list();

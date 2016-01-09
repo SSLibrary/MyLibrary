@@ -7,31 +7,31 @@
 		</h3>
 	</div>
 	<div class="row">
-		<div class="col-md-2 col-xs-4">First Name:</div>
+		<div class="col-md-2 col-xs-4"><b>First Name:</b></div>
 		<div class="col-md-2 col-xs-4">
 			<c:out value="${user.firstName}" />
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-2 col-xs-4">Last Name:</div>
+		<div class="col-md-2 col-xs-4"><b>Last Name:</b></div>
 		<div class="col-md-2 col-xs-4">
 			<c:out value="${user.lastName}" />
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-2 col-xs-4">Email:</div>
+		<div class="col-md-2 col-xs-4"><b>Email:</b></div>
 		<div class="col-md-2 col-xs-4">
 			<c:out value="${user.email}" />
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-2 col-xs-4">Status:</div>
+		<div class="col-md-2 col-xs-4"><b>Status:</b></div>
 		<div class="col-md-2 col-xs-4">
 			<c:out value="${user.userStatus}" />
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-2 col-xs-4">Role:</div>
+		<div class="col-md-2 col-xs-4"><b>Role:</b></div>
 		<div class="col-md-2 col-xs-4">
 			<c:out value="${user.userRole}" />
 		</div>

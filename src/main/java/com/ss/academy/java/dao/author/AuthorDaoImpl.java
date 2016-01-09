@@ -61,6 +61,7 @@ public class AuthorDaoImpl extends AbstractDao<Long, Author> implements AuthorDa
 	public List<Author> listAllAuthors(Integer offset, Integer maxResults) {
 		List<Author> authors = getSession()
 				.createCriteria(Author.class)
+				.addOrder(Order.asc("name"))
 				.setFirstResult(offset != null ? offset : 0)
 				.setMaxResults(maxResults != null ? maxResults : 5)
 				.list();
