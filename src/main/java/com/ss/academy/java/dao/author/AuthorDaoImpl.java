@@ -78,4 +78,11 @@ public class AuthorDaoImpl extends AbstractDao<Long, Author> implements AuthorDa
 		
 		return numberOfAuthors;
 	}
+
+	public Author findAuthorByName(String authorName) {
+		Criteria crit = createEntityCriteria();
+		crit.add(Restrictions.eq("name", authorName));
+
+		return (Author) crit.uniqueResult();
+	}
 }

@@ -1,17 +1,20 @@
 package com.ss.academy.java.controller;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,6 +40,9 @@ public class AuthorsController {
 
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	MessageSource messageSource;
 
 	// This method will list all existing authors.
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
@@ -101,10 +107,21 @@ public class AuthorsController {
 	@RequestMapping(value = { "/new" }, method = RequestMethod.POST)
 	public String saveAuthor(@Valid Author author, BindingResult result, ModelMap model,
 			@AuthenticationPrincipal UserDetails userDetails) {
+
 		User currentUser = userService.findByUsername(userDetails.getUsername());
 
 		if (result.hasErrors()) {
 			CommonAttributesPopulator.populate(currentUser, model);
+			return "authors/addNewAuthor";
+		}
+
+		Author dbAuthor = authorService.findAuthorByName(author.getName());
+
+		if (dbAuthor != null) {
+			FieldError authorAlreadyExists = new FieldError("name", "name", messageSource
+					.getMessage("non.unique.author", new String[] { author.getName() }, Locale.getDefault()));
+			result.addError(authorAlreadyExists);
+
 			return "authors/addNewAuthor";
 		}
 

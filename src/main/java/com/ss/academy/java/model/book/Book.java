@@ -48,6 +48,7 @@ public class Book implements Identifiable<Long> {
 
 	@Lob
 	@Column(name="image")
+	@JsonIgnore
 	private byte[] image;
 
 	@Column(name = "pages")

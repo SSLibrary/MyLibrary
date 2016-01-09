@@ -9,6 +9,8 @@ import com.ss.academy.java.model.author.Author;
 public interface AuthorService {
 
 	Author findById(Long id);
+	
+	Author findAuthorByName(String authorName);
 
 	List<Author> findAllAuthors();
 

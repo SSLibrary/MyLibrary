@@ -58,4 +58,8 @@ public class AuthorServiceImpl implements AuthorService {
 	public Long countAllAuthors() {
 		return dao.countAllAuthors();
 	}
+
+	public Author findAuthorByName(String authorName) {
+		return dao.findAuthorByName(authorName);
+	}
 }
